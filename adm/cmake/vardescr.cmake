@@ -1,19 +1,19 @@
 # variable description
 
-# 
-set (BUILD_PATCH_DESCR 
+#
+set (BUILD_PATCH_DESCR
 "Points to the directory recognized as a 'patch' for OCCT. If specified,
 the files from this directory take precedence over the corresponding native
 OCCT sources. This way you are able to introduce patches to Open CASCADE
 Technology not affecting the original source distribution")
 
 
-set (BUILD_LIBRARY_TYPE_DESCR 
+set (BUILD_LIBRARY_TYPE_DESCR
 "Specifies the type of library to be created. 'Shared' libraries
 are linked dynamically and loaded at runtime. 'Static' libraries
 are archives of object files for use when linking other targets")
 
-set (BUILD_YACCLEX_DESCR 
+set (BUILD_YACCLEX_DESCR
 "Enables Flex/Bison lexical analyzers. OCCT source files relating to STEP reader and
 ExprIntrp functionality are generated automatically with Flex/Bison. Checking this options
 leads to automatic search of Flex/Bison binaries and regeneration of the mentioned files")
@@ -49,7 +49,7 @@ set (BUILD_USE_PCH_DESCR
 Precompiled headers are generated automatically by Cotire tool.")
 
 # install variables
-set (INSTALL_DIR_DESCR 
+set (INSTALL_DIR_DESCR
 "The place where built OCCT libraries, headers, test cases (INSTALL_TEST_CASES variable),
 samples (INSTALL_SAMPLES_DESCR variable) and certain 3rdparties (INSTALL_TBB and
 other similar variables) will be placed during the installation process (building INSTALL project)")
@@ -62,25 +62,25 @@ set (INSTALL_DIR_LAYOUT_DESCR
 Two variants are predefined: for Windows (standard OCCT layout) and for Unix operating systems (standard Linux layout).
 If needed, layout can be customized with INSTALL_DIR_* variables.")
 
-set (INSTALL_DIR_BIN_DESCR 
+set (INSTALL_DIR_BIN_DESCR
 "Subdirectory of INSTALL_DIR where binaries will be installed")
-set (INSTALL_DIR_INCLUDE_DESCR 
+set (INSTALL_DIR_INCLUDE_DESCR
 "Subdirectory of INSTALL_DIR where OCCT headers will be installed")
-set (INSTALL_DIR_DATA_DESCR 
+set (INSTALL_DIR_DATA_DESCR
 "Subdirectory of INSTALL_DIR where sample data files will be installed")
-set (INSTALL_DIR_DOC_DESCR 
+set (INSTALL_DIR_DOC_DESCR
 "Subdirectory of INSTALL_DIR where documentation will be installed")
-set (INSTALL_DIR_LIB_DESCR 
+set (INSTALL_DIR_LIB_DESCR
 "Subdirectory of INSTALL_DIR where libraries (.so on Linux, .lib on Windows) will be installed")
-set (INSTALL_DIR_RESOURCE_DESCR 
+set (INSTALL_DIR_RESOURCE_DESCR
 "Subdirectory of INSTALL_DIR where OCCT resource files will be installed")
-set (INSTALL_DIR_SAMPLES_DESCR 
+set (INSTALL_DIR_SAMPLES_DESCR
 "Subdirectory of INSTALL_DIR where samples will be installed")
-set (INSTALL_DIR_TESTS_DESCR 
+set (INSTALL_DIR_TESTS_DESCR
 "Subdirectory of INSTALL_DIR where test scripts will be installed")
-set (INSTALL_DIR_SCRIPT_DESCR 
+set (INSTALL_DIR_SCRIPT_DESCR
 "Subdirectory of INSTALL_DIR where scripts will be installed")
-set (INSTALL_DIR_CMAKE_DESCR 
+set (INSTALL_DIR_CMAKE_DESCR
 "Subdirectory of INSTALL_DIR where CMake configuration files will be installed.
 Must be three levels below INSTALL_DIR")
 
@@ -96,7 +96,6 @@ INSTALL_MESSAGE (INSTALL_DOC_Overview     "OCCT overview documentation (HTML for
 INSTALL_MESSAGE (INSTALL_FFMPEG           "FFmpeg binaries")
 INSTALL_MESSAGE (INSTALL_FREEIMAGE        "FreeImage binaries")
 INSTALL_MESSAGE (INSTALL_OPENVR           "OpenVR binaries")
-INSTALL_MESSAGE (INSTALL_EIGEN            "EIGEN header files")
 INSTALL_MESSAGE (INSTALL_EGL              "EGL binaries")
 INSTALL_MESSAGE (INSTALL_GLES2            "OpenGL ES 2.0 binaries")
 INSTALL_MESSAGE (INSTALL_FREETYPE         "FreeType binaries")
