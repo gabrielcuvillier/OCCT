@@ -227,6 +227,9 @@ if (BUILD_SHARED_LIBS)
         install (FILES ${TK_DLLS}
                  CONFIGURATIONS Debug
                  DESTINATION "${INSTALL_DIR_BIN}d")
+        install (FILES ${TK_DLLS}
+                 CONFIGURATIONS MinSizeRel
+                 DESTINATION "${INSTALL_DIR_BIN}z")
       endif()
     else()
       get_filename_component(3RDPARTY_TK_LIBRARY_REALPATH ${3RDPARTY_TK_LIBRARY} REALPATH)
@@ -243,6 +246,9 @@ if (BUILD_SHARED_LIBS)
         install (FILES ${3RDPARTY_TK_LIBRARY_REALPATH}
                  CONFIGURATIONS Debug
                  DESTINATION "${INSTALL_DIR_LIB}d")
+        install (FILES ${3RDPARTY_TK_LIBRARY_REALPATH}
+                 CONFIGURATIONS MinSizeRel
+                 DESTINATION "${INSTALL_DIR_LIB}z")
       endif()
     endif()
 

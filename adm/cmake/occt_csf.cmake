@@ -19,7 +19,11 @@ endif()
 
 # FREETYPE
 if (USE_FREETYPE)
-  set (CSF_FREETYPE "freetype")
+  if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    set (CSF_FREETYPE "freetyped")
+  else()
+    set (CSF_FREETYPE "freetype")
+  endif()
 else()
   set (CSF_FREETYPE)
 endif()
@@ -33,13 +37,69 @@ endif()
 
 # FREEIMAGE
 if (USE_FREEIMAGE)
-  set (CSF_FreeImagePlus "freeimage")
+  if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    set (CSF_FreeImagePlus "freeimaged")
+  else()
+    set (CSF_FreeImagePlus "freeimage")
+  endif()
 else()
   if (WIN32)
     set (CSF_FreeImagePlus "windowscodecs")
   else()
     set (CSF_FreeImagePlus)
   endif()
+endif()
+
+
+# ZLIB
+if (USE_ZLIB)
+  if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    set(CSF_ZLIB "zd")
+  else()
+    set(CSF_ZLIB "z")
+  endif()
+else()
+  set(CSF_ZLIB "")
+endif()
+
+# PNG
+if (USE_PNG)
+  if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    set(CSF_PNG "png16d")
+  else()
+    set(CSF_PNG "png16")
+  endif()
+else()
+  set(CSF_PNG "")
+endif()
+
+# JPEG
+if (USE_JPEG)
+  if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    set(CSF_JPEG "jpegd")
+  else()
+    set(CSF_JPEG "jpeg")
+  endif()
+else()
+  set(CSF_JPEG "")
+endif()
+
+# TinyPLY
+if (USE_TINYPLY)
+  if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    set(CSF_TINYPLY "tinyplyd")
+  else()
+    set(CSF_TINYPLY "tinyply")
+  endif()
+else()
+  set(CSF_TINYPLY "")
+endif()
+
+# RapidJSON
+if (USE_RAPIDJSON)
+  set(CSF_RAPIDJSON "")
+else()
+  set(CSF_RAPIDJSON "")
 endif()
 
 # OpenVR

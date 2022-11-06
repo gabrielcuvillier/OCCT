@@ -218,7 +218,7 @@ else()
 endif()
 
 # freetype library
-#if (BUILD_SHARED_LIBS)
+if (BUILD_SHARED_LIBS)
   if (NOT 3RDPARTY_FREETYPE_LIBRARY OR NOT EXISTS "${3RDPARTY_FREETYPE_LIBRARY}")
     set (CMAKE_FIND_LIBRARY_SUFFIXES .lib .so .dylib .a)
 
@@ -311,6 +311,9 @@ endif()
         install (FILES "${3RDPARTY_FREETYPE_DLL}"
                  CONFIGURATIONS Debug
                  DESTINATION "${INSTALL_DIR_BIN}d")
+        install (FILES "${3RDPARTY_FREETYPE_DLL}"
+                 CONFIGURATIONS MinSizeRel
+                 DESTINATION "${INSTALL_DIR_BIN}z")
       endif()
     else()
       get_filename_component(3RDPARTY_FREETYPE_LIBRARY_ABS ${3RDPARTY_FREETYPE_LIBRARY} REALPATH)
@@ -333,6 +336,10 @@ endif()
                  CONFIGURATIONS Debug
                  DESTINATION "${INSTALL_DIR_LIB}d"
                  RENAME ${3RDPARTY_FREETYPE_LIBRARY_NAME}.6)
+        install (FILES "${3RDPARTY_FREETYPE_LIBRARY_ABS}"
+                 CONFIGURATIONS MinSizeRel
+                 DESTINATION "${INSTALL_DIR_LIB}z"
+                 RENAME ${3RDPARTY_FREETYPE_LIBRARY_NAME}.6)
       endif()
     endif()
 
@@ -345,7 +352,7 @@ endif()
       set (USED_3RDPARTY_FREETYPE_DIR ${3RDPARTY_FREETYPE_LIBRARY_DIR})
     endif()
   endif()
-#endif()
+endif()
 
 # unset all redundant variables
 OCCT_CHECK_AND_UNSET(FREETYPE_INCLUDE_DIR_ft2build)

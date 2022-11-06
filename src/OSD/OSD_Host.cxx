@@ -37,7 +37,7 @@ const OSD_WhoAmI Iam = OSD_WHost;
 #include <sys/ioctl.h>
 #include <net/if.h>
 extern "C" {
-  int gethostname(char* address, int len); 
+  int gethostname(char* address, int len);
 }
 #endif
 
@@ -64,14 +64,15 @@ TCollection_AsciiString result;
 // =========================================================================
 
 OSD_SysType OSD_Host::SystemId()const{
-struct utsname info; 
- 
+struct utsname info;
+
  uname (&info);
 
  if (!strcmp(info.sysname,"SunOS"))          return (OSD_UnixBSD);
  if (!strcmp(info.sysname,"ULTRIX"))         return (OSD_UnixBSD);
  if (!strcmp(info.sysname,"FreeBSD"))        return (OSD_UnixBSD);
  if (!strncmp(info.sysname,"Linux",5))       return (OSD_LinuxREDHAT);
+ if (!strncmp(info.sysname,"Emscripten"))    return (OSD_Emscripten);
  if (!strncmp(info.sysname,"IRIX", 4))       return (OSD_UnixSystemV);
  if (!strncmp(info.sysname,"OSF", 3))        return (OSD_OSF);
  if (!strcmp(info.sysname,"AIX"))            return (OSD_Aix);
@@ -139,8 +140,8 @@ TCollection_AsciiString OSD_Host::InternetAddress(){
 
 // =========================================================================
 OSD_OEMType OSD_Host::MachineType(){
-struct utsname info; 
- 
+struct utsname info;
+
  uname (&info);
 
  if (!strcmp(info.sysname,"SunOS"))         return (OSD_SUN);
@@ -235,28 +236,28 @@ OSD_Host :: OSD_Host () {
   Standard_ENABLE_DEPRECATION_WARNINGS
 
   if (  !Failed ()  ) {
-  
+
     memSize = (Standard_Integer) ms.dwAvailPageFile;
 
    if (   WSAStartup (  MAKEWORD( 1, 1 ), &wd  )   ) {
-   
+
     _osd_wnt_set_error ( myError, OSD_WHost );
-   
+
    } else if (   (  phe = gethostbyname (szHostName)  ) == NULL   ) {
-   
+
     _osd_wnt_set_error ( myError, OSD_WHost );
-   
+
    } else {
 
     CopyMemory (  &inAddr, *phe -> h_addr_list, sizeof ( IN_ADDR )  );
     hostAddr = inet_ntoa ( inAddr );
 
    }  // end else
-  
+
   }  // end if
 
   if (  !Failed ()  ) {
-  
+
    hostName  = szHostName;
    interAddr = Standard_CString ( hostAddr );
    TCollection_AsciiString aVersion = TCollection_AsciiString("Windows NT Version ") + (int )osVerInfo.dwMajorVersion + "." + (int )osVerInfo.dwMinorVersion;
@@ -267,9 +268,9 @@ OSD_Host :: OSD_Host () {
    version = aVersion;
 
    fInit = TRUE;
-  
+
   }  // end if
- 
+
  }  // end if
 
  if ( fInit )

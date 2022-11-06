@@ -117,7 +117,7 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
 
   foreach (LIBRARY_NAME ${${LIBRARY_CSF_NAME}})
     string (REPLACE "." "" LIBRARY_NAME_SUFFIX "${LIBRARY_NAME}")
-#    if (BUILD_SHARED_LIBS)
+    if (BUILD_SHARED_LIBS)
       # library
       if (NOT 3RDPARTY_${PRODUCT_NAME}_LIBRARY_${LIBRARY_NAME_SUFFIX} OR NOT EXISTS "${3RDPARTY_${PRODUCT_NAME}_LIBRARY_${LIBRARY_NAME_SUFFIX}}")
         set (CMAKE_FIND_LIBRARY_SUFFIXES .lib .so .dylib .a)
@@ -257,6 +257,9 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
             install (FILES "${3RDPARTY_${PRODUCT_NAME}_DLL_${LIBRARY_NAME_SUFFIX}}"
                      CONFIGURATIONS Debug
                      DESTINATION "${INSTALL_DIR_BIN}d")
+            install (FILES "${3RDPARTY_${PRODUCT_NAME}_DLL_${LIBRARY_NAME_SUFFIX}}"
+                     CONFIGURATIONS MinSizeRel
+                     DESTINATION "${INSTALL_DIR_BIN}z")
           endif()
         else()
           get_filename_component(ABS_PATH ${3RDPARTY_${PRODUCT_NAME}_LIBRARY_${LIBRARY_NAME_SUFFIX}} REALPATH)
@@ -279,6 +282,10 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
                        CONFIGURATIONS Debug
                        DESTINATION "${INSTALL_DIR_LIB}d"
                        RENAME ${FREEIMLIB}.3)
+              install (FILES "${ABS_PATH}"
+                       CONFIGURATIONS MinSizeRel
+                       DESTINATION "${INSTALL_DIR_LIB}z"
+                       RENAME ${FREEIMLIB}.3)
             endif()
           endif()
 
@@ -299,7 +306,7 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
       endif()
 
       mark_as_advanced (3RDPARTY_${PRODUCT_NAME}_LIBRARY_${LIBRARY_NAME_SUFFIX} 3RDPARTY_${PRODUCT_NAME}_DLL_${LIBRARY_NAME_SUFFIX})
-#    endif()
+    endif()
   endforeach()
 endmacro()
 

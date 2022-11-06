@@ -45,6 +45,15 @@ extern "C" {void    *dlerror (void);}
 
 #define BAD(X)  ((X) == NULL)
 
+namespace {
+const Standard_Boolean ToUseSharedLibrary =
+#if !defined(OCCT_DISABLE_SHAREDLIBRARY)
+        Standard_True;
+#else
+S       tandard_False;
+#endif
+}
+
 // ----------------------------------------------------------------
 //
 // Create and initialize a shared library object to NULL
@@ -58,7 +67,7 @@ OSD_SharedLibrary::OSD_SharedLibrary():myHandle(NULL),myName(NULL){
 // name given as argument
 //
 // ----------------------------------------------------------------
-OSD_SharedLibrary::OSD_SharedLibrary(const Standard_CString aName):myHandle(NULL) 
+OSD_SharedLibrary::OSD_SharedLibrary(const Standard_CString aName):myHandle(NULL)
 {
   if (aName != NULL) {
     myName = new char [(strlen (aName) + 1 )];
@@ -71,7 +80,7 @@ OSD_SharedLibrary::OSD_SharedLibrary(const Standard_CString aName):myHandle(NULL
 //
 // ----------------------------------------------------------------
 Standard_CString  OSD_SharedLibrary::Name() const {
-  return myName; 
+  return myName;
 }
 // ----------------------------------------------------------------
 //
@@ -86,24 +95,24 @@ void  OSD_SharedLibrary::SetName(const Standard_CString aName)  {
 }
 // ----------------------------------------------------------------
 //
-// DlOpen:   The dlopen function provides an interface to the dynamic 
+// DlOpen:   The dlopen function provides an interface to the dynamic
 // library loader to allow shared libraries to be loaded and called at
-// runtime.  
-// The dlopen function attempts to load filename, in the address space 
-// of the process, resolving symbols as appropriate.  Any libraries that      
+// runtime.
+// The dlopen function attempts to load filename, in the address space
+// of the process, resolving symbols as appropriate.  Any libraries that
 // filename depends upon are also loaded.
 //
-// If mode is RTLD_LAZY, then the runtime loader does symbol resolution 
-// only as needed.  Typically, this means that the first call	
-// to a function in the newly loaded library will cause the resolution 
-// of the address of that function to occur.  
+// If mode is RTLD_LAZY, then the runtime loader does symbol resolution
+// only as needed.  Typically, this means that the first call
+// to a function in the newly loaded library will cause the resolution
+// of the address of that function to occur.
 //
 // If mode is RTLD_NOW, then the runtime loader must do all
-// symbol binding during the dlopen call.  
-// The dlopen function returns a handle that is used by dlsym or 
+// symbol binding during the dlopen call.
+// The dlopen function returns a handle that is used by dlsym or
 // dlclose call.  If there is an error, a NULLpointer is returned.
 //
-// If a NULL filename is specified, dlopen returns a handle for the main      
+// If a NULL filename is specified, dlopen returns a handle for the main
 // executable, which allows access to dynamic symbols in the running program.
 //
 // ----------------------------------------------------------------
@@ -124,8 +133,8 @@ else {
 }
 // ----------------------------------------------------------------
 //
-// DlSymb: The dlsym function returns the address of the	
-// symbol name found in the shared library corresponding to handle.  
+// DlSymb: The dlsym function returns the address of the
+// symbol name found in the shared library corresponding to handle.
 // If the symbol is not	found, a NULL
 // pointer is returned.
 //

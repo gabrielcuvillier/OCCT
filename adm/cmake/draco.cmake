@@ -92,5 +92,8 @@ if (INSTALL_DRACO)
     install (FILES ${3RDPARTY_DRACO_LIBRARY_REALPATH}
              CONFIGURATIONS Debug
              DESTINATION "${INSTALL_DIR_LIB}d")
+    install (FILES ${3RDPARTY_DRACO_LIBRARY_REALPATH}
+             CONFIGURATIONS MinSizeRel
+             DESTINATION "${INSTALL_DIR_LIB}z")
   endif()
 endif()

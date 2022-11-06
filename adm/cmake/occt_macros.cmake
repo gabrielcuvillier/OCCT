@@ -46,6 +46,8 @@ macro (OCCT_MAKE_OS_WITH_BITNESS)
     set (OS_WITH_BIT "win${COMPILER_BITNESS}")
   elseif(APPLE)
     set (OS_WITH_BIT "mac${COMPILER_BITNESS}")
+  elseif(EMSCRIPTEN)
+    set (OS_WITH_BIT "wasm${COMPILER_BITNESS}")
   else()
     set (OS_WITH_BIT "lin${COMPILER_BITNESS}")
   endif()
@@ -325,7 +327,7 @@ macro (COLLECT_AND_INSTALL_OCCT_HEADER_FILES ROOT_TARGET_OCCT_DIR OCCT_BUILD_TOO
       endif()
     endforeach()
   endforeach()
-  
+
   # create new file including found header
   string(TIMESTAMP CURRENT_TIME "%H:%M:%S")
   message (STATUS "Info: \(${CURRENT_TIME}\) Create header-links in inc folder...")
@@ -335,17 +337,17 @@ macro (COLLECT_AND_INSTALL_OCCT_HEADER_FILES ROOT_TARGET_OCCT_DIR OCCT_BUILD_TOO
     set (OCCT_HEADER_FILE_CONTENT "#include \"${OCCT_HEADER_FILE}\"")
     configure_file ("${TEMPLATE_HEADER_PATH}" "${ROOT_TARGET_OCCT_DIR}/${OCCT_INSTALL_DIR_PREFIX}/${HEADER_FILE_NAME}" @ONLY)
   endforeach()
-  
+
   install (FILES ${OCCT_HEADER_FILES_COMPLETE} DESTINATION "${INSTALL_DIR}/${OCCT_INSTALL_DIR_PREFIX}")
-  
+
   string(TIMESTAMP CURRENT_TIME "%H:%M:%S")
   message (STATUS "Info: \(${CURRENT_TIME}\) Checking headers in inc folder...")
-    
+
   file (GLOB OCCT_HEADER_FILES_OLD "${ROOT_TARGET_OCCT_DIR}/${OCCT_INSTALL_DIR_PREFIX}/*")
   foreach (OCCT_HEADER_FILE_OLD ${OCCT_HEADER_FILES_OLD})
     get_filename_component (HEADER_FILE_NAME ${OCCT_HEADER_FILE_OLD} NAME)
     string (REGEX MATCH "^[a-zA-Z0-9]+" PACKAGE_NAME "${HEADER_FILE_NAME}")
-    
+
     list (FIND OCCT_USED_PACKAGES ${PACKAGE_NAME} IS_HEADER_FOUND)
     if (NOT ${IS_HEADER_FOUND} EQUAL -1)
       if (NOT EXISTS "${OCCT_COLLECT_SOURCE_DIR}/${PACKAGE_NAME}/${HEADER_FILE_NAME}")
@@ -363,7 +365,7 @@ macro (COLLECT_AND_INSTALL_OCCT_HEADER_FILES ROOT_TARGET_OCCT_DIR OCCT_BUILD_TOO
       if (NOT "${OCCT_HEADER_FILE_WITH_PROPER_NAMES}" STREQUAL "")
         list (FIND OCCT_HEADER_FILE_WITH_PROPER_NAMES ${HEADER_FILE_NAME} IS_HEADER_FOUND)
       endif()
-      
+
       if (${IS_HEADER_FOUND} EQUAL -1)
         message (STATUS "Warning. \(${PACKAGE_NAME}\) ${OCCT_HEADER_FILE_OLD} is not used and will be removed from ${ROOT_TARGET_OCCT_DIR}/inc")
         file (REMOVE "${OCCT_HEADER_FILE_OLD}")
@@ -527,7 +529,7 @@ function (OCC_VERSION OCC_VERSION_MAJOR OCC_VERSION_MINOR OCC_VERSION_MAINTENANC
   set (OCC_VERSION_MAINTENANCE   0)
   set (OCC_VERSION_DEVELOPMENT   dev)
   set (OCC_VERSION_COMPLETE      "7.0.0")
- 
+
   set (STANDARD_VERSION_FILE "${CMAKE_SOURCE_DIR}/src/Standard/Standard_Version.hxx")
   if (BUILD_PATCH AND EXISTS "${BUILD_PATCH}/src/Standard/Standard_Version.hxx")
     set (STANDARD_VERSION_FILE "${BUILD_PATCH}/src/Standard/Standard_Version.hxx")
@@ -538,18 +540,18 @@ function (OCC_VERSION OCC_VERSION_MAJOR OCC_VERSION_MINOR OCC_VERSION_MAINTENANC
       file (STRINGS "${STANDARD_VERSION_FILE}" ${SOUGHT_VERSION} REGEX "^#define ${SOUGHT_VERSION} .*")
       string (REGEX REPLACE ".*${SOUGHT_VERSION} .*([^ ]+).*" "\\1" ${SOUGHT_VERSION} "${${SOUGHT_VERSION}}" )
     endforeach()
-    
+
     foreach (SOUGHT_VERSION OCC_VERSION_DEVELOPMENT OCC_VERSION_COMPLETE)
       file (STRINGS "${STANDARD_VERSION_FILE}" ${SOUGHT_VERSION} REGEX "^#define ${SOUGHT_VERSION} .*")
       string (REGEX REPLACE ".*${SOUGHT_VERSION} .*\"([^ ]+)\".*" "\\1" ${SOUGHT_VERSION} "${${SOUGHT_VERSION}}" )
     endforeach()
   endif()
- 
+
   set (OCC_VERSION_MAJOR "${OCC_VERSION_MAJOR}" PARENT_SCOPE)
   set (OCC_VERSION_MINOR "${OCC_VERSION_MINOR}" PARENT_SCOPE)
   set (OCC_VERSION_MAINTENANCE "${OCC_VERSION_MAINTENANCE}" PARENT_SCOPE)
   set (OCC_VERSION_DEVELOPMENT "${OCC_VERSION_DEVELOPMENT}" PARENT_SCOPE)
-  
+
   if (OCC_VERSION_DEVELOPMENT AND OCC_VERSION_COMPLETE)
     set (OCC_VERSION_STRING_EXT "${OCC_VERSION_COMPLETE}.${OCC_VERSION_DEVELOPMENT}" PARENT_SCOPE)
   else()
@@ -558,7 +560,7 @@ function (OCC_VERSION OCC_VERSION_MAJOR OCC_VERSION_MINOR OCC_VERSION_MAINTENANC
 endfunction()
 
 macro (CHECK_PATH_FOR_CONSISTENCY THE_ROOT_PATH_NAME THE_BEING_CHECKED_PATH_NAME THE_VAR_TYPE THE_MESSAGE_OF_BEING_CHECKED_PATH)
-  
+
   set (THE_ROOT_PATH "${${THE_ROOT_PATH_NAME}}")
   set (THE_BEING_CHECKED_PATH "${${THE_BEING_CHECKED_PATH_NAME}}")
 
@@ -577,8 +579,8 @@ macro (CHECK_PATH_FOR_CONSISTENCY THE_ROOT_PATH_NAME THE_BEING_CHECKED_PATH_NAME
 
 endmacro()
 
-# Adds OCCT_INSTALL_BIN_LETTER variable ("" for Release, "d" for Debug and 
-# "i" for RelWithDebInfo) in OpenCASCADETargets-*.cmake files during 
+# Adds OCCT_INSTALL_BIN_LETTER variable ("" for Release, "d" for Debug and
+# "i" for RelWithDebInfo) in OpenCASCADETargets-*.cmake files during
 # installation process.
 # This and the following macros are used to overcome limitation of CMake
 # prior to version 3.3 not supporting per-configuration install paths
@@ -608,6 +610,8 @@ macro (OCCT_INSERT_CODE_FOR_TARGET)
     set (OCCT_INSTALL_BIN_LETTER \"i\")
   elseif (\"\${CMAKE_INSTALL_CONFIG_NAME}\" MATCHES \"^([Dd][Ee][Bb][Uu][Gg])$\")
     set (OCCT_INSTALL_BIN_LETTER \"d\")
+  elseif (\"\${CMAKE_INSTALL_CONFIG_NAME}\" MATCHES \"^([Mm][Ii][Nn][Ss][Ii][Zz][Ee][Rr][Ee][Ll])$\")
+    set (OCCT_INSTALL_BIN_LETTER \"z\")
   endif()")
 endmacro()
 

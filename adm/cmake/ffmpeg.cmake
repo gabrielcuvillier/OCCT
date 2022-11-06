@@ -198,6 +198,9 @@ foreach (LIBRARY_NAME ${CSF_FFmpeg})
         install (FILES "${3RDPARTY_FFMPEG_DLL_${LIBRARY_NAME}}"
                  CONFIGURATIONS Debug
                  DESTINATION "${INSTALL_DIR}/${OS_WITH_BIT}/${COMPILER}/${INSTALL_DIR_BIN}d")
+        install (FILES "${3RDPARTY_FFMPEG_DLL_${LIBRARY_NAME}}"
+                 CONFIGURATIONS MinSizeRel
+                 DESTINATION "${INSTALL_DIR}/${OS_WITH_BIT}/${COMPILER}/${INSTALL_DIR_BIN}z")
       endif()
     else()
       get_filename_component(3RDPARTY_FFMPEG_LIBRARY_ABS ${3RDPARTY_FFMPEG_LIBRARY_${LIBRARY_NAME}} REALPATH)
@@ -219,6 +222,10 @@ foreach (LIBRARY_NAME ${CSF_FFmpeg})
         install (FILES "${3RDPARTY_FFMPEG_LIBRARY_ABS}"
                  CONFIGURATIONS Debug
                  DESTINATION "${INSTALL_DIR}/${OS_WITH_BIT}/${COMPILER}/libd"
+                 RENAME ${3RDPARTY_FFMPEG_LIBRARY_NAME}.6)
+        install (FILES "${3RDPARTY_FFMPEG_LIBRARY_ABS}"
+                 CONFIGURATIONS MinSizeRel
+                 DESTINATION "${INSTALL_DIR}/${OS_WITH_BIT}/${COMPILER}/libz"
                  RENAME ${3RDPARTY_FFMPEG_LIBRARY_NAME}.6)
       endif()
     endif()

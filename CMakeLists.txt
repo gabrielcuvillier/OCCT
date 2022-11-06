@@ -4,7 +4,20 @@ set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/adm/cmake")
 
 set (CMAKE_SUPPRESS_REGENERATION TRUE)
 
-set (CMAKE_CONFIGURATION_TYPES Release Debug RelWithDebInfo CACHE INTERNAL "" FORCE)
+set (CMAKE_CONFIGURATION_TYPES Release Debug RelWithDebInfo MinSizeRel CACHE INTERNAL "" FORCE)
+
+# Light Build mode
+if(NOT DEFINED LIGHT_BUILD)
+  set(LIGHT_BUILD OFF CACHE BOOL "Light Build Mode" FORCE)
+endif()
+
+if (EMSCRIPTEN)
+  set(LIGHT_BUILD ON CACHE BOOL "Light Build Mode" FORCE)
+endif ()
+
+if (LIGHT_BUILD)
+  message(STATUS "Info: Light Build mode enabled")
+endif()
 
 # set using C++ standard
 set (BUILD_CPP_STANDARD "C++11" CACHE STRING "Select using c++ standard.")
@@ -39,18 +52,25 @@ endmacro()
 OCCT_INCLUDE_CMAKE_FILE ("adm/cmake/vardescr")
 
 # set type of OCCT libraries
-if (NOT BUILD_LIBRARY_TYPE)
-  set (BUILD_LIBRARY_TYPE "Shared" CACHE STRING "${BUILD_LIBRARY_TYPE_DESCR}" FORCE)
-  SET_PROPERTY(CACHE BUILD_LIBRARY_TYPE PROPERTY STRINGS Shared Static)
+if (LIGHT_BUILD)
+  set (BUILD_LIBRARY_TYPE "Static" CACHE STRING "${BUILD_LIBRARY_TYPE_DESCR}" FORCE)
+  SET_PROPERTY(CACHE BUILD_LIBRARY_TYPE PROPERTY STRINGS Static)
+else()
+  if (NOT BUILD_LIBRARY_TYPE)
+    set (BUILD_LIBRARY_TYPE "Shared" CACHE STRING "${BUILD_LIBRARY_TYPE_DESCR}" FORCE)
+    SET_PROPERTY(CACHE BUILD_LIBRARY_TYPE PROPERTY STRINGS Shared Static)
+  endif()
 endif()
 
 if ("${BUILD_LIBRARY_TYPE}" STREQUAL "Shared")
+  message(STATUS "Info: Building shared libraries")
   set (BUILD_SHARED_LIBS ON)
 
   if (NOT DEFINED BUILD_SHARED_LIBRARY_NAME_POSTFIX)
     set (BUILD_SHARED_LIBRARY_NAME_POSTFIX "" CACHE STRING "${BUILD_SHARED_LIBRARY_NAME_POSTFIX_DESCR}" FORCE)
   endif()
 else()
+  message(STATUS "Info: Building static libraries")
   unset (BUILD_SHARED_LIBS)
   unset (BUILD_SHARED_LIBRARY_NAME_POSTFIX)
 endif()
@@ -121,8 +141,12 @@ if (BUILD_WITH_DEBUG)
 endif()
 
 # option disabling OCCT exceptions in Release builds (No_Exception)
-if (NOT DEFINED BUILD_RELEASE_DISABLE_EXCEPTIONS)
+if (LIGHT_BUILD)
   set (BUILD_RELEASE_DISABLE_EXCEPTIONS ON CACHE BOOL "${BUILD_RELEASE_DISABLE_EXCEPTIONS_DESCR}")
+else()
+  if (NOT DEFINED BUILD_RELEASE_DISABLE_EXCEPTIONS)
+    set (BUILD_RELEASE_DISABLE_EXCEPTIONS ON CACHE BOOL "${BUILD_RELEASE_DISABLE_EXCEPTIONS_DESCR}")
+  endif()
 endif()
 
 if (MSVC)
@@ -247,6 +271,8 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
   set (BIN_LETTER "d")
 elseif ("${CMAKE_BUILD_TYPE}" STREQUAL "RelWithDebInfo")
   set (BIN_LETTER "i")
+elseif ("${CMAKE_BUILD_TYPE}" STREQUAL "MinSizeRel")
+  set (BIN_LETTER "z")
 endif()
 
 # Get all used variables: OS_WITH_BIT, COMPILER
@@ -408,8 +434,13 @@ if (MSVC)
 endif()
 
 # whether use optional 3rdparty or not
-set (USE_TK        ON  CACHE BOOL "${USE_TK_DESCR}")
-set (USE_FREETYPE  ON  CACHE BOOL "${USE_FREETYPE_DESCR}")
+if (LIGHT_BUILD)
+  set (USE_TK        OFF CACHE BOOL "${USE_TK_DESCR}")
+  set (USE_FREETYPE  OFF CACHE BOOL "${USE_FREETYPE_DESCR}")
+else()
+  set (USE_TK        ON  CACHE BOOL "${USE_TK_DESCR}")
+  set (USE_FREETYPE  ON  CACHE BOOL "${USE_FREETYPE_DESCR}")
+endif()
 set (USE_FREEIMAGE OFF CACHE BOOL "${USE_FREEIMAGE_DESCR}")
 set (USE_FFMPEG    OFF CACHE BOOL "${USE_FFMPEG_DESCR}")
 set (USE_OPENVR    OFF CACHE BOOL "${USE_OPENVR_DESCR}")
@@ -461,8 +492,8 @@ foreach (OCCT_MODULE ${OCCT_MODULES})
   BUILD_MODULE (${OCCT_MODULE})
 endforeach()
 
-if (ANDROID AND BUILD_MODULE_Draw)
-  message (STATUS "Info. Draw module is turned off due to it is not supported on Android")
+if ((EMSCRIPTEN OR ANDROID OR LIGHT_BUILD) AND BUILD_MODULE_Draw)
+  message (STATUS "Info. Draw module is turned off due to it is not supported on Android or Emscripten or Light Build mode")
   set (BUILD_MODULE_Draw OFF CACHE BOOL "${BUILD_MODULE_Draw_DESCR}" FORCE)
 endif()
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "WindowsStore" AND BUILD_MODULE_Draw)
@@ -471,16 +502,20 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "WindowsStore" AND BUILD_MODULE_Draw)
 endif()
 
 # Overview
-if (NOT DEFINED BUILD_DOC_Overview)
-  set (DO_ONLY_CHECK_FOR_DOXYGEN ON)
-  OCCT_INCLUDE_CMAKE_FILE ("adm/cmake/doxygen")
-  set (DO_ONLY_CHECK_FOR_DOXYGEN OFF)
+if (LIGHT_BUILD)
+  set (BUILD_DOC_Overview OFF CACHE BOOL "${BUILD_DOC_Overview_DESCR}")
+else()
+  if (NOT DEFINED BUILD_DOC_Overview)
+    set (DO_ONLY_CHECK_FOR_DOXYGEN ON)
+    OCCT_INCLUDE_CMAKE_FILE ("adm/cmake/doxygen")
+    set (DO_ONLY_CHECK_FOR_DOXYGEN OFF)
 
-  if (CAN_DOXYGEN_BE_USED)
-    message (STATUS "Info. Overview building is turned on")
+    if (CAN_DOXYGEN_BE_USED)
+      message (STATUS "Info. Overview building is turned on")
+    endif()
+
+    set (BUILD_DOC_Overview ${CAN_DOXYGEN_BE_USED} CACHE BOOL "${BUILD_DOC_Overview_DESCR}")
   endif()
-
-  set (BUILD_DOC_Overview ${CAN_DOXYGEN_BE_USED} CACHE BOOL "${BUILD_DOC_Overview_DESCR}")
 endif()
 
 # accumulate used toolkits (first level) in BUILD_TOOLKITS variable
@@ -541,6 +576,7 @@ else()
 endif()
 
 # search for CSF variable in EXTERNLIB of each being used toolkit
+OCCT_IS_PRODUCT_REQUIRED (CSF_TINYPLY CAN_USE_TINYPLY)
 OCCT_IS_PRODUCT_REQUIRED (CSF_FreeImagePlus CAN_USE_FREEIMAGE)
 OCCT_IS_PRODUCT_REQUIRED (CSF_TclLibs USE_TCL)
 OCCT_IS_PRODUCT_REQUIRED (CSF_TclTkLibs CAN_USE_TK)
@@ -912,10 +948,15 @@ set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bind")
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/libd")
 
+set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/libz")
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/binz")
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/libz")
+
 if (WIN32)
   set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE        "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bin")
   set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bini")
   set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG          "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bind")
+  set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_MINSIZEREL     "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/binz")
 endif()
 
 string(TIMESTAMP CURRENT_TIME "%H:%M:%S")
