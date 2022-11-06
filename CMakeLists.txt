@@ -857,7 +857,7 @@ else()
 endif()
 
 # ExpToCasExe
-if (EMSCRIPTEN)
+if (EMSCRIPTEN OR LIGHT_BUILD)
   list (REMOVE_ITEM BUILD_TOOLKITS TKExpress)
   list (REMOVE_ITEM BUILD_TOOLKITS ExpToCasExe)
 endif()
