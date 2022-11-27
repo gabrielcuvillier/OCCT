@@ -51,8 +51,6 @@ if (MSVC)
   # string pooling (GF), function-level linking (Gy)
   set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /GF /Gy")
   set (CMAKE_C_FLAGS_RELEASE   "${CMAKE_C_FLAGS_RELEASE}   /GF /Gy")
-  set (CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} /GF /Gy")
-  set (CMAKE_C_FLAGS_MINSIZEREL   "${CMAKE_C_FLAGS_MINSIZEREL}   /GF /Gy")
 endif()
 
 # remove _WINDOWS flag if it exists
@@ -96,7 +94,7 @@ if (IS_DEBUG_C)
   string (REGEX REPLACE "-DDEBUG" "" CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
 endif()
 # enable parallel compilation on MSVC 9 and above
-if (MSVC AND (MSVC_VERSION GREATER 1400) AND NOT CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]")
+if (MSVC AND (MSVC_VERSION GREATER 1400))
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
 endif()
 

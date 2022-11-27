@@ -3332,7 +3332,7 @@ function (cotire_setup_unity_build_target _languages _configurations _target)
 		endif()
 	endif()
 	# enable parallel compilation for MSVC
-	if (MSVC AND "${CMAKE_GENERATOR}" MATCHES "Visual Studio" AND NOT CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]")
+	if (MSVC AND "${CMAKE_GENERATOR}" MATCHES "Visual Studio")
 		list (LENGTH _unityTargetSources _numberOfUnityTargetSources)
 		if (_numberOfUnityTargetSources GREATER 1)
 			set_property(TARGET ${_unityTargetName} APPEND PROPERTY COMPILE_OPTIONS "/MP")
