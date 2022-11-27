@@ -96,7 +96,7 @@ if (IS_DEBUG_C)
   string (REGEX REPLACE "-DDEBUG" "" CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
 endif()
 # enable parallel compilation on MSVC 9 and above
-if (MSVC AND (MSVC_VERSION GREATER 1400))
+if (MSVC AND (MSVC_VERSION GREATER 1400) AND NOT CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]")
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
 endif()
 
