@@ -50,7 +50,7 @@ const Standard_Boolean ToUseSharedLibrary =
 #if !defined(OCCT_DISABLE_SHAREDLIBRARY)
         Standard_True;
 #else
-S       tandard_False;
+        Standard_False;
 #endif
 }
 
