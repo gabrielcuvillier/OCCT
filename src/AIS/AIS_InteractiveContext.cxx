@@ -100,7 +100,7 @@ namespace
 
 //=======================================================================
 //function : AIS_InteractiveContext
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 AIS_InteractiveContext::AIS_InteractiveContext(const Handle(V3d_Viewer)& MainViewer):
@@ -209,7 +209,7 @@ Handle(V3d_View) AIS_InteractiveContext::LastActiveView() const
 
 //=======================================================================
 //function : UpdateCurrentViewer
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void AIS_InteractiveContext::UpdateCurrentViewer()
@@ -511,7 +511,7 @@ void AIS_InteractiveContext::Load (const Handle(AIS_InteractiveObject)& theIObj,
   setContextToObject (theIObj);
   if (!myObjects.IsBound (theIObj))
   {
-    Standard_Integer aDispMode, aHiMod, aSelModeDef;
+    Standard_Integer aDispMode, aHiMod, aSelModeDef = -1;
     GetDefModes (theIObj, aDispMode, aHiMod, aSelModeDef);
     setObjectStatus (theIObj, PrsMgr_DisplayStatus_Erased, aDispMode, theSelMode != -1 ? theSelMode : aSelModeDef);
     theIObj->ViewAffinity()->SetVisible (true); // reset view affinity mask
@@ -537,7 +537,7 @@ void AIS_InteractiveContext::Erase (const Handle(AIS_InteractiveObject)& theIObj
   {
     return;
   }
-  
+
   if (!theIObj->IsAutoHilight())
   {
     theIObj->ClearSelected();
@@ -689,7 +689,7 @@ void AIS_InteractiveContext::RemoveAll (const Standard_Boolean theToUpdateViewer
 
 //=======================================================================
 //function : HilightWithColor
-//purpose  : 
+//purpose  :
 //=======================================================================
 void AIS_InteractiveContext::HilightWithColor(const Handle(AIS_InteractiveObject)& theObj,
                                               const Handle(Prs3d_Drawer)& theStyle,
@@ -723,7 +723,7 @@ void AIS_InteractiveContext::HilightWithColor(const Handle(AIS_InteractiveObject
 
 //=======================================================================
 //function : Unhilight
-//purpose  : 
+//purpose  :
 //=======================================================================
 void AIS_InteractiveContext::Unhilight (const Handle(AIS_InteractiveObject)& theObj,
                                         const Standard_Boolean theToUpdateViewer)
@@ -839,10 +839,10 @@ Standard_Boolean AIS_InteractiveContext::HighlightStyle (const Handle(SelectMgr_
 
 //=======================================================================
 //function : IsDisplayed
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-Standard_Boolean AIS_InteractiveContext::IsDisplayed(const Handle(AIS_InteractiveObject)& theObj) const 
+Standard_Boolean AIS_InteractiveContext::IsDisplayed(const Handle(AIS_InteractiveObject)& theObj) const
 {
   if(theObj.IsNull()) return Standard_False;
 
@@ -992,7 +992,7 @@ void AIS_InteractiveContext::RecomputePrsOnly (const Handle(AIS_InteractiveObjec
 }
 //=======================================================================
 //function : RecomputeSelectionOnly
-//purpose  : 
+//purpose  :
 //=======================================================================
 void AIS_InteractiveContext::RecomputeSelectionOnly (const Handle(AIS_InteractiveObject)& theIO)
 {
@@ -1147,7 +1147,7 @@ void AIS_InteractiveContext::SetDisplayMode(const Standard_Integer theMode,
     Standard_Boolean toProcess = anObj->IsKind (STANDARD_TYPE(AIS_Shape))
                               || anObj->IsKind (STANDARD_TYPE(AIS_ConnectedInteractive))
                               || anObj->IsKind (STANDARD_TYPE(AIS_MultipleConnectedInteractive));
-    
+
     if (!toProcess
      ||  anObj->HasDisplayMode()
      || !anObj->AcceptDisplayMode (theMode))

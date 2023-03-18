@@ -38,15 +38,15 @@ IntImp_IntCS::IntImp_IntCS(const Standard_Real U,
   v(0.0),
   tol(TolTangency*TolTangency)
   {
-    if(tol<1e-13) { tol=1e-13; } 
+    if(tol<1e-13) { tol=1e-13; }
     math_FunctionSetRoot Rsnld(myFunction);
     Standard_Real u0,u1,v0,v1,w0,w1;
     const ThePSurface& S = myFunction.AuxillarSurface();
     const TheCurve&    C = myFunction.AuxillarCurve();
-    
+
     w0 = TheCurveTool::FirstParameter(C);
     w1 = TheCurveTool::LastParameter(C);
-    
+
     u0 = ThePSurfaceTool::FirstUParameter(S);
     v0 = ThePSurfaceTool::FirstVParameter(S);
     u1 = ThePSurfaceTool::LastUParameter(S);
@@ -64,7 +64,7 @@ IntImp_IntCS::IntImp_IntCS(const Standard_Real U,
 	v0 -= marg; v1 += marg;
       }
     }
-    
+
     Perform(U,V,W,Rsnld,u0,u1,v0,v1,w0,w1);
   }
 
@@ -88,7 +88,7 @@ void IntImp_IntCS::Perform(const Standard_Real U,
 			   const Standard_Real w0,
 			   const Standard_Real w1) {
   done = Standard_True;
-  Standard_Real BornInfBuf[3], BornSupBuf[3], ToleranceBuf[3], UVapBuf[3];
+  Standard_Real BornInfBuf[3] = {}, BornSupBuf[3] = {}, ToleranceBuf[3] = {}, UVapBuf[3] = {};
   math_Vector BornInf (BornInfBuf, 1, 3), BornSup (BornSupBuf, 1, 3), Tolerance (ToleranceBuf, 1, 3), UVap (UVapBuf, 1, 3);
   UVap(1) = U;
   UVap(2) = V;
@@ -96,7 +96,7 @@ void IntImp_IntCS::Perform(const Standard_Real U,
   const ThePSurface& S = myFunction.AuxillarSurface();
   const TheCurve&    C = myFunction.AuxillarCurve();
 
-  BornInf(1) = u0;  BornInf(2) = v0; 
+  BornInf(1) = u0;  BornInf(2) = v0;
   BornSup(1) = u1;  BornSup(2) = v1;
 
   BornInf(3) = w0;   BornSup(3) = w1;
@@ -107,11 +107,11 @@ void IntImp_IntCS::Perform(const Standard_Real U,
   Rsnld.SetTolerance(Tolerance);
   Standard_Integer autretentative=0;
   done=Standard_False;
-  do { 
-    if(autretentative==1) { 
+  do {
+    if(autretentative==1) {
       UVap(3)=w0;
     }
-    else if(autretentative==2) { 
+    else if(autretentative==2) {
       UVap(3)=w1;
     }
     autretentative++;
@@ -133,13 +133,13 @@ void IntImp_IntCS::Perform(const Standard_Real U,
 
 Standard_Boolean IntImp_IntCS::IsDone() const { return done;}
 
-Standard_Boolean IntImp_IntCS::IsEmpty()const { 
+Standard_Boolean IntImp_IntCS::IsEmpty()const {
   if (!done) throw StdFail_NotDone();
   return empty;
 }
 
 const gp_Pnt& IntImp_IntCS::Point() const
-{ 
+{
   if (!done) throw StdFail_NotDone();
   if (empty) throw Standard_DomainError();
   return myFunction.Point();
@@ -147,17 +147,17 @@ const gp_Pnt& IntImp_IntCS::Point() const
 
 void IntImp_IntCS::ParameterOnSurface(Standard_Real& U,
 				      Standard_Real& V) const
-{ 
+{
   if (!done) throw StdFail_NotDone();
   if (empty) throw Standard_DomainError();
   U=u;
   V=v;
 }
 Standard_Real  IntImp_IntCS::ParameterOnCurve() const
-{ 
+{
   if (!done) throw StdFail_NotDone();
   if (empty) throw Standard_DomainError();
   return w;
 }
 
-TheFunction& IntImp_IntCS::Function()  {return myFunction;} 
+TheFunction& IntImp_IntCS::Function()  {return myFunction;}

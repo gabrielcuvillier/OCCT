@@ -58,7 +58,7 @@ void StepToTopoDS_TranslateShell::Init
   //bug15697
   if(CFS.IsNull())
     return;
-  
+
   if (!aTool.IsBound(CFS)) {
 
     BRep_Builder B;
@@ -134,11 +134,11 @@ void StepToTopoDS_TranslateShell::Init(const Handle(StepVisual_TessellatedShell)
 
   Handle(Transfer_TransientProcess) aTP = theTool.TransientProcess();
 
-  if (theTSh->HasTopologicalLink()) 
+  if (theTSh->HasTopologicalLink())
   {
     Handle(TransferBRep_ShapeBinder) aBinder
       = Handle(TransferBRep_ShapeBinder)::DownCast(aTP->Find(theTSh->TopologicalLink()));
-    if (aBinder.IsNull()) 
+    if (!aBinder.IsNull())
     {
       aSh = aBinder->Shell();
       theHasGeom = Standard_True;
@@ -146,7 +146,7 @@ void StepToTopoDS_TranslateShell::Init(const Handle(StepVisual_TessellatedShell)
   }
 
   Standard_Boolean aNewShell = Standard_False;
-  if (aSh.IsNull()) 
+  if (aSh.IsNull())
   {
     aB.MakeShell(aSh);
     aNewShell = Standard_True;
@@ -157,31 +157,31 @@ void StepToTopoDS_TranslateShell::Init(const Handle(StepVisual_TessellatedShell)
   aTranTF.SetPrecision(Precision());
   aTranTF.SetMaxTol(MaxTol());
 
-  for (Standard_Integer i = 1; i <= aNb && aPS.More(); i++, aPS.Next()) 
+  for (Standard_Integer i = 1; i <= aNb && aPS.More(); i++, aPS.Next())
   {
 #ifdef OCCT_DEBUG
     std::cout << "Processing Face : " << i << std::endl;
 #endif
     Handle(StepVisual_TessellatedStructuredItem) anItem = theTSh->ItemsValue(i);
-    if (anItem->IsKind(STANDARD_TYPE(StepVisual_TessellatedFace))) 
+    if (anItem->IsKind(STANDARD_TYPE(StepVisual_TessellatedFace)))
     {
       Handle(StepVisual_TessellatedFace) aTFace = Handle(StepVisual_TessellatedFace)::DownCast(anItem);
       Standard_Boolean aHasFaceGeom = Standard_False;
       aTranTF.Init(aTFace, theTool, theNMTool, theReadTessellatedWhenNoBRepOnly, aHasFaceGeom);
-      if (aTranTF.IsDone()) 
+      if (aTranTF.IsDone())
       {
-        if (aNewShell) 
+        if (aNewShell)
         {
           aB.Add(aSh, TopoDS::Face(aTranTF.Value()));
         }
         theHasGeom &= aHasFaceGeom;
       }
-      else 
+      else
       {
         aTP->AddWarning(anItem, " Triangulated face if not mapped to TopoDS");
       }
     }
-    else 
+    else
     {
       aTP->AddWarning(anItem, " Face is not of TriangulatedFace Type; not mapped to TopoDS");
     }
@@ -198,7 +198,7 @@ void StepToTopoDS_TranslateShell::Init(const Handle(StepVisual_TessellatedShell)
 // Purpose : Return the mapped Shape
 // ============================================================================
 
-const TopoDS_Shape& StepToTopoDS_TranslateShell::Value() const 
+const TopoDS_Shape& StepToTopoDS_TranslateShell::Value() const
 {
   StdFail_NotDone_Raise_if (!done, "StepToTopoDS_TranslateShell::Value() - no result");
   return myResult;
