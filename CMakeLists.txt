@@ -37,6 +37,8 @@ else ()
 endif()
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
+message(STATUS "Info: CPP standard is " ${BUILD_CPP_STANDARD})
+
 # macro: include patched file if it exists
 macro (OCCT_INCLUDE_CMAKE_FILE BEING_INCLUDED_FILE)
   if (BUILD_PATCH AND EXISTS "${BUILD_PATCH}/${BEING_INCLUDED_FILE}.cmake")
@@ -123,6 +125,12 @@ endif()
 # check this variable and set if it's required
 if (DEFINED CMAKE_BUILD_TYPE AND NOT CMAKE_BUILD_TYPE) # single-configuration generator.
   set (CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
+endif()
+
+if (SINGLE_GENERATOR)
+message(STATUS "Info: single generator for "  ${CMAKE_BUILD_TYPE})
+else()
+message(STATUS "Info: multiple generator")
 endif()
 
 # enable extended messages of many OCCT algorithms
@@ -477,11 +485,11 @@ foreach (OCCT_MODULE ${OCCT_MODULES})
 endforeach()
 
 if ((EMSCRIPTEN OR ANDROID OR LIGHT_BUILD) AND BUILD_MODULE_Draw)
-  message (STATUS "Info. Draw module is turned off due to it is not supported on Android or Emscripten or Light Build mode")
+  message (STATUS "Info: Draw module is turned off due to it is not supported on Android or Emscripten or Light Build mode")
   set (BUILD_MODULE_Draw OFF CACHE BOOL "${BUILD_MODULE_Draw_DESCR}" FORCE)
 endif()
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "WindowsStore" AND BUILD_MODULE_Draw)
-  message (STATUS "Info. Draw module is turned off due to it is not supported on UWP")
+  message (STATUS "Info: Draw module is turned off due to it is not supported on UWP")
   set (BUILD_MODULE_Draw OFF CACHE BOOL "${BUILD_MODULE_Draw_DESCR}" FORCE)
 endif()
 
@@ -495,7 +503,7 @@ else()
     set (DO_ONLY_CHECK_FOR_DOXYGEN OFF)
 
     if (CAN_DOXYGEN_BE_USED)
-      message (STATUS "Info. Overview building is turned on")
+      message (STATUS "Info: Overview building is turned on")
     endif()
 
     set (BUILD_DOC_Overview ${CAN_DOXYGEN_BE_USED} CACHE BOOL "${BUILD_DOC_Overview_DESCR}")
@@ -899,7 +907,8 @@ if (SINGLE_GENERATOR)
   set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bin${BIN_LETTER}")
   set (CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/lib${BIN_LETTER}")
   if (WIN32)
-    set (CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bin${BIN_LETTER}")
+    set (CMAKE_LIBRARY_OUTPUT_DIRECTORY     "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bin${BIN_LETTER}")
+    set (CMAKE_PDB_OUTPUT_DIRECTORY         "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bin${BIN_LETTER}")
     set (CMAKE_COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/lib${BIN_LETTER}")
   endif()
 endif()
@@ -921,10 +930,14 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_BINARY_DIR}/${OS_WITH_BI
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/libz")
 
 if (WIN32)
-  set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE        "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bin")
-  set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bini")
-  set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG          "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bind")
-  set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_MINSIZEREL     "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/binz")
+  set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE            "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bin")
+  set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO     "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bini")
+  set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG              "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bind")
+  set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_MINSIZEREL         "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/binz")
+  set (CMAKE_PDB_OUTPUT_DIRECTORY_RELEASE                "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bin")
+  set (CMAKE_PDB_OUTPUT_DIRECTORY_RELWITHDEBINFO         "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bini")
+  set (CMAKE_PDB_OUTPUT_DIRECTORY_DEBUG                  "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/bind")
+  set (CMAKE_PDB_OUTPUT_DIRECTORY_MINSIZEREL             "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/binz")
   set (CMAKE_COMPILE_PDB_OUTPUT_DIRECTORY_RELEASE        "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/lib")
   set (CMAKE_COMPILE_PDB_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/libi")
   set (CMAKE_COMPILE_PDB_OUTPUT_DIRECTORY_DEBUG          "${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/libd")
@@ -932,7 +945,7 @@ if (WIN32)
 endif()
 
 string(TIMESTAMP CURRENT_TIME "%H:%M:%S")
-message (STATUS "\nInfo: \(${CURRENT_TIME}\) Start collecting all OCCT header files into ${CMAKE_BINARY_DIR}/inc ...")
+message (STATUS "Info: \(${CURRENT_TIME}\) Start collecting all OCCT header files into ${CMAKE_BINARY_DIR}/inc ...")
 
 # collect all the headers to <binary dir>/inc folder
 COLLECT_AND_INSTALL_OCCT_HEADER_FILES ("${CMAKE_BINARY_DIR}" "${BUILD_TOOLKITS}" "${CMAKE_SOURCE_DIR}/src" "${INSTALL_DIR_INCLUDE}")
@@ -966,7 +979,7 @@ if (BUILD_Inspector)
 
   # collect all the headers to <binary dir>/inc/inspector folder
   string(TIMESTAMP CURRENT_TIME "%H:%M:%S")
-  message (STATUS "\nInfo: \(${CURRENT_TIME}\) Start collecting all OCCT tool header files into ${CMAKE_BINARY_DIR}/inc/inspector ...")
+  message (STATUS "Info: \(${CURRENT_TIME}\) Start collecting all OCCT tool header files into ${CMAKE_BINARY_DIR}/inc/inspector ...")
   COLLECT_AND_INSTALL_OCCT_HEADER_FILES ("${CMAKE_BINARY_DIR}" "${BUILD_TOOL_TOOLKITS}" "${CMAKE_SOURCE_DIR}/tools" "${INSTALL_DIR_INCLUDE}/inspector")
 endif()
 
