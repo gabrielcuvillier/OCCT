@@ -37,6 +37,8 @@ else()
   if (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
     set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fexceptions")
+    # suppress warning on using portable non-secure functions in favor of non-portable secure ones
+    add_definitions (-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE)
   else()
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions -fPIC")
     set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fexceptions -fPIC")
