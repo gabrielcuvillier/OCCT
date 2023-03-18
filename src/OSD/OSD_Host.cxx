@@ -72,7 +72,7 @@ struct utsname info;
  if (!strcmp(info.sysname,"ULTRIX"))         return (OSD_UnixBSD);
  if (!strcmp(info.sysname,"FreeBSD"))        return (OSD_UnixBSD);
  if (!strncmp(info.sysname,"Linux",5))       return (OSD_LinuxREDHAT);
- if (!strncmp(info.sysname,"Emscripten"))    return (OSD_Emscripten);
+ if (!strncmp(info.sysname,"Web"))           return (OSD_Web);
  if (!strncmp(info.sysname,"IRIX", 4))       return (OSD_UnixSystemV);
  if (!strncmp(info.sysname,"OSF", 3))        return (OSD_OSF);
  if (!strcmp(info.sysname,"AIX"))            return (OSD_Aix);

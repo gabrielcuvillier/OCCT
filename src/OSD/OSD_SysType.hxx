@@ -36,7 +36,7 @@ OSD_Taligent,
 OSD_WindowsNT,
 OSD_LinuxREDHAT,
 OSD_Aix,
-OSD_Emscripten
+OSD_Web
 };
 
 #endif // _OSD_SysType_HeaderFile
