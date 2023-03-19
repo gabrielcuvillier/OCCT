@@ -278,7 +278,7 @@ else()
     # endif()
   endif()
 
-  if (MSVC)
+  if (MSVC AND NOT CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]")
     if(BUILD_LIBRARY_TYPE STREQUAL "Static")
       install (FILES  ${CMAKE_BINARY_DIR}/${OS_WITH_BIT}/${COMPILER}/lib\${OCCT_INSTALL_BIN_LETTER}/${PROJECT_NAME}.pdb
           CONFIGURATIONS Debug RelWithDebInfo
