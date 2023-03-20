@@ -511,7 +511,7 @@ void AIS_InteractiveContext::Load (const Handle(AIS_InteractiveObject)& theIObj,
   setContextToObject (theIObj);
   if (!myObjects.IsBound (theIObj))
   {
-    Standard_Integer aDispMode, aHiMod, aSelModeDef = -1;
+    Standard_Integer aDispMode = 0, aHiMod, aSelModeDef = -1;
     GetDefModes (theIObj, aDispMode, aHiMod, aSelModeDef);
     setObjectStatus (theIObj, PrsMgr_DisplayStatus_Erased, aDispMode, theSelMode != -1 ? theSelMode : aSelModeDef);
     theIObj->ViewAffinity()->SetVisible (true); // reset view affinity mask

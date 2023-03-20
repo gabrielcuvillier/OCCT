@@ -32,7 +32,7 @@ const Standard_Real ZERO = 1.0e-30;
     const Standard_Real Un_Sur_Log_RADIX = 1.0/log(2.0);
 
     static Standard_Real Value(const Standard_Integer N, Standard_Real *Poly, const Standard_Real X) {
- 
+
         Standard_Real Result = Poly[0];
         for(Standard_Integer Index = 1; Index < N; Index++) {
           Result = Result * X + Poly[Index];
@@ -43,7 +43,7 @@ const Standard_Real ZERO = 1.0e-30;
 
     static void Values(const Standard_Integer N, Standard_Real *Poly, const Standard_Real X,
                        Standard_Real& Val, Standard_Real& Der) {
- 
+
         Val = Poly[0] * X + Poly[1];
         Der = Poly[0];
         for(Standard_Integer Index = 2; Index < N; Index++) {
@@ -66,7 +66,7 @@ const Standard_Real ZERO = 1.0e-30;
           Delta = - Val / Der;
           if(Abs(Delta) <= EPSILON * Abs(Sol)) break;
           Sol = Sol + Delta;
-//        std::cout << " Iter = " << Index << " Delta = " << Delta 
+//        std::cout << " Iter = " << Index << " Delta = " << Delta
 //             << " Val  = " << Val   << " Der   = " << Der << "\n";
         }
         if(Abs(Val) <= Abs(IniVal)) {
@@ -79,7 +79,7 @@ const Standard_Real ZERO = 1.0e-30;
 
     Standard_Real Improve(const Standard_Real A, const Standard_Real B, const Standard_Real C,
                  const Standard_Real D, const Standard_Real E, const Standard_Real IniSol) {
-      
+
         Standard_Real Poly[5];
         Poly[0] = A;
         Poly[1] = B;
@@ -89,9 +89,9 @@ const Standard_Real ZERO = 1.0e-30;
          return Improve(5, Poly, IniSol);
     }
 
-    Standard_Real Improve(const Standard_Real A, const Standard_Real B, 
+    Standard_Real Improve(const Standard_Real A, const Standard_Real B,
                  const Standard_Real C, const Standard_Real D, const Standard_Real IniSol) {
-      
+
         Standard_Real Poly[4];
         Poly[0] = A;
         Poly[1] = B;
@@ -100,9 +100,9 @@ const Standard_Real ZERO = 1.0e-30;
         return Improve(4, Poly, IniSol);
     }
 
-    Standard_Real Improve(const Standard_Real A, const Standard_Real B, 
+    Standard_Real Improve(const Standard_Real A, const Standard_Real B,
                  const Standard_Real C, const Standard_Real IniSol) {
-      
+
         Standard_Real Poly[3];
         Poly[0] = A;
         Poly[1] = B;
@@ -123,16 +123,19 @@ const Standard_Real ZERO = 1.0e-30;
         }
     }
 
-
-    math_DirectPolynomialRoots::math_DirectPolynomialRoots(const Standard_Real A,
-			       const Standard_Real B,
-			       const Standard_Real C,
-			       const Standard_Real D,
-			       const Standard_Real E) {
-      InfiniteStatus = Standard_False;
-      Done = Standard_True;
-      Solve(A, B, C, D, E);
-    }
+math_DirectPolynomialRoots::math_DirectPolynomialRoots(const Standard_Real A,
+                                                       const Standard_Real B,
+                                                       const Standard_Real C,
+                                                       const Standard_Real D,
+                                                       const Standard_Real E) {
+    InfiniteStatus = Standard_False;
+    Done = Standard_True;
+    TheRoots[0] = 0.0;
+    TheRoots[1] = 0.0;
+    TheRoots[2] = 0.0;
+    TheRoots[3] = 0.0;
+    Solve(A, B, C, D, E);
+}
 
 math_DirectPolynomialRoots::math_DirectPolynomialRoots(const Standard_Real A,
 						       const Standard_Real B,
@@ -140,6 +143,10 @@ math_DirectPolynomialRoots::math_DirectPolynomialRoots(const Standard_Real A,
 						       const Standard_Real D) {
   Done = Standard_True;
   InfiniteStatus = Standard_False;
+  TheRoots[0] = 0.0;
+  TheRoots[1] = 0.0;
+  TheRoots[2] = 0.0;
+  TheRoots[3] = 0.0;
   Solve(A, B, C, D);
 }
 
@@ -148,6 +155,10 @@ math_DirectPolynomialRoots::math_DirectPolynomialRoots(const Standard_Real A,
 						       const Standard_Real C) {
   Done = Standard_True;
   InfiniteStatus = Standard_False;
+  TheRoots[0] = 0.0;
+  TheRoots[1] = 0.0;
+  TheRoots[2] = 0.0;
+  TheRoots[3] = 0.0;
   Solve(A, B, C);
 }
 
@@ -155,6 +166,10 @@ math_DirectPolynomialRoots::math_DirectPolynomialRoots(const Standard_Real A,
 						       const Standard_Real B) {
   Done = Standard_True;
   InfiniteStatus = Standard_False;
+  TheRoots[0] = 0.0;
+  TheRoots[1] = 0.0;
+  TheRoots[2] = 0.0;
+  TheRoots[3] = 0.0;
   Solve(A, B);
 }
 
@@ -167,7 +182,7 @@ void math_DirectPolynomialRoots::Solve(const Standard_Real a,
   if(Abs(a) <= ZERO) {
     Solve(b, c, d, e);
     return;
-  }        
+  }
 
   //// modified by jgv, 22.01.09 ////
   Standard_Real aZero = ZERO;
@@ -201,7 +216,7 @@ void math_DirectPolynomialRoots::Solve(const Standard_Real a,
 	Solve(b, c, d, e);
 	return;
       }
-  }        
+  }
   ///////////////////////////////////
 
   Standard_Real A, B, C, D, R3, S3, T3, Q3, Y0, P0, Q0, P, Q, P1, Q1;
@@ -209,13 +224,13 @@ void math_DirectPolynomialRoots::Solve(const Standard_Real a,
   Standard_Integer Index;
   Standard_Integer Exp;
   Standard_Real PowRadix1,PowRadix2;
-  
+
   A = b / a;
   B = c / a;
   C = d / a;
   D = e / a;
   Exp = BaseExponent(D) / 4;
-  //-- 
+  //--
   //-- A = A / pow(RADIX, Exp);
   //-- B = B / pow(RADIX, 2 * Exp);
   //-- C = C / pow(RADIX, 3 * Exp);
@@ -225,14 +240,14 @@ void math_DirectPolynomialRoots::Solve(const Standard_Real a,
   B/= PowRadix2;
   C/= PowRadix2 * PowRadix1;
   D/= PowRadix2 * PowRadix2;
-  //-- 
+  //--
   R3 = -B;
   S3 = A * C - 4.0 * D;
   T3 = D * (4.0 * B - A * A) - C * C;
-  Q3 = 1.0;                
+  Q3 = 1.0;
   math_DirectPolynomialRoots Sol3(Q3, R3, S3, T3);
   //-- ################################################################################
-  if(Sol3.IsDone() == Standard_False) { Done = Standard_False; return; } 
+  if(Sol3.IsDone() == Standard_False) { Done = Standard_False; return; }
   //-- ################################################################################
 
 
@@ -241,17 +256,17 @@ void math_DirectPolynomialRoots::Solve(const Standard_Real a,
     if(Sol3.Value(Index) > Y0) Y0 = Sol3.Value(Index);
   }
   Discr = A * Y0 * 0.5 - C;
-  if(Discr >= 0.0) { 
+  if(Discr >= 0.0) {
     Sdiscr = 1.0;
   }
   else {
     Sdiscr = -1.0;
   }
   P0 = A * A * 0.25 - B + Y0;
-  if(P0 < 0.0) P0 = 0.0; 
+  if(P0 < 0.0) P0 = 0.0;
   P0 = sqrt(P0);
   Q0 = Y0 * Y0 * 0.25 - D;
-  if(Q0 < 0.0) Q0 = 0.0; 
+  if(Q0 < 0.0) Q0 = 0.0;
   Q0 = sqrt(Q0);
 
   Standard_Real Ademi    = A  * 0.5;
@@ -279,11 +294,11 @@ void math_DirectPolynomialRoots::Solve(const Standard_Real a,
 
   math_DirectPolynomialRoots ASol2(Ademi, P,  Q);
   //-- ################################################################################
-  if(ASol2.IsDone() == Standard_False) { Done = Standard_False; return; } 
+  if(ASol2.IsDone() == Standard_False) { Done = Standard_False; return; }
   //-- ################################################################################
   math_DirectPolynomialRoots BSol2(Ademi, P1,  Q1);
   //-- ################################################################################
-  if(BSol2.IsDone() == Standard_False) { Done = Standard_False; return; } 
+  if(BSol2.IsDone() == Standard_False) { Done = Standard_False; return; }
   //-- ################################################################################
 
   NbSol = ASol2.NbSolutions() + BSol2.NbSolutions();
@@ -302,7 +317,7 @@ void math_DirectPolynomialRoots::Solve(const Standard_Real a,
     void math_DirectPolynomialRoots::Solve(const Standard_Real A,
                                            const Standard_Real B,
                                            const Standard_Real C,
-                                           const Standard_Real D) { 
+                                           const Standard_Real D) {
 
       if(Abs(A) <= ZERO) {
         Solve(B, C, D);
@@ -322,7 +337,7 @@ void math_DirectPolynomialRoots::Solve(const Standard_Real a,
 
       Standard_Real PowRadix1 = pow(RADIX,Exp);
       Standard_Real PowRadix2 = PowRadix1*PowRadix1;
-      Beta/=   PowRadix1;                   
+      Beta/=   PowRadix1;
       Gamma/=  PowRadix2;
       Del/=    PowRadix2 * PowRadix1;
       //-- Beta  = Beta  / pow(RADIX, Exp);
@@ -342,9 +357,9 @@ void math_DirectPolynomialRoots::Solve(const Standard_Real a,
       if(Abs(Q) <= Eq) Q = 0.0;
       //-- ############################################################
       Standard_Real AbsP = P; if(P<0.0) AbsP = -P;
-      if(AbsP>1e+80) { Done = Standard_False; return; } 
-      //-- ############################################################      
-      A1 = (P * P * P) / 27.0;  
+      if(AbsP>1e+80) { Done = Standard_False; return; }
+      //-- ############################################################
+      A1 = (P * P * P) / 27.0;
       A2 = (Q * Q) / 4.0;
       Discr = A1 + A2;
       if(P < 0.0) {
@@ -379,7 +394,7 @@ void math_DirectPolynomialRoots::Solve(const Standard_Real a,
         else {
           Omega = atan(0.5 * Q / sqrt(- Discr));
           Sp3 = sqrt(-P / 3.0);
-          Y1 = -2.0 * Sb * Sp3 * cos(M_PI / 6.0 - Sb * Omega / 3.0);          
+          Y1 = -2.0 * Sb * Sp3 * cos(M_PI / 6.0 - Sb * Omega / 3.0);
           TheRoots[0] = - Beta / 3.0 + Y1;
           if(Beta * Q <= 0.0) {
             TheRoots[1] = - Beta / 3.0 + 2.0 * Sp3 * sin(Omega / 3.0);
@@ -392,7 +407,7 @@ void math_DirectPolynomialRoots::Solve(const Standard_Real a,
             else {
               Sdbg = -1.0;
             }
-            Den1 = 8.0 * Beta * Beta / 9.0 - 4.0 * Beta * Y1 / 3.0 
+            Den1 = 8.0 * Beta * Beta / 9.0 - 4.0 * Beta * Y1 / 3.0
                                            - 2.0 * Q / Y1;
             Den2 = 2.0 * Y1 * Y1 - Q / Y1;
             TheRoots[1] = Dbg / Den1 + Sdbg * sqrt(-27.0 * Discr) / Den2;
@@ -404,14 +419,14 @@ void math_DirectPolynomialRoots::Solve(const Standard_Real a,
         NbSol = 1;
         U = sqrt(Discr) + Abs(Q / 2.0);
         if(U >= 0.0) {
-          U = pow(U, 1.0 / 3.0);   
+          U = pow(U, 1.0 / 3.0);
         }
         else {
           U = - pow(Abs(U), 1.0 / 3.0);
         }
         if(P >= 0.0) {
-          H = U * U + P / 3.0 + (P / U) * (P / U) / 9.0;          
-        } 
+          H = U * U + P / 3.0 + (P / U) * (P / U) / 9.0;
+        }
         else {
           H = U * Abs(Q) / (U * U - P / 3.0);
         }
@@ -479,7 +494,7 @@ void math_DirectPolynomialRoots::Solve(const Standard_Real a,
           TheRoots[0] = -0.5 * B / A;
           TheRoots[0] = Improve(A, B, C, TheRoots[0]);
           TheRoots[1] = TheRoots[0];
-        } 
+        }
         else {
           NbSol = 2;
           if(B > 0.0) {
@@ -491,12 +506,12 @@ void math_DirectPolynomialRoots::Solve(const Standard_Real a,
           TheRoots[0] = Improve(A, B, C, TheRoots[0]);
           TheRoots[1] = C / (A * TheRoots[0]);
           TheRoots[1] = Improve(A, B, C, TheRoots[1]);
-        } 
+        }
     }
 
     void math_DirectPolynomialRoots::Solve(const Standard_Real A,
-                                           const Standard_Real B) { 
-        
+                                           const Standard_Real B) {
+
         if(Abs(A) <= ZERO) {
 	  if (Abs(B) <= ZERO) {
 	    InfiniteStatus = Standard_True;

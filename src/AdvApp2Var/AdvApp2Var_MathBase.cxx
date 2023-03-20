@@ -19,27 +19,27 @@
 #include <AdvApp2Var_Data.hxx>
 #include <NCollection_Array1.hxx>
 
-// statics 
+// statics
 static
-int mmchole_(integer *mxcoef, 
-	     integer *dimens, 
-	     doublereal *amatri, 
-	     integer *aposit, 
-	     integer *posuiv, 
-	     doublereal *chomat, 
+int mmchole_(integer *mxcoef,
+	     integer *dimens,
+	     doublereal *amatri,
+	     integer *aposit,
+	     integer *posuiv,
+	     doublereal *chomat,
 	     integer *iercod);
 
 
 
 
 static
-int mmrslss_(integer *mxcoef, 
-	     integer *dimens, 
-	     doublereal *smatri, 
+int mmrslss_(integer *mxcoef,
+	     integer *dimens,
+	     doublereal *smatri,
 	     integer *sposit,
-	     integer *posuiv, 
+	     integer *posuiv,
 	     doublereal *mscnmbr,
-	     doublereal *soluti, 
+	     doublereal *soluti,
 	     integer *iercod);
 
 static
@@ -47,43 +47,43 @@ int mfac_(doublereal *f,
 	  integer *n);
 
 static
-int mmaper0_(integer *ncofmx, 
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *crvlgd, 
-	     integer *ncfnew, 
-	     doublereal *ycvmax, 
+int mmaper0_(integer *ncofmx,
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *crvlgd,
+	     integer *ncfnew,
+	     doublereal *ycvmax,
 	     doublereal *errmax);
 static
 int mmaper2_(integer *ncofmx,
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *crvjac, 
-	     integer *ncfnew, 
-	     doublereal *ycvmax, 
-	     doublereal *errmax);
-
-static
-int mmaper4_(integer *ncofmx, 
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *crvjac, 
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *crvjac,
 	     integer *ncfnew,
 	     doublereal *ycvmax,
 	     doublereal *errmax);
 
 static
-int mmaper6_(integer *ncofmx, 
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *crvjac, 
+int mmaper4_(integer *ncofmx,
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *crvjac,
 	     integer *ncfnew,
 	     doublereal *ycvmax,
 	     doublereal *errmax);
 
 static
-int mmarc41_(integer *ndimax, 
-	     integer *ndimen, 
+int mmaper6_(integer *ncofmx,
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *crvjac,
+	     integer *ncfnew,
+	     doublereal *ycvmax,
+	     doublereal *errmax);
+
+static
+int mmarc41_(integer *ndimax,
+	     integer *ndimen,
 	     integer *ncoeff,
 	     doublereal *crvold,
 	     doublereal *upara0,
@@ -92,35 +92,35 @@ int mmarc41_(integer *ndimax,
 	     integer *iercod);
 
 static
-int mmatvec_(integer *nligne, 
+int mmatvec_(integer *nligne,
 	     integer *ncolon,
 	     integer *gposit,
-	     integer *gnstoc, 
+	     integer *gnstoc,
 	     doublereal *gmatri,
-	     doublereal *vecin, 
+	     doublereal *vecin,
 	     integer *deblig,
 	     doublereal *vecout,
 	     integer *iercod);
 
 static
-int mmcvstd_(integer *ncofmx, 
-	     integer *ndimax, 
+int mmcvstd_(integer *ncofmx,
+	     integer *ndimax,
 	     integer *ncoeff,
-	     integer *ndimen, 
-	     doublereal *crvcan, 
+	     integer *ndimen,
+	     doublereal *crvcan,
 	     doublereal *courbe);
 
 static
 int mmdrvcb_(integer *ideriv,
-	     integer *ndim, 
+	     integer *ndim,
 	     integer *ncoeff,
-	     doublereal *courbe, 
+	     doublereal *courbe,
 	     doublereal *tparam,
-	     doublereal *tabpnt, 
+	     doublereal *tabpnt,
 	     integer *iercod);
 
 static
-int mmexthi_(integer *ndegre, 
+int mmexthi_(integer *ndegre,
 	     NCollection_Array1<doublereal>& hwgaus);
 
 static
@@ -130,118 +130,118 @@ int mmextrl_(integer *ndegre,
 
 
 static
-int mmherm0_(doublereal *debfin, 
+int mmherm0_(doublereal *debfin,
 	     integer *iercod);
 
 static
-int mmherm1_(doublereal *debfin, 
-	     integer *ordrmx, 
-	     integer *iordre, 
-	     doublereal *hermit, 
+int mmherm1_(doublereal *debfin,
+	     integer *ordrmx,
+	     integer *iordre,
+	     doublereal *hermit,
 	     integer *iercod);
 static
 int mmloncv_(integer *ndimax,
 	     integer *ndimen,
 	     integer *ncoeff,
-	     doublereal *courbe, 
-	     doublereal *tdebut, 
-	     doublereal *tfinal, 
-	     doublereal *xlongc, 
+	     doublereal *courbe,
+	     doublereal *tdebut,
+	     doublereal *tfinal,
+	     doublereal *xlongc,
 	     integer *iercod);
 static
-int mmpojac_(doublereal *tparam, 
-	     integer *iordre, 
-	     integer *ncoeff, 
-	     integer *nderiv, 
-       NCollection_Array1<doublereal>& valjac, 
+int mmpojac_(doublereal *tparam,
+	     integer *iordre,
+	     integer *ncoeff,
+	     integer *nderiv,
+       NCollection_Array1<doublereal>& valjac,
 	     integer *iercod);
 
 static
-int mmrslw_(integer *normax, 
-	    integer *nordre, 
-	    integer *ndimen, 
+int mmrslw_(integer *normax,
+	    integer *nordre,
+	    integer *ndimen,
 	    doublereal *epspiv,
 	    doublereal *abmatr,
-	    doublereal *xmatri, 
+	    doublereal *xmatri,
 	    integer *iercod);
 static
-int mmtmave_(integer *nligne, 
-	     integer *ncolon, 
-	     integer *gposit, 
-	     integer *gnstoc, 
+int mmtmave_(integer *nligne,
+	     integer *ncolon,
+	     integer *gposit,
+	     integer *gnstoc,
 	     doublereal *gmatri,
-	     doublereal *vecin, 
-	     doublereal *vecout, 
+	     doublereal *vecin,
+	     doublereal *vecout,
 	     integer *iercod);
 static
 int mmtrpj0_(integer *ncofmx,
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *epsi3d, 
-	     doublereal *crvlgd, 
-	     doublereal *ycvmax, 
-	     doublereal *epstrc, 
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *epsi3d,
+	     doublereal *crvlgd,
+	     doublereal *ycvmax,
+	     doublereal *epstrc,
 	     integer *ncfnew);
 static
 int mmtrpj2_(integer *ncofmx,
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *epsi3d, 
-	     doublereal *crvlgd, 
-	     doublereal *ycvmax, 
-	     doublereal *epstrc, 
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *epsi3d,
+	     doublereal *crvlgd,
+	     doublereal *ycvmax,
+	     doublereal *epstrc,
 	     integer *ncfnew);
 
 static
 int mmtrpj4_(integer *ncofmx,
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *epsi3d, 
-	     doublereal *crvlgd, 
-	     doublereal *ycvmax, 
-	     doublereal *epstrc, 
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *epsi3d,
+	     doublereal *crvlgd,
+	     doublereal *ycvmax,
+	     doublereal *epstrc,
 	     integer *ncfnew);
 static
 int mmtrpj6_(integer *ncofmx,
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *epsi3d, 
-	     doublereal *crvlgd, 
-	     doublereal *ycvmax, 
-	     doublereal *epstrc, 
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *epsi3d,
+	     doublereal *crvlgd,
+	     doublereal *ycvmax,
+	     doublereal *epstrc,
 	     integer *ncfnew);
 static
-integer  pow__ii(integer *x, 
+integer  pow__ii(integer *x,
 		 integer *n);
 
 static
-int mvcvin2_(integer *ncoeff, 
-	     doublereal *crvold, 
+int mvcvin2_(integer *ncoeff,
+	     doublereal *crvold,
 	     doublereal *crvnew,
 	     integer *iercod);
 
 static
 int mvcvinv_(integer *ncoeff,
-	     doublereal *crvold, 
-	     doublereal *crvnew, 
+	     doublereal *crvold,
+	     doublereal *crvnew,
 	     integer *iercod);
 
 static
-int mvgaus0_(integer *kindic, 
-	     doublereal *urootl, 
-	     doublereal *hiltab, 
-	     integer *nbrval, 
+int mvgaus0_(integer *kindic,
+	     doublereal *urootl,
+	     doublereal *hiltab,
+	     integer *nbrval,
 	     integer *iercod);
 static
-int mvpscr2_(integer *ncoeff, 
-	     doublereal *curve2, 
-	     doublereal *tparam, 
+int mvpscr2_(integer *ncoeff,
+	     doublereal *curve2,
+	     doublereal *tparam,
 	     doublereal *pntcrb);
 
 static
-int mvpscr3_(integer *ncoeff, 
-	     doublereal *curve2, 
-	     doublereal *tparam, 
+int mvpscr3_(integer *ncoeff,
+	     doublereal *curve2,
+	     doublereal *tparam,
 	     doublereal *pntcrb);
 
 static struct {
@@ -250,16 +250,16 @@ static struct {
 } mmprcsn_;
 
 static struct {
-    doublereal tdebut, tfinal, verifi, cmherm[576];	
+    doublereal tdebut, tfinal, verifi, cmherm[576];
 } mmcmher_;
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mdsptpt_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_MathBase::mdsptpt_(integer *ndimen, 
-				  doublereal *point1, 
-				  doublereal *point2, 
+int AdvApp2Var_MathBase::mdsptpt_(integer *ndimen,
+				  doublereal *point1,
+				  doublereal *point2,
 				  doublereal *distan)
 
 {
@@ -274,7 +274,7 @@ int AdvApp2Var_MathBase::mdsptpt_(integer *ndimen,
   integer  ier;
   intptr_t iofset, j;
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -304,7 +304,7 @@ int AdvApp2Var_MathBase::mdsptpt_(integer *ndimen,
 /*     DESCRIPTION/NOTES/LIMITATIONS : */
 /*     ----------------------------------- */
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
@@ -346,7 +346,7 @@ int AdvApp2Var_MathBase::mdsptpt_(integer *ndimen,
 	}
 	*distan = sqrt(*distan);
 
-/* --- Otherwise MZSNORM is used to minimize the risks of overflow 
+/* --- Otherwise MZSNORM is used to minimize the risks of overflow
 */
 
     } else {
@@ -377,9 +377,9 @@ int AdvApp2Var_MathBase::mdsptpt_(integer *ndimen,
 
 //=======================================================================
 //function : mfac_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mfac_(doublereal *f, 
+int mfac_(doublereal *f,
 	  integer *n)
 
 {
@@ -406,24 +406,24 @@ int mfac_(doublereal *f,
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmapcmp_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_MathBase::mmapcmp_(integer *ndim, 
-				  integer *ncofmx, 
-				  integer *ncoeff, 
-				  doublereal *crvold, 
+int AdvApp2Var_MathBase::mmapcmp_(integer *ndim,
+				  integer *ncofmx,
+				  integer *ncoeff,
+				  doublereal *crvold,
 				  doublereal *crvnew)
 
 {
   /* System generated locals */
-  integer crvold_dim1, crvold_offset, crvnew_dim1, crvnew_offset, i__1, 
+  integer crvold_dim1, crvold_offset, crvnew_dim1, crvnew_offset, i__1,
   i__2;
 
   /* Local variables */
   integer ipair, nd, ndegre, impair, ibb, idg;
   //extern  int  mgsomsg_();//mgenmsg_(),
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -445,7 +445,7 @@ int AdvApp2Var_MathBase::mmapcmp_(integer *ndim,
 
 /*     OUTPUT ARGUMENTS : */
 /*     ------------------- */
-/*     CRVNEW : Curve compacted in (0:(NCOEFF-1)/2,0,NDIM) (containing 
+/*     CRVNEW : Curve compacted in (0:(NCOEFF-1)/2,0,NDIM) (containing
 */
 /*              even terms) and in (0:(NCOEFF-1)/2,1,NDIM) */
 /*              (containing uneven terms). */
@@ -487,7 +487,7 @@ int AdvApp2Var_MathBase::mmapcmp_(integer *ndim,
 	ipair = 0;
 	i__2 = ndegre / 2;
 	for (idg = 0; idg <= i__2; ++idg) {
-	    crvnew[idg + (nd << 1) * crvnew_dim1] = crvold[ipair + nd * 
+	    crvnew[idg + (nd << 1) * crvnew_dim1] = crvold[ipair + nd *
 		    crvold_dim1];
 	    ipair += 2;
 /* L200: */
@@ -509,7 +509,7 @@ L400:
 	;
     }
 
-/* ---------------------------------- The end --------------------------- 
+/* ---------------------------------- The end ---------------------------
 */
 
     if (ibb >= 3) {
@@ -520,14 +520,14 @@ L400:
 
 //=======================================================================
 //function : mmaper0_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mmaper0_(integer *ncofmx, 
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *crvlgd, 
-	     integer *ncfnew, 
-	     doublereal *ycvmax, 
+int mmaper0_(integer *ncofmx,
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *crvlgd,
+	     integer *ncfnew,
+	     doublereal *ycvmax,
 	     doublereal *errmax)
 
 {
@@ -546,7 +546,7 @@ int mmaper0_(integer *ncofmx,
 /*     FUNCTION : */
 /*     ---------- */
 /*        Calculate the max error of approximation done when */
-/*        only the first NCFNEW coefficients of a curve are preserved.  
+/*        only the first NCFNEW coefficients of a curve are preserved.
 */
 /*        Degree NCOEFF-1 written in the base of Legendre (Jacobi */
 /*        of  order 0). */
@@ -565,7 +565,7 @@ int mmaper0_(integer *ncofmx,
 
 /*     OUTPUT ARGUMENTS : */
 /*     ------------------- */
-/*        YCVMAX : Auxiliary Table (max error on each dimension). 
+/*        YCVMAX : Auxiliary Table (max error on each dimension).
 */
 /*        ERRMAX : Precision of the approximation. */
 
@@ -581,7 +581,7 @@ int mmaper0_(integer *ncofmx,
  */
 
 
-/* ------------------- Init to calculate an error ----------------------- 
+/* ------------------- Init to calculate an error -----------------------
 */
 
     /* Parameter adjustments */
@@ -597,7 +597,7 @@ int mmaper0_(integer *ncofmx,
 /* L100: */
     }
 
-/* ------ Minimum that can be reached : Stop at 1 or NCFNEW ------ 
+/* ------ Minimum that can be reached : Stop at 1 or NCFNEW ------
 */
 
     ncut = 1;
@@ -605,9 +605,9 @@ int mmaper0_(integer *ncofmx,
 	ncut = *ncfnew + 1;
     }
 
-/* -------------- Elimination of high degree coefficients----------- 
+/* -------------- Elimination of high degree coefficients-----------
 */
-/* ----------- Loop on the series of Legendre: NCUT --> NCOEFF -------- 
+/* ----------- Loop on the series of Legendre: NCUT --> NCOEFF --------
 */
 
     i__1 = *ncoeff;
@@ -618,19 +618,19 @@ int mmaper0_(integer *ncofmx,
 
 	i__2 = *ndimen;
 	for (nd = 1; nd <= i__2; ++nd) {
-	    ycvmax[nd] += (d__1 = crvlgd[ii + nd * crvlgd_dim1], advapp_abs(d__1)) * 
+	    ycvmax[nd] += (d__1 = crvlgd[ii + nd * crvlgd_dim1], advapp_abs(d__1)) *
 		    bidon;
 /* L310: */
 	}
 /* L300: */
     }
 
-/* -------------- The error is the norm of the vector error --------------- 
+/* -------------- The error is the norm of the vector error ---------------
 */
 
     *errmax = AdvApp2Var_MathBase::mzsnorm_(ndimen, &ycvmax[1]);
 
-/* --------------------------------- Fin -------------------------------- 
+/* --------------------------------- Fin --------------------------------
 */
 
     return 0;
@@ -638,14 +638,14 @@ int mmaper0_(integer *ncofmx,
 
 //=======================================================================
 //function : mmaper2_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int mmaper2_(integer *ncofmx,
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *crvjac, 
-	     integer *ncfnew, 
-	     doublereal *ycvmax, 
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *crvjac,
+	     integer *ncfnew,
+	     doublereal *ycvmax,
 	     doublereal *errmax)
 
 {
@@ -726,7 +726,7 @@ int mmaper2_(integer *ncofmx,
 /*     FONCTION : */
 /*     ---------- */
 /*        Calculate max approximation error i faite lorsque l' on */
-/*        ne conserve que les premiers NCFNEW coefficients d' une courbe 
+/*        ne conserve que les premiers NCFNEW coefficients d' une courbe
 */
 /*        de degre NCOEFF-1 ecrite dans la base de Jacobi d' ordre 2. */
 
@@ -744,7 +744,7 @@ int mmaper2_(integer *ncofmx,
 
 /*     OUTPUT ARGUMENTS : */
 /*     ------------------- */
-/*        YCVMAX : Auxiliary Table (max error on each dimension). 
+/*        YCVMAX : Auxiliary Table (max error on each dimension).
 */
 /*        ERRMAX : Precision of the approximation. */
 
@@ -758,7 +758,7 @@ int mmaper2_(integer *ncofmx,
 
 
 
-/* ------------------ Table of maximums of (1-t2)*Ji(t) ---------------- 
+/* ------------------ Table of maximums of (1-t2)*Ji(t) ----------------
 */
 
     /* Parameter adjustments */
@@ -771,7 +771,7 @@ int mmaper2_(integer *ncofmx,
 
 
 
-/* ------------------- Init for error  calculation ----------------------- 
+/* ------------------- Init for error  calculation -----------------------
 */
 
     i__1 = *ndimen;
@@ -780,7 +780,7 @@ int mmaper2_(integer *ncofmx,
 /* L100: */
     }
 
-/* ------ Min. Degree that can be attained : Stop at 3 or NCFNEW ------ 
+/* ------ Min. Degree that can be attained : Stop at 3 or NCFNEW ------
 */
 
     idec = 3;
@@ -788,9 +788,9 @@ int mmaper2_(integer *ncofmx,
     i__1 = idec, i__2 = *ncfnew + 1;
     ncut = advapp_max(i__1,i__2);
 
-/* -------------- Removal of coefficients of high degree ----------- 
+/* -------------- Removal of coefficients of high degree -----------
 */
-/* ----------- Loop on the series of Jacobi :NCUT --> NCOEFF ---------- 
+/* ----------- Loop on the series of Jacobi :NCUT --> NCOEFF ----------
 */
 
     i__1 = *ncoeff;
@@ -799,19 +799,19 @@ int mmaper2_(integer *ncofmx,
 	bidon = xmaxj[ii - idec];
 	i__2 = *ndimen;
 	for (nd = 1; nd <= i__2; ++nd) {
-	    ycvmax[nd] += (d__1 = crvjac[ii + nd * crvjac_dim1], advapp_abs(d__1)) * 
+	    ycvmax[nd] += (d__1 = crvjac[ii + nd * crvjac_dim1], advapp_abs(d__1)) *
 		    bidon;
 /* L310: */
 	}
 /* L300: */
     }
 
-/* -------------- The error is the norm of the vector error --------------- 
+/* -------------- The error is the norm of the vector error ---------------
 */
 
     *errmax = AdvApp2Var_MathBase::mzsnorm_(ndimen, &ycvmax[1]);
 
-/* --------------------------------- Fin -------------------------------- 
+/* --------------------------------- Fin --------------------------------
 */
 
     return 0;
@@ -822,15 +822,15 @@ int mmaper2_(integer *ncofmx,
 	-lf2c -lm   (in that order)
 */
 
-/* Subroutine */ 
+/* Subroutine */
 //=======================================================================
 //function : mmaper4_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mmaper4_(integer *ncofmx, 
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *crvjac, 
+int mmaper4_(integer *ncofmx,
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *crvjac,
 	     integer *ncfnew,
 	     doublereal *ycvmax,
 	     doublereal *errmax)
@@ -910,7 +910,7 @@ int mmaper4_(integer *ncofmx,
 /*     FUNCTION : */
 /*     ---------- */
 /*        Calculate the max. error of approximation made when  */
-/*        only first NCFNEW coefficients of a curve are preserved 
+/*        only first NCFNEW coefficients of a curve are preserved
 */
 /*        degree NCOEFF-1 is written in the base of Jacobi of order 4. */
 /*        KEYWORDS : */
@@ -927,7 +927,7 @@ int mmaper4_(integer *ncofmx,
 
 /*     OUTPUT ARGUMENTS : */
 /*     ------------------- */
-/*        YCVMAX : Auxiliary Table (max error on each dimension). 
+/*        YCVMAX : Auxiliary Table (max error on each dimension).
 */
 /*        ERRMAX : Precision of the approximation. */
 
@@ -944,7 +944,7 @@ int mmaper4_(integer *ncofmx,
  */
 
 
-/* ---------------- Table of maximums of ((1-t2)2)*Ji(t) --------------- 
+/* ---------------- Table of maximums of ((1-t2)2)*Ji(t) ---------------
 */
 
     /* Parameter adjustments */
@@ -957,7 +957,7 @@ int mmaper4_(integer *ncofmx,
 
 
 
-/* ------------------- Init for error calculation ----------------------- 
+/* ------------------- Init for error calculation -----------------------
 */
 
     i__1 = *ndimen;
@@ -966,7 +966,7 @@ int mmaper4_(integer *ncofmx,
 /* L100: */
     }
 
-/* ------ Min. Degree that can be attained : Stop at 5 or NCFNEW ------ 
+/* ------ Min. Degree that can be attained : Stop at 5 or NCFNEW ------
 */
 
     idec = 5;
@@ -974,9 +974,9 @@ int mmaper4_(integer *ncofmx,
     i__1 = idec, i__2 = *ncfnew + 1;
     ncut = advapp_max(i__1,i__2);
 
-/* -------------- Removal of high degree coefficients ----------- 
+/* -------------- Removal of high degree coefficients -----------
 */
-/* ----------- Loop on the series of Jacobi :NCUT --> NCOEFF ---------- 
+/* ----------- Loop on the series of Jacobi :NCUT --> NCOEFF ----------
 */
 
     i__1 = *ncoeff;
@@ -985,19 +985,19 @@ int mmaper4_(integer *ncofmx,
 	bidon = xmaxj[ii - idec];
 	i__2 = *ndimen;
 	for (nd = 1; nd <= i__2; ++nd) {
-	    ycvmax[nd] += (d__1 = crvjac[ii + nd * crvjac_dim1], advapp_abs(d__1)) * 
+	    ycvmax[nd] += (d__1 = crvjac[ii + nd * crvjac_dim1], advapp_abs(d__1)) *
 		    bidon;
 /* L310: */
 	}
 /* L300: */
     }
 
-/* -------------- The error is the norm of the error vector --------------- 
+/* -------------- The error is the norm of the error vector ---------------
 */
 
     *errmax = AdvApp2Var_MathBase::mzsnorm_(ndimen, &ycvmax[1]);
 
-/* --------------------------------- End -------------------------------- 
+/* --------------------------------- End --------------------------------
 */
 
     return 0;
@@ -1005,12 +1005,12 @@ int mmaper4_(integer *ncofmx,
 
 //=======================================================================
 //function : mmaper6_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mmaper6_(integer *ncofmx, 
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *crvjac, 
+int mmaper6_(integer *ncofmx,
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *crvjac,
 	     integer *ncfnew,
 	     doublereal *ycvmax,
 	     doublereal *errmax)
@@ -1088,7 +1088,7 @@ int mmaper6_(integer *ncofmx,
 /*     FUNCTION : */
 /*     ---------- */
 /*        Calculate the max. error of approximation made when  */
-/*        only first NCFNEW coefficients of a curve are preserved 
+/*        only first NCFNEW coefficients of a curve are preserved
 */
 /*        degree NCOEFF-1 is written in the base of Jacobi of order 6. */
 /*        KEYWORDS : */
@@ -1105,7 +1105,7 @@ int mmaper6_(integer *ncofmx,
 
 /*     OUTPUT ARGUMENTS : */
 /*     ------------------- */
-/*        YCVMAX : Auxiliary Table (max error on each dimension). 
+/*        YCVMAX : Auxiliary Table (max error on each dimension).
 */
 /*        ERRMAX : Precision of the approximation. */
 
@@ -1121,7 +1121,7 @@ int mmaper6_(integer *ncofmx,
  */
 
 
-/* ---------------- Table of maximums of ((1-t2)3)*Ji(t) --------------- 
+/* ---------------- Table of maximums of ((1-t2)3)*Ji(t) ---------------
 */
 
     /* Parameter adjustments */
@@ -1134,7 +1134,7 @@ int mmaper6_(integer *ncofmx,
 
 
 
-/* ------------------- Init for error calculation ----------------------- 
+/* ------------------- Init for error calculation -----------------------
 */
 
     i__1 = *ndimen;
@@ -1143,7 +1143,7 @@ int mmaper6_(integer *ncofmx,
 /* L100: */
     }
 
-/* ------ Min Degree that can be attained : Stop at 3 or NCFNEW ------ 
+/* ------ Min Degree that can be attained : Stop at 3 or NCFNEW ------
 */
 
     idec = 7;
@@ -1151,9 +1151,9 @@ int mmaper6_(integer *ncofmx,
     i__1 = idec, i__2 = *ncfnew + 1;
     ncut = advapp_max(i__1,i__2);
 
-/* -------------- Removal of high degree coefficients ----------- 
+/* -------------- Removal of high degree coefficients -----------
 */
-/* ----------- Loop on the series of Jacobi :NCUT --> NCOEFF ---------- 
+/* ----------- Loop on the series of Jacobi :NCUT --> NCOEFF ----------
 */
 
     i__1 = *ncoeff;
@@ -1162,19 +1162,19 @@ int mmaper6_(integer *ncofmx,
 	bidon = xmaxj[ii - idec];
 	i__2 = *ndimen;
 	for (nd = 1; nd <= i__2; ++nd) {
-	    ycvmax[nd] += (d__1 = crvjac[ii + nd * crvjac_dim1], advapp_abs(d__1)) * 
+	    ycvmax[nd] += (d__1 = crvjac[ii + nd * crvjac_dim1], advapp_abs(d__1)) *
 		    bidon;
 /* L310: */
 	}
 /* L300: */
     }
 
-/* -------------- The error is the norm of the vector error --------------- 
+/* -------------- The error is the norm of the vector error ---------------
 */
 
     *errmax = AdvApp2Var_MathBase::mzsnorm_(ndimen, &ycvmax[1]);
 
-/* --------------------------------- END -------------------------------- 
+/* --------------------------------- END --------------------------------
 */
 
     return 0;
@@ -1182,16 +1182,16 @@ int mmaper6_(integer *ncofmx,
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmaperx_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx, 
-				  integer *ndimen, 
-				  integer *ncoeff, 
-				  integer *iordre, 
-				  doublereal *crvjac, 
-				  integer *ncfnew, 
-				  doublereal *ycvmax, 
-				  doublereal *errmax, 
+int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
+				  integer *ndimen,
+				  integer *ncoeff,
+				  integer *iordre,
+				  doublereal *crvjac,
+				  integer *ncfnew,
+				  doublereal *ycvmax,
+				  doublereal *errmax,
 				  integer *iercod)
 
 {
@@ -1201,12 +1201,12 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
   /* Local variables */
   integer jord;
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*     FUNCTION : */
 /*     ---------- */
 /*        Calculate the max. error of approximation made when  */
-/*        only first NCFNEW coefficients of a curve are preserved 
+/*        only first NCFNEW coefficients of a curve are preserved
 */
 /*        degree NCOEFF-1 is written in the base of Jacobi of order IORDRE. */
 /*        KEYWORDS : */
@@ -1217,14 +1217,14 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
 /*     ------------------ */
 /*        NCOFMX : Max. degree of the curve. */
 /*        NDIMEN : Space dimension. */
-/*        NCOEFF : Degree +1 of the curve. */ 
+/*        NCOEFF : Degree +1 of the curve. */
 /*        IORDRE : Order of continuity at the extremities. */
 /*        CRVJAC : Curve the degree which of should be lowered. */
 /*        NCFNEW : Degree +1 of the resulting polynom. */
 
 /*     OUTPUT ARGUMENTS : */
 /*     ------------------- */
-/*        YCVMAX : Auxiliary Table (max error on each dimension). 
+/*        YCVMAX : Auxiliary Table (max error on each dimension).
 */
 /*        ERRMAX : Precision of the approximation. */
 /*        IERCOD = 0, OK */
@@ -1270,7 +1270,7 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
 	*iercod = 1;
     }
 
-/* ----------------------------------- Fin ------------------------------ 
+/* ----------------------------------- Fin ------------------------------
 */
 
     return 0;
@@ -1278,10 +1278,10 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
 
 //=======================================================================
 //function : mmarc41_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int mmarc41_(integer *ndimax, 
-	      integer *ndimen, 
+ int mmarc41_(integer *ndimax,
+	      integer *ndimen,
 	      integer *ncoeff,
 	      doublereal *crvold,
 	      doublereal *upara0,
@@ -1291,9 +1291,9 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
 
 {
   /* System generated locals */
-    integer crvold_dim1, crvold_offset, crvnew_dim1, crvnew_offset, i__1, 
+    integer crvold_dim1, crvold_offset, crvnew_dim1, crvnew_offset, i__1,
     i__2, i__3;
-    
+
     /* Local variables */
     integer nboct;
     doublereal tbaux[61];
@@ -1324,9 +1324,9 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
 /*   NDIMEN : Curve Dimension. */
 /*   NCOEFF : Nb of coefficients of the curve. */
 /*   CRVOLD : Curve to be limited. */
-/*   UPARA0     : Min limit of the interval limiting the curve. 
+/*   UPARA0     : Min limit of the interval limiting the curve.
 */
-/*   UPARA1     : Max limit of the interval limiting the curve. 
+/*   UPARA1     : Max limit of the interval limiting the curve.
 */
 
 /*     OUTPUT ARGUMENTS : */
@@ -1364,7 +1364,7 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
 /*     is absolutely LEGAL. (RBD) */
 
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*   Name of the routine */
@@ -1383,35 +1383,35 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
 
     /* Function Body */
     *iercod = 0;
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*                CASE WHEN PROCESSING CAN'T BE DONE */
-/* ********************************************************************** 
+/* **********************************************************************
 */
     if (*ncoeff > 61 || *ncoeff < 1) {
 	*iercod = 10;
 	goto L9999;
     }
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*                         IF NO CHANGES */
-/* ********************************************************************** 
+/* **********************************************************************
 */
     if (*ndimen == *ndimax && *upara0 == 0. && *upara1 == 1.) {
 	nboct = (*ndimax << 3) * *ncoeff;
 	AdvApp2Var_SysBase::mcrfill_(&nboct,
-		 &crvold[crvold_offset], 
+		 &crvold[crvold_offset],
 		 &crvnew[crvnew_offset]);
 	goto L9999;
     }
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*                    INVERSION 3D : FAST PROCESSING */
-/* ********************************************************************** 
+/* **********************************************************************
 */
     if (*upara0 == 1. && *upara1 == 0.) {
 	if (*ndimen == 3 && *ndimax == 3 && *ncoeff <= 21) {
-	    mvcvinv_(ncoeff, &crvold[crvold_offset], &crvnew[crvnew_offset], 
+	    mvcvinv_(ncoeff, &crvold[crvold_offset], &crvnew[crvnew_offset],
 		    iercod);
 	    goto L9999;
 	}
@@ -1421,17 +1421,17 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
 /* ******************************************************************
 **** */
 	if (*ndimen == 2 && *ndimax == 2 && *ncoeff <= 21) {
-	    mvcvin2_(ncoeff, &crvold[crvold_offset], &crvnew[crvnew_offset], 
+	    mvcvin2_(ncoeff, &crvold[crvold_offset], &crvnew[crvnew_offset],
 		    iercod);
 	    goto L9999;
 	}
     }
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*                          GENERAL PROCESSING */
-/* ********************************************************************** 
+/* **********************************************************************
 */
-/* -------------------------- Initializations --------------------------- 
+/* -------------------------- Initializations ---------------------------
 */
 
     i__1 = *ndimen;
@@ -1445,7 +1445,7 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
     tbaux[0] = *upara0;
     tbaux[1] = *upara1 - *upara0;
 
-/* ----------------------- Calculation of coeff. of CRVNEW ------------------ 
+/* ----------------------- Calculation of coeff. of CRVNEW ------------------
 */
 
     i__1 = *ncoeff - 1;
@@ -1459,7 +1459,7 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
 	    bid = tbaux[ncj - 1];
 	    i__3 = *ndimen;
 	    for (nd = 1; nd <= i__3; ++nd) {
-		crvnew[nd + ncj * crvnew_dim1] += crvold[nd + ncf * 
+		crvnew[nd + ncj * crvnew_dim1] += crvold[nd + ncf *
 			crvold_dim1] * bid;
 /* L400: */
 	    }
@@ -1469,7 +1469,7 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
 	bid = tbaux[ncf - 1];
 	i__2 = *ndimen;
 	for (nd = 1; nd <= i__2; ++nd) {
-	    crvnew[nd + ncf * crvnew_dim1] = crvold[nd + ncf * crvold_dim1] * 
+	    crvnew[nd + ncf * crvnew_dim1] = crvold[nd + ncf * crvold_dim1] *
 		    bid;
 /* L500: */
 	}
@@ -1488,7 +1488,7 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
 /* L200: */
     }
 
-/* -------------- Take into account the last coeff. of CRVOLD ----------- 
+/* -------------- Take into account the last coeff. of CRVOLD -----------
 */
 
     i__1 = *ncoeff - 1;
@@ -1496,7 +1496,7 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
 	bid = tbaux[ncj - 1];
 	i__2 = *ndimen;
 	for (nd = 1; nd <= i__2; ++nd) {
-	    crvnew[nd + ncj * crvnew_dim1] += crvold[nd + *ncoeff * 
+	    crvnew[nd + ncj * crvnew_dim1] += crvold[nd + *ncoeff *
 		    crvold_dim1] * bid;
 /* L800: */
 	}
@@ -1504,12 +1504,12 @@ int AdvApp2Var_MathBase::mmaperx_(integer *ncofmx,
     }
     i__1 = *ndimen;
     for (nd = 1; nd <= i__1; ++nd) {
-	crvnew[nd + *ncoeff * crvnew_dim1] = crvold[nd + *ncoeff * 
+	crvnew[nd + *ncoeff * crvnew_dim1] = crvold[nd + *ncoeff *
 		crvold_dim1] * tbaux[*ncoeff - 1];
 /* L900: */
     }
 
-/* ---------------------------- The end --------------------------------- 
+/* ---------------------------- The end ---------------------------------
 */
 
 L9999:
@@ -1522,23 +1522,23 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmarcin_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_MathBase::mmarcin_(integer *ndimax, 
-				  integer *ndim, 
-				  integer *ncoeff, 
-				  doublereal *crvold, 
-				  doublereal *u0, 
-				  doublereal *u1, 
-				  doublereal *crvnew, 
+int AdvApp2Var_MathBase::mmarcin_(integer *ndimax,
+				  integer *ndim,
+				  integer *ncoeff,
+				  doublereal *crvold,
+				  doublereal *u0,
+				  doublereal *u1,
+				  doublereal *crvnew,
 				  integer *iercod)
 
 {
   /* System generated locals */
-  integer crvold_dim1, crvold_offset, crvnew_dim1, crvnew_offset, i__1, 
+  integer crvold_dim1, crvold_offset, crvnew_dim1, crvnew_offset, i__1,
   i__2, i__3;
   doublereal d__1;
-  
+
   /* Local variables */
   doublereal x0, x1;
   integer nd;
@@ -1548,10 +1548,10 @@ int AdvApp2Var_MathBase::mmarcin_(integer *ndimax,
   integer ncf;
   integer ncj;
   doublereal eps3;
-  
 
 
-/* ********************************************************************** 
+
+/* **********************************************************************
 *//*     FUNCTION : */
 /*     ---------- */
 /*     Creation of curve C2(v) defined on [U0,U1] identic to */
@@ -1568,9 +1568,9 @@ int AdvApp2Var_MathBase::mmarcin_(integer *ndimax,
 /*   NDIMEN : Curve Dimension. */
 /*   NCOEFF : Nb of coefficients of the curve. */
 /*   CRVOLD : Curve to be limited. */
-/*   U0     : Min limit of the interval limiting the curve. 
+/*   U0     : Min limit of the interval limiting the curve.
 */
-/*   U1     : Max limit of the interval limiting the curve. 
+/*   U1     : Max limit of the interval limiting the curve.
 */
 
 /*     OUTPUT ARGUMENTS : */
@@ -1587,7 +1587,7 @@ int AdvApp2Var_MathBase::mmarcin_(integer *ndimax,
 /*     DESCRIPTION/NOTES/LIMITATIONS : */
 /*     ----------------------------------- */
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*   Name of the routine */
@@ -1619,42 +1619,42 @@ int AdvApp2Var_MathBase::mmarcin_(integer *ndimax,
     }
     *iercod = 0;
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*                CASE WHEN THE PROCESSING IS IMPOSSIBLE */
-/* ********************************************************************** 
+/* **********************************************************************
 */
     if (*ncoeff > 61 || *ncoeff < 1) {
 	*iercod = 10;
 	goto L9999;
     }
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*          IF NO CHANGE OF THE INTERVAL OF DEFINITION */
 /*          (ONLY INVERSION OF INDICES OF TABLE CRVOLD) */
-/* ********************************************************************** 
+/* **********************************************************************
 */
     if (*ndim == *ndimax && *u0 == -1. && *u1 == 1.) {
 	AdvApp2Var_MathBase::mmcvinv_(ndim, ncoeff, ndim, &crvold[crvold_offset], &crvnew[
 		crvnew_offset]);
 	goto L9999;
     }
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*          CASE WHEN THE NEW INTERVAL OF DEFINITION IS [0,1] */
-/* ********************************************************************** 
+/* **********************************************************************
 */
     if (*u0 == 0. && *u1 == 1.) {
 	mmcvstd_(ncoeff, ndimax, ncoeff, ndim, &crvold[crvold_offset], &
 		crvnew[crvnew_offset]);
 	goto L9999;
     }
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*                          GENERAL PROCESSING */
-/* ********************************************************************** 
+/* **********************************************************************
 */
-/* -------------------------- Initialization --------------------------- 
+/* -------------------------- Initialization ---------------------------
 */
 
     x0 = -(*u1 + *u0) / (*u1 - *u0);
@@ -1670,7 +1670,7 @@ int AdvApp2Var_MathBase::mmarcin_(integer *ndimax,
     tabaux[0] = x0;
     tabaux[1] = x1;
 
-/* ----------------------- Calculation of coeff. of CRVNEW ------------------ 
+/* ----------------------- Calculation of coeff. of CRVNEW ------------------
 */
 
     i__1 = *ncoeff - 1;
@@ -1684,7 +1684,7 @@ int AdvApp2Var_MathBase::mmarcin_(integer *ndimax,
 	    bid = tabaux[ncj - 1];
 	    i__3 = *ndim;
 	    for (nd = 1; nd <= i__3; ++nd) {
-		crvnew[nd + ncj * crvnew_dim1] += crvold[ncf + nd * 
+		crvnew[nd + ncj * crvnew_dim1] += crvold[ncf + nd *
 			crvold_dim1] * bid;
 /* L400: */
 	    }
@@ -1694,7 +1694,7 @@ int AdvApp2Var_MathBase::mmarcin_(integer *ndimax,
 	bid = tabaux[ncf - 1];
 	i__2 = *ndim;
 	for (nd = 1; nd <= i__2; ++nd) {
-	    crvnew[nd + ncf * crvnew_dim1] = crvold[ncf + nd * crvold_dim1] * 
+	    crvnew[nd + ncf * crvnew_dim1] = crvold[ncf + nd * crvold_dim1] *
 		    bid;
 /* L500: */
 	}
@@ -1712,7 +1712,7 @@ int AdvApp2Var_MathBase::mmarcin_(integer *ndimax,
 /* L200: */
     }
 
-/* -------------- Take into account the last coeff. of CRVOLD ----------- 
+/* -------------- Take into account the last coeff. of CRVOLD -----------
 */
 
     i__1 = *ncoeff - 1;
@@ -1720,7 +1720,7 @@ int AdvApp2Var_MathBase::mmarcin_(integer *ndimax,
 	bid = tabaux[ncj - 1];
 	i__2 = *ndim;
 	for (nd = 1; nd <= i__2; ++nd) {
-	    crvnew[nd + ncj * crvnew_dim1] += crvold[*ncoeff + nd * 
+	    crvnew[nd + ncj * crvnew_dim1] += crvold[*ncoeff + nd *
 		    crvold_dim1] * bid;
 /* L800: */
 	}
@@ -1728,12 +1728,12 @@ int AdvApp2Var_MathBase::mmarcin_(integer *ndimax,
     }
     i__1 = *ndim;
     for (nd = 1; nd <= i__1; ++nd) {
-	crvnew[nd + *ncoeff * crvnew_dim1] = crvold[*ncoeff + nd * 
+	crvnew[nd + *ncoeff * crvnew_dim1] = crvold[*ncoeff + nd *
 		crvold_dim1] * tabaux[*ncoeff - 1];
 /* L900: */
     }
 
-/* ---------------------------- The end --------------------------------- 
+/* ---------------------------- The end ---------------------------------
 */
 
 L9999:
@@ -1748,14 +1748,14 @@ L9999:
 
 //=======================================================================
 //function : mmatvec_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mmatvec_(integer *nligne, 
+int mmatvec_(integer *nligne,
 	     integer *,//ncolon,
 	     integer *gposit,
-	     integer *,//gnstoc, 
+	     integer *,//gnstoc,
 	     doublereal *gmatri,
-	     doublereal *vecin, 
+	     doublereal *vecin,
 	     integer *deblig,
 	     doublereal *vecout,
 	     integer *iercod)
@@ -1763,7 +1763,7 @@ int mmatvec_(integer *nligne,
 {
   /* System generated locals */
   integer i__1, i__2;
-  
+
   /* Local variables */
     logical ldbg;
   integer jmin, jmax, i__, j, k;
@@ -1801,7 +1801,7 @@ int mmatvec_(integer *nligne,
 /*       GMATRI : Matrix of constraints in form of profile */
 /*       VECIN  : Input vector */
 /*       DEBLIG : Line indexusing which the vector matrix is calculated */
-/**/               
+/**/
 /*     OUTPUT ARGUMENTS */
 /*     --------------------- */
 /*       VECOUT : VECTOR PRODUCT */
@@ -1852,7 +1852,7 @@ int mmatvec_(integer *nligne,
 /*                    Processing */
 /* ***********************************************************************
  */
-    AdvApp2Var_SysBase::mvriraz_(nligne, 
+    AdvApp2Var_SysBase::mvriraz_(nligne,
 	     &vecout[1]);
     i__1 = *nligne;
     for (i__ = *deblig; i__ <= i__1; ++i__) {
@@ -1903,22 +1903,22 @@ L9999:
 
 //=======================================================================
 //function : mmbulld_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_MathBase::mmbulld_(integer *nbcoln, 
-				  integer *nblign, 
-				  doublereal *dtabtr, 
+int AdvApp2Var_MathBase::mmbulld_(integer *nbcoln,
+				  integer *nblign,
+				  doublereal *dtabtr,
 				  integer *numcle)
 
 {
   /* System generated locals */
   integer dtabtr_dim1, dtabtr_offset, i__1, i__2;
-  
+
   /* Local variables */
   logical ldbg;
   doublereal daux;
   integer nite1, nite2, nchan, i1, i2;
-  
+
 /* ***********************************************************************
  */
 
@@ -1988,7 +1988,7 @@ int AdvApp2Var_MathBase::mmbulld_(integer *nbcoln,
 		i__2 = *nblign;
 		for (i2 = 1; i2 <= i__2; ++i2) {
 		    daux = dtabtr[i2 + (i1 - 1) * dtabtr_dim1];
-		    dtabtr[i2 + (i1 - 1) * dtabtr_dim1] = dtabtr[i2 + i1 * 
+		    dtabtr[i2 + (i1 - 1) * dtabtr_dim1] = dtabtr[i2 + i1 *
 			    dtabtr_dim1];
 		    dtabtr[i2 + i1 * dtabtr_dim1] = daux;
 		}
@@ -2005,7 +2005,7 @@ int AdvApp2Var_MathBase::mmbulld_(integer *nbcoln,
 	    nchan = 0;
 	    i__1 = nite2;
 	    for (i1 = nite1; i1 >= i__1; --i1) {
-		if (dtabtr[*numcle + i1 * dtabtr_dim1] < dtabtr[*numcle + (i1 
+		if (dtabtr[*numcle + i1 * dtabtr_dim1] < dtabtr[*numcle + (i1
 			- 1) * dtabtr_dim1]) {
 		    i__2 = *nblign;
 		    for (i2 = 1; i2 <= i__2; ++i2) {
@@ -2052,25 +2052,25 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmcdriv_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_MathBase::mmcdriv_(integer *ndimen, 
-				  integer *ncoeff, 
-				  doublereal *courbe, 
-				  integer *ideriv, 
-				  integer *ncofdv, 
+int AdvApp2Var_MathBase::mmcdriv_(integer *ndimen,
+				  integer *ncoeff,
+				  doublereal *courbe,
+				  integer *ideriv,
+				  integer *ncofdv,
 				  doublereal *crvdrv)
 
 
 {
   /* System generated locals */
-  integer courbe_dim1, courbe_offset, crvdrv_dim1, crvdrv_offset, i__1, 
+  integer courbe_dim1, courbe_offset, crvdrv_dim1, crvdrv_offset, i__1,
   i__2;
-  
+
   /* Local variables */
   integer i__, j, k;
   doublereal mfactk, bid;
-  
+
 
 /* ***********************************************************************
  */
@@ -2116,7 +2116,7 @@ int AdvApp2Var_MathBase::mmcdriv_(integer *ndimen,
 /*     NCOEFF : they are not set to zero. */
 
 /* ---> Algorithm : */
-/*     The code below was written basing on the following algorithm: 
+/*     The code below was written basing on the following algorithm:
 */
 
 /*     Let P(t) = a1 + a2*t + ... an*t**n. Derivate of order k of P */
@@ -2132,12 +2132,12 @@ int AdvApp2Var_MathBase::mmcdriv_(integer *ndimen,
  */
 
 
-/* -------------- Case when the order of derivative is  ------------------- 
+/* -------------- Case when the order of derivative is  -------------------
 */
-/* ---------------- greater than the degree of the curve --------------------- 
+/* ---------------- greater than the degree of the curve ---------------------
 */
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -2156,7 +2156,7 @@ int AdvApp2Var_MathBase::mmcdriv_(integer *ndimen,
 
 /*     Initialization is done by block-data MMLLL09.RES, */
 /*     created by program MQINICNP.FOR). */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
@@ -2182,12 +2182,12 @@ int AdvApp2Var_MathBase::mmcdriv_(integer *ndimen,
 	*ncofdv = 1;
 	goto L9999;
     }
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*                        General processing */
-/* ********************************************************************** 
+/* **********************************************************************
 */
-/* --------------------- Calculation of Factorial(IDERIV) ------------------ 
+/* --------------------- Calculation of Factorial(IDERIV) ------------------
 */
 
     k = *ideriv;
@@ -2198,7 +2198,7 @@ int AdvApp2Var_MathBase::mmcdriv_(integer *ndimen,
 /* L50: */
     }
 
-/* ------------ Calculation of coeff of the derived of order IDERIV ---------- 
+/* ------------ Calculation of coeff of the derived of order IDERIV ----------
 */
 /* ---> Attention :  coefficient binomial C(n,m) is represented in */
 /*                 MCCNP by CNP(N+1,M+1). */
@@ -2208,7 +2208,7 @@ int AdvApp2Var_MathBase::mmcdriv_(integer *ndimen,
 	bid = mmcmcnp_.cnp[j - 1 + k * 61] * mfactk;
 	i__2 = *ndimen;
 	for (i__ = 1; i__ <= i__2; ++i__) {
-	    crvdrv[i__ + (j - k) * crvdrv_dim1] = bid * courbe[i__ + j * 
+	    crvdrv[i__ + (j - k) * crvdrv_dim1] = bid * courbe[i__ + j *
 		    courbe_dim1];
 /* L200: */
 	}
@@ -2217,7 +2217,7 @@ int AdvApp2Var_MathBase::mmcdriv_(integer *ndimen,
 
     *ncofdv = *ncoeff - *ideriv;
 
-/* -------------------------------- The end ----------------------------- 
+/* -------------------------------- The end -----------------------------
 */
 
 L9999:
@@ -2226,17 +2226,17 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmcglc1_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_MathBase::mmcglc1_(integer *ndimax, 
-				  integer *ndimen, 
-				  integer *ncoeff, 
-				  doublereal *courbe, 
-				  doublereal *tdebut, 
-				  doublereal *tfinal, 
-				  doublereal *epsiln, 
-				  doublereal *xlongc, 
-				  doublereal *erreur, 
+int AdvApp2Var_MathBase::mmcglc1_(integer *ndimax,
+				  integer *ndimen,
+				  integer *ncoeff,
+				  doublereal *courbe,
+				  doublereal *tdebut,
+				  doublereal *tfinal,
+				  doublereal *epsiln,
+				  doublereal *xlongc,
+				  doublereal *erreur,
 				  integer *iercod)
 
 
@@ -2244,7 +2244,7 @@ int AdvApp2Var_MathBase::mmcglc1_(integer *ndimax,
   /* System generated locals */
   integer courbe_dim1, courbe_offset, i__1;
   doublereal d__1;
-  
+
   /* Local variables */
   integer ndec;
   doublereal tdeb, tfin;
@@ -2255,7 +2255,7 @@ int AdvApp2Var_MathBase::mmcglc1_(integer *ndimax,
   integer kk, ibb;
   doublereal dif, pas;
   doublereal som;
- 
+
 
 /* ***********************************************************************
  */
@@ -2274,7 +2274,7 @@ int AdvApp2Var_MathBase::mmcglc1_(integer *ndimax,
 /*      NDIMAX : Max. number of lines of tables */
 /*               (i.e. max. nb of polynoms). */
 /*      NDIMEN : Dimension of the space (nb of polynoms). */
-/*      NCOEFF : Nb of coefficients of the polynom. This is degree + 1. 
+/*      NCOEFF : Nb of coefficients of the polynom. This is degree + 1.
 */
 /*      COURBE(NDIMAX,NCOEFF) : Coefficients of the curve. */
 /*      TDEBUT : Lower limit of the interval of integration for  */
@@ -2320,7 +2320,7 @@ int AdvApp2Var_MathBase::mmcglc1_(integer *ndimax,
 /*   Name of the routine */
 
 
-/* ------------------------ General Initialization --------------------- 
+/* ------------------------ General Initialization ---------------------
 */
 
     /* Parameter adjustments */
@@ -2387,7 +2387,7 @@ L5000:
     }
 
 
-/* ----------------- Test of the maximum number of iterations ------------ 
+/* ----------------- Test of the maximum number of iterations ------------
 */
 
 /*  Test if passes at least once ** */
@@ -2425,7 +2425,7 @@ L5000:
 	}
     }
 
-/* ------------------------------ THE END ------------------------------- 
+/* ------------------------------ THE END -------------------------------
 */
 
 L9000:
@@ -2457,24 +2457,24 @@ L9999:
 
 //=======================================================================
 //function : mmchole_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mmchole_(integer *,//mxcoef, 
-	     integer *dimens, 
-	     doublereal *amatri, 
-	     integer *aposit, 
-	     integer *posuiv, 
-	     doublereal *chomat, 
+int mmchole_(integer *,//mxcoef,
+	     integer *dimens,
+	     doublereal *amatri,
+	     integer *aposit,
+	     integer *posuiv,
+	     doublereal *chomat,
 	     integer *iercod)
 
 {
   /* System generated locals */
   integer i__1, i__2, i__3;
   doublereal d__1;
-  
+
   /* Builtin functions */
   //double sqrt();
-  
+
     /* Local variables */
   logical ldbg;
   integer kmin, i__, j, k;
@@ -2499,7 +2499,7 @@ int mmchole_(integer *,//mxcoef,
 /*     MXCOEF : Max number of terms in the hessian profile */
 /*     DIMENS : Dimension of the problem */
 /*     AMATRI(MXCOEF) : Coefficients of the matrix profile */
-/*        APOSIT(1,*) : Distance diagonal-left extremity of the line 
+/*        APOSIT(1,*) : Distance diagonal-left extremity of the line
 */
 /*        APOSIT(2,*) : Position of diagonal terms in HESSIE */
 /*     POSUIV(MXCOEF) :  first line inferior not out of profile */
@@ -2585,7 +2585,7 @@ int mmchole_(integer *,//mxcoef,
 /*                               ik  jk */
 	    somme = 0.;
 /* Computing MAX */
-	    i__2 = i__ - aposit[(i__ << 1) + 1], i__3 = j - aposit[(j << 1) + 
+	    i__2 = i__ - aposit[(i__ << 1) + 1], i__3 = j - aposit[(j << 1) +
 		    1];
 	    kmin = advapp_max(i__2,i__3);
 	    i__2 = j - 1;
@@ -2628,23 +2628,23 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmcvctx_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_MathBase::mmcvctx_(integer *ndimen, 
-				  integer *ncofmx, 
-				  integer *nderiv, 
-				  doublereal *ctrtes, 
-				  doublereal *crvres, 
-				  doublereal *tabaux, 
-				  doublereal *xmatri, 
+int AdvApp2Var_MathBase::mmcvctx_(integer *ndimen,
+				  integer *ncofmx,
+				  integer *nderiv,
+				  doublereal *ctrtes,
+				  doublereal *crvres,
+				  doublereal *tabaux,
+				  doublereal *xmatri,
 				  integer *iercod)
 
 {
   /* System generated locals */
-  integer ctrtes_dim1, ctrtes_offset, crvres_dim1, crvres_offset, 
-  xmatri_dim1, xmatri_offset, tabaux_dim1, tabaux_offset, i__1, 
+  integer ctrtes_dim1, ctrtes_offset, crvres_dim1, crvres_offset,
+  xmatri_dim1, xmatri_offset, tabaux_dim1, tabaux_offset, i__1,
   i__2;
-  
+
   /* Local variables */
   integer moup1, nordr;
   integer nd;
@@ -2737,9 +2737,9 @@ int AdvApp2Var_MathBase::mmcvctx_(integer *ndimen,
 /*   Precision. */
     AdvApp2Var_MathBase::mmeps1_(&eps1);
 
-/* ****************** CALCULATION OF EVEN COEFFICIENTS ********************* 
+/* ****************** CALCULATION OF EVEN COEFFICIENTS *********************
 */
-/* ------------------------- Initialization ----------------------------- 
+/* ------------------------- Initialization -----------------------------
 */
 
     nordr = *nderiv + 1;
@@ -2749,21 +2749,21 @@ int AdvApp2Var_MathBase::mmcvctx_(integer *ndimen,
 /* L100: */
     }
 
-/* ---------------- Calculation of terms corresponding to derivatives ------- 
+/* ---------------- Calculation of terms corresponding to derivatives -------
 */
 
     i__1 = nordr;
     for (ndv = 2; ndv <= i__1; ++ndv) {
 	i__2 = nordr;
 	for (ncf = 1; ncf <= i__2; ++ncf) {
-	    tabaux[ncf + ndv * tabaux_dim1] = tabaux[ncf + (ndv - 1) * 
+	    tabaux[ncf + ndv * tabaux_dim1] = tabaux[ncf + (ndv - 1) *
 		    tabaux_dim1] * (doublereal) ((ncf << 1) - ndv);
 /* L300: */
 	}
 /* L200: */
     }
 
-/* ------------------ Writing the second member ----------------------- 
+/* ------------------ Writing the second member -----------------------
 */
 
     moup1 = 1;
@@ -2771,7 +2771,7 @@ int AdvApp2Var_MathBase::mmcvctx_(integer *ndimen,
     for (ndv = 1; ndv <= i__1; ++ndv) {
 	i__2 = *ndimen;
 	for (nd = 1; nd <= i__2; ++nd) {
-	    tabaux[nordr + nd + ndv * tabaux_dim1] = (ctrtes[nd + ((ndv << 1) 
+	    tabaux[nordr + nd + ndv * tabaux_dim1] = (ctrtes[nd + ((ndv << 1)
 		    + 2) * ctrtes_dim1] + moup1 * ctrtes[nd + ((ndv << 1) + 1)
 		     * ctrtes_dim1]) / 2.;
 /* L500: */
@@ -2780,7 +2780,7 @@ int AdvApp2Var_MathBase::mmcvctx_(integer *ndimen,
 /* L400: */
     }
 
-/* -------------------- Resolution of the system --------------------------- 
+/* -------------------- Resolution of the system ---------------------------
 */
 
     mmrslw_(&nordr, &nordr, ndimen, &eps1, &tabaux[tabaux_offset], &xmatri[
@@ -2792,16 +2792,16 @@ int AdvApp2Var_MathBase::mmcvctx_(integer *ndimen,
     for (nd = 1; nd <= i__1; ++nd) {
 	i__2 = nordr;
 	for (ncf = 1; ncf <= i__2; ++ncf) {
-	    crvres[(ncf << 1) - 1 + nd * crvres_dim1] = xmatri[ncf + nd * 
+	    crvres[(ncf << 1) - 1 + nd * crvres_dim1] = xmatri[ncf + nd *
 		    xmatri_dim1];
 /* L700: */
 	}
 /* L600: */
     }
 
-/* ***************** CALCULATION OF UNEVEN COEFFICIENTS ******************** 
+/* ***************** CALCULATION OF UNEVEN COEFFICIENTS ********************
 */
-/* ------------------------- Initialization ----------------------------- 
+/* ------------------------- Initialization -----------------------------
 */
 
 
@@ -2811,21 +2811,21 @@ int AdvApp2Var_MathBase::mmcvctx_(integer *ndimen,
 /* L1100: */
     }
 
-/* ---------------- Calculation of terms corresponding to derivatives ------- 
+/* ---------------- Calculation of terms corresponding to derivatives -------
 */
 
     i__1 = nordr;
     for (ndv = 2; ndv <= i__1; ++ndv) {
 	i__2 = nordr;
 	for (ncf = 1; ncf <= i__2; ++ncf) {
-	    tabaux[ncf + ndv * tabaux_dim1] = tabaux[ncf + (ndv - 1) * 
+	    tabaux[ncf + ndv * tabaux_dim1] = tabaux[ncf + (ndv - 1) *
 		    tabaux_dim1] * (doublereal) ((ncf << 1) - ndv + 1);
 /* L1300: */
 	}
 /* L1200: */
     }
 
-/* ------------------ Writing of the second member ----------------------- 
+/* ------------------ Writing of the second member -----------------------
 */
 
     moup1 = -1;
@@ -2833,7 +2833,7 @@ int AdvApp2Var_MathBase::mmcvctx_(integer *ndimen,
     for (ndv = 1; ndv <= i__1; ++ndv) {
 	i__2 = *ndimen;
 	for (nd = 1; nd <= i__2; ++nd) {
-	    tabaux[nordr + nd + ndv * tabaux_dim1] = (ctrtes[nd + ((ndv << 1) 
+	    tabaux[nordr + nd + ndv * tabaux_dim1] = (ctrtes[nd + ((ndv << 1)
 		    + 2) * ctrtes_dim1] + moup1 * ctrtes[nd + ((ndv << 1) + 1)
 		     * ctrtes_dim1]) / 2.;
 /* L1500: */
@@ -2842,7 +2842,7 @@ int AdvApp2Var_MathBase::mmcvctx_(integer *ndimen,
 /* L1400: */
     }
 
-/* -------------------- Solution of the system --------------------------- 
+/* -------------------- Solution of the system ---------------------------
 */
 
     mmrslw_(&nordr, &nordr, ndimen, &eps1, &tabaux[tabaux_offset], &xmatri[
@@ -2854,14 +2854,14 @@ int AdvApp2Var_MathBase::mmcvctx_(integer *ndimen,
     for (nd = 1; nd <= i__1; ++nd) {
 	i__2 = nordr;
 	for (ncf = 1; ncf <= i__2; ++ncf) {
-	    crvres[(ncf << 1) + nd * crvres_dim1] = xmatri[ncf + nd * 
+	    crvres[(ncf << 1) + nd * crvres_dim1] = xmatri[ncf + nd *
 		    xmatri_dim1];
 /* L1700: */
 	}
 /* L1600: */
     }
 
-/* --------------------------- The end ---------------------------------- 
+/* --------------------------- The end ----------------------------------
 */
 
 L9999:
@@ -2877,25 +2877,25 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmcvinv_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mmcvinv_(integer *ndimax, 
+ int AdvApp2Var_MathBase::mmcvinv_(integer *ndimax,
 			    integer *ncoef,
-			    integer *ndim, 
-			    doublereal *curveo, 
+			    integer *ndim,
+			    doublereal *curveo,
 			    doublereal *curve)
 
 {
   /* Initialized data */
-  
+
   static char nomprg[8+1] = "MMCVINV ";
-  
+
   /* System generated locals */
   integer curve_dim1, curve_offset, curveo_dim1, curveo_offset, i__1, i__2;
-  
+
   /* Local variables */
   integer i__, nd, ibb;
-  
+
 
 /* ***********************************************************************
  */
@@ -2960,23 +2960,23 @@ L9999:
 
 //=======================================================================
 //function : mmcvstd_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mmcvstd_(integer *ncofmx, 
-	     integer *ndimax, 
+int mmcvstd_(integer *ncofmx,
+	     integer *ndimax,
 	     integer *ncoeff,
-	     integer *ndimen, 
-	     doublereal *crvcan, 
+	     integer *ndimen,
+	     doublereal *crvcan,
 	     doublereal *courbe)
 
 {
   /* System generated locals */
   integer courbe_dim1, crvcan_dim1, crvcan_offset, i__1, i__2, i__3;
-  
+
   /* Local variables */
   integer ndeg, i__, j, j1, nd, ibb;
   doublereal bid;
-  
+
 
 /* ***********************************************************************
  */
@@ -3015,7 +3015,7 @@ int mmcvstd_(integer *ncofmx,
 /*   Name of the program. */
 
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -3035,7 +3035,7 @@ int mmcvstd_(integer *ncofmx,
 /*     Initialization is done with block-data MMLLL09.RES, */
 /*     created by the program MQINICNP.FOR. */
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
@@ -3057,7 +3057,7 @@ int mmcvstd_(integer *ncofmx,
     }
     ndeg = *ncoeff - 1;
 
-/* ------------------ Construction of the resulting curve ---------------- 
+/* ------------------ Construction of the resulting curve ----------------
 */
 
     i__1 = *ndimen;
@@ -3067,7 +3067,7 @@ int mmcvstd_(integer *ncofmx,
 	    bid = 0.;
 	    i__3 = ndeg;
 	    for (i__ = j; i__ <= i__3; i__ += 2) {
-		bid += crvcan[i__ + nd * crvcan_dim1] * mmcmcnp_.cnp[i__ + j 
+		bid += crvcan[i__ + nd * crvcan_dim1] * mmcmcnp_.cnp[i__ + j
 			* 61];
 /* L410: */
 	    }
@@ -3077,7 +3077,7 @@ int mmcvstd_(integer *ncofmx,
 	    j1 = j + 1;
 	    i__3 = ndeg;
 	    for (i__ = j1; i__ <= i__3; i__ += 2) {
-		bid += crvcan[i__ + nd * crvcan_dim1] * mmcmcnp_.cnp[i__ + j 
+		bid += crvcan[i__ + nd * crvcan_dim1] * mmcmcnp_.cnp[i__ + j
 			* 61];
 /* L420: */
 	    }
@@ -3102,7 +3102,7 @@ int mmcvstd_(integer *ncofmx,
 /* L500: */
     }
 
-/* ----------------------------- The end -------------------------------- 
+/* ----------------------------- The end --------------------------------
 */
 
     if (ibb >= 3) {
@@ -3113,26 +3113,26 @@ int mmcvstd_(integer *ncofmx,
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmdrc11_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_MathBase::mmdrc11_(integer *iordre, 
-				  integer *ndimen, 
-				  integer *ncoeff, 
-				  doublereal *courbe, 
-				  doublereal *points, 
+int AdvApp2Var_MathBase::mmdrc11_(integer *iordre,
+				  integer *ndimen,
+				  integer *ncoeff,
+				  doublereal *courbe,
+				  doublereal *points,
 				  doublereal *mfactab)
 
 {
   /* System generated locals */
-  integer courbe_dim1, courbe_offset, points_dim2, points_offset, i__1, 
+  integer courbe_dim1, courbe_offset, points_dim2, points_offset, i__1,
   i__2;
-  
-  /* Local variables */
-  
-  integer ndeg, i__, j, ndgcb, nd, ibb;
-  
 
-/* ********************************************************************** 
+  /* Local variables */
+
+  integer ndeg, i__, j, ndgcb, nd, ibb;
+
+
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -3157,7 +3157,7 @@ int AdvApp2Var_MathBase::mmdrc11_(integer *iordre,
 /*     ------------------- */
 /*        POINTS    : Table of values of consecutive derivatives */
 /*                 of parameters -1.D0 and 1.D0. */
-/*        MFACTAB : Auxiliary table for calculation of factorial(I). 
+/*        MFACTAB : Auxiliary table for calculation of factorial(I).
 */
 
 /*     COMMONS USED   : */
@@ -3199,7 +3199,7 @@ int AdvApp2Var_MathBase::mmdrc11_(integer *iordre,
 /*                             Addison-Wesley Pub. Co. (1969) */
 /*                             pages 423-425. */
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*   Name of the routine */
@@ -3222,7 +3222,7 @@ int AdvApp2Var_MathBase::mmdrc11_(integer *iordre,
 	goto L9999;
     }
 
-/* ------------------- Initialization of table POINTS ----------------- 
+/* ------------------- Initialization of table POINTS -----------------
 */
 
     ndgcb = *ncoeff - 1;
@@ -3253,23 +3253,23 @@ int AdvApp2Var_MathBase::mmdrc11_(integer *iordre,
 	i__2 = ndgcb;
 	for (ndeg = 1; ndeg <= i__2; ++ndeg) {
 	    for (i__ = *iordre; i__ >= 1; --i__) {
-		points[((i__ + nd * points_dim2) << 1) + 1] = -points[((i__ + nd 
-			* points_dim2) << 1) + 1] + points[((i__ - 1 + nd * 
+		points[((i__ + nd * points_dim2) << 1) + 1] = -points[((i__ + nd
+			* points_dim2) << 1) + 1] + points[((i__ - 1 + nd *
 			points_dim2) << 1) + 1];
-		points[((i__ + nd * points_dim2) << 1) + 2] += points[((i__ - 1 
+		points[((i__ + nd * points_dim2) << 1) + 2] += points[((i__ - 1
 			+ nd * points_dim2) << 1) + 2];
 /* L800: */
 	    }
 	    points[(nd * points_dim2 << 1) + 1] = -points[(nd * points_dim2 <<
 		     1) + 1] + courbe[ndgcb - ndeg + nd * courbe_dim1];
-	    points[(nd * points_dim2 << 1) + 2] += courbe[ndgcb - ndeg + nd * 
+	    points[(nd * points_dim2 << 1) + 2] += courbe[ndgcb - ndeg + nd *
 		    courbe_dim1];
 /* L700: */
 	}
 /* L600: */
     }
 
-/* --------------------- Multiplication by factorial(I) -------------- 
+/* --------------------- Multiplication by factorial(I) --------------
 */
 
     if (*iordre > 1) {
@@ -3279,9 +3279,9 @@ int AdvApp2Var_MathBase::mmdrc11_(integer *iordre,
 	for (nd = 1; nd <= i__1; ++nd) {
 	    i__2 = *iordre;
 	    for (i__ = 2; i__ <= i__2; ++i__) {
-		points[((i__ + nd * points_dim2) << 1) + 1] = mfactab[i__] * 
+		points[((i__ + nd * points_dim2) << 1) + 1] = mfactab[i__] *
 			points[((i__ + nd * points_dim2) << 1) + 1];
-		points[((i__ + nd * points_dim2) << 1) + 2] = mfactab[i__] * 
+		points[((i__ + nd * points_dim2) << 1) + 2] = mfactab[i__] *
 			points[((i__ + nd * points_dim2) << 1) + 2];
 /* L1000: */
 	    }
@@ -3289,7 +3289,7 @@ int AdvApp2Var_MathBase::mmdrc11_(integer *iordre,
 	}
     }
 
-/* ---------------------------- End ------------------------------------- 
+/* ---------------------------- End -------------------------------------
 */
 
 L9999:
@@ -3301,23 +3301,23 @@ L9999:
 
 //=======================================================================
 //function : mmdrvcb_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int mmdrvcb_(integer *ideriv,
-	     integer *ndim, 
+	     integer *ndim,
 	     integer *ncoeff,
-	     doublereal *courbe, 
+	     doublereal *courbe,
 	     doublereal *tparam,
-	     doublereal *tabpnt, 
+	     doublereal *tabpnt,
 	     integer *iercod)
 
 {
   /* System generated locals */
   integer courbe_dim1, tabpnt_dim1, i__1, i__2, i__3;
-  
+
   /* Local variables */
   integer ndeg, i__, j, nd, ndgcrb, iptpnt, ibb;
-  
+
 
 /* *********************************************************************** */
 /*     FUNCTION : */
@@ -3386,7 +3386,7 @@ int mmdrvcb_(integer *ideriv,
 /* ---> To evaluare derivatives at 0 and 1, it is preferable */
 /*      to use routine MDRV01.FOR . */
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*   Name of the routine */
@@ -3409,7 +3409,7 @@ int mmdrvcb_(integer *ideriv,
     }
     *iercod = 0;
 
-/* ------------------- Initialization of table TABPNT ----------------- 
+/* ------------------- Initialization of table TABPNT -----------------
 */
 
     ndgcrb = *ncoeff - 1;
@@ -3423,11 +3423,11 @@ int mmdrvcb_(integer *ideriv,
 	goto L200;
     }
     iptpnt = *ndim * *ideriv;
-    AdvApp2Var_SysBase::mvriraz_(&iptpnt, 
+    AdvApp2Var_SysBase::mvriraz_(&iptpnt,
 	     &tabpnt[tabpnt_dim1 + 1]);
 L200:
 
-/* ------------------------ Calculation of parameter TPARAM ------------------ 
+/* ------------------------ Calculation of parameter TPARAM ------------------
 */
 
     i__1 = ndgcrb;
@@ -3435,19 +3435,19 @@ L200:
 	i__2 = *ndim;
 	for (nd = 1; nd <= i__2; ++nd) {
 	    for (i__ = *ideriv; i__ >= 1; --i__) {
-		tabpnt[nd + i__ * tabpnt_dim1] = tabpnt[nd + i__ * 
-			tabpnt_dim1] * *tparam + tabpnt[nd + (i__ - 1) * 
+		tabpnt[nd + i__ * tabpnt_dim1] = tabpnt[nd + i__ *
+			tabpnt_dim1] * *tparam + tabpnt[nd + (i__ - 1) *
 			tabpnt_dim1];
 /* L700: */
 	    }
-	    tabpnt[nd] = tabpnt[nd] * *tparam + courbe[nd + (ndgcrb - ndeg) * 
+	    tabpnt[nd] = tabpnt[nd] * *tparam + courbe[nd + (ndgcrb - ndeg) *
 		    courbe_dim1];
 /* L600: */
 	}
 /* L500: */
     }
 
-/* --------------------- Multiplication by factorial(I) ------------- 
+/* --------------------- Multiplication by factorial(I) -------------
 */
 
     i__1 = *ideriv;
@@ -3456,7 +3456,7 @@ L200:
 	for (j = 2; j <= i__2; ++j) {
 	    i__3 = *ndim;
 	    for (nd = 1; nd <= i__3; ++nd) {
-		tabpnt[nd + i__ * tabpnt_dim1] = (doublereal) j * tabpnt[nd + 
+		tabpnt[nd + i__ * tabpnt_dim1] = (doublereal) j * tabpnt[nd +
 			i__ * tabpnt_dim1];
 /* L1200: */
 	    }
@@ -3465,7 +3465,7 @@ L200:
 /* L1000: */
     }
 
-/* --------------------------- The end --------------------------------- 
+/* --------------------------- The end ---------------------------------
 */
 
 L9999:
@@ -3477,30 +3477,30 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmdrvck_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_MathBase::mmdrvck_(integer *ncoeff, 
-				  integer *ndimen, 
-				  doublereal *courbe, 
-				  integer *ideriv, 
-				  doublereal *tparam, 
+int AdvApp2Var_MathBase::mmdrvck_(integer *ncoeff,
+				  integer *ndimen,
+				  doublereal *courbe,
+				  integer *ideriv,
+				  doublereal *tparam,
 				  doublereal *pntcrb)
 
 {
   /* Initialized data */
-  
+
   static doublereal mmfack[21] = { 1.,2.,6.,24.,120.,720.,5040.,40320.,
 	    362880.,3628800.,39916800.,479001600.,6227020800.,87178291200.,
 	    1.307674368e12,2.0922789888e13,3.55687428096e14,6.402373705728e15,
 	    1.21645100408832e17,2.43290200817664e18,5.109094217170944e19 };
-  
+
   /* System generated locals */
   integer courbe_dim1, courbe_offset, i__1, i__2;
-  
+
   /* Local variables */
   integer i__, j, k, nd;
   doublereal mfactk, bid;
-  
+
 
 /*      IMPLICIT INTEGER (I-N) */
 /*      IMPLICIT DOUBLE PRECISION(A-H,O-Z) */
@@ -3541,7 +3541,7 @@ int AdvApp2Var_MathBase::mmdrvck_(integer *ncoeff,
 /*     DESCRIPTION/NOTES/LIMITATIONS : */
 /*     ----------------------------------- */
 
-/*    The code below was written basing on the following algorithm : 
+/*    The code below was written basing on the following algorithm :
 */
 
 /*    Let P(t) = a1 + a2*t + ... an*t**n. The derivative of order k of P */
@@ -3563,7 +3563,7 @@ int AdvApp2Var_MathBase::mmdrvck_(integer *ncoeff,
 /*     Factorials (1 to 21)  caculated on VAX in R*16 */
 
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -3583,7 +3583,7 @@ int AdvApp2Var_MathBase::mmdrvck_(integer *ncoeff,
 /*     Initialization is done by block-data MMLLL09.RES, */
 /*     created by program MQINICNP.FOR. */
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
@@ -3599,9 +3599,9 @@ int AdvApp2Var_MathBase::mmdrvck_(integer *ncoeff,
 
     /* Function Body */
 
-/* -------------- Case when the order of derivative is greater than ------------------- 
+/* -------------- Case when the order of derivative is greater than -------------------
 */
-/* ---------------- the degree of the curve --------------------- 
+/* ---------------- the degree of the curve ---------------------
 */
 
     if (*ideriv >= *ncoeff) {
@@ -3612,12 +3612,12 @@ int AdvApp2Var_MathBase::mmdrvck_(integer *ncoeff,
 	}
 	goto L9999;
     }
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*                         General processing*/
-/* ********************************************************************** 
+/* **********************************************************************
 */
-/* --------------------- Calculation of Factorial(IDERIV) ------------------ 
+/* --------------------- Calculation of Factorial(IDERIV) ------------------
 */
 
     k = *ideriv;
@@ -3632,7 +3632,7 @@ int AdvApp2Var_MathBase::mmdrvck_(integer *ncoeff,
 	}
     }
 
-/* ------- Calculation of derivative of order IDERIV of CURVE in TPARAM ----- 
+/* ------- Calculation of derivative of order IDERIV of CURVE in TPARAM -----
 */
 /* ---> Attention : binomial coefficient C(n,m) is represented in */
 /*                 MCCNP by CNP(N,M). */
@@ -3656,7 +3656,7 @@ int AdvApp2Var_MathBase::mmdrvck_(integer *ncoeff,
 /* L400: */
     }
 
-/* -------------------------------- The end ----------------------------- 
+/* -------------------------------- The end -----------------------------
 */
 
 L9999:
@@ -3666,10 +3666,10 @@ L9999:
 } /* mmdrvck_ */
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmeps1_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int AdvApp2Var_MathBase::mmeps1_(doublereal *epsilo)
-     
+
 {
 /* ***********************************************************************
  */
@@ -3762,20 +3762,20 @@ int AdvApp2Var_MathBase::mmeps1_(doublereal *epsilo)
 
 //=======================================================================
 //function : mmexthi_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mmexthi_(integer *ndegre, 
+int mmexthi_(integer *ndegre,
 	     NCollection_Array1<doublereal>& hwgaus)
 
 {
   /* System generated locals */
   integer i__1;
-  
+
   /* Local variables */
   integer iadd, ideb, ndeg2, nmod2, ii, ibb;
   integer kpt;
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FONCTION : */
@@ -3901,7 +3901,7 @@ int mmexthi_(integer *ndegre,
 	hwgaus(ndeg2 + 1) = mlgdrtl_.hi0tab[ndeg2];
     }
 
-/* --------------------------- The end ---------------------------------- 
+/* --------------------------- The end ----------------------------------
 */
 
     if (ibb >= 3) {
@@ -3912,20 +3912,20 @@ int mmexthi_(integer *ndegre,
 
 //=======================================================================
 //function : mmextrl_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int mmextrl_(integer *ndegre,
 	     NCollection_Array1<doublereal>& rootlg)
 {
   /* System generated locals */
   integer i__1;
-  
+
   /* Local variables */
   integer iadd, ideb, ndeg2, nmod2, ii, ibb;
   integer kpt;
 
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -3959,7 +3959,7 @@ int mmextrl_(integer *ndegre,
 /*     ATTENTION: Condition of NDEGRE ( 2 <= NDEGRE <= 61) is not */
 /*     tested. The caller should make the test. */
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
@@ -4030,9 +4030,9 @@ int mmextrl_(integer *ndegre,
 /* L100: */
     }
 
-/*   Strictly negative roots are equal to positive roots 
+/*   Strictly negative roots are equal to positive roots
 */
-/*   to the sign i.e RT(1) = -RT(NDEGRE), RT(2) = -RT(NDEGRE-1), etc... 
+/*   to the sign i.e RT(1) = -RT(NDEGRE), RT(2) = -RT(NDEGRE-1), etc...
 */
 
     i__1 = ndeg2;
@@ -4047,7 +4047,7 @@ int mmextrl_(integer *ndegre,
 	rootlg(ndeg2 + 1) = 0.;
     }
 
-/* -------------------------------- THE END ----------------------------- 
+/* -------------------------------- THE END -----------------------------
 */
 
     if (ibb >= 3) {
@@ -4058,14 +4058,14 @@ int mmextrl_(integer *ndegre,
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmfmca8_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int AdvApp2Var_MathBase::mmfmca8_(const integer *ndimen,
 				  const integer *ncoefu,
 				  const integer *ncoefv,
-				  const integer *ndimax, 
-				  const integer *ncfumx, 
-				  const integer *,//ncfvmx, 
+				  const integer *ndimax,
+				  const integer *ncfumx,
+				  const integer *,//ncfvmx,
 				  doublereal *tabini,
 				  doublereal *tabres)
 
@@ -4079,7 +4079,7 @@ int AdvApp2Var_MathBase::mmfmca8_(const integer *ndimen,
 
 
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -4115,7 +4115,7 @@ int AdvApp2Var_MathBase::mmfmca8_(const integer *ndimen,
 /*     ----------------------------------- */
 /*     The following call : */
 
-/*  CALL MMFMCA8(NDIMEN,NCOEFU,NCOEFV,NDIMAX,NCFUMX,NCFVMX,TABINI,TABINI) 
+/*  CALL MMFMCA8(NDIMEN,NCOEFU,NCOEFV,NDIMAX,NCFUMX,NCFVMX,TABINI,TABINI)
 */
 
 /*     where TABINI is input/output argument, is possible provided */
@@ -4124,7 +4124,7 @@ int AdvApp2Var_MathBase::mmfmca8_(const integer *ndimen,
 /*     ATTENTION : it is not checked that NDIMAX >= NDIMEN, */
 /*                 NCOEFU >= NCFMXU and NCOEFV >= NCFMXV. */
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
@@ -4143,7 +4143,7 @@ int AdvApp2Var_MathBase::mmfmca8_(const integer *ndimen,
 	goto L1000;
     }
 
-/* ----------------------- decompression NDIMAX<>NDIMEN ----------------- 
+/* ----------------------- decompression NDIMAX<>NDIMEN -----------------
 */
 
     for (k = *ncoefv; k >= 1; --k) {
@@ -4159,7 +4159,7 @@ int AdvApp2Var_MathBase::mmfmca8_(const integer *ndimen,
     }
     goto L9999;
 
-/* ----------------------- decompression NDIMAX=NDIMEN ------------------ 
+/* ----------------------- decompression NDIMAX=NDIMEN ------------------
 */
 
 L1000:
@@ -4168,24 +4168,24 @@ L1000:
     }
     ilong = (*ndimen << 3) * *ncoefu;
     for (k = *ncoefv; k >= 1; --k) {
-	AdvApp2Var_SysBase::mcrfill_(&ilong, 
-		 &tabini[(k * tabini_dim2 + 1) * tabini_dim1 + 1], 
+	AdvApp2Var_SysBase::mcrfill_(&ilong,
+		 &tabini[(k * tabini_dim2 + 1) * tabini_dim1 + 1],
 		 &tabres[(k * tabres_dim2 + 1) * tabres_dim1 + 1]);
 /* L500: */
     }
     goto L9999;
 
-/* ----------------- decompression NDIMAX=NDIMEN,NCOEFU=NCFUMX ---------- 
+/* ----------------- decompression NDIMAX=NDIMEN,NCOEFU=NCFUMX ----------
 */
 
 L2000:
     ilong = (*ndimen << 3) * *ncoefu * *ncoefv;
-    AdvApp2Var_SysBase::mcrfill_(&ilong, 
-	     &tabini[tabini_offset], 
+    AdvApp2Var_SysBase::mcrfill_(&ilong,
+	     &tabini[tabini_offset],
 	     &tabres[tabres_offset]);
     goto L9999;
 
-/* ---------------------------- The end --------------------------------- 
+/* ---------------------------- The end ---------------------------------
 */
 
 L9999:
@@ -4194,28 +4194,28 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmfmca9_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mmfmca9_(integer *ndimax, 
-				   integer *ncfumx, 
-				   integer *,//ncfvmx, 
-				   integer *ndimen, 
-				   integer *ncoefu, 
-				   integer *ncoefv, 
-				   doublereal *tabini, 
+ int AdvApp2Var_MathBase::mmfmca9_(integer *ndimax,
+				   integer *ncfumx,
+				   integer *,//ncfvmx,
+				   integer *ndimen,
+				   integer *ncoefu,
+				   integer *ncoefv,
+				   doublereal *tabini,
 				   doublereal *tabres)
 
 {
   /* System generated locals */
   integer tabini_dim1, tabini_dim2, tabini_offset, tabres_dim1, tabres_dim2,
   tabres_offset, i__1, i__2, i__3;
-  
+
     /* Local variables */
   integer i__, j, k, ilong;
 
 
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -4251,7 +4251,7 @@ L9999:
 /*     ----------------------------------- */
 /*     The following call : */
 
-/* CALL MMFMCA9(NDIMAX,NCFUMX,NCFVMX,NDIMEN,NCOEFU,NCOEFV,TABINI,TABINI) 
+/* CALL MMFMCA9(NDIMAX,NCFUMX,NCFVMX,NDIMEN,NCOEFU,NCOEFV,TABINI,TABINI)
 */
 
 /*     where TABINI is input/output argument, is possible provided */
@@ -4264,7 +4264,7 @@ L9999:
 /*     These conditions are not tested in the program. */
 
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
@@ -4283,7 +4283,7 @@ L9999:
 	goto L1000;
     }
 
-/* ----------------------- Compression NDIMEN<>NDIMAX ------------------- 
+/* ----------------------- Compression NDIMEN<>NDIMAX -------------------
 */
 
     i__1 = *ncoefv;
@@ -4302,7 +4302,7 @@ L9999:
     }
     goto L9999;
 
-/* ----------------------- Compression NDIMEN=NDIMAX -------------------- 
+/* ----------------------- Compression NDIMEN=NDIMAX --------------------
 */
 
 L1000:
@@ -4312,24 +4312,24 @@ L1000:
     ilong = (*ndimen << 3) * *ncoefu;
     i__1 = *ncoefv;
     for (k = 1; k <= i__1; ++k) {
-	AdvApp2Var_SysBase::mcrfill_(&ilong, 
-		 &tabini[(k * tabini_dim2 + 1) * tabini_dim1 + 1], 
+	AdvApp2Var_SysBase::mcrfill_(&ilong,
+		 &tabini[(k * tabini_dim2 + 1) * tabini_dim1 + 1],
 		 &tabres[(k * tabres_dim2 + 1) * tabres_dim1 + 1]);
 /* L500: */
     }
     goto L9999;
 
-/* ----------------- Compression NDIMEN=NDIMAX,NCOEFU=NCFUMX ------------ 
+/* ----------------- Compression NDIMEN=NDIMAX,NCOEFU=NCFUMX ------------
 */
 
 L2000:
     ilong = (*ndimen << 3) * *ncoefu * *ncoefv;
     AdvApp2Var_SysBase::mcrfill_(&ilong,
-	     &tabini[tabini_offset], 
+	     &tabini[tabini_offset],
 	     &tabres[tabres_offset]);
     goto L9999;
 
-/* ---------------------------- The end --------------------------------- 
+/* ---------------------------- The end ---------------------------------
 */
 
 L9999:
@@ -4338,18 +4338,18 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmfmcar_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int AdvApp2Var_MathBase::mmfmcar_(integer *ndimen,
-				  integer *ncofmx, 
-				  integer *ncoefu, 
-				  integer *ncoefv, 
-				  doublereal *patold, 
-				  doublereal *upara1, 
-				  doublereal *upara2, 
-				  doublereal *vpara1, 
-				  doublereal *vpara2, 
-				  doublereal *patnew, 
+				  integer *ncofmx,
+				  integer *ncoefu,
+				  integer *ncoefv,
+				  doublereal *patold,
+				  doublereal *upara1,
+				  doublereal *upara2,
+				  doublereal *vpara1,
+				  doublereal *vpara2,
+				  doublereal *patnew,
 				  integer *iercod)
 
 {
@@ -4401,7 +4401,7 @@ int AdvApp2Var_MathBase::mmfmcar_(integer *ndimen,
 /*     DESCRIPTION/NOTES/LIMITATIONS : */
 /*     ----------------------------------- */
 /* --->    The following call : */
-/*   CALL MMFMCAR(NCOFMX,NCOEFU,NCOEFV,PATOLD,UPARA1,UPARA2,VPARA1,VPARA2 
+/*   CALL MMFMCAR(NCOFMX,NCOEFU,NCOEFV,PATOLD,UPARA1,UPARA2,VPARA1,VPARA2
 */
 /*              ,PATOLD), */
 /*        where PATOLD is input/output argument is absolutely legal. */
@@ -4410,7 +4410,7 @@ int AdvApp2Var_MathBase::mmfmcar_(integer *ndimen,
 
 /* --->    If NCOEFU < NCOFMX, the data is compressed by MMFMCA9 before */
 /*        limitation by v to get time during the execution */
-/*        of MMARC41 that follows (the square is processed as a curve of 
+/*        of MMARC41 that follows (the square is processed as a curve of
 */
 /*        dimension NDIMEN*NCOEFU possessing NCOEFV coefficients). */
 /* > */
@@ -4439,10 +4439,10 @@ int AdvApp2Var_MathBase::mmfmcar_(integer *ndimen,
     iofst = 0;
     AdvApp2Var_SysBase anAdvApp2Var_SysBase;
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*                  TEST OF COEFFICIENT NUMBERS */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
     if (*ncofmx < *ncoefu) {
@@ -4454,24 +4454,24 @@ int AdvApp2Var_MathBase::mmfmcar_(integer *ndimen,
 	goto L9999;
     }
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*                  CASE WHEN UPARA1=VPARA1=0 AND UPARA2=VPARA2=1 */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
     if (*upara1 == 0. && *upara2 == 1. && *vpara1 == 0. && *vpara2 == 1.) {
 	ksize = (*ndimen << 3) * *ncofmx * *ncoefv;
-	AdvApp2Var_SysBase::mcrfill_(&ksize, 
-		 &patold[patold_offset], 
+	AdvApp2Var_SysBase::mcrfill_(&ksize,
+		 &patold[patold_offset],
 		 &patnew[patnew_offset]);
 	goto L9999;
     }
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*                        LIMITATION BY U */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
     if (*upara1 == 0. && *upara2 == 1.) {
@@ -4479,16 +4479,16 @@ int AdvApp2Var_MathBase::mmfmcar_(integer *ndimen,
     }
     i__1 = *ncoefv;
     for (kk = 1; kk <= i__1; ++kk) {
-	mmarc41_(ndimen, ndimen, ncoefu, &patold[(kk * patold_dim2 + 1) * 
-		patold_dim1 + 1], upara1, upara2, &patnew[(kk * patnew_dim2 + 
+	mmarc41_(ndimen, ndimen, ncoefu, &patold[(kk * patold_dim2 + 1) *
+		patold_dim1 + 1], upara1, upara2, &patnew[(kk * patnew_dim2 +
 		1) * patnew_dim1 + 1], iercod);
 /* L100: */
     }
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*                         LIMITATION BY V */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 L2000:
@@ -4496,7 +4496,7 @@ L2000:
 	goto L9999;
     }
 
-/* ----------- LIMITATION BY V (WITH COMPRESSION I.E. NCOEFU<NCOFMX) ---- 
+/* ----------- LIMITATION BY V (WITH COMPRESSION I.E. NCOEFU<NCOFMX) ----
 */
 
     numax = *ndimen * *ncoefu;
@@ -4512,21 +4512,21 @@ L2000:
 /* --------------- Compression by (NDIMEN,NCOEFU,NCOEFV) ------------
 ---- */
 	if (*upara1 == 0. && *upara2 == 1.) {
-	  AdvApp2Var_MathBase::mmfmca9_(ndimen, 
-					ncofmx, 
-					ncoefv, 
-					ndimen, 
-					ncoefu, 
-					ncoefv, 
-					&patold[patold_offset], 
+	  AdvApp2Var_MathBase::mmfmca9_(ndimen,
+					ncofmx,
+					ncoefv,
+					ndimen,
+					ncoefu,
+					ncoefv,
+					&patold[patold_offset],
 					&tbaux[iofst]);
 	} else {
-	  AdvApp2Var_MathBase::mmfmca9_(ndimen, 
-					ncofmx, 
-					ncoefv, 
-					ndimen, 
-					ncoefu, 
-					ncoefv, 
+	  AdvApp2Var_MathBase::mmfmca9_(ndimen,
+					ncofmx,
+					ncoefv,
+					ndimen,
+					ncoefu,
+					ncoefv,
 					&patnew[patnew_offset],
 					&tbaux[iofst]);
 	}
@@ -4545,19 +4545,19 @@ L2000:
 
     } else {
 	if (*upara1 == 0. && *upara2 == 1.) {
-	    mmarc41_(&numax, &numax, ncoefv, &patold[patold_offset], vpara1, 
+	    mmarc41_(&numax, &numax, ncoefv, &patold[patold_offset], vpara1,
 		    vpara2, &patnew[patnew_offset], iercod);
 	} else {
-	    mmarc41_(&numax, &numax, ncoefv, &patnew[patnew_offset], vpara1, 
+	    mmarc41_(&numax, &numax, ncoefv, &patnew[patnew_offset], vpara1,
 		    vpara2, &patnew[patnew_offset], iercod);
 	}
 	goto L9999;
     }
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*                             DESALLOCATION */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 L9900:
@@ -4568,7 +4568,7 @@ L9900:
 	*iercod = 13;
     }
 
-/* ------------------------------ The end ------------------------------- 
+/* ------------------------------ The end -------------------------------
 */
 
 L9999:
@@ -4584,28 +4584,28 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmfmcb5_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_MathBase::mmfmcb5_(integer *isenmsc, 
+int AdvApp2Var_MathBase::mmfmcb5_(integer *isenmsc,
 				  integer *ndimax,
-				  integer *ncf1mx, 
-				  doublereal *courb1, 
-				  integer *ncoeff, 
+				  integer *ncf1mx,
+				  doublereal *courb1,
+				  integer *ncoeff,
 				  integer *ncf2mx,
-				  integer *ndimen, 
-				  doublereal *courb2, 
+				  integer *ndimen,
+				  doublereal *courb2,
 				  integer *iercod)
 
 {
   /* System generated locals */
-  integer courb1_dim1, courb1_offset, courb2_dim1, courb2_offset, i__1, 
+  integer courb1_dim1, courb1_offset, courb2_dim1, courb2_offset, i__1,
   i__2;
-  
+
   /* Local variables */
   integer i__, nboct, nd;
-  
 
-/* ********************************************************************** 
+
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -4621,7 +4621,7 @@ int AdvApp2Var_MathBase::mmfmcb5_(integer *isenmsc,
 /*     INPUT ARGUMENTS : */
 /*     -------------------- */
 /*        ISENMSC : required direction of the transfer : */
-/*           1   :  passage of (NDIMEN,.) ---> (.,NDIMEN)  direction to AB 
+/*           1   :  passage of (NDIMEN,.) ---> (.,NDIMEN)  direction to AB
 */
 /*          -1   :  passage of (.,NDIMEN) ---> (NDIMEN,.)  direction to TS,T
 V*/
@@ -4673,13 +4673,13 @@ V*/
     if (*ndimen == 1 && *ncf1mx == *ncf2mx) {
 	nboct = *ncf2mx << 3;
 	if (*isenmsc == 1) {
-	    AdvApp2Var_SysBase::mcrfill_(&nboct, 
-		     &courb1[courb1_offset], 
+	    AdvApp2Var_SysBase::mcrfill_(&nboct,
+		     &courb1[courb1_offset],
 		     &courb2[courb2_offset]);
 	}
 	if (*isenmsc == -1) {
-	    AdvApp2Var_SysBase::mcrfill_(&nboct, 
-		     &courb2[courb2_offset], 
+	    AdvApp2Var_SysBase::mcrfill_(&nboct,
+		     &courb2[courb2_offset],
 		     &courb1[courb1_offset]);
 	}
 	*iercod = -3136;
@@ -4692,7 +4692,7 @@ V*/
 	for (nd = 1; nd <= i__1; ++nd) {
 	    i__2 = *ncoeff;
 	    for (i__ = 1; i__ <= i__2; ++i__) {
-		courb2[i__ + nd * courb2_dim1] = courb1[nd + i__ * 
+		courb2[i__ + nd * courb2_dim1] = courb1[nd + i__ *
 			courb1_dim1];
 /* L400: */
 	    }
@@ -4703,7 +4703,7 @@ V*/
 	for (nd = 1; nd <= i__1; ++nd) {
 	    i__2 = *ncoeff;
 	    for (i__ = 1; i__ <= i__2; ++i__) {
-		courb1[nd + i__ * courb1_dim1] = courb2[i__ + nd * 
+		courb1[nd + i__ * courb1_dim1] = courb2[i__ + nd *
 			courb2_dim1];
 /* L1400: */
 	    }
@@ -4730,22 +4730,22 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmfmtb1_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_MathBase::mmfmtb1_(integer *maxsz1, 
-				  doublereal *table1, 
-				  integer *isize1, 
-				  integer *jsize1, 
-				  integer *maxsz2, 
-				  doublereal *table2, 
+int AdvApp2Var_MathBase::mmfmtb1_(integer *maxsz1,
+				  doublereal *table1,
+				  integer *isize1,
+				  integer *jsize1,
+				  integer *maxsz2,
+				  doublereal *table2,
 				  integer *isize2,
-				  integer *jsize2, 
+				  integer *jsize2,
 				  integer *iercod)
 {
   integer c__8 = 8;
 
    /* System generated locals */
-    integer table1_dim1, table1_offset, table2_dim1, table2_offset, i__1, 
+    integer table1_dim1, table1_offset, table2_dim1, table2_offset, i__1,
 	    i__2;
 
     /* Local variables */
@@ -4800,7 +4800,7 @@ int AdvApp2Var_MathBase::mmfmtb1_(integer *maxsz1,
 /*               ,ISIZE2,JSIZE2,IERCOD) */
 /*    is valuable. */
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
@@ -4840,11 +4840,11 @@ int AdvApp2Var_MathBase::mmfmtb1_(integer *maxsz1,
 /* L100: */
     }
     ilong = isize << 3;
-    AdvApp2Var_SysBase::mcrfill_(&ilong, 
-	     &work[iofst], 
+    AdvApp2Var_SysBase::mcrfill_(&ilong,
+	     &work[iofst],
 	     &table2[table2_offset]);
 
-/* -------------- The number of elements of TABLE2 is returned ------------ 
+/* -------------- The number of elements of TABLE2 is returned ------------
 */
 
     ii = *isize1;
@@ -4853,7 +4853,7 @@ int AdvApp2Var_MathBase::mmfmtb1_(integer *maxsz1,
 
     goto L9999;
 
-/* ------------------------------- THE END ------------------------------ 
+/* ------------------------------- THE END ------------------------------
 */
 /* --> Invalid input. */
 L9100:
@@ -4876,28 +4876,28 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmgaus1_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int AdvApp2Var_MathBase::mmgaus1_(integer *ndimf,
 				  int (*bfunx) (
-						integer *ninteg, 
-						doublereal *parame, 
-						doublereal *vfunj1, 
+						integer *ninteg,
+						doublereal *parame,
+						doublereal *vfunj1,
 						integer *iercod
-						), 
-				  
-				  integer *k, 
-				  doublereal *xd, 
-				  doublereal *xf, 
-				  doublereal *saux1, 
-				  doublereal *saux2, 
-				  doublereal *somme, 
-				  integer *niter, 
+						),
+
+				  integer *k,
+				  doublereal *xd,
+				  doublereal *xf,
+				  doublereal *saux1,
+				  doublereal *saux2,
+				  doublereal *somme,
+				  integer *niter,
 				  integer *iercod)
 {
   /* System generated locals */
   integer i__1, i__2;
-  
+
   /* Local variables */
   integer ndeg;
   doublereal h__[20];
@@ -4905,7 +4905,7 @@ int AdvApp2Var_MathBase::mmgaus1_(integer *ndimf,
   doublereal t, u[20], x;
   integer idimf;
   doublereal c1x, c2x;
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*      FUNCTION : */
@@ -4936,13 +4936,13 @@ int AdvApp2Var_MathBase::mmgaus1_(integer *ndimf,
 /*              Should be declared as EXTERNAL in the call routine. */
 /*                   SUBROUTINE BFUNX(NDIMF,X,VAL,IER) */
 /*                   REAL *8 X,VAL */
-/*     K      : Parameter determining the degree of the LEGENDRE polynom that 
+/*     K      : Parameter determining the degree of the LEGENDRE polynom that
 */
 /*               can take a value between 0 and 10. */
-/*               The degree of the polynom is equal to 4 k, that is 4, 8, 
+/*               The degree of the polynom is equal to 4 k, that is 4, 8,
 */
 /*               12, 16, 20, 24, 28, 32, 36 and 40. */
-/*               If K is not correct, the degree is set to 40 directly. 
+/*               If K is not correct, the degree is set to 40 directly.
 */
 /*      XD     : Lower limit of the interval of integration. */
 /*      XF     : Upper limit of the interval of integration. */
@@ -4982,7 +4982,7 @@ int AdvApp2Var_MathBase::mmgaus1_(integer *ndimf,
 /*      See the explanations detailed in the listing */
 /*      Use of the GAUSS method (orthogonal polynoms) */
 /*      The symmetry of roots of these polynomes is used */
-/*      Depending on K, the degree of the interpolated polynom grows. 
+/*      Depending on K, the degree of the interpolated polynom grows.
 */
 /*      If you wish to calculate the integral with a given precision, */
 /*      loop on k varying from 1 to 10 and test the difference of 2
@@ -4994,7 +4994,7 @@ int AdvApp2Var_MathBase::mmgaus1_(integer *ndimf,
 
 /*            AF=DABS(S1-S2) */
 /*            AS=DABS(S2) */
-/*            If AS < 1 test if FS < eps otherwise test if AF/AS < eps 
+/*            If AS < 1 test if FS < eps otherwise test if AF/AS < eps
 */
 /*            --        -----                    ----- */
 /* > */
@@ -5014,7 +5014,7 @@ int AdvApp2Var_MathBase::mmgaus1_(integer *ndimf,
     --saux1;
 
     /* Function Body */
-    AdvApp2Var_SysBase::mvriraz_(ndimf, 
+    AdvApp2Var_SysBase::mvriraz_(ndimf,
 	     &somme[1]);
     *iercod = 0;
 
@@ -5073,15 +5073,15 @@ L9999:
 } /* mmgaus1_ */
 //=======================================================================
 //function : mmherm0_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mmherm0_(doublereal *debfin, 
+int mmherm0_(doublereal *debfin,
 	     integer *iercod)
 {
   integer c__576 = 576;
   integer c__6 = 6;
 
-  
+
    /* System generated locals */
     integer i__1, i__2;
     doublereal d__1;
@@ -5123,7 +5123,7 @@ int mmherm0_(doublereal *debfin,
 /*                 (ABS(DEBFIN(1)+ABS(DEBFIN(2))) > 1/100 */
 /*           (for overflows) */
 
-/*      ABS(DEBFIN(2)-DEBFIN(1)) / (ABS(DEBFIN(1)+ABS(DEBFIN(2))) > 1/100 
+/*      ABS(DEBFIN(2)-DEBFIN(1)) / (ABS(DEBFIN(1)+ABS(DEBFIN(2))) > 1/100
 */
 /*           (for the conditioning) */
 
@@ -5154,7 +5154,7 @@ int mmherm0_(doublereal *debfin,
 
 
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -5171,7 +5171,7 @@ int mmherm0_(doublereal *debfin,
 /*     The coefficients of hermit polynoms are calculated by */
 /*     the routine MMHERM0 and read by the routine MMHERM1 */
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
@@ -5265,7 +5265,7 @@ L100:
 /*     Init. matrix identity : */
 
     ncmat = 36;
-    AdvApp2Var_SysBase::mvriraz_(&ncmat, 
+    AdvApp2Var_SysBase::mvriraz_(&ncmat,
 	     miden);
 
     for (ii = 1; ii <= 6; ++ii) {
@@ -5324,7 +5324,7 @@ L100:
 		    i__2 = ncf;
 		    for (jj = pp; jj <= i__2; ++jj) {
 
-/*        everything is done in these 3 lines 
+/*        everything is done in these 3 lines
  */
 
 			mat[ii + jj * 6 - 7] = cof[jj - 1] * prod;
@@ -5354,8 +5354,8 @@ L100:
 		for (pp = 1; pp <= i__1; ++pp) {
 		    i__2 = ncf;
 		    for (ii = 1; ii <= i__2; ++ii) {
-			mmcmher_.cmherm[ii + (pp + (cot + ((iord1 + (iord2 << 
-				2)) << 1)) * 3) * 6 + 155] = amat[ii + (pp + 
+			mmcmher_.cmherm[ii + (pp + (cot + ((iord1 + (iord2 <<
+				2)) << 1)) * 3) * 6 + 155] = amat[ii + (pp +
 				iof[cot - 1]) * 6 - 7];
 /* L1300: */
 		    }
@@ -5411,12 +5411,12 @@ L9999:
 
 //=======================================================================
 //function : mmherm1_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mmherm1_(doublereal *debfin, 
-	     integer *ordrmx, 
-	     integer *iordre, 
-	     doublereal *hermit, 
+int mmherm1_(doublereal *debfin,
+	     integer *ordrmx,
+	     integer *iordre,
+	     doublereal *hermit,
 	     integer *iercod)
 {
   /* System generated locals */
@@ -5492,7 +5492,7 @@ int mmherm1_(doublereal *debfin,
 
 
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -5510,7 +5510,7 @@ int mmherm1_(doublereal *debfin,
 /*     routine MMHERM0 and read by routine MMHERM1 */
 
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
@@ -5575,7 +5575,7 @@ int mmherm1_(doublereal *debfin,
 
 /*     OTHERWISE IT IS INITIALIZED */
 
-    if (debfin[1] != mmcmher_.tdebut || debfin[2] != mmcmher_.tfinal || d1 
+    if (debfin[1] != mmcmher_.tdebut || debfin[2] != mmcmher_.tfinal || d1
 	    != mmcmher_.verifi) {
 	*iercod = -1;
 	mmherm0_(&debfin[1], iercod);
@@ -5593,7 +5593,7 @@ int mmherm1_(doublereal *debfin,
 
     nbval = 36;
 
-    AdvApp2Var_SysBase::msrfill_(&nbval, &mmcmher_.cmherm[((((iordre[1] + (iordre[2] << 2)) << 1) 
+    AdvApp2Var_SysBase::msrfill_(&nbval, &mmcmher_.cmherm[((((iordre[1] + (iordre[2] << 2)) << 1)
 	    + 1) * 3 + 1) * 6 + 156], &hermit[hermit_offset]);
 
 /* ***********************************************************************
@@ -5626,264 +5626,264 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmhjcan_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_MathBase::mmhjcan_(integer *ndimen, 
-			    integer *ncourb, 
-			    integer *ncftab, 
-			    integer *orcont, 
-			    integer *ncflim, 
-			    doublereal *tcbold, 
-			    doublereal *tdecop, 
-			    doublereal *tcbnew, 
-			    integer *iercod)
-
-{
-  integer c__2 = 2;
-  integer c__21 = 21;
-  /* System generated locals */
-    integer tcbold_dim1, tcbold_dim2, tcbold_offset, tcbnew_dim1, tcbnew_dim2,
-	     tcbnew_offset, i__1, i__2, i__3, i__4, i__5;
-
-
-    /* Local variables */
-    logical ldbg;
-    integer ndeg;
-    doublereal taux1[21];
-    integer d__, e, i__, k;
-    doublereal mfact;
-    integer ncoeff;
-    doublereal tjacap[21];
-    integer iordre[2];
-    doublereal hermit[36]/* was [6][3][2] */, ctenor, bornes[2];
-    integer ier;
-    integer aux1, aux2;
-
-/* ***********************************************************************
- */
-
-/*     FUNCTION : */
-/*     ---------- */
-/*       CONVERSION OF TABLE TCBOLD OF POLYNOMIAL CURVE COEFFICIENTS */
-/*       EXPRESSED IN HERMIT JACOBI BASE, INTO A */
-/*       TABLE OF COEFFICIENTS TCBNEW OF COURVES EXPRESSED IN THE CANONIC BASE */
-
-/*     KEYWORDS : */
-/*     ----------- */
-/*      CANNONIC, HERMIT, JACCOBI */
-
-/*     INPUT ARGUMENTS : */
-/*     -------------------- */
-/*       ORDHER : ORDER OF HERMIT POLYNOMS OR ORDER OF CONTINUITY */
-/*       NCOEFS : NUMBER OF COEFFICIENTS OF A POLYNOMIAL CURVE */
-/*                FOR ONE OF ITS NDIM COMPONENTS;(DEGREE+1 OF THE CURVE) 
-*/
-/*       NDIM   : DIMENSION OF THE CURVE */
-/*       CBHEJA : TABLE OF COEFFICIENTS OF THE CURVE IN THE BASE */
-/*                HERMIT JACOBI */
-/*                (H(0,-1),..,H(ORDHER,-1),H(0,1),..,H(ORDHER,1), */
-/*                 JA(ORDHER+1,2*ORDHER+2),....,JA(ORDHER+1,NCOEFS-1) */
-
-/*     OUTPUT ARGUMENTS  : */
-/*     --------------------- */
-/*       CBRCAN : TABLE OF COEFFICIENTS OF THE CURVE IN THE CANONIC BASE */
-/*                (1, t, ...) */
-
-/*     COMMONS USED : */
-/*     ------------------ */
-
-
-/*     REFERENCES CALLED : */
-/*     --------------------- */
-
-
-/* ***********************************************************************
- */
-
-
-/* ***********************************************************************
- */
-
-/*     FUNCTION : */
-/*     ---------- */
-/*        Providesinteger constants from 0 to 1000 */
-
-/*     KEYWORDS : */
-/*     ----------- */
-/*        ALL, INTEGER */
-
-/*     DEMSCRIPTION/NOTES/LIMITATIONS : */
-/*     ----------------------------------- */
-/* > */
-/* ***********************************************************************
- */
-
-
-/* ***********************************************************************
- */
-
-
-
-
-/* ***********************************************************************
- */
-/*                      INITIALIZATION */
-/* ***********************************************************************
- */
-
-    /* Parameter adjustments */
-    --ncftab;
-    tcbnew_dim1 = *ndimen;
-    tcbnew_dim2 = *ncflim;
-    tcbnew_offset = tcbnew_dim1 * (tcbnew_dim2 + 1) + 1;
-    tcbnew -= tcbnew_offset;
-    tcbold_dim1 = *ndimen;
-    tcbold_dim2 = *ncflim;
-    tcbold_offset = tcbold_dim1 * (tcbold_dim2 + 1) + 1;
-    tcbold -= tcbold_offset;
-
-    /* Function Body */
-    ldbg = AdvApp2Var_SysBase::mnfndeb_() >= 2;
-    if (ldbg) {
-	AdvApp2Var_SysBase::mgenmsg_("MMHJCAN", 7L);
-    }
-    *iercod = 0;
-
-    bornes[0] = -1.;
-    bornes[1] = 1.;
-
-/* ***********************************************************************
- */
-/*                     PROCESSING */
-/* ***********************************************************************
- */
-
-    if (*orcont > 2) {
-	goto L9101;
-    }
-    if (*ncflim > 21) {
-	goto L9101;
-    }
-
-/*     CALCULATION OF HERMIT POLYNOMS IN THE CANONIC BASE ON (-1,1) */
-
-
-    iordre[0] = *orcont;
-    iordre[1] = *orcont;
-    mmherm1_(bornes, &c__2, iordre, hermit, &ier);
-    if (ier > 0) {
-	goto L9102;
-    }
-
-
-    aux1 = *orcont + 1;
-    aux2 = aux1 << 1;
-
-    i__1 = *ncourb;
-    for (e = 1; e <= i__1; ++e) {
-
-	ctenor = (tdecop[e] - tdecop[e - 1]) / 2;
-	ncoeff = ncftab[e];
-	ndeg = ncoeff - 1;
-	if (ncoeff > 21) {
-	    goto L9101;
-	}
-
-	i__2 = *ndimen;
-	for (d__ = 1; d__ <= i__2; ++d__) {
-
-/*     CONVERSION OF THE COEFFICIENTS OF THE PART OF THE CURVE EXPRESSED */
-/*     IN HERMIT BASE, INTO THE CANONIC BASE */
-
-	    AdvApp2Var_SysBase::mvriraz_(&ncoeff, taux1);
-
-	    i__3 = aux2;
-	    for (k = 1; k <= i__3; ++k) {
-		i__4 = aux1;
-		for (i__ = 1; i__ <= i__4; ++i__) {
-		    i__5 = i__ - 1;
-		    mfact = AdvApp2Var_MathBase::pow__di(&ctenor, &i__5);
-		    taux1[k - 1] += (tcbold[d__ + (i__ + e * tcbold_dim2) * 
-			    tcbold_dim1] * hermit[k + (i__ + 2) * 6 - 19] + 
-			    tcbold[d__ + (i__ + aux1 + e * tcbold_dim2) * 
-			    tcbold_dim1] * hermit[k + (i__ + 5) * 6 - 19]) * 
-			    mfact;
-		}
-	    }
-
-
-	    i__3 = ncoeff;
-	    for (i__ = aux2 + 1; i__ <= i__3; ++i__) {
-		taux1[i__ - 1] = tcbold[d__ + (i__ + e * tcbold_dim2) * 
-			tcbold_dim1];
-	    }
-
-/*     CONVERSION OF THE COEFFICIENTS OF THE PART OF THE CURVE EXPRESSED */
-/*     IN CANONIC-JACOBI BASE, INTO THE CANONIC BASE */
-
-
-
-	    AdvApp2Var_MathBase::mmapcmp_(&minombr_.nbr[1], &c__21, &ncoeff, taux1, tjacap);
-	    AdvApp2Var_MathBase::mmjacan_(orcont, &ndeg, tjacap, taux1);
-
-/*        RECOPY THE COEFS RESULTING FROM THE CONVERSION IN THE TABLE */
-/*        OF RESULTS */
-
-	    i__3 = ncoeff;
-	    for (i__ = 1; i__ <= i__3; ++i__) {
-		tcbnew[d__ + (i__ + e * tcbnew_dim2) * tcbnew_dim1] = taux1[
-			i__ - 1];
-	    }
-
-	}
-    }
-
-    goto L9999;
-
-/* ***********************************************************************
- */
-/*                   PROCESSING OF ERRORS */
-/* ***********************************************************************
- */
-
-L9101:
-    *iercod = 1;
-    goto L9999;
-L9102:
-    *iercod = 2;
-    goto L9999;
-
-/* ***********************************************************************
- */
-/*                   RETURN CALLING PROGRAM */
-/* ***********************************************************************
- */
-
-L9999:
-
-    AdvApp2Var_SysBase::maermsg_("MMHJCAN", iercod, 7L);
-    if (ldbg) {
-	AdvApp2Var_SysBase::mgsomsg_("MMHJCAN", 7L);
-    }
- return 0 ;
-} /* mmhjcan_ */
+//int AdvApp2Var_MathBase::mmhjcan_(integer *ndimen,
+//			    integer *ncourb,
+//			    integer *ncftab,
+//			    integer *orcont,
+//			    integer *ncflim,
+//			    doublereal *tcbold,
+//			    doublereal *tdecop,
+//			    doublereal *tcbnew,
+//			    integer *iercod)
+//
+//{
+//  integer c__2 = 2;
+//  integer c__21 = 21;
+//  /* System generated locals */
+//    integer tcbold_dim1, tcbold_dim2, tcbold_offset, tcbnew_dim1, tcbnew_dim2,
+//	     tcbnew_offset, i__1, i__2, i__3, i__4, i__5;
+//
+//
+//    /* Local variables */
+//    logical ldbg;
+//    integer ndeg;
+//    doublereal taux1[21];
+//    integer d__, e, i__, k;
+//    doublereal mfact;
+//    integer ncoeff;
+//    doublereal tjacap[21];
+//    integer iordre[2];
+//    doublereal hermit[36]/* was [6][3][2] */, ctenor, bornes[2];
+//    integer ier;
+//    integer aux1, aux2;
+//
+///* ***********************************************************************
+// */
+//
+///*     FUNCTION : */
+///*     ---------- */
+///*       CONVERSION OF TABLE TCBOLD OF POLYNOMIAL CURVE COEFFICIENTS */
+///*       EXPRESSED IN HERMIT JACOBI BASE, INTO A */
+///*       TABLE OF COEFFICIENTS TCBNEW OF COURVES EXPRESSED IN THE CANONIC BASE */
+//
+///*     KEYWORDS : */
+///*     ----------- */
+///*      CANNONIC, HERMIT, JACCOBI */
+//
+///*     INPUT ARGUMENTS : */
+///*     -------------------- */
+///*       ORDHER : ORDER OF HERMIT POLYNOMS OR ORDER OF CONTINUITY */
+///*       NCOEFS : NUMBER OF COEFFICIENTS OF A POLYNOMIAL CURVE */
+///*                FOR ONE OF ITS NDIM COMPONENTS;(DEGREE+1 OF THE CURVE)
+//*/
+///*       NDIM   : DIMENSION OF THE CURVE */
+///*       CBHEJA : TABLE OF COEFFICIENTS OF THE CURVE IN THE BASE */
+///*                HERMIT JACOBI */
+///*                (H(0,-1),..,H(ORDHER,-1),H(0,1),..,H(ORDHER,1), */
+///*                 JA(ORDHER+1,2*ORDHER+2),....,JA(ORDHER+1,NCOEFS-1) */
+//
+///*     OUTPUT ARGUMENTS  : */
+///*     --------------------- */
+///*       CBRCAN : TABLE OF COEFFICIENTS OF THE CURVE IN THE CANONIC BASE */
+///*                (1, t, ...) */
+//
+///*     COMMONS USED : */
+///*     ------------------ */
+//
+//
+///*     REFERENCES CALLED : */
+///*     --------------------- */
+//
+//
+///* ***********************************************************************
+// */
+//
+//
+///* ***********************************************************************
+// */
+//
+///*     FUNCTION : */
+///*     ---------- */
+///*        Providesinteger constants from 0 to 1000 */
+//
+///*     KEYWORDS : */
+///*     ----------- */
+///*        ALL, INTEGER */
+//
+///*     DEMSCRIPTION/NOTES/LIMITATIONS : */
+///*     ----------------------------------- */
+///* > */
+///* ***********************************************************************
+// */
+//
+//
+///* ***********************************************************************
+// */
+//
+//
+//
+//
+///* ***********************************************************************
+// */
+///*                      INITIALIZATION */
+///* ***********************************************************************
+// */
+//
+//    /* Parameter adjustments */
+//    --ncftab;
+//    tcbnew_dim1 = *ndimen;
+//    tcbnew_dim2 = *ncflim;
+//    tcbnew_offset = tcbnew_dim1 * (tcbnew_dim2 + 1) + 1;
+//    tcbnew -= tcbnew_offset;
+//    tcbold_dim1 = *ndimen;
+//    tcbold_dim2 = *ncflim;
+//    tcbold_offset = tcbold_dim1 * (tcbold_dim2 + 1) + 1;
+//    tcbold -= tcbold_offset;
+//
+//    /* Function Body */
+//    ldbg = AdvApp2Var_SysBase::mnfndeb_() >= 2;
+//    if (ldbg) {
+//	AdvApp2Var_SysBase::mgenmsg_("MMHJCAN", 7L);
+//    }
+//    *iercod = 0;
+//
+//    bornes[0] = -1.;
+//    bornes[1] = 1.;
+//
+///* ***********************************************************************
+// */
+///*                     PROCESSING */
+///* ***********************************************************************
+// */
+//
+//    if (*orcont > 2) {
+//	goto L9101;
+//    }
+//    if (*ncflim > 21) {
+//	goto L9101;
+//    }
+//
+///*     CALCULATION OF HERMIT POLYNOMS IN THE CANONIC BASE ON (-1,1) */
+//
+//
+//    iordre[0] = *orcont;
+//    iordre[1] = *orcont;
+//    mmherm1_(bornes, &c__2, iordre, hermit, &ier);
+//    if (ier > 0) {
+//	goto L9102;
+//    }
+//
+//
+//    aux1 = *orcont + 1;
+//    aux2 = aux1 << 1;
+//
+//    i__1 = *ncourb;
+//    for (e = 1; e <= i__1; ++e) {
+//
+//	ctenor = (tdecop[e] - tdecop[e - 1]) / 2;
+//	ncoeff = ncftab[e];
+//	ndeg = ncoeff - 1;
+//	if (ncoeff > 21) {
+//	    goto L9101;
+//	}
+//
+//	i__2 = *ndimen;
+//	for (d__ = 1; d__ <= i__2; ++d__) {
+//
+///*     CONVERSION OF THE COEFFICIENTS OF THE PART OF THE CURVE EXPRESSED */
+///*     IN HERMIT BASE, INTO THE CANONIC BASE */
+//
+//	    AdvApp2Var_SysBase::mvriraz_(&ncoeff, taux1);
+//
+//	    i__3 = aux2;
+//	    for (k = 1; k <= i__3; ++k) {
+//		i__4 = aux1;
+//		for (i__ = 1; i__ <= i__4; ++i__) {
+//		    i__5 = i__ - 1;
+//		    mfact = AdvApp2Var_MathBase::pow__di(&ctenor, &i__5);
+//		    taux1[k - 1] += (tcbold[d__ + (i__ + e * tcbold_dim2) *
+//			    tcbold_dim1] * hermit[k + (i__ + 2) * 6 - 19] +
+//			    tcbold[d__ + (i__ + aux1 + e * tcbold_dim2) *
+//			    tcbold_dim1] * hermit[k + (i__ + 5) * 6 - 19]) *
+//			    mfact;
+//		}
+//	    }
+//
+//
+//	    i__3 = ncoeff;
+//	    for (i__ = aux2 + 1; i__ <= i__3; ++i__) {
+//		taux1[i__ - 1] = tcbold[d__ + (i__ + e * tcbold_dim2) *
+//			tcbold_dim1];
+//	    }
+//
+///*     CONVERSION OF THE COEFFICIENTS OF THE PART OF THE CURVE EXPRESSED */
+///*     IN CANONIC-JACOBI BASE, INTO THE CANONIC BASE */
+//
+//
+//
+//	    AdvApp2Var_MathBase::mmapcmp_(&minombr_.nbr[1], &c__21, &ncoeff, taux1, tjacap);
+//	    AdvApp2Var_MathBase::mmjacan_(orcont, &ndeg, tjacap, taux1);
+//
+///*        RECOPY THE COEFS RESULTING FROM THE CONVERSION IN THE TABLE */
+///*        OF RESULTS */
+//
+//	    i__3 = ncoeff;
+//	    for (i__ = 1; i__ <= i__3; ++i__) {
+//		tcbnew[d__ + (i__ + e * tcbnew_dim2) * tcbnew_dim1] = taux1[
+//			i__ - 1];
+//	    }
+//
+//	}
+//    }
+//
+//    goto L9999;
+//
+///* ***********************************************************************
+// */
+///*                   PROCESSING OF ERRORS */
+///* ***********************************************************************
+// */
+//
+//L9101:
+//    *iercod = 1;
+//    goto L9999;
+//L9102:
+//    *iercod = 2;
+//    goto L9999;
+//
+///* ***********************************************************************
+// */
+///*                   RETURN CALLING PROGRAM */
+///* ***********************************************************************
+// */
+//
+//L9999:
+//
+//    AdvApp2Var_SysBase::maermsg_("MMHJCAN", iercod, 7L);
+//    if (ldbg) {
+//	AdvApp2Var_SysBase::mgsomsg_("MMHJCAN", 7L);
+//    }
+// return 0 ;
+//} /* mmhjcan_ */
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mminltt_
-//purpose  : 
+//purpose  :
 //=======================================================================
  int AdvApp2Var_MathBase::mminltt_(integer *ncolmx,
-			    integer *nlgnmx, 
-			    doublereal *tabtri, 
-			    integer *nbrcol, 
-			    integer *nbrlgn, 
-			    doublereal *ajoute, 
-			    doublereal *,//epseg, 
+			    integer *nlgnmx,
+			    doublereal *tabtri,
+			    integer *nbrcol,
+			    integer *nbrlgn,
+			    doublereal *ajoute,
+			    doublereal *,//epseg,
 			    integer *iercod)
 {
   /* System generated locals */
   integer tabtri_dim1, tabtri_offset, i__1, i__2;
-  
+
   /* Local variables */
   logical idbg;
   integer icol, ilgn, nlgn, noct, inser;
@@ -5926,7 +5926,7 @@ L9999:
 
 /*     DESCRIPTION/NOTES/LIMITATIONS : */
 /*     ----------------------------------- */
-/*        . The line is inserted only if there is no line with all 
+/*        . The line is inserted only if there is no line with all
 */
 /*     elements equl to those which are planned to be insered, to epsilon. */
 
@@ -5984,8 +5984,8 @@ L9999:
 	    if (tabtri[ilgn * tabtri_dim1 + 1] <= ajoute[1] + epsega) {
 		i__2 = *nbrcol;
 		for (icol = 1; icol <= i__2; ++icol) {
-		    if (tabtri[icol + ilgn * tabtri_dim1] < ajoute[icol] - 
-			    epsega || tabtri[icol + ilgn * tabtri_dim1] > 
+		    if (tabtri[icol + ilgn * tabtri_dim1] < ajoute[icol] -
+			    epsega || tabtri[icol + ilgn * tabtri_dim1] >
 			    ajoute[icol] + epsega) {
 			goto L20;
 		    }
@@ -6038,16 +6038,16 @@ L70:
     nlgn = *nbrlgn - inser;
     if (nlgn > 0) {
 	noct = (*ncolmx << 3) * nlgn;
-	AdvApp2Var_SysBase::mcrfill_(&noct, 
-		 &tabtri[inser * tabtri_dim1 + 1], 
+	AdvApp2Var_SysBase::mcrfill_(&noct,
+		 &tabtri[inser * tabtri_dim1 + 1],
 		 &tabtri[(inser + 1)* tabtri_dim1 + 1]);
     }
 
 /* --- Copy line */
 
     noct = *nbrcol << 3;
-    AdvApp2Var_SysBase::mcrfill_(&noct, 
-	     &ajoute[1], 
+    AdvApp2Var_SysBase::mcrfill_(&noct,
+	     &ajoute[1],
 	     &tabtri[inser * tabtri_dim1 + 1]);
 
     goto L9999;
@@ -6075,16 +6075,16 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmjacan_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mmjacan_(const integer *ideriv, 
-			    integer *ndeg, 
-			    doublereal *poljac, 
+ int AdvApp2Var_MathBase::mmjacan_(const integer *ideriv,
+			    integer *ndeg,
+			    doublereal *poljac,
 			    doublereal *polcan)
 {
     /* System generated locals */
   integer poljac_dim1, i__1, i__2;
-  
+
   /* Local variables */
   integer iptt, i__, j, ibb;
   doublereal bid;
@@ -6168,7 +6168,7 @@ L9999:
 	AdvApp2Var_SysBase::mgenmsg_("MMJACAN", 7L);
     }
 
-/* ----------------- Expression of terms of even degree ---------------- 
+/* ----------------- Expression of terms of even degree ----------------
 */
 
     i__1 = *ndeg / 2;
@@ -6185,7 +6185,7 @@ L9999:
 /* L300: */
     }
 
-/* --------------- Expression of terms of uneven degree ---------------- 
+/* --------------- Expression of terms of uneven degree ----------------
 */
 
     if (*ndeg == 0) {
@@ -6198,7 +6198,7 @@ L9999:
 	iptt = i__ * 31 - (i__ + 1) * i__ / 2 + 1;
 	i__2 = (*ndeg - 1) / 2;
 	for (j = i__; j <= i__2; ++j) {
-	    bid += mmjcobi_.plgcan[iptt + j + ((*ideriv << 1) + 1) * 496 + 
+	    bid += mmjcobi_.plgcan[iptt + j + ((*ideriv << 1) + 1) * 496 +
 		    991] * poljac[j + poljac_dim1];
 /* L410: */
 	}
@@ -6206,7 +6206,7 @@ L9999:
 /* L400: */
     }
 
-/* -------------------------------- The end ----------------------------- 
+/* -------------------------------- The end -----------------------------
 */
 
 L9999:
@@ -6218,24 +6218,24 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmjaccv_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mmjaccv_(const integer *ncoef, 
-			    const integer *ndim, 
-			    const integer *ider, 
+ int AdvApp2Var_MathBase::mmjaccv_(const integer *ncoef,
+			    const integer *ndim,
+			    const integer *ider,
 			    const doublereal *crvlgd,
 			    doublereal *polaux,
 			    doublereal *crvcan)
 
 {
   /* Initialized data */
-  
+
   static char nomprg[8+1] = "MMJACCV ";
-  
+
   /* System generated locals */
-  integer crvlgd_dim1, crvlgd_offset, crvcan_dim1, crvcan_offset, 
+  integer crvlgd_dim1, crvlgd_offset, crvcan_dim1, crvcan_offset,
   polaux_dim1, i__1, i__2;
-  
+
   /* Local variables */
   integer ndeg, i__, nd, ii, ibb;
 
@@ -6273,7 +6273,7 @@ L9999:
 /*     ----------------------------------- */
 
 /* > */
-/* ********************************************************************* 
+/* *********************************************************************
 */
 
 /*   Name of the routine */
@@ -6327,25 +6327,25 @@ L9999:
 
 //=======================================================================
 //function : mmloncv_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int mmloncv_(integer *ndimax,
 	     integer *ndimen,
 	     integer *ncoeff,
-	     doublereal *courbe, 
-	     doublereal *tdebut, 
-	     doublereal *tfinal, 
-	     doublereal *xlongc, 
+	     doublereal *courbe,
+	     doublereal *tdebut,
+	     doublereal *tfinal,
+	     doublereal *xlongc,
 	     integer *iercod)
 
 {
   /* Initialized data */
-  
+
   integer kgar = 0;
-  
+
   /* System generated locals */
   integer courbe_dim1, courbe_offset, i__1, i__2;
-  
+
   /* Local variables */
   doublereal tran;
   integer ngaus = 0;
@@ -6358,7 +6358,7 @@ int mmloncv_(integer *ndimax,
 
 
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : Length of an arc of curve on a given interval */
@@ -6366,7 +6366,7 @@ int mmloncv_(integer *ndimax,
 /*                which of is a multidimensional polynom. */
 /*      The polynom is a set of polynoms the coefficients which of are ranked */
 /*  in a table with 2 indices, each line relative to 1 polynom. */
-/*      The polynom is defined by its coefficients ordered by increasing 
+/*      The polynom is defined by its coefficients ordered by increasing
 *       power of the variable. */
 /*      All polynoms have the same number of coefficients (and the same degree). */
 
@@ -6430,7 +6430,7 @@ int mmloncv_(integer *ndimax,
 /*      If you wish to control it, use  MMCGLC1, taking into account that  */
 /*      the performance (in time) will be worse. */
 
-/* >===================================================================== 
+/* >=====================================================================
 */
 
 /*      ATTENTION : SAVE KGAR WGAUS and UROOT EVENTUALLY */
@@ -6565,20 +6565,20 @@ L9900:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmpobas_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mmpobas_(doublereal *tparam, 
-			    integer *iordre, 
-			    integer *ncoeff, 
-			    integer *nderiv, 
-			    doublereal *valbas, 
+ int AdvApp2Var_MathBase::mmpobas_(doublereal *tparam,
+			    integer *iordre,
+			    integer *ncoeff,
+			    integer *nderiv,
+			    doublereal *valbas,
 			    integer *iercod)
 
 {
   integer c__2 = 2;
   integer c__1 = 1;
 
-  
+
    /* Initialized data */
 
     doublereal moin11[2] = { -1.,1. };
@@ -6709,13 +6709,13 @@ L9900:
 
 	i__1 = *iordre;
 	for (ii = 0; ii <= i__1; ++ii) {
-	    mmdrvcb_(nderiv, &c__1, &iorjac, &hermit[(ii + 3) * 6 - 18], 
+	    mmdrvcb_(nderiv, &c__1, &iorjac, &hermit[(ii + 3) * 6 - 18],
 		    tparam, &herm[jj - 1], &ier);
 	    if (ier > 0) {
 		goto L9102;
 	    }
 
-	    mmdrvcb_(nderiv, &c__1, &iorjac, &hermit[(ii + 6) * 6 - 18], 
+	    mmdrvcb_(nderiv, &c__1, &iorjac, &hermit[(ii + 6) * 6 - 18],
 		    tparam, &herm[jj + khe - 1], &ier);
 	    if (ier > 0) {
 		goto L9102;
@@ -6727,10 +6727,10 @@ L9900:
 
 	i__1 = *iordre;
 	for (ii = 0; ii <= i__1; ++ii) {
-	    AdvApp2Var_MathBase::mmpocrb_(&c__1, &iorjac, &hermit[(ii + 3) * 6 - 18], &c__1, 
+	    AdvApp2Var_MathBase::mmpocrb_(&c__1, &iorjac, &hermit[(ii + 3) * 6 - 18], &c__1,
 		    tparam, &herm[jj - 1]);
 
-	    AdvApp2Var_MathBase::mmpocrb_(&c__1, &iorjac, &hermit[(ii + 6) * 6 - 18], &c__1, 
+	    AdvApp2Var_MathBase::mmpocrb_(&c__1, &iorjac, &hermit[(ii + 6) * 6 - 18], &c__1,
 		    tparam, &herm[jj + khe - 1]);
 	    jj += iunit;
 	}
@@ -6750,7 +6750,7 @@ L9900:
 /* Computing MAX */
     i__1 = iorjac + 1;
     nwcof = advapp_max(i__1,1);
-    AdvApp2Var_SysBase::mvriraz_(&nwcof, 
+    AdvApp2Var_SysBase::mvriraz_(&nwcof,
 	     wpoly);
     wpoly[0] = 1.;
     if (*iordre == 2) {
@@ -6817,8 +6817,8 @@ L9900:
 
 	i__1 = kk1;
 	for (ii = 1; ii <= i__1; ++ii) {
-	    valbas[ii + iorjac + (valbas_dim1 << 1)] = wval[0] * vjac(ii + 
-		    kk2) + wval[1] * 2 * vjac(ii + kk1) + wval[2] * 
+	    valbas[ii + iorjac + (valbas_dim1 << 1)] = wval[0] * vjac(ii +
+		    kk2) + wval[1] * 2 * vjac(ii + kk1) + wval[2] *
 		    vjac(ii);
 	}
     }
@@ -6836,7 +6836,7 @@ L9900:
 	i__1 = kk1;
 	for (ii = 1; ii <= i__1; ++ii) {
 	    valbas[ii + iorjac + valbas_dim1 * 3] = wval[0] * vjac(ii + kk3)
-		  + wval[1] * 3 * vjac(ii + kk2) + wval[2] * 3 * 
+		  + wval[1] * 3 * vjac(ii + kk2) + wval[2] * 3 *
 		    vjac(ii + kk1) + wval[3] * vjac(ii);
 	}
     }
@@ -6872,19 +6872,19 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmpocrb_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mmpocrb_(integer *ndimax, 
-			    integer *ncoeff, 
-			    doublereal *courbe, 
-			    integer *ndim, 
-			    doublereal *tparam, 
+ int AdvApp2Var_MathBase::mmpocrb_(integer *ndimax,
+			    integer *ncoeff,
+			    doublereal *courbe,
+			    integer *ndim,
+			    doublereal *tparam,
 			    doublereal *pntcrb)
 
 {
   /* System generated locals */
   integer courbe_dim1, courbe_offset, i__1, i__2;
-  
+
   /* Local variables */
   integer ncof2;
   integer isize, nd, kcf, ncf;
@@ -6944,7 +6944,7 @@ L9999:
 
     /* Function Body */
     isize = *ndim << 3;
-    AdvApp2Var_SysBase::miraz_(&isize, 
+    AdvApp2Var_SysBase::miraz_(&isize,
 	   &pntcrb[1]);
 
     if (*ncoeff <= 0) {
@@ -7001,24 +7001,24 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmmpocur_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mmmpocur_(integer *ncofmx, 
-			     integer *ndim, 
-			     integer *ndeg, 
-			     doublereal *courbe, 
-			     doublereal *tparam, 
+ int AdvApp2Var_MathBase::mmmpocur_(integer *ncofmx,
+			     integer *ndim,
+			     integer *ndeg,
+			     doublereal *courbe,
+			     doublereal *tparam,
 			     doublereal *tabval)
 
 {
   /* System generated locals */
   integer courbe_dim1, courbe_offset, i__1;
-  
+
   /* Local variables */
   integer i__, nd;
   doublereal fu;
-  
- 
+
+
 /* ***********************************************************************
  */
 
@@ -7085,18 +7085,18 @@ L9999:
 
 //=======================================================================
 //function : mmpojac_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mmpojac_(doublereal *tparam, 
-	     integer *iordre, 
-	     integer *ncoeff, 
-	     integer *nderiv, 
-	     NCollection_Array1<doublereal>& valjac, 
+int mmpojac_(doublereal *tparam,
+	     integer *iordre,
+	     integer *ncoeff,
+	     integer *nderiv,
+	     NCollection_Array1<doublereal>& valjac,
 	     integer *iercod)
 
 {
   integer c__2 = 2;
-  
+
     /* System generated locals */
     integer valjac_dim1, i__1, i__2;
 
@@ -7245,23 +7245,23 @@ int mmpojac_(doublereal *tparam,
 	denom = 1. / denom;
 
 /*        --> Pi(t) */
-	valjac(ii) = (cofa * *tparam * valjac(kk1) + cofb * valjac(kk2)) * 
+	valjac(ii) = (cofa * *tparam * valjac(kk1) + cofb * valjac(kk2)) *
 		denom;
 /*        --> P'i(t) */
 	if (*nderiv >= 1) {
-	    valjac(ii + valjac_dim1) = (cofa * *tparam * valjac(kk1 + 
-		    valjac_dim1) + cofa * valjac(kk1) + cofb * valjac(kk2 + 
+	    valjac(ii + valjac_dim1) = (cofa * *tparam * valjac(kk1 +
+		    valjac_dim1) + cofa * valjac(kk1) + cofb * valjac(kk2 +
 		    valjac_dim1)) * denom;
 /*        --> P''i(t) */
 	    if (*nderiv >= 2) {
 		valjac(ii + (valjac_dim1 << 1)) = (cofa * *tparam * valjac(
-			kk1 + (valjac_dim1 << 1)) + cofa * 2 * valjac(kk1 + 
+			kk1 + (valjac_dim1 << 1)) + cofa * 2 * valjac(kk1 +
 			valjac_dim1) + cofb * valjac(kk2 + (valjac_dim1 << 1))
 			) * denom;
 	    }
 /*        --> P'i(t) */
 	    if (*nderiv >= 3) {
-		valjac(ii + valjac_dim1 * 3) = (cofa * *tparam * valjac(kk1 + 
+		valjac(ii + valjac_dim1 * 3) = (cofa * *tparam * valjac(kk1 +
 			valjac_dim1 * 3) + cofa * 3 * valjac(kk1 + (
 			valjac_dim1 << 1)) + cofb * valjac(kk2 + valjac_dim1 *
 			 3)) * denom;
@@ -7275,7 +7275,7 @@ int mmpojac_(doublereal *tparam,
     for (ii = 1; ii <= i__1; ++ii) {
 	i__2 = *nderiv;
 	for (jj = 0; jj <= i__2; ++jj) {
-	    valjac(ii + jj * valjac_dim1) = tnorm[ii - 1] * valjac(ii + jj * 
+	    valjac(ii + jj * valjac_dim1) = tnorm[ii - 1] * valjac(ii + jj *
 		    valjac_dim1);
 	}
     }
@@ -7309,18 +7309,18 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmposui_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mmposui_(integer *dimmat, 
-			    integer *,//nistoc, 
-			    integer *aposit, 
-			    integer *posuiv, 
+ int AdvApp2Var_MathBase::mmposui_(integer *dimmat,
+			    integer *,//nistoc,
+			    integer *aposit,
+			    integer *posuiv,
 			    integer *iercod)
 
 {
   /* System generated locals */
   integer i__1, i__2;
-  
+
   /* Local variables */
   logical ldbg;
   integer imin, jmin, i__, j, k;
@@ -7463,28 +7463,28 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmresol_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mmresol_(integer *hdimen, 
-			    integer *gdimen, 
-			    integer *hnstoc, 
-			    integer *gnstoc, 
-			    integer *mnstoc, 
-			    doublereal *matsyh, 
-			    doublereal *matsyg, 
-			    doublereal *vecsyh, 
-			    doublereal *vecsyg, 
-			    integer *hposit, 
-			    integer *hposui, 
-			    integer *gposit, 
-			    integer *mmposui, 
-			    integer *mposit, 
-			    doublereal *vecsol, 
+ int AdvApp2Var_MathBase::mmresol_(integer *hdimen,
+			    integer *gdimen,
+			    integer *hnstoc,
+			    integer *gnstoc,
+			    integer *mnstoc,
+			    doublereal *matsyh,
+			    doublereal *matsyg,
+			    doublereal *vecsyh,
+			    doublereal *vecsyg,
+			    integer *hposit,
+			    integer *hposui,
+			    integer *gposit,
+			    integer *mmposui,
+			    integer *mposit,
+			    doublereal *vecsol,
 			    integer *iercod)
 
 {
   integer c__100 = 100;
- 
+
    /* System generated locals */
     integer i__1, i__2;
 
@@ -7521,7 +7521,7 @@ L9999:
 /*     -------------------- */
 /*      HDIMEN: NOMBER OF LINE (OR COLUMN) OF THE HESSIAN MATRIX */
 /*      GDIMEN: NOMBER OF LINE OF THE MATRIX OF CONSTRAINTS */
-/*      HNSTOC: NOMBErS OF TERMS IN THE PROFILE OF HESSIAN MATRIX 
+/*      HNSTOC: NOMBErS OF TERMS IN THE PROFILE OF HESSIAN MATRIX
 */
 /*      GNSTOC: NOMBERS OF TERMS IN THE PROFILE OF THE MATRIX OF CONSTRAINTS */
 /*      MNSTOC: NOMBERS OF TERMS IN THE PROFILE OF THE MATRIX M= G H t(G) */
@@ -7698,7 +7698,7 @@ L9999:
 		k = j + aux;
 		v1[j + iofv1 - 1] = matsyg[k];
 	    }
-	    mmrslss_(hnstoc, hdimen, &hchole[iofhch], &hposit[3], &hposui[1], 
+	    mmrslss_(hnstoc, hdimen, &hchole[iofhch], &hposit[3], &hposui[1],
 		    &v1[iofv1], &v3[iofv3], &ier);
 	    if (ier > 0) {
 		goto L9101;
@@ -7742,7 +7742,7 @@ L9999:
 	}
 
 
-/*    CALCULATE THE VECTOR OF THE SECOND MEMBER OF THE SYSTEM  Hx = b - t(G) L 
+/*    CALCULATE THE VECTOR OF THE SECOND MEMBER OF THE SYSTEM  Hx = b - t(G) L
 */
 /*                                                      = V1 */
 
@@ -7836,20 +7836,20 @@ L9999:
 
 //=======================================================================
 //function : mmrslss_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mmrslss_(integer *,//mxcoef, 
-	     integer *dimens, 
-	     doublereal *smatri, 
+int mmrslss_(integer *,//mxcoef,
+	     integer *dimens,
+	     doublereal *smatri,
 	     integer *sposit,
-	     integer *posuiv, 
+	     integer *posuiv,
 	     doublereal *mscnmbr,
-	     doublereal *soluti, 
+	     doublereal *soluti,
 	     integer *iercod)
 {
   /* System generated locals */
   integer i__1, i__2;
-  
+
   /* Local variables */
   logical ldbg;
   integer i__, j;
@@ -7993,18 +7993,18 @@ L9999:
 
 //=======================================================================
 //function : mmrslw_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mmrslw_(integer *normax, 
-	    integer *nordre, 
-	    integer *ndimen, 
+int mmrslw_(integer *normax,
+	    integer *nordre,
+	    integer *ndimen,
 	    doublereal *epspiv,
 	    doublereal *abmatr,
-	    doublereal *xmatri, 
+	    doublereal *xmatri,
 	    integer *iercod)
 {
   /* System generated locals */
-    integer abmatr_dim1, abmatr_offset, xmatri_dim1, xmatri_offset, i__1, 
+    integer abmatr_dim1, abmatr_offset, xmatri_dim1, xmatri_offset, i__1,
 	    i__2, i__3;
     doublereal d__1;
 
@@ -8013,9 +8013,9 @@ int mmrslw_(integer *normax,
     doublereal pivot;
     integer ii, jj, kk;
     doublereal akj;
-    
 
-/* ********************************************************************** 
+
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -8084,7 +8084,7 @@ int mmrslw_(integer *normax,
 /*     To use this routine, it is recommended to use one of */
 /*     interfaces : MMRSLWI or MMMRSLWD. */
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*   Name of the routine */
@@ -8104,10 +8104,10 @@ int mmrslw_(integer *normax,
     /* Function Body */
     *iercod = 0;
 
-/* ********************************************************************* 
+/* *********************************************************************
 */
 /*                  Triangulation of matrix ABMATR. */
-/* ********************************************************************* 
+/* *********************************************************************
 */
 
     i__1 = *nordre;
@@ -8138,7 +8138,7 @@ int mmrslw_(integer *normax,
 	    i__2 = *nordre + *ndimen;
 	    for (jj = kk; jj <= i__2; ++jj) {
 		akj = abmatr[jj + kk * abmatr_dim1];
-		abmatr[jj + kk * abmatr_dim1] = abmatr[jj + kpiv * 
+		abmatr[jj + kk * abmatr_dim1] = abmatr[jj + kpiv *
 			abmatr_dim1];
 		abmatr[jj + kpiv * abmatr_dim1] = akj;
 /* L200: */
@@ -8154,7 +8154,7 @@ int mmrslw_(integer *normax,
 	    akj = abmatr[kk + ii * abmatr_dim1] / pivot;
 	    i__3 = *nordre + *ndimen;
 	    for (jj = kk + 1; jj <= i__3; ++jj) {
-		abmatr[jj + ii * abmatr_dim1] += akj * abmatr[jj + kk * 
+		abmatr[jj + ii * abmatr_dim1] += akj * abmatr[jj + kk *
 			abmatr_dim1];
 /* L400: */
 	    }
@@ -8165,16 +8165,16 @@ int mmrslw_(integer *normax,
 /* L1000: */
     }
 
-/* ********************************************************************* 
+/* *********************************************************************
 */
 /*          Solution of the system of triangular equations. */
 /*   Matrix ABMATR(NORDRE+JJ,II), contains second members  */
 /*             of the system for 1<=j<=NDIMEN and 1<=i<=NORDRE. */
-/* ********************************************************************* 
+/* *********************************************************************
 */
 
 
-/* ---------------- Calculation of solutions by ascending. ----------------- 
+/* ---------------- Calculation of solutions by ascending. -----------------
 */
 
     for (kk = *nordre; kk >= 1; --kk) {
@@ -8184,7 +8184,7 @@ int mmrslw_(integer *normax,
 	    akj = abmatr[ii + *nordre + kk * abmatr_dim1];
 	    i__2 = *nordre;
 	    for (jj = kk + 1; jj <= i__2; ++jj) {
-		akj -= abmatr[jj + kk * abmatr_dim1] * xmatri[jj + ii * 
+		akj -= abmatr[jj + kk * abmatr_dim1] * xmatri[jj + ii *
 			xmatri_dim1];
 /* L800: */
 	    }
@@ -8196,7 +8196,7 @@ int mmrslw_(integer *normax,
     goto L9999;
 
 /* ------If the absolute value of a pivot is smaller than -------- */
-/* ---------- EPSPIV: return the code of error. ------------ 
+/* ---------- EPSPIV: return the code of error. ------------
 */
 
 L9900:
@@ -8211,26 +8211,26 @@ L9999:
 /*      IF (IBB.GE.2) CALL MGSOMSG(NOMPR) */
  return 0 ;
 } /* mmrslw_ */
- 
+
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmmrslwd_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mmmrslwd_(integer *normax, 
+ int AdvApp2Var_MathBase::mmmrslwd_(integer *normax,
 			     integer *nordre,
 			     integer *ndim,
-			     doublereal *amat, 
+			     doublereal *amat,
 			     doublereal *bmat,
-			     doublereal *epspiv, 
-			     doublereal *aaux, 
-			     doublereal *xmat, 
+			     doublereal *epspiv,
+			     doublereal *aaux,
+			     doublereal *xmat,
 			     integer *iercod)
 
 {
   /* System generated locals */
-  integer amat_dim1, amat_offset, bmat_dim1, bmat_offset, xmat_dim1, 
+  integer amat_dim1, amat_offset, bmat_dim1, bmat_offset, xmat_dim1,
   xmat_offset, aaux_dim1, aaux_offset, i__1, i__2;
-  
+
   /* Local variables */
   integer i__, j;
   integer ibb;
@@ -8239,7 +8239,7 @@ L9999:
 /*      IMPLICIT INTEGER (I-N) */
 
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -8297,7 +8297,7 @@ L9999:
 /*     is the index of columns (Compare with MMRSLWI which is faster). */
 
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*   Name of the routine */
@@ -8363,16 +8363,16 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmrtptt_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mmrtptt_(integer *ndglgd, 
+ int AdvApp2Var_MathBase::mmrtptt_(integer *ndglgd,
 			    doublereal *rtlegd)
 
 {
   integer ideb, nmod2, nsur2, ilong, ibb;
 
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -8407,7 +8407,7 @@ L9999:
 /*     tested. The caller should make the test. */
 
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*   Nome of the routine */
 
@@ -8470,11 +8470,11 @@ L9999:
 
     ilong = nsur2 << 3;
     ideb = nsur2 * (nsur2 - 1) / 2 + 1;
-    AdvApp2Var_SysBase::mcrfill_(&ilong, 
-	     &mlgdrtl_.rootab[ideb + nmod2 * 465 - 1], 
+    AdvApp2Var_SysBase::mcrfill_(&ilong,
+	     &mlgdrtl_.rootab[ideb + nmod2 * 465 - 1],
 	     &rtlegd[1]);
 
-/* ----------------------------- The end -------------------------------- 
+/* ----------------------------- The end --------------------------------
 */
 
 L9999:
@@ -8486,19 +8486,19 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmsrre2_
-//purpose  : 
+//purpose  :
 //=======================================================================
  int AdvApp2Var_MathBase::mmsrre2_(doublereal *tparam,
-			    integer *nbrval, 
-			    doublereal *tablev, 
-			    doublereal *epsil, 
-			    integer *numint, 
-			    integer *itypen, 
+			    integer *nbrval,
+			    doublereal *tablev,
+			    doublereal *epsil,
+			    integer *numint,
+			    integer *itypen,
 			    integer *iercod)
 {
   /* System generated locals */
   doublereal d__1;
-  
+
   /* Local variables */
   integer ideb, ifin, imil, ibb;
 
@@ -8585,7 +8585,7 @@ L9999:
 	goto L9999;
     }
 
-/* ----------------------- SEARCH OF THE INTERVAL -------------------- 
+/* ----------------------- SEARCH OF THE INTERVAL --------------------
 */
 
 L1000:
@@ -8609,7 +8609,7 @@ L1000:
     goto L1000;
 
 /* -------------- TEST IF TPARAM IS NOT A VALUE --------- */
-/* ------------------------OF TABLEV UP TO EPSIL ---------------------- 
+/* ------------------------OF TABLEV UP TO EPSIL ----------------------
 */
 
 L2000:
@@ -8622,7 +8622,7 @@ L2000:
 	goto L9999;
     }
 
-/* --------------------------- THE END ---------------------------------- 
+/* --------------------------- THE END ----------------------------------
 */
 
 L9999:
@@ -8637,27 +8637,27 @@ L9999:
 
 //=======================================================================
 //function : mmtmave_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mmtmave_(integer *nligne, 
-	     integer *ncolon, 
-	     integer *gposit, 
-	     integer *,//gnstoc, 
+int mmtmave_(integer *nligne,
+	     integer *ncolon,
+	     integer *gposit,
+	     integer *,//gnstoc,
 	     doublereal *gmatri,
-	     doublereal *vecin, 
-	     doublereal *vecout, 
+	     doublereal *vecin,
+	     doublereal *vecout,
 	     integer *iercod)
 
 {
   /* System generated locals */
   integer i__1, i__2;
-  
+
   /* Local variables */
   logical ldbg;
   integer imin, imax, i__, j, k;
   doublereal somme;
   integer aux;
-  
+
 
 /* ***********************************************************************
  */
@@ -8787,27 +8787,27 @@ L9999:
 
 //=======================================================================
 //function : mmtrpj0_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int mmtrpj0_(integer *ncofmx,
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *epsi3d, 
-	     doublereal *crvlgd, 
-	     doublereal *ycvmax, 
-	     doublereal *epstrc, 
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *epsi3d,
+	     doublereal *crvlgd,
+	     doublereal *ycvmax,
+	     doublereal *epstrc,
 	     integer *ncfnew)
 
 {
   /* System generated locals */
   integer crvlgd_dim1, crvlgd_offset, i__1, i__2;
   doublereal d__1;
-  
+
   /* Local variables */
   integer ncut, i__;
   doublereal bidon, error;
   integer nd;
-  
+
 
 /* ***********************************************************************
  */
@@ -8847,7 +8847,7 @@ int mmtrpj0_(integer *ncofmx,
  */
 
 
-/* ------- Minimum degree that can be attained : Stop at 1 (RBD) --------- 
+/* ------- Minimum degree that can be attained : Stop at 1 (RBD) ---------
 */
 
     /* Parameter adjustments */
@@ -8858,7 +8858,7 @@ int mmtrpj0_(integer *ncofmx,
 
     /* Function Body */
     *ncfnew = 1;
-/* ------------------- Init for error calculation ----------------------- 
+/* ------------------- Init for error calculation -----------------------
 */
     i__1 = *ndimen;
     for (i__ = 1; i__ <= i__1; ++i__) {
@@ -8871,7 +8871,7 @@ int mmtrpj0_(integer *ncofmx,
 /*   Cutting of coefficients. */
 
     ncut = 2;
-/* ------ Loop on the series of Legendre :NCOEFF --> 2 (RBD) ----------- 
+/* ------ Loop on the series of Legendre :NCOEFF --> 2 (RBD) -----------
 */
     i__1 = ncut;
     for (i__ = *ncoeff; i__ >= i__1; --i__) {
@@ -8898,7 +8898,7 @@ int mmtrpj0_(integer *ncofmx,
 /* L300: */
     }
 
-/* --------------------------------- End -------------------------------- 
+/* --------------------------------- End --------------------------------
 */
 
 L9999:
@@ -8907,15 +8907,15 @@ L9999:
 
 //=======================================================================
 //function : mmtrpj2_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int mmtrpj2_(integer *ncofmx,
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *epsi3d, 
-	     doublereal *crvlgd, 
-	     doublereal *ycvmax, 
-	     doublereal *epstrc, 
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *epsi3d,
+	     doublereal *crvlgd,
+	     doublereal *ycvmax,
+	     doublereal *epstrc,
 	     integer *ncfnew)
 
 {
@@ -9012,7 +9012,7 @@ int mmtrpj2_(integer *ncofmx,
 
 /*     OUTPUT ARGUMENTS : */
 /*     ------------------- */
-/*        YCVMAX : Auxiliary table (error max on each dimension). 
+/*        YCVMAX : Auxiliary table (error max on each dimension).
 */
 /*        EPSTRC : Precision of the approximation. */
 /*        NCFNEW : Degree +1 of the resulting polynom. */
@@ -9040,7 +9040,7 @@ int mmtrpj2_(integer *ncofmx,
 
 
 
-/*   Minimum degree that can be reached : Stop at IA (RBD). ------------- 
+/*   Minimum degree that can be reached : Stop at IA (RBD). -------------
 */
     ia = 2;
     *ncfnew = ia;
@@ -9056,7 +9056,7 @@ int mmtrpj2_(integer *ncofmx,
 /*   Cutting of coefficients. */
 
     ncut = ia + 1;
-/* ------ Loop on the series of Jacobi :NCOEFF --> IA+1 (RBD) ---------- 
+/* ------ Loop on the series of Jacobi :NCOEFF --> IA+1 (RBD) ----------
 */
     i__1 = ncut;
     for (i__ = *ncoeff; i__ >= i__1; --i__) {
@@ -9082,7 +9082,7 @@ int mmtrpj2_(integer *ncofmx,
 /* L300: */
     }
 
-/* ------- Cutting of zero coeffs of interpolation (RBD) ------- 
+/* ------- Cutting of zero coeffs of interpolation (RBD) -------
 */
 
 L400:
@@ -9105,7 +9105,7 @@ L400:
 	*ncfnew = 1;
     }
 
-/* --------------------------------- End -------------------------------- 
+/* --------------------------------- End --------------------------------
 */
 
 L9999:
@@ -9114,15 +9114,15 @@ L9999:
 
 //=======================================================================
 //function : mmtrpj4_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int mmtrpj4_(integer *ncofmx,
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *epsi3d, 
-	     doublereal *crvlgd, 
-	     doublereal *ycvmax, 
-	     doublereal *epstrc, 
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *epsi3d,
+	     doublereal *crvlgd,
+	     doublereal *ycvmax,
+	     doublereal *epstrc,
 	     integer *ncfnew)
 {
     /* Initialized data */
@@ -9217,7 +9217,7 @@ int mmtrpj4_(integer *ncofmx,
 
 /*     OUTPUT ARGUMENTS : */
 /*     ------------------- */
-/*        YCVMAX : Auxiliary table (max error on each dimension). 
+/*        YCVMAX : Auxiliary table (max error on each dimension).
 */
 /*        EPSTRC : Precision of the approximation. */
 /*        NCFNEW : Degree +1 of the resulting polynom. */
@@ -9245,7 +9245,7 @@ int mmtrpj4_(integer *ncofmx,
 
 
 
-/*   Minimum degree that can be reached : Stop at IA (RBD). ------------- 
+/*   Minimum degree that can be reached : Stop at IA (RBD). -------------
 */
     ia = 4;
     *ncfnew = ia;
@@ -9261,7 +9261,7 @@ int mmtrpj4_(integer *ncofmx,
 /*   Cutting of coefficients. */
 
     ncut = ia + 1;
-/* ------ Loop on the series of Jacobi :NCOEFF --> IA+1 (RBD) ---------- 
+/* ------ Loop on the series of Jacobi :NCOEFF --> IA+1 (RBD) ----------
 */
     i__1 = ncut;
     for (i__ = *ncoeff; i__ >= i__1; --i__) {
@@ -9287,7 +9287,7 @@ int mmtrpj4_(integer *ncofmx,
 /* L300: */
     }
 
-/* ------- Cutting of zero coeffs of the pole of interpolation (RBD) ------- 
+/* ------- Cutting of zero coeffs of the pole of interpolation (RBD) -------
 */
 
 L400:
@@ -9310,7 +9310,7 @@ L400:
 	*ncfnew = 1;
     }
 
-/* --------------------------------- End -------------------------------- 
+/* --------------------------------- End --------------------------------
 */
 
 L9999:
@@ -9319,15 +9319,15 @@ L9999:
 
 //=======================================================================
 //function : mmtrpj6_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int mmtrpj6_(integer *ncofmx,
-	     integer *ndimen, 
-	     integer *ncoeff, 
-	     doublereal *epsi3d, 
-	     doublereal *crvlgd, 
-	     doublereal *ycvmax, 
-	     doublereal *epstrc, 
+	     integer *ndimen,
+	     integer *ncoeff,
+	     doublereal *epsi3d,
+	     doublereal *crvlgd,
+	     doublereal *ycvmax,
+	     doublereal *epstrc,
 	     integer *ncfnew)
 
 {
@@ -9448,7 +9448,7 @@ int mmtrpj6_(integer *ncofmx,
 
 
 
-/*   Minimum degree that can be reached : Stop at IA (RBD). ------------- 
+/*   Minimum degree that can be reached : Stop at IA (RBD). -------------
 */
     ia = 6;
     *ncfnew = ia;
@@ -9464,7 +9464,7 @@ int mmtrpj6_(integer *ncofmx,
 /*   Cutting of coefficients. */
 
     ncut = ia + 1;
-/* ------ Loop on the series of Jacobi :NCOEFF --> IA+1 (RBD) ---------- 
+/* ------ Loop on the series of Jacobi :NCOEFF --> IA+1 (RBD) ----------
 */
     i__1 = ncut;
     for (i__ = *ncoeff; i__ >= i__1; --i__) {
@@ -9490,7 +9490,7 @@ int mmtrpj6_(integer *ncofmx,
 /* L300: */
     }
 
-/* ------- Cutting of zero coeff. of the pole of interpolation (RBD) ------- 
+/* ------- Cutting of zero coeff. of the pole of interpolation (RBD) -------
 */
 
 L400:
@@ -9513,7 +9513,7 @@ L400:
 	*ncfnew = 1;
     }
 
-/* --------------------------------- End -------------------------------- 
+/* --------------------------------- End --------------------------------
 */
 
 L9999:
@@ -9522,16 +9522,16 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmtrpjj_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mmtrpjj_(integer *ncofmx, 
-			    integer *ndimen, 
-			    integer *ncoeff, 
-			    doublereal *epsi3d, 
-			    integer *iordre, 
-			    doublereal *crvlgd, 
-			    doublereal *ycvmax, 
-			    doublereal *errmax, 
+ int AdvApp2Var_MathBase::mmtrpjj_(integer *ncofmx,
+			    integer *ndimen,
+			    integer *ncoeff,
+			    doublereal *epsi3d,
+			    integer *iordre,
+			    doublereal *crvlgd,
+			    doublereal *ycvmax,
+			    doublereal *errmax,
 			    integer *ncfnew)
 {
     /* System generated locals */
@@ -9539,7 +9539,7 @@ L9999:
 
     /* Local variables */
     integer ia;
-   
+
 
 /* ***********************************************************************
  */
@@ -9603,7 +9603,7 @@ L9999:
 		ycvmax[1], errmax, ncfnew);
     }
 
-/* ------------------------ End ----------------------------------------- 
+/* ------------------------ End -----------------------------------------
 */
 
     return 0;
@@ -9611,17 +9611,17 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmunivt_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mmunivt_(integer *ndimen, 
-	     doublereal *vector, 
-	     doublereal *vecnrm, 
-	     doublereal *epsiln, 
+ int AdvApp2Var_MathBase::mmunivt_(integer *ndimen,
+	     doublereal *vector,
+	     doublereal *vecnrm,
+	     doublereal *epsiln,
 	     integer *iercod)
 {
- 
+
   doublereal c_b2 = 10.;
-  
+
     /* System generated locals */
     integer i__1;
     doublereal d__1;
@@ -9689,7 +9689,7 @@ L9999:
     /* Function Body */
     *iercod = 0;
 
-/* -------- Precision by default : zero machine 10.D-17 on Vax ------ 
+/* -------- Precision by default : zero machine 10.D-17 on Vax ------
 */
 
     AdvApp2Var_SysBase::maovsr8_(&nchif);
@@ -9700,7 +9700,7 @@ L9999:
 	eps0 = *epsiln;
     }
 
-/* ------------------------- Calculation of the norm -------------------- 
+/* ------------------------- Calculation of the norm --------------------
 */
 
     vnorm = AdvApp2Var_MathBase::mzsnorm_(ndimen, &vector[1]);
@@ -9710,7 +9710,7 @@ L9999:
 	goto L9999;
     }
 
-/* ---------------------- Calculation of the vector norm  --------------- 
+/* ---------------------- Calculation of the vector norm  ---------------
 */
 
     izero = 0;
@@ -9727,9 +9727,9 @@ L9999:
 /* L20: */
     }
 
-/* ------ Case when all coordinates except for one are almost null ---- 
+/* ------ Case when all coordinates except for one are almost null ----
 */
-/* ------------- then one of coordinates costs 1.D0 or -1.D0 -------- 
+/* ------------- then one of coordinates costs 1.D0 or -1.D0 --------
 */
 
     if (izero == *ndimen - 1) {
@@ -9746,7 +9746,7 @@ L9999:
 	}
     }
 
-/* -------------------------------- The end ----------------------------- 
+/* -------------------------------- The end -----------------------------
 */
 
 L9999:
@@ -9755,16 +9755,16 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmveps3_
-//purpose  : 
+//purpose  :
 //=======================================================================
  int AdvApp2Var_MathBase::mmveps3_(doublereal *eps03)
 {
   /* Initialized data */
-  
+
   static char nomprg[8+1] = "MMEPS1  ";
-  
+
   integer ibb;
-  
+
 
 
 /************************************************************************
@@ -9859,17 +9859,17 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmvncol_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mmvncol_(integer *ndimen, 
-			    doublereal *vecin, 
-			    doublereal *vecout, 
+ int AdvApp2Var_MathBase::mmvncol_(integer *ndimen,
+			    doublereal *vecin,
+			    doublereal *vecout,
 			    integer *iercod)
 
 {
   /* System generated locals */
   integer i__1;
-  
+
   /* Local variables */
   logical ldbg;
   integer d__;
@@ -9877,7 +9877,7 @@ L9999:
   logical colin;
   doublereal valaux;
   integer aux;
- 
+
 /* ***********************************************************************
  */
 
@@ -10028,13 +10028,13 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmwprcs_
-//purpose  : 
+//purpose  :
 //=======================================================================
-void AdvApp2Var_MathBase::mmwprcs_(doublereal *epsil1, 
-				   doublereal *epsil2, 
-				   doublereal *epsil3, 
-				   doublereal *epsil4, 
-				   integer *niter1, 
+void AdvApp2Var_MathBase::mmwprcs_(doublereal *epsil1,
+				   doublereal *epsil2,
+				   doublereal *epsil3,
+				   doublereal *epsil4,
+				   integer *niter1,
 				   integer *niter2)
 
 {
@@ -10150,7 +10150,7 @@ void AdvApp2Var_MathBase::mmwprcs_(doublereal *epsil1,
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::pow__di
-//purpose  : 
+//purpose  :
 //=======================================================================
  doublereal AdvApp2Var_MathBase::pow__di (doublereal *x,
 				   integer *n)
@@ -10169,14 +10169,14 @@ void AdvApp2Var_MathBase::mmwprcs_(doublereal *epsil1,
  }
  return result ;
 }
-   
 
-/* ********************************************************************** 
+
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
 /*     ---------- */
-/*        Calculate integer function power not obligatory in the most efficient way ; 
+/*        Calculate integer function power not obligatory in the most efficient way ;
 */
 
 /*     KEYWORDS : */
@@ -10206,9 +10206,9 @@ void AdvApp2Var_MathBase::mmwprcs_(doublereal *epsil1,
 
 //=======================================================================
 //function : pow__ii
-//purpose  : 
+//purpose  :
 //=======================================================================
-integer pow__ii(integer *x, 
+integer pow__ii(integer *x,
 		integer *n)
 
 {
@@ -10226,16 +10226,16 @@ integer pow__ii(integer *x,
  }
  return result ;
 }
-   
 
-/* ********************************************************************** 
+
+/* **********************************************************************
 */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
 /*     ---------- */
-/*        Calculate integer function power not obligatory in the most efficient way ; 
+/*        Calculate integer function power not obligatory in the most efficient way ;
 */
 
 /*     KEYWORDS : */
@@ -10265,21 +10265,21 @@ integer pow__ii(integer *x,
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::msc_
-//purpose  : 
+//purpose  :
 //=======================================================================
- doublereal AdvApp2Var_MathBase::msc_(integer *ndimen, 
-			       doublereal *vecte1, 
+ doublereal AdvApp2Var_MathBase::msc_(integer *ndimen,
+			       doublereal *vecte1,
 			       doublereal *vecte2)
 
 {
   /* System generated locals */
   integer i__1;
   doublereal ret_val;
-  
+
   /* Local variables */
   integer i__;
   doublereal x;
-  
+
 
 
 /************************************************************************
@@ -10331,7 +10331,7 @@ integer pow__ii(integer *x,
     }
     ret_val = x;
 
-/* ----------------------------------- THE END -------------------------- 
+/* ----------------------------------- THE END --------------------------
 */
 
     return ret_val;
@@ -10339,22 +10339,22 @@ integer pow__ii(integer *x,
 
 //=======================================================================
 //function : mvcvin2_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mvcvin2_(integer *ncoeff, 
-	     doublereal *crvold, 
+int mvcvin2_(integer *ncoeff,
+	     doublereal *crvold,
 	     doublereal *crvnew,
 	     integer *iercod)
 
 {
   /* System generated locals */
   integer i__1, i__2;
-  
+
   /* Local variables */
   integer m1jm1, ncfm1, j, k;
   doublereal bid;
   doublereal cij1, cij2;
-  
+
 
 
 /************************************************************************
@@ -10399,7 +10399,7 @@ int mvcvin2_(integer *ncoeff,
  */
 
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -10421,7 +10421,7 @@ int mvcvin2_(integer *ncoeff,
 
 
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
@@ -10489,25 +10489,25 @@ L9999:
 
 //=======================================================================
 //function : mvcvinv_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int mvcvinv_(integer *ncoeff,
-	     doublereal *crvold, 
-	     doublereal *crvnew, 
+	     doublereal *crvold,
+	     doublereal *crvnew,
 	     integer *iercod)
 
 {
   /* System generated locals */
   integer i__1, i__2;
-  
+
   /* Local variables */
   integer m1jm1, ncfm1, j, k;
   doublereal bid;
   //extern /* Subroutine */ int maermsg_();
   doublereal cij1, cij2, cij3;
-  
- 
-/* ********************************************************************** 
+
+
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -10548,7 +10548,7 @@ int mvcvinv_(integer *ncoeff,
 /* ***********************************************************************
  */
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -10568,7 +10568,7 @@ int mvcvinv_(integer *ncoeff,
 /*     Initialisation is done by block-data MMLLL09.RES, */
 /*     created by program MQINICNP.FOR (see the team (AC) ). */
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
@@ -10643,12 +10643,12 @@ L9999:
 
 //=======================================================================
 //function : mvgaus0_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mvgaus0_(integer *kindic, 
-	     doublereal *urootl, 
-	     doublereal *hiltab, 
-	     integer *nbrval, 
+int mvgaus0_(integer *kindic,
+	     doublereal *urootl,
+	     doublereal *hiltab,
+	     integer *nbrval,
 	     integer *iercod)
 
 {
@@ -10659,8 +10659,8 @@ int mvgaus0_(integer *kindic,
     doublereal tampc[40] = {};
     NCollection_Array1<doublereal> tamp (tampc[0], 1, 40);
     integer ndegl = 0, kg = 0, ii = 0;
-   
-/* ********************************************************************** 
+
+/* **********************************************************************
 */
 
 /*      FUNCTION : */
@@ -10717,7 +10717,7 @@ int mvgaus0_(integer *kindic,
 
 /*      See detailed explications on the listing */
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
@@ -10739,11 +10739,11 @@ int mvgaus0_(integer *kindic,
     *nbrval = kg << 1;
     ndegl = *nbrval << 1;
 
-/* ---------------------------------------------------------------------- 
+/* ----------------------------------------------------------------------
 */
-/* ****** Load NBRVAL positive roots depending on the degree ** 
+/* ****** Load NBRVAL positive roots depending on the degree **
 */
-/* ---------------------------------------------------------------------- 
+/* ----------------------------------------------------------------------
 */
 /* ATTENTION : Sign minus (-) in the loop is intentional. */
 
@@ -10774,23 +10774,23 @@ int mvgaus0_(integer *kindic,
 
 //=======================================================================
 //function : mvpscr2_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mvpscr2_(integer *ncoeff, 
-	     doublereal *curve2, 
-	     doublereal *tparam, 
+int mvpscr2_(integer *ncoeff,
+	     doublereal *curve2,
+	     doublereal *tparam,
 	     doublereal *pntcrb)
 {
   /* System generated locals */
   integer i__1;
-  
+
   /* Local variables */
   integer ndeg, kk;
   doublereal xxx, yyy;
 
 
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -10823,11 +10823,11 @@ int mvpscr2_(integer *ncoeff,
 /*     MSCHEMA OF HORNER. */
 
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
-/* -------- INITIALIZATIONS AND PROCESSING OF PARTICULAR CASES ---------- 
+/* -------- INITIALIZATIONS AND PROCESSING OF PARTICULAR CASES ----------
 */
 
 /* ---> Cas when NCOEFF > 1 (case STANDARD). */
@@ -10885,14 +10885,14 @@ L1000:
     }
     goto L5000;
 
-/* ------------------------ RECOVER THE CALCULATED POINT --------------- 
+/* ------------------------ RECOVER THE CALCULATED POINT ---------------
 */
 
 L5000:
     pntcrb[1] = xxx;
     pntcrb[2] = yyy;
 
-/* ------------------------------ THE END ------------------------------- 
+/* ------------------------------ THE END -------------------------------
 */
 
 L9999:
@@ -10901,24 +10901,24 @@ L9999:
 
 //=======================================================================
 //function : mvpscr3_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mvpscr3_(integer *ncoeff, 
-	     doublereal *curve3, 
-	     doublereal *tparam, 
+int mvpscr3_(integer *ncoeff,
+	     doublereal *curve3,
+	     doublereal *tparam,
 	     doublereal *pntcrb)
 
 {
   /* System generated locals */
   integer i__1;
-  
+
   /* Local variables */
   integer ndeg, kk;
   doublereal xxx, yyy, zzz;
 
 
 
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -10951,14 +10951,14 @@ int mvpscr3_(integer *ncoeff,
 /*     ----------------------------------- */
 /*     MSCHEMA OF HORNER. */
 /* > */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 /*                           DECLARATIONS */
-/* ********************************************************************** 
+/* **********************************************************************
 */
 
 
-/* -------- INITIALISATIONS AND PROCESSING OF PARTICULAR CASES ---------- 
+/* -------- INITIALISATIONS AND PROCESSING OF PARTICULAR CASES ----------
 */
 
 /* ---> Case when NCOEFF > 1 (cas STANDARD). */
@@ -11023,7 +11023,7 @@ L1000:
     }
     goto L5000;
 
-/* ------------------------ RETURN THE CALCULATED POINT ------------------ 
+/* ------------------------ RETURN THE CALCULATED POINT ------------------
 */
 
 L5000:
@@ -11031,7 +11031,7 @@ L5000:
     pntcrb[2] = yyy;
     pntcrb[3] = zzz;
 
-/* ------------------------------ THE END ------------------------------- 
+/* ------------------------------ THE END -------------------------------
 */
 
 L9999:
@@ -11040,17 +11040,17 @@ L9999:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mvsheld_
-//purpose  : 
+//purpose  :
 //=======================================================================
- int AdvApp2Var_MathBase::mvsheld_(integer *n, 
-			    integer *is, 
-			    doublereal *dtab, 
+ int AdvApp2Var_MathBase::mvsheld_(integer *n,
+			    integer *is,
+			    doublereal *dtab,
 			    integer *icle)
 
 {
   /* System generated locals */
   integer dtab_dim1, dtab_offset, i__1, i__2;
-  
+
   /* Local variables */
   integer incr;
   doublereal dsave;
@@ -11138,7 +11138,7 @@ L1004:
 	    goto L1003;
 	}
 /*           ------------------------- */
-	if (dtab[*icle + i4 * dtab_dim1] <= dtab[*icle + (i4 + incr) * 
+	if (dtab[*icle + i4 * dtab_dim1] <= dtab[*icle + (i4 + incr) *
 		dtab_dim1]) {
 	    goto L1003;
 	}
@@ -11172,11 +11172,11 @@ L9900:
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mzsnorm_
-//purpose  : 
+//purpose  :
 //=======================================================================
- doublereal AdvApp2Var_MathBase::mzsnorm_(integer *ndimen, 
+ doublereal AdvApp2Var_MathBase::mzsnorm_(integer *ndimen,
 				   doublereal *vecteu)
-   
+
 {
   /* System generated locals */
   integer i__1;
@@ -11185,8 +11185,8 @@ L9900:
   /* Local variables */
   doublereal xsom;
   integer i__, irmax;
-  
-  
+
+
 
 /* ***********************************************************************
  */
