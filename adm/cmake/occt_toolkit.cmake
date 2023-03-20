@@ -1,5 +1,7 @@
 # script for each OCCT toolkit
 
+message(STATUS "Processing " ${PROJECT_NAME})
+
 # filling some variables by default values(src) or using custom(tools, samples)
 set (RELATIVE_SOURCES_DIR "${RELATIVE_DIR}")
 if ("${RELATIVE_SOURCES_DIR}" STREQUAL "")
@@ -224,6 +226,8 @@ if (MSVC)
   endif()
 endif()
 
+
+
 set (CURRENT_MODULE)
 foreach (OCCT_MODULE ${OCC_MODULES_LIST})
   list (FIND ${OCCT_MODULE}_${OCCT_TOOLKITS_NAME_SUFFIX} ${PROJECT_NAME} CURRENT_PROJECT_IS_BUILT)
@@ -265,6 +269,9 @@ if (EXECUTABLE_PROJECT)
   endif()
 else()
   add_library (${PROJECT_NAME} ${USED_SRCFILES} ${USED_INCFILES} ${USED_RCFILE} ${RESOURCE_FILES} ${${PROJECT_NAME}_MOC_FILES})
+  if (MSVC)
+    set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_PDB_NAME ${PROJECT_NAME})
+  endif()
 
   if (DEFINED ${PROJECT_NAME}_DISABLE_COTIRE AND ${PROJECT_NAME}_DISABLE_COTIRE)
     set_target_properties(${PROJECT_NAME} PROPERTIES COTIRE_ENABLE_PRECOMPILED_HEADER FALSE)
