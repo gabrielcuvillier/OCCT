@@ -36,6 +36,11 @@ IMPLEMENT_STANDARD_RTTIEXT(WNT_Window, Aspect_Window)
 #define MOUSEEVENTF_FROMTOUCH 0xFF515700
 #endif
 
+#if defined(__MINGW32__)
+// To prevent temporarilly disable -Wcast-function-type, due to GetProcAdress / FARPROC
+#include "Standard_WarningDisableFunctionCast.hxx"
+#endif
+
 //! Auxiliary tool for handling WM_TOUCH events.
 //! Dynamically loads functions from User32 available since Win7 and later.
 class WNT_Window::TouchInputHelper : public Standard_Transient
