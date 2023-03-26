@@ -42,8 +42,8 @@ else()
   else()
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions -fPIC")
     set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fexceptions -fPIC")
+    add_definitions(-DOCC_CONVERT_SIGNALS)
   endif()
-  add_definitions(-DOCC_CONVERT_SIGNALS)
 endif()
 
 # enable structured exceptions for MSVC
@@ -97,6 +97,12 @@ if (IS_DEBUG_CXX)
   string (REGEX REPLACE "-DDEBUG" "" CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
 endif()
 
+string (REGEX MATCH "-D_DEBUG" IS__DEBUG_CXX "${CMAKE_CXX_FLAGS_DEBUG}")
+if (IS__DEBUG_CXX)
+  message (STATUS "Info: -D_DEBUG has been removed from CMAKE_CXX_FLAGS_DEBUG")
+  string (REGEX REPLACE "-D_DEBUG" "" CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
+endif()
+
 string (REGEX MATCH "-DDEBUG" IS_DEBUG_C "${CMAKE_C_FLAGS_DEBUG}")
 if (IS_DEBUG_C)
   message (STATUS "Info: -DDEBUG has been removed from CMAKE_C_FLAGS_DEBUG")
@@ -142,11 +148,15 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]")
     set (CMAKE_CXX_FLAGS "-stdlib=libc++ ${CMAKE_CXX_FLAGS}")
   endif()
   # Optimize size of binaries
-  set (CMAKE_SHARED_LINKER_FLAGS "-Wl,-s ${CMAKE_SHARED_LINKER_FLAGS}")
+  set (CMAKE_SHARED_LINKER_FLAGS_RELEASE "-Wl,-s ${CMAKE_SHARED_LINKER_FLAGS_RELEASE}")
+  set (CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL "-Wl,-s ${CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL}")
 
   #disable warning not yet managed in source code when using clang
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-but-set-variable")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-but-set-parameter")
+
+  set (CMAKE_STATIC_LINKER_FLAGS_RELEASE "-s ${CMAKE_STATIC_LINKER_FLAGS_RELEASE}")
+  set (CMAKE_STATIC_LINKER_FLAGS_MINSIZEREL "-s ${CMAKE_STATIC_LINKER_FLAGS_MINSIZEREL}")
 elseif(MINGW)
   add_definitions(-D_WIN32_WINNT=0x0601)
   # _WIN32_WINNT=0x0601 (use Windows 7 SDK)
