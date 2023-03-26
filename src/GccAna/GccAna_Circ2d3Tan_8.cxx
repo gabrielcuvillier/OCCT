@@ -12,6 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 
 #include <ElCLib.hxx>
 #include <GccAna_Circ2d3Tan.hxx>
@@ -54,7 +55,7 @@ GccAna_Circ2d3Tan::
    par3sol(1,2)    ,
    pararg1(1,2)    ,
    pararg2(1,2)    ,
-   pararg3(1,2)    
+   pararg3(1,2)
 {
 
    WellDone = Standard_False;
@@ -115,7 +116,7 @@ GccAna_Circ2d3Tan::
        Radius = dist1;
      }
 	   if (ok) {
-	     if (Abs(dist2-Radius)<=Tol) { 
+	     if (Abs(dist2-Radius)<=Tol) {
 	       nbsol3 = 1;
 	     }
 	     else { ok = Standard_False; }
@@ -126,7 +127,7 @@ GccAna_Circ2d3Tan::
 	       cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center,dirx),Radius);
 //             =======================================================
 	       gp_Dir2d dc1(origin1.XY()-Center.XY());
-	       if (!Qualified1.IsUnqualified()) { 
+	       if (!Qualified1.IsUnqualified()) {
 		 qualifier1(NbrSol) = Qualified1.Qualifier();
 	       }
 	       else if (dc1.Dot(normL1) > 0.0) {
@@ -162,3 +163,4 @@ GccAna_Circ2d3Tan::
    }
  }
 
+#endif

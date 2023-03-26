@@ -14,6 +14,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
+
 #ifndef _GccAna_Circ2d3Tan_HeaderFile
 #define _GccAna_Circ2d3Tan_HeaderFile
 
@@ -52,87 +54,87 @@ class gp_Circ2d;
 //! With Tolerance we will find a solution if the
 //! lowest distance between C1 and C2 is lower than or
 //! equal Tolerance.
-class GccAna_Circ2d3Tan 
+class GccAna_Circ2d3Tan
 {
 public:
 
   DEFINE_STANDARD_ALLOC
 
-  
+
   //! This method implements the algorithms used to
   //! create 2d circles tangent to 3 circles.
   //! ConstructionError is raised if there is a problem during
   //! the computation.
   Standard_EXPORT GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1, const GccEnt_QualifiedCirc& Qualified2, const GccEnt_QualifiedCirc& Qualified3, const Standard_Real Tolerance);
-  
+
   //! This method implements the algorithms used to
   //! create 2d circles tangent to 2 circles and 1 line.
   //! ConstructionError is raised if there is a problem during
   //! the computation.
   Standard_EXPORT GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1, const GccEnt_QualifiedCirc& Qualified2, const GccEnt_QualifiedLin& Qualified3, const Standard_Real Tolerance);
-  
+
   //! This method implements the algorithms used to
   //! create 2d circles tangent to 1 circle and 2 lines.
   //! ConstructionError is raised if there is a problem during
   //! the computation.
   Standard_EXPORT GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1, const GccEnt_QualifiedLin& Qualified2, const GccEnt_QualifiedLin& Qualified3, const Standard_Real Tolerance);
-  
+
   //! This method implements the algorithms used to
   //! create 2d circles tangent to 3 lines.
   //! ConstructionError is raised if there is a problem during
   //! the computation.
   Standard_EXPORT GccAna_Circ2d3Tan(const GccEnt_QualifiedLin& Qualified1, const GccEnt_QualifiedLin& Qualified2, const GccEnt_QualifiedLin& Qualified3, const Standard_Real Tolerance);
-  
+
   //! This method implements the algorithms used to
   //! create 2d circles tangent to 2 circles and 1 Point.
   //! ConstructionError is raised if there is a problem during
   //! the computation.
   Standard_EXPORT GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1, const GccEnt_QualifiedCirc& Qualified2, const gp_Pnt2d& Point3, const Standard_Real Tolerance);
-  
+
   //! This method implements the algorithms used to
   //! create 2d circles tangent to a circle and a line and
   //! 1 Point.
   //! ConstructionError is raised if there is a problem during
   //! the computation.
   Standard_EXPORT GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1, const GccEnt_QualifiedLin& Qualified2, const gp_Pnt2d& Point3, const Standard_Real Tolerance);
-  
+
   //! This method implements the algorithms used to
   //! create 2d circles tangent to 2 lines and 1 Point.
   //! ConstructionError is raised if there is a problem during
   //! the computation.
   Standard_EXPORT GccAna_Circ2d3Tan(const GccEnt_QualifiedLin& Qualified1, const GccEnt_QualifiedLin& Qualified2, const gp_Pnt2d& Point3, const Standard_Real Tolerance);
-  
+
   //! This method implements the algorithms used to
   //! create 2d circles tangent to a circle and passing
   //! through 2 Points.
   //! ConstructionError is raised if there is a problem during
   //! the computation.
   Standard_EXPORT GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1, const gp_Pnt2d& Point2, const gp_Pnt2d& Point3, const Standard_Real Tolerance);
-  
+
   //! This method implements the algorithms used to
   //! create 2d circles tangent to a line and passing
   //! through 2 Points.
   //! ConstructionError is raised if there is a problem during
   //! the computation.
   Standard_EXPORT GccAna_Circ2d3Tan(const GccEnt_QualifiedLin& Qualified1, const gp_Pnt2d& Point2, const gp_Pnt2d& Point3, const Standard_Real Tolerance);
-  
+
   //! This method implements the algorithms used to
   //! create 2d circles passing through 3 Points.
   //! ConstructionError is raised if there is a problem during
   //! the computation.
   Standard_EXPORT GccAna_Circ2d3Tan(const gp_Pnt2d& Point1, const gp_Pnt2d& Point2, const gp_Pnt2d& Point3, const Standard_Real Tolerance);
-  
+
   //! This method returns True if the construction
   //! algorithm succeeded.
   //! Note: IsDone protects against a failure arising from a
   //! more internal intersection algorithm, which has
   //! reached its numeric limits.
   Standard_EXPORT Standard_Boolean IsDone() const;
-  
+
   //! This method returns the number of solutions.
   //! Raises NotDone if the construction algorithm didn't succeed.
   Standard_EXPORT Standard_Integer NbSolutions() const;
-  
+
   //! Returns the solution number Index and raises OutOfRange
   //! exception if Index is greater than the number of
   //! solutions.
@@ -143,7 +145,7 @@ public:
   //! the number of solutions.
   //! It raises NotDone if the algorithm failed.
   Standard_EXPORT gp_Circ2d ThisSolution (const Standard_Integer Index) const;
-  
+
   //! Returns the information about the qualifiers of the
   //! tangency
   //! arguments concerning the solution number Index.
@@ -151,7 +153,7 @@ public:
   //! constructor method in case of enclosed, enclosing and outside
   //! and the qualifiers computedin case of unqualified).
   Standard_EXPORT void WhichQualifier (const Standard_Integer Index, GccEnt_Position& Qualif1, GccEnt_Position& Qualif2, GccEnt_Position& Qualif3) const;
-  
+
   //! Returns information about the tangency point between the
   //! result number Index and the first argument.
   //! ParSol is the intrinsic parameter of the point PntSol
@@ -161,7 +163,7 @@ public:
   //! the number of solutions.
   //! It raises NotDone if the algorithm failed.
   Standard_EXPORT void Tangency1 (const Standard_Integer Index, Standard_Real& ParSol, Standard_Real& ParArg, gp_Pnt2d& PntSol) const;
-  
+
   //! Returns information about the tangency point between the
   //! result number Index and the first argument.
   //! ParSol is the intrinsic parameter of the point PntSol
@@ -171,7 +173,7 @@ public:
   //! the number of solutions.
   //! It raises NotDone if the algorithm failed.
   Standard_EXPORT void Tangency2 (const Standard_Integer Index, Standard_Real& ParSol, Standard_Real& ParArg, gp_Pnt2d& PntSol) const;
-  
+
   //! Returns information about the tangency point between the
   //! result number Index and the first argument.
   //! ParSol is the intrinsic parameter of the point PntSol
@@ -181,19 +183,19 @@ public:
   //! the number of solutions.
   //! It raises NotDone if the algorithm failed.
   Standard_EXPORT void Tangency3 (const Standard_Integer Index, Standard_Real& ParSol, Standard_Real& ParArg, gp_Pnt2d& PntSol) const;
-  
+
   //! Returns True if the solution number Index is equal to
   //! the first argument. Raises OutOfRange if Index is greater than
   //! the number of solutions.
   //! It raises NotDone if the algorithm failed.
   Standard_EXPORT Standard_Boolean IsTheSame1 (const Standard_Integer Index) const;
-  
+
   //! Returns True if the solution number Index is equal to
   //! the second argument. Raises OutOfRange Index is greater than
   //! the number of solutions.
   //! It raises NotDone if the algorithm failed.
   Standard_EXPORT Standard_Boolean IsTheSame2 (const Standard_Integer Index) const;
-  
+
   //! Returns True if the solution number Index is equal to
   //! the third argument. Raises OutOfRange if Index is greater than
   //! the number of solutions.
@@ -242,3 +244,4 @@ private:
 
 
 #endif // _GccAna_Circ2d3Tan_HeaderFile
+#endif

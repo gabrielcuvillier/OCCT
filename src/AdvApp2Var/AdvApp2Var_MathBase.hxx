@@ -167,15 +167,17 @@ class AdvApp2Var_MathBase {
 				      integer *niter,
 				      integer *iercod);
 
-//  Standard_EXPORT static int mmhjcan_(integer *ndimen,
-//				      integer *ncourb,
-//				      integer *ncftab,
-//				      integer *orcont,
-//				      integer *ncflim,
-//				      doublereal *tcbold,
-//				      doublereal *tdecop,
-//				      doublereal *tcbnew,
-//				      integer *iercod);
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
+  Standard_EXPORT static int mmhjcan_(integer *ndimen,
+				      integer *ncourb,
+				      integer *ncftab,
+				      integer *orcont,
+				      integer *ncflim,
+				      doublereal *tcbold,
+				      doublereal *tdecop,
+				      doublereal *tcbnew,
+				      integer *iercod);
+#endif
 
   Standard_EXPORT static int mminltt_(integer *ncolmx,
 				      integer *nlgnmx,

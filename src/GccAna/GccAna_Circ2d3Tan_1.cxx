@@ -12,6 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 
 #include <ElCLib.hxx>
 #include <GccAna_Circ2d3Tan.hxx>
@@ -44,7 +45,7 @@ GccAna_Circ2d3Tan::
 //   Initialization of fields.                                           +
 //=========================================================================
 
-   cirsol(1,16)     , 
+   cirsol(1,16)     ,
    qualifier1(1,16) ,
    qualifier2(1,16) ,
    qualifier3(1,16),
@@ -59,18 +60,18 @@ GccAna_Circ2d3Tan::
    par3sol(1,16)    ,
    pararg1(1,16)    ,
    pararg2(1,16)    ,
-   pararg3(1,16)    
+   pararg3(1,16)
 {
 
   gp_Dir2d dirx(1.0,0.0);
   Standard_Real Tol = Abs(Tolerance);
   WellDone = Standard_False;
   NbrSol = 0;
-  if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() || 
+  if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() ||
 	Qualified1.IsOutside() || Qualified1.IsUnqualified()) ||
-      !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() || 
+      !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() ||
 	Qualified2.IsOutside() || Qualified2.IsUnqualified()) ||
-      !(Qualified3.IsEnclosed() || 
+      !(Qualified3.IsEnclosed() ||
 	Qualified3.IsOutside() || Qualified3.IsUnqualified())) {
     throw GccEnt_BadQualifier();
     return;
@@ -92,7 +93,7 @@ GccAna_Circ2d3Tan::
   gp_Pnt2d origin3(L3.Location());
   gp_Dir2d dir3(L3.Direction());
   gp_Dir2d normL3(-dir3.Y(),dir3.X());
-  
+
   TColStd_Array1OfReal Radius(1,2);
   GccAna_CircLin2dBisec Bis1(C1,L3);
   GccAna_CircLin2dBisec Bis2(C2,L3);
@@ -128,16 +129,16 @@ GccAna_Circ2d3Tan::
 	      Standard_Real Rradius=0;
 	      gp_Pnt2d Center(Intp.Point(j).Value());
 
-// pop : if the coordinates are too great, no creation		 
-	      if (Center.X() > 1e10 || 
-		  Center.Y() > 1e10  ) break;	      
+// pop : if the coordinates are too great, no creation
+	      if (Center.X() > 1e10 ||
+		  Center.Y() > 1e10  ) break;
 
 	      Standard_Real dist1 = Center.Distance(C1.Location());
 	       Standard_Real dist2 = Center.Distance(C2.Location());
 	      Standard_Real dist3 = L3.Distance(Center);
 
-// pop : if the coordinates are too great, no creation			 
-	      if (dist3 > 1e10  ) break;	
+// pop : if the coordinates are too great, no creation
+	      if (dist3 > 1e10  ) break;
 
 	      Standard_Integer nbsol1 = 0;
 	      Standard_Integer nbsol2 = 0;
@@ -244,7 +245,7 @@ GccAna_Circ2d3Tan::
 		  cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center,dirx),Radius(ind3));
 //                ==========================================================
 		  Standard_Real distcc1 = Center.Distance(center1);
-		  if (!Qualified1.IsUnqualified()) { 
+		  if (!Qualified1.IsUnqualified()) {
 		    qualifier1(NbrSol) = Qualified1.Qualifier();
 		  }
 		  else if (Abs(distcc1+Radius(ind3)-R1) < Tol) {
@@ -255,7 +256,7 @@ GccAna_Circ2d3Tan::
 		  }
 		  else { qualifier1(NbrSol) = GccEnt_enclosing; }
 		  Standard_Real distcc2 = Center.Distance(center1);
-		  if (!Qualified2.IsUnqualified()) { 
+		  if (!Qualified2.IsUnqualified()) {
 		    qualifier2(NbrSol) = Qualified2.Qualifier();
 		  }
 		  else if (Abs(distcc2+Radius(ind3)-R2) < Tol) {
@@ -266,7 +267,7 @@ GccAna_Circ2d3Tan::
 		  }
 		  else { qualifier2(NbrSol) = GccEnt_enclosing; }
 		  gp_Dir2d dc3(origin3.XY()-Center.XY());
-		  if (!Qualified3.IsUnqualified()) { 
+		  if (!Qualified3.IsUnqualified()) {
 		    qualifier3(NbrSol) = Qualified3.Qualifier();
 		  }
 		  else if (dc3.Dot(normL3) > 0.0) {
@@ -333,3 +334,4 @@ GccAna_Circ2d3Tan::
     }
   }
 }
+#endif

@@ -14,7 +14,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 #include <GccAna_Circ2d3Tan.hxx>
 #include <GccEnt_QualifiedCirc.hxx>
 #include <GccEnt_QualifiedLin.hxx>
@@ -53,7 +53,7 @@ Geom2dGcc_Circ2d3Tan::
   par3sol(1,16)  ,
   pararg1(1,16)  ,
   pararg2(1,16)  ,
-  pararg3(1,16)  
+  pararg3(1,16)
 {
   Geom2dAdaptor_Curve C1 = Qualified1.Qualified();
   Geom2dAdaptor_Curve C2 = Qualified2.Qualified();
@@ -262,7 +262,7 @@ Geom2dGcc_Circ2d3Tan::
   par3sol(1,20)  ,
   pararg1(1,20)  ,
   pararg2(1,20)  ,
-  pararg3(1,20)  
+  pararg3(1,20)
 {
   Geom2dAdaptor_Curve C1 = Qualified1.Qualified();
   Geom2dAdaptor_Curve C2 = Qualified2.Qualified();
@@ -380,7 +380,7 @@ Geom2dGcc_Circ2d3Tan::
   par3sol(1,16)  ,
   pararg1(1,16)  ,
   pararg2(1,16)  ,
-  pararg3(1,16)  
+  pararg3(1,16)
 {
   Geom2dAdaptor_Curve C1 = Qualified1.Qualified();
   Handle(Geom2d_Curve) CC1 = C1.Curve();
@@ -459,7 +459,7 @@ Geom2dGcc_Circ2d3Tan::
   par3sol(1,2)  ,
   pararg1(1,2)  ,
   pararg2(1,2)  ,
-  pararg3(1,2)  
+  pararg3(1,2)
 {
 
 //=============================================================================
@@ -488,49 +488,49 @@ void Geom2dGcc_Circ2d3Tan::Results(const GccAna_Circ2d3Tan& Circ ,
     Standard_Integer i1 = 0, i2 = 0, i3 = 0;
     if (Circ.IsTheSame1(j)) { i1 = 1; }
     if (Circ.IsTheSame2(j)) { i2 = 1; }
-    if (Circ.IsTheSame3(j)) { i3 = 1; }    
-    if (Rank1 == 1) { 
-      TheSame1(j) = i1; 
+    if (Circ.IsTheSame3(j)) { i3 = 1; }
+    if (Rank1 == 1) {
+      TheSame1(j) = i1;
       if ( i1 == 0)
 	Circ.Tangency1(j,par1sol(j),pararg1(j),pnttg1sol(j));
     }
-    else if (Rank1 == 2) { 
-      TheSame1(j) = i2; 
+    else if (Rank1 == 2) {
+      TheSame1(j) = i2;
       if ( i2 == 0)
 	Circ.Tangency2(j,par1sol(j),pararg1(j),pnttg1sol(j));
     }
-    else if (Rank1 == 3) { 
-      TheSame1(j) = i3; 
+    else if (Rank1 == 3) {
+      TheSame1(j) = i3;
       if ( i3 == 0)
 	Circ.Tangency3(j,par1sol(j),pararg1(j),pnttg1sol(j));
     }
-    if (Rank2 == 1) { 
-      TheSame2(j) = i1; 
+    if (Rank2 == 1) {
+      TheSame2(j) = i1;
       if ( i1 == 0)
 	Circ.Tangency1(j,par2sol(j),pararg2(j),pnttg2sol(j));
     }
-    else if (Rank2 == 2) { 
-      TheSame2(j) = i2; 
+    else if (Rank2 == 2) {
+      TheSame2(j) = i2;
       if ( i2 == 0)
 	Circ.Tangency2(j,par2sol(j),pararg2(j),pnttg2sol(j));
     }
-    else if (Rank2 == 3) { 
-      TheSame2(j) = i3; 
+    else if (Rank2 == 3) {
+      TheSame2(j) = i3;
       if ( i3 == 0)
 	Circ.Tangency3(j,par2sol(j),pararg2(j),pnttg2sol(j));
     }
-    if (Rank3 == 1) { 
-      TheSame3(j) = i1; 
+    if (Rank3 == 1) {
+      TheSame3(j) = i1;
       if ( i1 == 0)
 	Circ.Tangency1(j,par3sol(j),pararg3(j),pnttg3sol(j));
     }
-    else if (Rank3 == 2) { 
-      TheSame3(j) = i2; 
+    else if (Rank3 == 2) {
+      TheSame3(j) = i2;
       if ( i2 == 0)
 	Circ.Tangency2(j,par3sol(j),pararg3(j),pnttg3sol(j));
     }
-    else if (Rank3 == 3) { 
-      TheSame3(j) = i3; 
+    else if (Rank3 == 3) {
+      TheSame3(j) = i3;
       if ( i3 == 0)
 	Circ.Tangency3(j,par3sol(j),pararg3(j),pnttg3sol(j));
     }
@@ -541,17 +541,17 @@ Standard_Boolean Geom2dGcc_Circ2d3Tan::
    IsDone () const { return WellDone; }
 
 Standard_Integer Geom2dGcc_Circ2d3Tan::
-  NbSolutions () const 
-{ 
+  NbSolutions () const
+{
   return (Standard_Integer ) NbrSol;
 }
 
 gp_Circ2d Geom2dGcc_Circ2d3Tan::
-  ThisSolution (const Standard_Integer Index) const 
+  ThisSolution (const Standard_Integer Index) const
 {
   if (!WellDone) { throw StdFail_NotDone(); }
   if (Index <= 0 ||Index > NbrSol) { throw Standard_OutOfRange(); }
-  return cirsol(Index); 
+  return cirsol(Index);
 }
 
 void Geom2dGcc_Circ2d3Tan::
@@ -628,7 +628,7 @@ Standard_Boolean Geom2dGcc_Circ2d3Tan::IsTheSame1 (const Standard_Integer Index)
   if (!WellDone) { throw StdFail_NotDone(); }
   if (Index <= 0 ||Index > NbrSol) { throw Standard_OutOfRange(); }
   if (TheSame1(Index) == 0) { return Standard_False; }
-  return Standard_True; 
+  return Standard_True;
 }
 
 Standard_Boolean Geom2dGcc_Circ2d3Tan::
@@ -646,8 +646,9 @@ Standard_Boolean Geom2dGcc_Circ2d3Tan::
   if (!WellDone) { throw StdFail_NotDone(); }
   if (Index <= 0 ||Index > NbrSol) { throw Standard_OutOfRange(); }
   if (TheSame3(Index) == 0) { return Standard_False; }
-  return Standard_True; 
+  return Standard_True;
 }
 
 
 
+#endif

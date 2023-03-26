@@ -12,6 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 
 #include <ElCLib.hxx>
 #include <GccAna_Circ2d3Tan.hxx>
@@ -60,10 +61,10 @@ GccAna_Circ2d3Tan::
    pnttg3sol(1,1)  ,
    par1sol(1,1)    ,
    par2sol(1,1)    ,
-   par3sol(1,1)    , 
-   pararg1(1,1)    , 
+   par3sol(1,1)    ,
+   pararg1(1,1)    ,
    pararg2(1,1)    ,
-   pararg3(1,1)    
+   pararg3(1,1)
 {
 
    gp_Dir2d dirx(1.0,0.0);
@@ -152,3 +153,4 @@ GccAna_Circ2d3Tan::
    }
  }
 
+#endif

@@ -12,6 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 
 #include <ElCLib.hxx>
 #include <GccAna_Circ2d3Tan.hxx>
@@ -38,7 +39,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan (const GccEnt_QualifiedCirc& Qualified1 ,
 				      const GccEnt_QualifiedLin&  Qualified2 ,
 				      const GccEnt_QualifiedLin&  Qualified3 ,
 				      const Standard_Real         Tolerance  )
-		   
+
 //=========================================================================
 //   Initialisation of fields.                                           +
 //=========================================================================
@@ -51,25 +52,25 @@ TheSame1(1,8)   ,
 TheSame2(1,8)   ,
 TheSame3(1,8)   ,
 pnttg1sol(1,8)  ,
-pnttg2sol(1,8)  , 
+pnttg2sol(1,8)  ,
 pnttg3sol(1,8)  ,
 par1sol(1,8)    ,
 par2sol(1,8)    ,
 par3sol(1,8)    ,
 pararg1(1,8)    ,
 pararg2(1,8)    ,
-pararg3(1,8)    
+pararg3(1,8)
 {
-  
+
   TheSame1.Init(0);
-  
+
   gp_Dir2d dirx(1.0,0.0);
    Standard_Real Tol = Abs(Tolerance);
    WellDone = Standard_False;
    NbrSol = 0;
-   if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() || 
+   if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() ||
 	 Qualified1.IsOutside() || Qualified1.IsUnqualified()) ||
-       !(Qualified2.IsEnclosed() || 
+       !(Qualified2.IsEnclosed() ||
 	 Qualified2.IsOutside() || Qualified2.IsUnqualified()) ||
        !(Qualified3.IsEnclosed() ||
 	 Qualified3.IsOutside() || Qualified3.IsUnqualified())) {
@@ -150,7 +151,7 @@ pararg3(1,8)
 		 if ((((origin2.X()-Center.X())*(-dir2.Y()))+
 		    ((origin2.Y()-Center.Y())*(dir2.X())))<=0){
 		   for (Standard_Integer ii = 1 ; ii <= nbsol1 ; ii++) {
-		     if (Abs(dist2-Radius(ii)) < Tol) { 
+		     if (Abs(dist2-Radius(ii)) < Tol) {
 		       ok = Standard_True;
 		       Radius(1) = Radius(ii);
 		     }
@@ -161,7 +162,7 @@ pararg3(1,8)
 		 if ((((origin2.X()-Center.X())*(-dir2.Y()))+
 		    ((origin2.Y()-Center.Y())*(dir2.X())))>=0){
 		   for (Standard_Integer ii = 1 ; ii <= nbsol1 ; ii++) {
-		     if (Abs(dist2-Radius(ii)) < Tol) { 
+		     if (Abs(dist2-Radius(ii)) < Tol) {
 		       ok = Standard_True;
 		       Radius(1) = Radius(ii);
 		     }
@@ -170,7 +171,7 @@ pararg3(1,8)
 	       }
 	       else if (Qualified2.IsUnqualified() && ok) {
 		 for (Standard_Integer ii = 1 ; ii <= nbsol1 ; ii++) {
-		   if (Abs(dist2-Radius(ii)) < Tol) { 
+		   if (Abs(dist2-Radius(ii)) < Tol) {
 		     ok = Standard_True;
 		     Radius(1) = Radius(ii);
 		   }
@@ -179,7 +180,7 @@ pararg3(1,8)
 	       if (Qualified3.IsEnclosed() && ok) {
 		 if ((((origin3.X()-Center.X())*(-dir3.Y()))+
 		    ((origin3.Y()-Center.Y())*(dir3.X())))<=0){
-		   if (Abs(dist3-Radius(1)) < Tol) { 
+		   if (Abs(dist3-Radius(1)) < Tol) {
 		     ok = Standard_True;
 		     nbsol3 = 1;
 		   }
@@ -188,14 +189,14 @@ pararg3(1,8)
 	       else if (Qualified3.IsOutside() && ok) {
 		 if ((((origin3.X()-Center.X())*(-dir3.Y()))+
 		    ((origin3.Y()-Center.Y())*(dir3.X())))>=0){
-		   if (Abs(dist3-Radius(1)) < Tol) { 
+		   if (Abs(dist3-Radius(1)) < Tol) {
 		     ok = Standard_True;
 		     nbsol3 = 1;
 		   }
 		 }
 	       }
 	       else if (Qualified3.IsUnqualified() && ok) {
-		 if (Abs(dist3-Radius(1)) < Tol) { 
+		 if (Abs(dist3-Radius(1)) < Tol) {
 		   ok = Standard_True;
 		   nbsol3 = 1;
 		 }
@@ -206,7 +207,7 @@ pararg3(1,8)
 		   cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center,dirx),Radius(m));
 //                 ==========================================================
 		   Standard_Real distcc1 = Center.Distance(center1);
-		   if (!Qualified1.IsUnqualified()) { 
+		   if (!Qualified1.IsUnqualified()) {
 		     qualifier1(NbrSol) = Qualified1.Qualifier();
 		   }
 		   else if (Abs(distcc1+Radius(m)-R1) < Tol) {
@@ -217,7 +218,7 @@ pararg3(1,8)
 		   }
 		   else { qualifier1(NbrSol) = GccEnt_enclosing; }
 		   gp_Dir2d dc2(origin2.XY()-Center.XY());
-		   if (!Qualified2.IsUnqualified()) { 
+		   if (!Qualified2.IsUnqualified()) {
 		     qualifier2(NbrSol) = Qualified2.Qualifier();
 		   }
 		   else if (dc2.Dot(normL2) > 0.0) {
@@ -225,7 +226,7 @@ pararg3(1,8)
 		   }
 		   else { qualifier2(NbrSol) = GccEnt_enclosed; }
 		   gp_Dir2d dc3(origin3.XY()-Center.XY());
-		   if (!Qualified3.IsUnqualified()) { 
+		   if (!Qualified3.IsUnqualified()) {
 		     qualifier3(NbrSol) = Qualified3.Qualifier();
 		   }
 		   else if (dc3.Dot(normL3) > 0.0) {
@@ -272,3 +273,4 @@ pararg3(1,8)
  }
 
 
+#endif

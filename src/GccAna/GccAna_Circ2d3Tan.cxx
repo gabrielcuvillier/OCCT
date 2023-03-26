@@ -12,6 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 
 #include <ElCLib.hxx>
 #include <GccAna_Circ2d3Tan.hxx>
@@ -54,23 +55,23 @@ GccAna_Circ2d3Tan::
   par3sol(1,16)  ,
   pararg1(1,16)  ,
   pararg2(1,16)  ,
-  pararg3(1,16)  
+  pararg3(1,16)
 {
 
   gp_Dir2d dirx(1.0,0.0);
   Standard_Real Tol = Abs(Tolerance);
   WellDone = Standard_False;
   NbrSol = 0;
-  if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() || 
+  if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() ||
 	Qualified1.IsOutside() || Qualified1.IsUnqualified()) ||
-      !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() || 
+      !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() ||
 	Qualified2.IsOutside() || Qualified2.IsUnqualified()) ||
-      !(Qualified3.IsEnclosed() || Qualified3.IsEnclosing() || 
+      !(Qualified3.IsEnclosed() || Qualified3.IsEnclosing() ||
 	Qualified3.IsOutside() || Qualified3.IsUnqualified())) {
     throw GccEnt_BadQualifier();
       return;
     }
-  
+
 //=========================================================================
 //   Processing.                                                          +
 //=========================================================================
@@ -84,11 +85,11 @@ GccAna_Circ2d3Tan::
   gp_Pnt2d center1(Cir1.Location());
   gp_Pnt2d center2(Cir2.Location());
   gp_Pnt2d center3(Cir3.Location());
-  
+
   Standard_Real X1 = center1.X();
   Standard_Real X2 = center2.X();
   Standard_Real X3 = center3.X();
-  
+
   Standard_Real Y1 = center1.Y();
   Standard_Real Y2 = center2.Y();
   Standard_Real Y3 = center3.Y();
@@ -126,8 +127,8 @@ GccAna_Circ2d3Tan::
     }
   }
 /////////
-  TColStd_Array1OfReal A2(1, 8), B2(1, 8), C2(1, 8), D2(1, 8), E2(1, 8), F2(1, 8); 
-  TColStd_Array1OfReal A3(1, 8), B3(1, 8), C3(1, 8), D3(1, 8), E3(1, 8), F3(1, 8); 
+  TColStd_Array1OfReal A2(1, 8), B2(1, 8), C2(1, 8), D2(1, 8), E2(1, 8), F2(1, 8);
+  TColStd_Array1OfReal A3(1, 8), B3(1, 8), C3(1, 8), D3(1, 8), E3(1, 8), F3(1, 8);
   TColStd_Array1OfReal Beta2(1, 8), Gamma2(1, 8), Delta2(1, 8);
   TColStd_Array1OfReal Beta3(1, 8), Gamma3(1, 8), Delta3(1, 8);
   Standard_Real a2, b2, c2, d2, e2, f2;
@@ -189,11 +190,11 @@ GccAna_Circ2d3Tan::
 //   Verification do two circles touch each other or not
 //   if at least one circle touches other one IsTouch become Standard_Standard_True
 
-  if (Abs((X1 - X2)*(X1 - X2) + (Y1 - Y2)*(Y1 - Y2) - (R1 - R2)*(R1 - R2)) <= Tolerance || 
-      Abs((X1 - X2)*(X1 - X2) + (Y1 - Y2)*(Y1 - Y2) - (R1 + R2)*(R1 + R2)) <= Tolerance || 
-      Abs((X1 - X3)*(X1 - X3) + (Y1 - Y3)*(Y1 - Y3) - (R1 - R3)*(R1 - R3)) <= Tolerance || 
-      Abs((X1 - X3)*(X1 - X3) + (Y1 - Y3)*(Y1 - Y3) - (R1 + R3)*(R1 + R3)) <= Tolerance || 
-      Abs((X2 - X3)*(X2 - X3) + (Y2 - Y3)*(Y2 - Y3) - (R2 - R3)*(R2 - R3)) <= Tolerance || 
+  if (Abs((X1 - X2)*(X1 - X2) + (Y1 - Y2)*(Y1 - Y2) - (R1 - R2)*(R1 - R2)) <= Tolerance ||
+      Abs((X1 - X2)*(X1 - X2) + (Y1 - Y2)*(Y1 - Y2) - (R1 + R2)*(R1 + R2)) <= Tolerance ||
+      Abs((X1 - X3)*(X1 - X3) + (Y1 - Y3)*(Y1 - Y3) - (R1 - R3)*(R1 - R3)) <= Tolerance ||
+      Abs((X1 - X3)*(X1 - X3) + (Y1 - Y3)*(Y1 - Y3) - (R1 + R3)*(R1 + R3)) <= Tolerance ||
+      Abs((X2 - X3)*(X2 - X3) + (Y2 - Y3)*(Y2 - Y3) - (R2 - R3)*(R2 - R3)) <= Tolerance ||
       Abs((X2 - X3)*(X2 - X3) + (Y2 - Y3)*(Y2 - Y3) - (R2 + R3)*(R2 + R3)) <= Tolerance)
     IsTouch = Standard_True;
   else
@@ -244,12 +245,12 @@ GccAna_Circ2d3Tan::
       E2(i) = Gamma2(i)*Delta2(i) + Y2;
       F2(i) = Delta2(i)*Delta2(i) - X2*X2 - Y2*Y2;
     }
-    
+
 //    _
 //   | (X - X1)2 + (Y - Y1)2 = (R +- R1)2
 //  <
 //   \_(X - X3)2 + (Y - Y3)2 = (R +- R3)2
-    
+
     if (i == 1 || i == 3 || i == 6 || i == 8) {
       if (Abs(R1 - R3) > Tolerance) {
 	Beta3(i) = (X1 - X3)/(R1 - R3);
@@ -298,17 +299,17 @@ GccAna_Circ2d3Tan::
     FirstSol(i) = CurSol;
 
 //  In some cases we know that some systems have no solution in any case due to qualifiers
-    if (((i == 2 || i == 5 || i == 6 || i == 8) && 
+    if (((i == 2 || i == 5 || i == 6 || i == 8) &&
 	 (Qualified1.IsEnclosed() || Qualified1.IsEnclosing())) ||
 	((i == 1 || i == 3 || i == 4 || i == 7) && Qualified1.IsOutside()))
       continue;
 
-    if (((i == 3 || i == 5 || i == 7 || i == 8) && 
+    if (((i == 3 || i == 5 || i == 7 || i == 8) &&
 	 (Qualified2.IsEnclosed() || Qualified2.IsEnclosing())) ||
 	((i == 1 || i == 2 || i == 4 || i == 6) && Qualified2.IsOutside()))
       continue;
 
-    if (((i == 4 || i == 6 || i == 7 || i == 8) && 
+    if (((i == 4 || i == 6 || i == 7 || i == 8) &&
 	 (Qualified3.IsEnclosed() || Qualified3.IsEnclosing())) ||
 	((i == 1 || i == 2 || i == 3 || i == 5) && Qualified3.IsOutside()))
       continue;
@@ -334,7 +335,7 @@ GccAna_Circ2d3Tan::
 //   for each y solution:
 	  y = yRoots.Value(k);
 //   Searching for solution of the equation Ax2 + Bx + C = 0
-	  if (!(k == 2 && Abs(y - yRoots.Value(1)) <= 10*Tolerance) && 
+	  if (!(k == 2 && Abs(y - yRoots.Value(1)) <= 10*Tolerance) &&
 	      Abs(b2*y + d2) <= b2*Tolerance) {
 	    A = a3; B = 2*(b3*y + d3); C = c3*(y*y) + 2*e3*y + f3;
 	    math_DirectPolynomialRoots xRoots(A, B, C);
@@ -353,13 +354,13 @@ GccAna_Circ2d3Tan::
 // 1.2) b2y + d2 != 0
       A = a3*c2*c2 - 4*b2*(b3*c2 - b2*c3);
       B = 4*a3*c2*e2 - 4*b3*(c2*d2 + 2*b2*e2) + 4*b2*(2*c3*d2 - c2*d3 + 2*b2*e3);
-      C = 2*a3*(c2*f2 + 2*e2*e2) - 4*b3*(b2*f2 + 2*e2*d2) + 4*c3*d2*d2 - 4*d3*(c2*d2 + 2*b2*e2) 
+      C = 2*a3*(c2*f2 + 2*e2*e2) - 4*b3*(b2*f2 + 2*e2*d2) + 4*c3*d2*d2 - 4*d3*(c2*d2 + 2*b2*e2)
 	+ 16*b2*e3*d2 + 4*b2*b2*f3;
       D = 4*a3*e2*f2 - 4*b3*d2*f2 - 4*d3*(b2*f2 + 2*d2*e2) + 8*d2*d2*e3 + 8*b2*d2*f3;
       E = a3*f2*f2 - 4*d2*d3*f2 + 4*d2*d2*f3;
 
 //   Searching for solution of the equation Ay4 + By3 + Cy2 + Dy + E = 0
-// Special case: one circle touches other 
+// Special case: one circle touches other
       if (IsTouch) {
 // Derivation of the equation Ay4 + By3 + Cy2 + Dy + E
 	math_DirectPolynomialRoots yRoots1(4*A, 3*B, 2*C, D);
@@ -370,7 +371,7 @@ GccAna_Circ2d3Tan::
 	    IsSame = Standard_False;
 	    for (l = 1; l < k; l++)
 	      if (Abs(y - yRoots1.Value(l)) <= 10*Tolerance) IsSame = Standard_True;
-	    
+
 	    Epsilon = (Abs((Abs((Abs(4*A*y) + Abs(3*B))*y) + Abs(2*C))*y) + Abs(D));
 	    if (Abs((((A*y + B)*y + C)*y + D)*y + E) <= Epsilon*Tolerance) {
 	      if (!IsSame && Abs(b2*y + d2) > b2*Tolerance) {
@@ -423,7 +424,7 @@ GccAna_Circ2d3Tan::
 	    Epsilon = 2.*(Abs((b2*b2 + Abs(a2*c2))*y) + Abs(b2*d2) + Abs(a2*e2))/(a2*a2);
 	    if (!(k == 2 && Abs(y - yRoots.Value(1)) <= 10*Tolerance) &&
 		p*p - q >= -Epsilon*Tolerance) {
-	      A = a2; 
+	      A = a2;
 	      B = 2*(b2*y + d2);
 	      C = c2*y*y + 2*e2*y + f2;
 	      math_DirectPolynomialRoots xRoots(A, B, C);
@@ -451,7 +452,7 @@ GccAna_Circ2d3Tan::
 	E = v*v*(d2*d2 - a2*f2) - t*t*a2*a2;
 
 //   Searching for solution of the equation Ay4 + By3 + Cy2 + Dy + E = 0
-// Special case: one circle touches other 
+// Special case: one circle touches other
 	if (IsTouch) {
 // Derivation of the equation Ay4 + By3 + Cy2 + Dy + E
 	  math_DirectPolynomialRoots yRoots1(4*A, 3*B, 2*C, D);
@@ -473,7 +474,7 @@ GccAna_Circ2d3Tan::
 
 		Epsilon = 2.*(Abs((b2*b2 + Abs(a2*c2))*y) + Abs(b2*d2) + Abs(a2*e2))/(a2*a2);
 		if (!IsSame && p*p - q >= -Epsilon*Tolerance) {
-		  A = a2; 
+		  A = a2;
 		  B = 2*(b2*y + d2);
 		  C = c2*y*y + 2*e2*y + f2;
 		  math_DirectPolynomialRoots xRoots(A, B, C);
@@ -509,7 +510,7 @@ GccAna_Circ2d3Tan::
 
 	    Epsilon = 2.*(Abs((b2*b2 + Abs(a2*c2))*y) + Abs(b2*d2) + Abs(a2*e2))/(a2*a2);
 	    if (!IsSame && p*p - q >= -Epsilon*Tolerance) {
-	      A = a2; 
+	      A = a2;
 	      B = 2*(b2*y + d2);
 	      C = c2*y*y + 2*e2*y + f2;
 	      math_DirectPolynomialRoots xRoots(A, B, C);
@@ -544,7 +545,7 @@ GccAna_Circ2d3Tan::
 	if (i == 1 || i == 4) {
 	  r = R1 + Sqrt((x - X1)*(x - X1) + (y - Y1)*(y - Y1));
 	  Epsilon = 10*(2*Abs(r - R2) + Abs(x - X2) + Abs(y - Y2));
-	  if (Abs((r - R2)*(r - R2) - (x - X2)*(x - X2) - (y - Y2)*(y - Y2)) <= 
+	  if (Abs((r - R2)*(r - R2) - (x - X2)*(x - X2) - (y - Y2)*(y - Y2)) <=
 	      Epsilon*Tolerance) {
 	    xSol1(CurSol) = x;
 	    ySol1(CurSol) = y;
@@ -553,8 +554,8 @@ GccAna_Circ2d3Tan::
 	  }
 	  r = R1 - Sqrt((x - X1)*(x - X1) + (y - Y1)*(y - Y1));
 	  Epsilon = 10*(2*Abs(r - R2) + Abs(x - X2) + Abs(y - Y2));
-	  if ((r > Tolerance) && 
-	      (Abs((r - R2)*(r - R2) - (x - X2)*(x - X2) - (y - Y2)*(y - Y2)) <= 
+	  if ((r > Tolerance) &&
+	      (Abs((r - R2)*(r - R2) - (x - X2)*(x - X2) - (y - Y2)*(y - Y2)) <=
 	       Epsilon*Tolerance)) {
 	    xSol1(CurSol) = x;
 	    ySol1(CurSol) = y;
@@ -626,7 +627,7 @@ GccAna_Circ2d3Tan::
       if ((i == 1 || i == 3 || i == 6 || i == 8) && Abs(R1 - R3) <= Tolerance) {
 	if (i == 1 || i == 3) {
 	  Epsilon = 10*(2*Abs(r - R3) + Abs(x - X3) + Abs(y - Y3));
-	  if (Abs((r - R3)*(r - R3) - (x - X3)*(x - X3) - (y - Y3)*(y - Y3)) <= 
+	  if (Abs((r - R3)*(r - R3) - (x - X3)*(x - X3) - (y - Y3)*(y - Y3)) <=
 	      Epsilon*Tolerance) {
 	    xSol(CurSol) = x;
 	    ySol(CurSol) = y;
@@ -636,7 +637,7 @@ GccAna_Circ2d3Tan::
 	} else {
 //	i == 6 || i == 8
 	  Epsilon = 10*(2*(r + R3) + Abs(x - X3) + Abs(y - Y3));
-	  if (Abs((r + R3)*(r + R3) - (x - X3)*(x - X3) - (y - Y3)*(y - Y3)) <= 
+	  if (Abs((r + R3)*(r + R3) - (x - X3)*(x - X3) - (y - Y3)*(y - Y3)) <=
 	      Epsilon*Tolerance) {
  	    xSol(CurSol) = x;
 	    ySol(CurSol) = y;
@@ -699,7 +700,7 @@ GccAna_Circ2d3Tan::
 
 // RLE, avoid out of range
       if (NbrSol > cirsol.Upper()) NbrSol = cirsol.Upper();
-      
+
       gp_Pnt2d Center = gp_Pnt2d(xSol(j), ySol(j));
 
       cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center,dirx),rSol(j));
@@ -796,15 +797,15 @@ Standard_Integer GccAna_Circ2d3Tan::
  }
 
 gp_Circ2d GccAna_Circ2d3Tan::
-   ThisSolution (const Standard_Integer Index) const 
+   ThisSolution (const Standard_Integer Index) const
 {
   if (!WellDone)
     throw StdFail_NotDone();
-  
+
   if (Index <= 0 ||Index > NbrSol)
     throw Standard_OutOfRange();
-  
-  return cirsol(Index); 
+
+  return cirsol(Index);
 }
 
 void GccAna_Circ2d3Tan::
@@ -890,13 +891,13 @@ Standard_Boolean GccAna_Circ2d3Tan::
 {
   if (!WellDone)
     throw StdFail_NotDone();
-  
+
   if (Index <= 0 ||Index > NbrSol)
     throw Standard_OutOfRange();
-  
+
   if (TheSame1(Index) == 0)
     return Standard_False;
-  
+
   return Standard_True;
 }
 
@@ -920,14 +921,14 @@ Standard_Boolean GccAna_Circ2d3Tan::
 {
   if (!WellDone)
     throw StdFail_NotDone();
-  
+
   if (Index <= 0 ||Index > NbrSol)
     throw Standard_OutOfRange();
 
-  if (TheSame3(Index) == 0) 
+  if (TheSame3(Index) == 0)
     return Standard_False;
-  
+
   return Standard_True;
 }
 
-
+#endif

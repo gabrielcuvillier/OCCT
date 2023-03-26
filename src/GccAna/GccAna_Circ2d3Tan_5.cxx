@@ -14,6 +14,8 @@
 
 // init. de MinRad et MaxRad (PRO15604), JCT 09/10/98
 
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
+
 #include <ElCLib.hxx>
 #include <GccAna_Circ2d3Tan.hxx>
 #include <GccAna_CircLin2dBisec.hxx>
@@ -49,7 +51,7 @@ GccAna_Circ2d3Tan::
    qualifier1(1,4) ,
    qualifier2(1,4) ,
    qualifier3(1,4) ,
-   TheSame1(1,4)   ,  
+   TheSame1(1,4)   ,
    TheSame2(1,4)   ,
    TheSame3(1,4)   ,
    pnttg1sol(1,4)  ,
@@ -60,7 +62,7 @@ GccAna_Circ2d3Tan::
    par3sol(1,4)    ,
    pararg1(1,4)    ,
    pararg2(1,4)    ,
-   pararg3(1,4)    
+   pararg3(1,4)
 {
 
    gp_Dir2d dirx(1.0,0.0);
@@ -68,7 +70,7 @@ GccAna_Circ2d3Tan::
    Standard_Real MaxRad = 1e10, MinRad = 1e-6;
    WellDone = Standard_False;
    NbrSol = 0;
-   if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() || 
+   if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() ||
 	 Qualified1.IsOutside() || Qualified1.IsUnqualified()) ||
        !(Qualified2.IsEnclosed() ||
 	 Qualified2.IsOutside() || Qualified2.IsUnqualified())) {
@@ -154,7 +156,7 @@ GccAna_Circ2d3Tan::
 	       if ((((L2.Location().X()-Center.X())*(-L2.Direction().Y()))+
 		    ((L2.Location().Y()-Center.Y())*(L2.Direction().X())))<=0){
 		 for (Standard_Integer ii = 1 ; ii <= nbsol1 ; ii++) {
-		   if (Abs(dist2-Radius(ii)) < Tol) { 
+		   if (Abs(dist2-Radius(ii)) < Tol) {
 		     ok = Standard_True;
 		     Radius(1) = Radius(ii);
 		   }
@@ -165,7 +167,7 @@ GccAna_Circ2d3Tan::
 	       if ((((L2.Location().X()-Center.X())*(-L2.Direction().Y()))+
 		    ((L2.Location().Y()-Center.Y())*(L2.Direction().X())))>=0){
 		 for (Standard_Integer ii = 1 ; ii <= nbsol1 ; ii++) {
-		   if (Abs(dist2-Radius(ii)) < Tol) { 
+		   if (Abs(dist2-Radius(ii)) < Tol) {
 		     ok = Standard_True;
 		     Radius(1) = Radius(ii);
 		   }
@@ -174,7 +176,7 @@ GccAna_Circ2d3Tan::
 	     }
 	     else if (Qualified2.IsUnqualified() && ok) {
 	       for (Standard_Integer ii = 1 ; ii <= nbsol1 ; ii++) {
-		 if (Abs(dist2-Radius(ii)) < Tol) { 
+		 if (Abs(dist2-Radius(ii)) < Tol) {
 		   ok = Standard_True;
 		   Radius(1) = Radius(ii);
 		 }
@@ -188,7 +190,7 @@ GccAna_Circ2d3Tan::
 	       for (Standard_Integer k = 1 ; k <= nbsol3 ; k++) {
 		 if (NbrSol==4)
 		   break;
-// pop : if the radius is too great - no creation		 
+// pop : if the radius is too great - no creation
 		 if (Radius(k) > MaxRad) break;
 		 if (Abs(Radius(k)) < MinRad) break;
 
@@ -196,7 +198,7 @@ GccAna_Circ2d3Tan::
 		 cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center,dirx),Radius(k));
 //               ==========================================================
 		 Standard_Real distcc1 = Center.Distance(center1);
-		 if (!Qualified1.IsUnqualified()) { 
+		 if (!Qualified1.IsUnqualified()) {
 		   qualifier1(NbrSol) = Qualified1.Qualifier();
 		 }
 		 else if (Abs(distcc1+Radius(k)-R1) < Tol) {
@@ -207,7 +209,7 @@ GccAna_Circ2d3Tan::
 		 }
 		 else { qualifier1(NbrSol) = GccEnt_enclosing; }
 		 gp_Dir2d dc2(origin2.XY()-Center.XY());
-		 if (!Qualified2.IsUnqualified()) { 
+		 if (!Qualified2.IsUnqualified()) {
 		   qualifier2(NbrSol) = Qualified2.Qualifier();
 		 }
 		 else if (dc2.Dot(normL2) > 0.0) {
@@ -256,3 +258,4 @@ GccAna_Circ2d3Tan::
      }
    }
  }
+#endif

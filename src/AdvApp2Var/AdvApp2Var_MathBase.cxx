@@ -5624,249 +5624,251 @@ L9999:
  return 0 ;
 } /* mmherm1_ */
 
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmhjcan_
 //purpose  :
 //=======================================================================
-//int AdvApp2Var_MathBase::mmhjcan_(integer *ndimen,
-//			    integer *ncourb,
-//			    integer *ncftab,
-//			    integer *orcont,
-//			    integer *ncflim,
-//			    doublereal *tcbold,
-//			    doublereal *tdecop,
-//			    doublereal *tcbnew,
-//			    integer *iercod)
-//
-//{
-//  integer c__2 = 2;
-//  integer c__21 = 21;
-//  /* System generated locals */
-//    integer tcbold_dim1, tcbold_dim2, tcbold_offset, tcbnew_dim1, tcbnew_dim2,
-//	     tcbnew_offset, i__1, i__2, i__3, i__4, i__5;
-//
-//
-//    /* Local variables */
-//    logical ldbg;
-//    integer ndeg;
-//    doublereal taux1[21];
-//    integer d__, e, i__, k;
-//    doublereal mfact;
-//    integer ncoeff;
-//    doublereal tjacap[21];
-//    integer iordre[2];
-//    doublereal hermit[36]/* was [6][3][2] */, ctenor, bornes[2];
-//    integer ier;
-//    integer aux1, aux2;
-//
-///* ***********************************************************************
-// */
-//
-///*     FUNCTION : */
-///*     ---------- */
-///*       CONVERSION OF TABLE TCBOLD OF POLYNOMIAL CURVE COEFFICIENTS */
-///*       EXPRESSED IN HERMIT JACOBI BASE, INTO A */
-///*       TABLE OF COEFFICIENTS TCBNEW OF COURVES EXPRESSED IN THE CANONIC BASE */
-//
-///*     KEYWORDS : */
-///*     ----------- */
-///*      CANNONIC, HERMIT, JACCOBI */
-//
-///*     INPUT ARGUMENTS : */
-///*     -------------------- */
-///*       ORDHER : ORDER OF HERMIT POLYNOMS OR ORDER OF CONTINUITY */
-///*       NCOEFS : NUMBER OF COEFFICIENTS OF A POLYNOMIAL CURVE */
-///*                FOR ONE OF ITS NDIM COMPONENTS;(DEGREE+1 OF THE CURVE)
-//*/
-///*       NDIM   : DIMENSION OF THE CURVE */
-///*       CBHEJA : TABLE OF COEFFICIENTS OF THE CURVE IN THE BASE */
-///*                HERMIT JACOBI */
-///*                (H(0,-1),..,H(ORDHER,-1),H(0,1),..,H(ORDHER,1), */
-///*                 JA(ORDHER+1,2*ORDHER+2),....,JA(ORDHER+1,NCOEFS-1) */
-//
-///*     OUTPUT ARGUMENTS  : */
-///*     --------------------- */
-///*       CBRCAN : TABLE OF COEFFICIENTS OF THE CURVE IN THE CANONIC BASE */
-///*                (1, t, ...) */
-//
-///*     COMMONS USED : */
-///*     ------------------ */
-//
-//
-///*     REFERENCES CALLED : */
-///*     --------------------- */
-//
-//
-///* ***********************************************************************
-// */
-//
-//
-///* ***********************************************************************
-// */
-//
-///*     FUNCTION : */
-///*     ---------- */
-///*        Providesinteger constants from 0 to 1000 */
-//
-///*     KEYWORDS : */
-///*     ----------- */
-///*        ALL, INTEGER */
-//
-///*     DEMSCRIPTION/NOTES/LIMITATIONS : */
-///*     ----------------------------------- */
-///* > */
-///* ***********************************************************************
-// */
-//
-//
-///* ***********************************************************************
-// */
-//
-//
-//
-//
-///* ***********************************************************************
-// */
-///*                      INITIALIZATION */
-///* ***********************************************************************
-// */
-//
-//    /* Parameter adjustments */
-//    --ncftab;
-//    tcbnew_dim1 = *ndimen;
-//    tcbnew_dim2 = *ncflim;
-//    tcbnew_offset = tcbnew_dim1 * (tcbnew_dim2 + 1) + 1;
-//    tcbnew -= tcbnew_offset;
-//    tcbold_dim1 = *ndimen;
-//    tcbold_dim2 = *ncflim;
-//    tcbold_offset = tcbold_dim1 * (tcbold_dim2 + 1) + 1;
-//    tcbold -= tcbold_offset;
-//
-//    /* Function Body */
-//    ldbg = AdvApp2Var_SysBase::mnfndeb_() >= 2;
-//    if (ldbg) {
-//	AdvApp2Var_SysBase::mgenmsg_("MMHJCAN", 7L);
-//    }
-//    *iercod = 0;
-//
-//    bornes[0] = -1.;
-//    bornes[1] = 1.;
-//
-///* ***********************************************************************
-// */
-///*                     PROCESSING */
-///* ***********************************************************************
-// */
-//
-//    if (*orcont > 2) {
-//	goto L9101;
-//    }
-//    if (*ncflim > 21) {
-//	goto L9101;
-//    }
-//
-///*     CALCULATION OF HERMIT POLYNOMS IN THE CANONIC BASE ON (-1,1) */
-//
-//
-//    iordre[0] = *orcont;
-//    iordre[1] = *orcont;
-//    mmherm1_(bornes, &c__2, iordre, hermit, &ier);
-//    if (ier > 0) {
-//	goto L9102;
-//    }
-//
-//
-//    aux1 = *orcont + 1;
-//    aux2 = aux1 << 1;
-//
-//    i__1 = *ncourb;
-//    for (e = 1; e <= i__1; ++e) {
-//
-//	ctenor = (tdecop[e] - tdecop[e - 1]) / 2;
-//	ncoeff = ncftab[e];
-//	ndeg = ncoeff - 1;
-//	if (ncoeff > 21) {
-//	    goto L9101;
-//	}
-//
-//	i__2 = *ndimen;
-//	for (d__ = 1; d__ <= i__2; ++d__) {
-//
-///*     CONVERSION OF THE COEFFICIENTS OF THE PART OF THE CURVE EXPRESSED */
-///*     IN HERMIT BASE, INTO THE CANONIC BASE */
-//
-//	    AdvApp2Var_SysBase::mvriraz_(&ncoeff, taux1);
-//
-//	    i__3 = aux2;
-//	    for (k = 1; k <= i__3; ++k) {
-//		i__4 = aux1;
-//		for (i__ = 1; i__ <= i__4; ++i__) {
-//		    i__5 = i__ - 1;
-//		    mfact = AdvApp2Var_MathBase::pow__di(&ctenor, &i__5);
-//		    taux1[k - 1] += (tcbold[d__ + (i__ + e * tcbold_dim2) *
-//			    tcbold_dim1] * hermit[k + (i__ + 2) * 6 - 19] +
-//			    tcbold[d__ + (i__ + aux1 + e * tcbold_dim2) *
-//			    tcbold_dim1] * hermit[k + (i__ + 5) * 6 - 19]) *
-//			    mfact;
-//		}
-//	    }
-//
-//
-//	    i__3 = ncoeff;
-//	    for (i__ = aux2 + 1; i__ <= i__3; ++i__) {
-//		taux1[i__ - 1] = tcbold[d__ + (i__ + e * tcbold_dim2) *
-//			tcbold_dim1];
-//	    }
-//
-///*     CONVERSION OF THE COEFFICIENTS OF THE PART OF THE CURVE EXPRESSED */
-///*     IN CANONIC-JACOBI BASE, INTO THE CANONIC BASE */
-//
-//
-//
-//	    AdvApp2Var_MathBase::mmapcmp_(&minombr_.nbr[1], &c__21, &ncoeff, taux1, tjacap);
-//	    AdvApp2Var_MathBase::mmjacan_(orcont, &ndeg, tjacap, taux1);
-//
-///*        RECOPY THE COEFS RESULTING FROM THE CONVERSION IN THE TABLE */
-///*        OF RESULTS */
-//
-//	    i__3 = ncoeff;
-//	    for (i__ = 1; i__ <= i__3; ++i__) {
-//		tcbnew[d__ + (i__ + e * tcbnew_dim2) * tcbnew_dim1] = taux1[
-//			i__ - 1];
-//	    }
-//
-//	}
-//    }
-//
-//    goto L9999;
-//
-///* ***********************************************************************
-// */
-///*                   PROCESSING OF ERRORS */
-///* ***********************************************************************
-// */
-//
-//L9101:
-//    *iercod = 1;
-//    goto L9999;
-//L9102:
-//    *iercod = 2;
-//    goto L9999;
-//
-///* ***********************************************************************
-// */
-///*                   RETURN CALLING PROGRAM */
-///* ***********************************************************************
-// */
-//
-//L9999:
-//
-//    AdvApp2Var_SysBase::maermsg_("MMHJCAN", iercod, 7L);
-//    if (ldbg) {
-//	AdvApp2Var_SysBase::mgsomsg_("MMHJCAN", 7L);
-//    }
-// return 0 ;
-//} /* mmhjcan_ */
+int AdvApp2Var_MathBase::mmhjcan_(integer *ndimen,
+			    integer *ncourb,
+			    integer *ncftab,
+			    integer *orcont,
+			    integer *ncflim,
+			    doublereal *tcbold,
+			    doublereal *tdecop,
+			    doublereal *tcbnew,
+			    integer *iercod)
+
+{
+  integer c__2 = 2;
+  integer c__21 = 21;
+  /* System generated locals */
+    integer tcbold_dim1, tcbold_dim2, tcbold_offset, tcbnew_dim1, tcbnew_dim2,
+	     tcbnew_offset, i__1, i__2, i__3, i__4, i__5;
+
+
+    /* Local variables */
+    logical ldbg;
+    integer ndeg;
+    doublereal taux1[21];
+    integer d__, e, i__, k;
+    doublereal mfact;
+    integer ncoeff;
+    doublereal tjacap[21];
+    integer iordre[2];
+    doublereal hermit[36]/* was [6][3][2] */, ctenor, bornes[2];
+    integer ier;
+    integer aux1, aux2;
+
+/* ***********************************************************************
+ */
+
+/*     FUNCTION : */
+/*     ---------- */
+/*       CONVERSION OF TABLE TCBOLD OF POLYNOMIAL CURVE COEFFICIENTS */
+/*       EXPRESSED IN HERMIT JACOBI BASE, INTO A */
+/*       TABLE OF COEFFICIENTS TCBNEW OF COURVES EXPRESSED IN THE CANONIC BASE */
+
+/*     KEYWORDS : */
+/*     ----------- */
+/*      CANNONIC, HERMIT, JACCOBI */
+
+/*     INPUT ARGUMENTS : */
+/*     -------------------- */
+/*       ORDHER : ORDER OF HERMIT POLYNOMS OR ORDER OF CONTINUITY */
+/*       NCOEFS : NUMBER OF COEFFICIENTS OF A POLYNOMIAL CURVE */
+/*                FOR ONE OF ITS NDIM COMPONENTS;(DEGREE+1 OF THE CURVE)
+*/
+/*       NDIM   : DIMENSION OF THE CURVE */
+/*       CBHEJA : TABLE OF COEFFICIENTS OF THE CURVE IN THE BASE */
+/*                HERMIT JACOBI */
+/*                (H(0,-1),..,H(ORDHER,-1),H(0,1),..,H(ORDHER,1), */
+/*                 JA(ORDHER+1,2*ORDHER+2),....,JA(ORDHER+1,NCOEFS-1) */
+
+/*     OUTPUT ARGUMENTS  : */
+/*     --------------------- */
+/*       CBRCAN : TABLE OF COEFFICIENTS OF THE CURVE IN THE CANONIC BASE */
+/*                (1, t, ...) */
+
+/*     COMMONS USED : */
+/*     ------------------ */
+
+
+/*     REFERENCES CALLED : */
+/*     --------------------- */
+
+
+/* ***********************************************************************
+ */
+
+
+/* ***********************************************************************
+ */
+
+/*     FUNCTION : */
+/*     ---------- */
+/*        Providesinteger constants from 0 to 1000 */
+
+/*     KEYWORDS : */
+/*     ----------- */
+/*        ALL, INTEGER */
+
+/*     DEMSCRIPTION/NOTES/LIMITATIONS : */
+/*     ----------------------------------- */
+/* > */
+/* ***********************************************************************
+ */
+
+
+/* ***********************************************************************
+ */
+
+
+
+
+/* ***********************************************************************
+ */
+/*                      INITIALIZATION */
+/* ***********************************************************************
+ */
+
+    /* Parameter adjustments */
+    --ncftab;
+    tcbnew_dim1 = *ndimen;
+    tcbnew_dim2 = *ncflim;
+    tcbnew_offset = tcbnew_dim1 * (tcbnew_dim2 + 1) + 1;
+    tcbnew -= tcbnew_offset;
+    tcbold_dim1 = *ndimen;
+    tcbold_dim2 = *ncflim;
+    tcbold_offset = tcbold_dim1 * (tcbold_dim2 + 1) + 1;
+    tcbold -= tcbold_offset;
+
+    /* Function Body */
+    ldbg = AdvApp2Var_SysBase::mnfndeb_() >= 2;
+    if (ldbg) {
+	AdvApp2Var_SysBase::mgenmsg_("MMHJCAN", 7L);
+    }
+    *iercod = 0;
+
+    bornes[0] = -1.;
+    bornes[1] = 1.;
+
+/* ***********************************************************************
+ */
+/*                     PROCESSING */
+/* ***********************************************************************
+ */
+
+    if (*orcont > 2) {
+	goto L9101;
+    }
+    if (*ncflim > 21) {
+	goto L9101;
+    }
+
+/*     CALCULATION OF HERMIT POLYNOMS IN THE CANONIC BASE ON (-1,1) */
+
+
+    iordre[0] = *orcont;
+    iordre[1] = *orcont;
+    mmherm1_(bornes, &c__2, iordre, hermit, &ier);
+    if (ier > 0) {
+	goto L9102;
+    }
+
+
+    aux1 = *orcont + 1;
+    aux2 = aux1 << 1;
+
+    i__1 = *ncourb;
+    for (e = 1; e <= i__1; ++e) {
+
+	ctenor = (tdecop[e] - tdecop[e - 1]) / 2;
+	ncoeff = ncftab[e];
+	ndeg = ncoeff - 1;
+	if (ncoeff > 21) {
+	    goto L9101;
+	}
+
+	i__2 = *ndimen;
+	for (d__ = 1; d__ <= i__2; ++d__) {
+
+/*     CONVERSION OF THE COEFFICIENTS OF THE PART OF THE CURVE EXPRESSED */
+/*     IN HERMIT BASE, INTO THE CANONIC BASE */
+
+	    AdvApp2Var_SysBase::mvriraz_(&ncoeff, taux1);
+
+	    i__3 = aux2;
+	    for (k = 1; k <= i__3; ++k) {
+		i__4 = aux1;
+		for (i__ = 1; i__ <= i__4; ++i__) {
+		    i__5 = i__ - 1;
+		    mfact = AdvApp2Var_MathBase::pow__di(&ctenor, &i__5);
+		    taux1[k - 1] += (tcbold[d__ + (i__ + e * tcbold_dim2) *
+			    tcbold_dim1] * hermit[k + (i__ + 2) * 6 - 19] +
+			    tcbold[d__ + (i__ + aux1 + e * tcbold_dim2) *
+			    tcbold_dim1] * hermit[k + (i__ + 5) * 6 - 19]) *
+			    mfact;
+		}
+	    }
+
+
+	    i__3 = ncoeff;
+	    for (i__ = aux2 + 1; i__ <= i__3; ++i__) {
+		taux1[i__ - 1] = tcbold[d__ + (i__ + e * tcbold_dim2) *
+			tcbold_dim1];
+	    }
+
+/*     CONVERSION OF THE COEFFICIENTS OF THE PART OF THE CURVE EXPRESSED */
+/*     IN CANONIC-JACOBI BASE, INTO THE CANONIC BASE */
+
+
+
+	    AdvApp2Var_MathBase::mmapcmp_(&minombr_.nbr[1], &c__21, &ncoeff, taux1, tjacap);
+	    AdvApp2Var_MathBase::mmjacan_(orcont, &ndeg, tjacap, taux1);
+
+/*        RECOPY THE COEFS RESULTING FROM THE CONVERSION IN THE TABLE */
+/*        OF RESULTS */
+
+	    i__3 = ncoeff;
+	    for (i__ = 1; i__ <= i__3; ++i__) {
+		tcbnew[d__ + (i__ + e * tcbnew_dim2) * tcbnew_dim1] = taux1[
+			i__ - 1];
+	    }
+
+	}
+    }
+
+    goto L9999;
+
+/* ***********************************************************************
+ */
+/*                   PROCESSING OF ERRORS */
+/* ***********************************************************************
+ */
+
+L9101:
+    *iercod = 1;
+    goto L9999;
+L9102:
+    *iercod = 2;
+    goto L9999;
+
+/* ***********************************************************************
+ */
+/*                   RETURN CALLING PROGRAM */
+/* ***********************************************************************
+ */
+
+L9999:
+
+    AdvApp2Var_SysBase::maermsg_("MMHJCAN", iercod, 7L);
+    if (ldbg) {
+	AdvApp2Var_SysBase::mgsomsg_("MMHJCAN", 7L);
+    }
+ return 0 ;
+} /* mmhjcan_ */
+#endif
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mminltt_

@@ -23,7 +23,7 @@
 //                                                  Cercle.               +
 //                                                  Courbes.              +
 //=========================================================================
-
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 #include <GccAna_Circ2d3Tan.hxx>
 #include <GccEnt_BadQualifier.hxx>
 #include <GccEnt_QualifiedCirc.hxx>
@@ -42,9 +42,9 @@
 #include <StdFail_NotDone.hxx>
 
 Geom2dGcc_Circ2d3TanIter::
-Geom2dGcc_Circ2d3TanIter (const Geom2dGcc_QCurve& Qualified1 , 
+Geom2dGcc_Circ2d3TanIter (const Geom2dGcc_QCurve& Qualified1 ,
                           const Geom2dGcc_QCurve& Qualified2 ,
-                          const Geom2dGcc_QCurve& Qualified3 , 
+                          const Geom2dGcc_QCurve& Qualified3 ,
                           const Standard_Real      Param1     ,
                           const Standard_Real      Param2     ,
                           const Standard_Real      Param3     ,
@@ -65,11 +65,11 @@ Geom2dGcc_Circ2d3TanIter (const Geom2dGcc_QCurve& Qualified1 ,
                             qualifier1 = GccEnt_noqualifier;
                             qualifier2 = GccEnt_noqualifier;
                             qualifier3 = GccEnt_noqualifier;
-                            if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() || 
+                            if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() ||
                               Qualified1.IsOutside() || Qualified1.IsUnqualified()) ||
-                              !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() || 
+                              !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() ||
                               Qualified2.IsOutside() || Qualified2.IsUnqualified()) ||
-                              !(Qualified3.IsEnclosed() || Qualified3.IsEnclosing() || 
+                              !(Qualified3.IsEnclosed() || Qualified3.IsEnclosing() ||
                               Qualified3.IsOutside() || Qualified3.IsUnqualified())) {
                                 throw GccEnt_BadQualifier();
                                 return;
@@ -93,7 +93,7 @@ Geom2dGcc_Circ2d3TanIter (const Geom2dGcc_QCurve& Qualified1 ,
                             Ufirst(3) = Param3;
                             tol(1) = Geom2dGcc_CurveTool::EpsX(Cu1,Abs(Tolerance));
                             tol(2) = Geom2dGcc_CurveTool::EpsX(Cu2,Abs(Tolerance));
-                            tol(3) = Geom2dGcc_CurveTool::EpsX(Cu3,Abs(Tolerance));   
+                            tol(3) = Geom2dGcc_CurveTool::EpsX(Cu3,Abs(Tolerance));
                             math_FunctionSetRoot Root(Func, tol);
                             Root.Perform(Func, Ufirst, Umin, Umax);
                             if (Root.IsDone()) {
@@ -105,7 +105,7 @@ Geom2dGcc_Circ2d3TanIter (const Geom2dGcc_QCurve& Qualified1 ,
                               Geom2dGcc_CurveTool::D1(Cu2,Ufirst(2),point2,Tan2);
                               Geom2dGcc_CurveTool::D1(Cu3,Ufirst(3),point3,Tan3);
                               GccAna_Circ2d3Tan circ(point1,point2,point3,Tol);
-                              if (circ.IsDone()) { 
+                              if (circ.IsDone()) {
                                 cirsol = circ.ThisSolution(1);
                                 gp_Pnt2d centre = cirsol.Location();
                                 Standard_Real normetan1 = Tan1.Magnitude();
@@ -138,12 +138,12 @@ Geom2dGcc_Circ2d3TanIter (const Geom2dGcc_QCurve& Qualified1 ,
                                     (Qualified1.IsOutside() && Angle1 >= 0.) ||
                                     (Qualified1.IsEnclosed() && Angle1 <= 0.)) {
                                       Angle1 = Vec2.Angle(Tan2);
-                                      if (Qualified2.IsUnqualified() || 
+                                      if (Qualified2.IsUnqualified() ||
                                         (Qualified2.IsEnclosing()&&Angle1<=0.)||
                                         (Qualified2.IsOutside() && Angle1 >= 0) ||
                                         (Qualified2.IsEnclosed() && Angle1 <= 0.)) {
                                           Angle1 = Vec3.Angle(Tan3);
-                                          if (Qualified3.IsUnqualified() || 
+                                          if (Qualified3.IsUnqualified() ||
                                             (Qualified3.IsEnclosing()&&Angle1<=0.)||
                                             (Qualified3.IsOutside() && Angle1 >= 0) ||
                                             (Qualified3.IsEnclosed() && Angle1 <= 0.)) {
@@ -169,9 +169,9 @@ Geom2dGcc_Circ2d3TanIter (const Geom2dGcc_QCurve& Qualified1 ,
 }
 
 Geom2dGcc_Circ2d3TanIter::
-Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 , 
+Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
                           const Geom2dGcc_QCurve& Qualified2 ,
-                          const Geom2dGcc_QCurve& Qualified3 , 
+                          const Geom2dGcc_QCurve& Qualified3 ,
                           const Standard_Real      Param1     ,
                           const Standard_Real      Param2     ,
                           const Standard_Real      Param3     ,
@@ -192,11 +192,11 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
                             qualifier1 = GccEnt_noqualifier;
                             qualifier2 = GccEnt_noqualifier;
                             qualifier3 = GccEnt_noqualifier;
-                            if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() || 
+                            if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() ||
                               Qualified1.IsOutside() || Qualified1.IsUnqualified()) ||
-                              !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() || 
+                              !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() ||
                               Qualified2.IsOutside() || Qualified2.IsUnqualified()) ||
-                              !(Qualified3.IsEnclosed() || Qualified3.IsEnclosing() || 
+                              !(Qualified3.IsEnclosed() || Qualified3.IsEnclosing() ||
                               Qualified3.IsOutside() || Qualified3.IsUnqualified())) {
                                 throw GccEnt_BadQualifier();
                                 return;
@@ -220,7 +220,7 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
                             Ufirst(3) = Param3;
                             tol(1) = 2.e-15*M_PI;
                             tol(2) = Geom2dGcc_CurveTool::EpsX(Cu2,Abs(Tolerance));
-                            tol(3) = Geom2dGcc_CurveTool::EpsX(Cu3,Abs(Tolerance));   
+                            tol(3) = Geom2dGcc_CurveTool::EpsX(Cu3,Abs(Tolerance));
                             math_FunctionSetRoot Root(Func, tol);
                             Root.Perform(Func, Ufirst, Umin, Umax);
                             if (Root.IsDone()) {
@@ -265,17 +265,17 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
                                 else { dot3 = 0.; }
                                 Tol = 1.e-12;
                                 if (dot1 <= Tol && dot2 <=Tol && dot3 <= Tol) {
-                                  if (Qualified1.IsUnqualified() || 
+                                  if (Qualified1.IsUnqualified() ||
                                     (Qualified1.IsEnclosing() && Rsol >= R1 && dist <= Rsol)||
                                     (Qualified1.IsOutside() && dist >= Rsol) ||
                                     (Qualified1.IsEnclosed() && Rsol <= R1 && dist <= Rsol)) {
                                       Standard_Real Angle1 = Vec2.Angle(Tan2);
-                                      if (Qualified2.IsUnqualified() || 
+                                      if (Qualified2.IsUnqualified() ||
                                         (Qualified2.IsEnclosing()&&Angle1<=0.)||
                                         (Qualified2.IsOutside() && Angle1 >= 0) ||
                                         (Qualified2.IsEnclosed() && Angle1 <= 0.)) {
                                           Angle1 = Vec3.Angle(Tan3);
-                                          if (Qualified3.IsUnqualified() || 
+                                          if (Qualified3.IsUnqualified() ||
                                             (Qualified3.IsEnclosing()&&Angle1<=0.)||
                                             (Qualified3.IsOutside() && Angle1 >= 0) ||
                                             (Qualified3.IsEnclosed() && Angle1 <= 0.)) {
@@ -301,9 +301,9 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
 }
 
 Geom2dGcc_Circ2d3TanIter::
-Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 , 
-                          const GccEnt_QualifiedCirc& Qualified2 , 
-                          const Geom2dGcc_QCurve&    Qualified3 , 
+Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
+                          const GccEnt_QualifiedCirc& Qualified2 ,
+                          const Geom2dGcc_QCurve&    Qualified3 ,
                           const Standard_Real         Param1     ,
                           const Standard_Real         Param2     ,
                           const Standard_Real         Param3     ,
@@ -324,11 +324,11 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
                             qualifier1 = GccEnt_noqualifier;
                             qualifier2 = GccEnt_noqualifier;
                             qualifier3 = GccEnt_noqualifier;
-                            if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() || 
+                            if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() ||
                               Qualified1.IsOutside() || Qualified1.IsUnqualified()) ||
-                              !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() || 
+                              !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() ||
                               Qualified2.IsOutside() || Qualified2.IsUnqualified()) ||
-                              !(Qualified3.IsEnclosed() || Qualified3.IsEnclosing() || 
+                              !(Qualified3.IsEnclosed() || Qualified3.IsEnclosing() ||
                               Qualified3.IsOutside() || Qualified3.IsUnqualified())) {
                                 throw GccEnt_BadQualifier();
                                 return;
@@ -352,7 +352,7 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
                             Ufirst(3) = Param3;
                             tol(1) = 2.e-15*M_PI;
                             tol(2) = 2.e-15*M_PI;
-                            tol(3) = Geom2dGcc_CurveTool::EpsX(Cu3,Abs(Tolerance));   
+                            tol(3) = Geom2dGcc_CurveTool::EpsX(Cu3,Abs(Tolerance));
                             math_FunctionSetRoot Root(Func, tol);
                             Root.Perform(Func, Ufirst, Umin, Umax);
                             if (Root.IsDone()) {
@@ -399,18 +399,18 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
                                 else { dot3 = 0.; }
                                 Tol = 1.e-12;
                                 if (dot1 <= Tol && dot2 <=Tol && dot3 <= Tol) {
-                                  if (Qualified1.IsUnqualified() || 
+                                  if (Qualified1.IsUnqualified() ||
                                     (Qualified1.IsEnclosing() && Rsol >= R1 && dist <= Rsol)||
                                     (Qualified1.IsOutside() && dist >= Rsol) ||
                                     (Qualified1.IsEnclosed() && Rsol <= R1 && dist <= Rsol)) {
                                       dist = centre2.Distance(centre);
-                                      if (Qualified1.IsUnqualified() || 
+                                      if (Qualified1.IsUnqualified() ||
                                         (Qualified1.IsEnclosing() && Rsol >= R2 && dist <= Rsol)||
                                         (Qualified1.IsOutside() && dist >= Rsol) ||
                                         (Qualified1.IsEnclosed() && Rsol <= R2 && dist <= Rsol)) {
                                           gp_Vec2d Vec(point3,centre);
                                           Standard_Real Angle1 = Vec.Angle(Tan3);
-                                          if (Qualified3.IsUnqualified() || 
+                                          if (Qualified3.IsUnqualified() ||
                                             (Qualified3.IsEnclosing()&&Angle1<=0.)||
                                             (Qualified3.IsOutside() && Angle1 >= 0) ||
                                             (Qualified3.IsEnclosed() && Angle1 <= 0.)) {
@@ -436,9 +436,9 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
 }
 
 Geom2dGcc_Circ2d3TanIter::
-Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin& Qualified1 , 
+Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin& Qualified1 ,
                           const Geom2dGcc_QCurve&   Qualified2 ,
-                          const Geom2dGcc_QCurve&   Qualified3 , 
+                          const Geom2dGcc_QCurve&   Qualified3 ,
                           const Standard_Real        Param1     ,
                           const Standard_Real        Param2     ,
                           const Standard_Real        Param3     ,
@@ -461,9 +461,9 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin& Qualified1 ,
                             qualifier3 = GccEnt_noqualifier;
                             if (!(Qualified1.IsEnclosed() ||
                               Qualified1.IsOutside() || Qualified1.IsUnqualified()) ||
-                              !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() || 
+                              !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() ||
                               Qualified2.IsOutside() || Qualified2.IsUnqualified()) ||
-                              !(Qualified3.IsEnclosed() || Qualified3.IsEnclosing() || 
+                              !(Qualified3.IsEnclosed() || Qualified3.IsEnclosing() ||
                               Qualified3.IsOutside() || Qualified3.IsUnqualified())) {
                                 throw GccEnt_BadQualifier();
                                 return;
@@ -487,7 +487,7 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin& Qualified1 ,
                             Ufirst(3) = Param3;
                             tol(1) = 1.e-15;
                             tol(2) = Geom2dGcc_CurveTool::EpsX(Cu2,Abs(Tolerance));
-                            tol(3) = Geom2dGcc_CurveTool::EpsX(Cu3,Abs(Tolerance));   
+                            tol(3) = Geom2dGcc_CurveTool::EpsX(Cu3,Abs(Tolerance));
                             math_FunctionSetRoot Root(Func, tol);
                             Root.Perform(Func, Ufirst, Umin, Umax);
                             if (Root.IsDone()) {
@@ -534,18 +534,18 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin& Qualified1 ,
                                 else { dot3 = 0.; }
                                 Tol = 1.e-12;
                                 if (dot1 <= Tol && dot2 <=Tol && dot3 <= Tol) {
-                                  if (Qualified1.IsUnqualified() || 
+                                  if (Qualified1.IsUnqualified() ||
                                     (Qualified1.IsOutside() && pscal <= 0.) ||
                                     (Qualified1.IsEnclosed() && pscal >= 0.)) {
                                       gp_Vec2d Vec(point2,centre);
                                       Standard_Real Angle1 = Vec.Angle(Tan2);
-                                      if (Qualified2.IsUnqualified() || 
+                                      if (Qualified2.IsUnqualified() ||
                                         (Qualified2.IsEnclosing()&&Angle1<=0.)||
                                         (Qualified2.IsOutside() && Angle1 >= 0) ||
                                         (Qualified2.IsEnclosed() && Angle1 <= 0.)) {
                                           Vec = gp_Vec2d(point3,centre);
                                           Angle1 = Vec.Angle(Tan3);
-                                          if (Qualified3.IsUnqualified() || 
+                                          if (Qualified3.IsUnqualified() ||
                                             (Qualified3.IsEnclosing()&&Angle1<=0.)||
                                             (Qualified3.IsOutside() && Angle1 >= 0) ||
                                             (Qualified3.IsEnclosed() && Angle1 <= 0.)) {
@@ -571,9 +571,9 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin& Qualified1 ,
 }
 
 Geom2dGcc_Circ2d3TanIter::
-Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin&  Qualified1 , 
-                          const GccEnt_QualifiedLin&  Qualified2 , 
-                          const Geom2dGcc_QCurve&    Qualified3 , 
+Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin&  Qualified1 ,
+                          const GccEnt_QualifiedLin&  Qualified2 ,
+                          const Geom2dGcc_QCurve&    Qualified3 ,
                           const Standard_Real         Param1     ,
                           const Standard_Real         Param2     ,
                           const Standard_Real         Param3     ,
@@ -594,11 +594,11 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin&  Qualified1 ,
                             qualifier1 = GccEnt_noqualifier;
                             qualifier2 = GccEnt_noqualifier;
                             qualifier3 = GccEnt_noqualifier;
-                            if (!(Qualified1.IsEnclosed() || 
+                            if (!(Qualified1.IsEnclosed() ||
                               Qualified1.IsOutside() || Qualified1.IsUnqualified()) ||
-                              !(Qualified2.IsEnclosed() || 
+                              !(Qualified2.IsEnclosed() ||
                               Qualified2.IsOutside() || Qualified2.IsUnqualified()) ||
-                              !(Qualified3.IsEnclosed() || Qualified3.IsEnclosing() || 
+                              !(Qualified3.IsEnclosed() || Qualified3.IsEnclosing() ||
                               Qualified3.IsOutside() || Qualified3.IsUnqualified())) {
                                 throw GccEnt_BadQualifier();
                                 return;
@@ -622,7 +622,7 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin&  Qualified1 ,
                             Ufirst(3) = Param3;
                             tol(1) = 1.e-15;
                             tol(2) = 1.e-15;
-                            tol(3) = Geom2dGcc_CurveTool::EpsX(Cu3,Abs(Tolerance));   
+                            tol(3) = Geom2dGcc_CurveTool::EpsX(Cu3,Abs(Tolerance));
                             math_FunctionSetRoot Root(Func, tol);
                             Root.Perform(Func, Ufirst, Umin, Umax);
                             if (Root.IsDone()) {
@@ -641,7 +641,7 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin&  Qualified1 ,
                                 gp_Pnt2d centre(cirsol.Location());
                                 Standard_Real pscal=centre.XY().Dot(gp_XY(-L1.Direction().Y(),
                                   L1.Direction().X()));
-                                if (Qualified1.IsUnqualified() || 
+                                if (Qualified1.IsUnqualified() ||
                                   (Qualified1.IsOutside() && pscal <= 0.) ||
                                   (Qualified1.IsEnclosed() && pscal >= 0.)) {
                                     gp_Vec2d Tan1(L1.Direction().XY());
@@ -670,11 +670,11 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin&  Qualified1 ,
                                     else { dot3 = 0.; }
                                     Tol = 1.e-12;
                                     if (dot1 <= Tol && dot2 <=Tol && dot3 <= Tol) {
-                                      if (Qualified2.IsUnqualified() || 
+                                      if (Qualified2.IsUnqualified() ||
                                         (Qualified2.IsOutside() && pscal <= 0.) ||
                                         (Qualified2.IsEnclosed() && pscal >= 0.)) {
                                           Standard_Real Angle1 = Vec3.Angle(Tan3);
-                                          if (Qualified3.IsUnqualified() || 
+                                          if (Qualified3.IsUnqualified() ||
                                             (Qualified3.IsEnclosing()&&Angle1<=0.)||
                                             (Qualified3.IsOutside() && Angle1 >= 0) ||
                                             (Qualified3.IsEnclosed() && Angle1 <= 0.)) {
@@ -701,7 +701,7 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin&  Qualified1 ,
 
 Geom2dGcc_Circ2d3TanIter::
 Geom2dGcc_Circ2d3TanIter (const Geom2dGcc_QCurve& Qualified1 ,
-                          const Geom2dGcc_QCurve& Qualified2 , 
+                          const Geom2dGcc_QCurve& Qualified2 ,
                           const gp_Pnt2d&          Point3     ,
                           const Standard_Real      Param1     ,
                           const Standard_Real      Param2     ,
@@ -722,9 +722,9 @@ Geom2dGcc_Circ2d3TanIter (const Geom2dGcc_QCurve& Qualified1 ,
                             qualifier1 = GccEnt_noqualifier;
                             qualifier2 = GccEnt_noqualifier;
                             qualifier3 = GccEnt_noqualifier;
-                            if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() || 
+                            if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() ||
                               Qualified1.IsOutside() || Qualified1.IsUnqualified()) ||
-                              !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() || 
+                              !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() ||
                               Qualified2.IsOutside() || Qualified2.IsUnqualified())) {
                                 throw GccEnt_BadQualifier();
                                 return;
@@ -840,7 +840,7 @@ Geom2dGcc_Circ2d3TanIter (const Geom2dGcc_QCurve& Qualified1 ,
                             qualifier1 = GccEnt_noqualifier;
                             qualifier2 = GccEnt_noqualifier;
                             qualifier3 = GccEnt_noqualifier;
-                            if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() || 
+                            if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() ||
                               Qualified1.IsOutside() || Qualified1.IsUnqualified())) {
                                 throw GccEnt_BadQualifier();
                                 return;
@@ -876,7 +876,7 @@ Geom2dGcc_Circ2d3TanIter (const Geom2dGcc_QCurve& Qualified1 ,
                               gp_Vec2d Tan3;
                               Geom2dGcc_CurveTool::D1(Cu1,Ufirst(3),point3,Tan3);
                               GccAna_Circ2d3Tan circ(Point2,Point3,point3,Tol);
-                              if (circ.IsDone()) { 
+                              if (circ.IsDone()) {
                                 cirsol = circ.ThisSolution(1);
                                 gp_Pnt2d centre(cirsol.Location());
                                 gp_Vec2d Tan2(-Sin(Ufirst(2)),Cos(Ufirst(2)));
@@ -930,7 +930,7 @@ Geom2dGcc_Circ2d3TanIter (const Geom2dGcc_QCurve& Qualified1 ,
 }
 
 Geom2dGcc_Circ2d3TanIter::
-Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin&  Qualified1 , 
+Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin&  Qualified1 ,
                           const Geom2dGcc_QCurve&    Qualified2 ,
                           const gp_Pnt2d&             Point3     ,
                           const Standard_Real         Param1     ,
@@ -954,7 +954,7 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin&  Qualified1 ,
                             qualifier3 = GccEnt_noqualifier;
                             if (!(Qualified1.IsEnclosed() ||
                               Qualified1.IsOutside() || Qualified1.IsUnqualified()) ||
-                              !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() || 
+                              !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() ||
                               Qualified2.IsOutside() || Qualified2.IsUnqualified())) {
                                 throw GccEnt_BadQualifier();
                                 return;
@@ -1022,11 +1022,11 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin&  Qualified1 ,
                                 else { dot3 = 0.; }
                                 Tol = 1.e-12;
                                 if (dot1 <= Tol && dot2 <=Tol && dot3 <= Tol) {
-                                  if (Qualified1.IsUnqualified() || 
+                                  if (Qualified1.IsUnqualified() ||
                                     (Qualified1.IsOutside() && pscal <= 0.) ||
                                     (Qualified1.IsEnclosed() && pscal >= 0.)) {
                                       Standard_Real Angle1 = Vec2.Angle(Tan2);
-                                      if (Qualified2.IsUnqualified() || 
+                                      if (Qualified2.IsUnqualified() ||
                                         (Qualified2.IsEnclosing()&&Angle1<=0.)||
                                         (Qualified2.IsOutside() && Angle1 >= 0) ||
                                         (Qualified2.IsEnclosed() && Angle1 <= 0.)) {
@@ -1051,9 +1051,9 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedLin&  Qualified1 ,
 }
 
 Geom2dGcc_Circ2d3TanIter::
-Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 , 
-                          const GccEnt_QualifiedLin&  Qualified2 , 
-                          const Geom2dGcc_QCurve&     Qualified3 , 
+Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
+                          const GccEnt_QualifiedLin&  Qualified2 ,
+                          const Geom2dGcc_QCurve&     Qualified3 ,
                           const Standard_Real         Param1     ,
                           const Standard_Real         Param2     ,
                           const Standard_Real         Param3     ,
@@ -1074,11 +1074,11 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
                             qualifier1 = GccEnt_noqualifier;
                             qualifier2 = GccEnt_noqualifier;
                             qualifier3 = GccEnt_noqualifier;
-                            if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() || 
+                            if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() ||
                               Qualified1.IsOutside() || Qualified1.IsUnqualified()) ||
                               !(Qualified2.IsEnclosed() ||
                               Qualified2.IsOutside() || Qualified2.IsUnqualified()) ||
-                              !(Qualified3.IsEnclosed() || Qualified3.IsEnclosing() || 
+                              !(Qualified3.IsEnclosed() || Qualified3.IsEnclosing() ||
                               Qualified3.IsOutside() || Qualified3.IsUnqualified())) {
                                 throw GccEnt_BadQualifier();
                                 return;
@@ -1148,17 +1148,17 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
                                 if (dot1 <= Tol && dot2 <=Tol && dot3 <= Tol) {
                                   Standard_Real dist = centre1.Distance(centre);
                                   Standard_Real Rsol = cirsol.Radius();
-                                  if (Qualified1.IsUnqualified() || 
+                                  if (Qualified1.IsUnqualified() ||
                                     (Qualified1.IsEnclosing() && Rsol >= R1 && dist <= Rsol)||
                                     (Qualified1.IsOutside() && dist >= Rsol) ||
                                     (Qualified1.IsEnclosed() && Rsol <= R1 && dist <= Rsol)) {
                                       Standard_Real pscal=centre.XY().Dot(gp_XY(-L2.Direction().Y(),
                                         L2.Direction().X()));
-                                      if (Qualified2.IsUnqualified() || 
+                                      if (Qualified2.IsUnqualified() ||
                                         (Qualified2.IsOutside() && pscal <= 0.) ||
                                         (Qualified2.IsEnclosed() && pscal >= 0.)) {
                                           Standard_Real Angle1 = Vec3.Angle(Tan3);
-                                          if (Qualified3.IsUnqualified() || 
+                                          if (Qualified3.IsUnqualified() ||
                                             (Qualified3.IsEnclosing()&&Angle1<=0.)||
                                             (Qualified3.IsOutside() && Angle1 >= 0) ||
                                             (Qualified3.IsEnclosed() && Angle1 <= 0.)) {
@@ -1184,7 +1184,7 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
 }
 
 Geom2dGcc_Circ2d3TanIter::
-Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 , 
+Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
                           const Geom2dGcc_QCurve&     Qualified2 ,
                           const gp_Pnt2d&             Point3     ,
                           const Standard_Real         Param1     ,
@@ -1206,9 +1206,9 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
                             qualifier1 = GccEnt_noqualifier;
                             qualifier2 = GccEnt_noqualifier;
                             qualifier3 = GccEnt_noqualifier;
-                            if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() || 
+                            if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() ||
                               Qualified1.IsOutside() || Qualified1.IsUnqualified()) ||
-                              !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() || 
+                              !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() ||
                               Qualified2.IsOutside() || Qualified2.IsUnqualified())) {
                                 throw GccEnt_BadQualifier();
                                 return;
@@ -1276,12 +1276,12 @@ Geom2dGcc_Circ2d3TanIter (const GccEnt_QualifiedCirc& Qualified1 ,
                                 if (dot1 <= Tol && dot2 <=Tol && dot3 <= Tol) {
                                   Standard_Real dist = centre1.Distance(centre);
                                   Standard_Real Rsol = cirsol.Radius();
-                                  if (Qualified1.IsUnqualified() || 
+                                  if (Qualified1.IsUnqualified() ||
                                     (Qualified1.IsEnclosing() && Rsol >= R1 && dist <= Rsol)||
                                     (Qualified1.IsOutside() && dist >= Rsol) ||
                                     (Qualified1.IsEnclosed() && Rsol <= R1 && dist <= Rsol)) {
                                       Standard_Real Angle1 = Vec2.Angle(Tan2);
-                                      if (Qualified2.IsUnqualified() || 
+                                      if (Qualified2.IsUnqualified() ||
                                         (Qualified2.IsEnclosing()&&Angle1<=0.)||
                                         (Qualified2.IsOutside() && Angle1 >= 0) ||
                                         (Qualified2.IsEnclosed() && Angle1 <= 0.)) {
@@ -1311,7 +1311,7 @@ IsDone () const{ return WellDone; }
 gp_Circ2d Geom2dGcc_Circ2d3TanIter::
 ThisSolution () const{ return cirsol; }
 
-void Geom2dGcc_Circ2d3TanIter:: 
+void Geom2dGcc_Circ2d3TanIter::
 WhichQualifier (GccEnt_Position& Qualif1  ,
                 GccEnt_Position& Qualif2  ,
                 GccEnt_Position& Qualif3  ) const
@@ -1324,7 +1324,7 @@ WhichQualifier (GccEnt_Position& Qualif1  ,
   }
 }
 
-void Geom2dGcc_Circ2d3TanIter:: 
+void Geom2dGcc_Circ2d3TanIter::
 Tangency1 (Standard_Real&      ParSol ,
            Standard_Real&      ParArg ,
            gp_Pnt2d&           PntSol ) const{
@@ -1339,7 +1339,7 @@ Tangency1 (Standard_Real&      ParSol ,
              }
 }
 
-void Geom2dGcc_Circ2d3TanIter:: 
+void Geom2dGcc_Circ2d3TanIter::
 Tangency2 (Standard_Real&      ParSol         ,
            Standard_Real&      ParArg         ,
            gp_Pnt2d&  PntSol         ) const{
@@ -1351,7 +1351,7 @@ Tangency2 (Standard_Real&      ParSol         ,
              }
 }
 
-void Geom2dGcc_Circ2d3TanIter:: 
+void Geom2dGcc_Circ2d3TanIter::
 Tangency3 (Standard_Real&      ParSol         ,
            Standard_Real&      ParArg         ,
            gp_Pnt2d&  PntSol         ) const{
@@ -1368,7 +1368,7 @@ IsTheSame1 () const
 {
   if (!WellDone) throw StdFail_NotDone();
 
-  if (TheSame1 == 0) 
+  if (TheSame1 == 0)
     return Standard_False;
 
   return Standard_True;
@@ -1380,7 +1380,7 @@ IsTheSame2 () const
 {
   if (!WellDone) throw StdFail_NotDone();
 
-  if (TheSame3 == 0) 
+  if (TheSame3 == 0)
     return Standard_False;
 
   return Standard_True;
@@ -1394,3 +1394,4 @@ IsTheSame3 () const
 
   return Standard_True;
 }
+#endif

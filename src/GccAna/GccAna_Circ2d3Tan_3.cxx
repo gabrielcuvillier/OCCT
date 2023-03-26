@@ -12,6 +12,7 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 
 #include <ElCLib.hxx>
 #include <GccAna_Circ2d3Tan.hxx>
@@ -61,7 +62,7 @@ GccAna_Circ2d3Tan::
    par3sol(1,4)    ,
    pararg1(1,4)    ,
    pararg2(1,4)    ,
-   pararg3(1,4)    
+   pararg3(1,4)
 {
 
    TheSame1.Init(0);
@@ -135,7 +136,7 @@ GccAna_Circ2d3Tan::
 	       cirsol(nbsol) = gp_Circ2d(gp_Ax2d(Center,dirx),Radius);
 //             ======================================================
 	       gp_Dir2d dc1(origin1.XY()-Center.XY());
-	       if (!Qualified1.IsUnqualified()) { 
+	       if (!Qualified1.IsUnqualified()) {
 		 qualifier1(nbsol) = Qualified1.Qualifier();
 	       }
 	       else if (dc1.Dot(normL1) > 0.0) {
@@ -143,7 +144,7 @@ GccAna_Circ2d3Tan::
 	       }
 	       else { qualifier1(nbsol) = GccEnt_enclosed; }
 	       gp_Dir2d dc2(origin2.XY()-Center.XY());
-	       if (!Qualified2.IsUnqualified()) { 
+	       if (!Qualified2.IsUnqualified()) {
 		 qualifier2(nbsol) = Qualified2.Qualifier();
 	       }
 	       else if (dc2.Dot(normL2) > 0.0) {
@@ -151,14 +152,14 @@ GccAna_Circ2d3Tan::
 	       }
 	       else { qualifier2(nbsol) = GccEnt_enclosed; }
 	       gp_Dir2d dc3(origin3.XY()-Center.XY());
-	       if (!Qualified3.IsUnqualified()) { 
+	       if (!Qualified3.IsUnqualified()) {
 		 qualifier3(nbsol) = Qualified3.Qualifier();
 	       }
 	       else if (dc3.Dot(normL3) > 0.0) {
 		 qualifier3(nbsol) = GccEnt_outside;
 	       }
 	       else { qualifier3(nbsol) = GccEnt_enclosed; }
-	       
+
 	       Standard_Real cross1=gp_Dir2d(-ydir1,xdir1)
 		                   .Dot(gp_Dir2d(xloc1-cx,yloc1-cy));
 	       Standard_Real cross2=gp_Dir2d(-ydir2,xdir2)
@@ -196,7 +197,7 @@ GccAna_Circ2d3Tan::
        }
      }
    }
-   if (Qualified1.IsEnclosed() && Qualified2.IsEnclosed() && 
+   if (Qualified1.IsEnclosed() && Qualified2.IsEnclosed() &&
 //  =========================================================
        Qualified3.IsEnclosed()) {
 //     ========================
@@ -207,7 +208,7 @@ GccAna_Circ2d3Tan::
      cote2(1) = 1.0;
      cote3(1) = 1.0;
    }
-   else if (Qualified1.IsEnclosed() && Qualified2.IsEnclosed() && 
+   else if (Qualified1.IsEnclosed() && Qualified2.IsEnclosed() &&
 // ==============================================================
 	    Qualified3.IsOutside()) {
 //          =======================
@@ -218,7 +219,7 @@ GccAna_Circ2d3Tan::
      cote2(1) = 1.0;
      cote3(1) = -1.0;
    }
-   else if (Qualified1.IsEnclosed() && Qualified2.IsOutside() && 
+   else if (Qualified1.IsEnclosed() && Qualified2.IsOutside() &&
 // =============================================================
 	    Qualified3.IsEnclosed()) {
 //          ========================
@@ -229,7 +230,7 @@ GccAna_Circ2d3Tan::
      cote2(1) = -1.0;
      cote3(1) = 1.0;
    }
-   else if (Qualified1.IsEnclosed() && Qualified2.IsOutside() && 
+   else if (Qualified1.IsEnclosed() && Qualified2.IsOutside() &&
 // =============================================================
 	    Qualified3.IsOutside()) {
 //          =======================
@@ -240,7 +241,7 @@ GccAna_Circ2d3Tan::
      cote2(1) = -1.0;
      cote3(1) = -1.0;
    }
-   else if (Qualified1.IsOutside() && Qualified2.IsEnclosed() && 
+   else if (Qualified1.IsOutside() && Qualified2.IsEnclosed() &&
 // =============================================================
 	    Qualified3.IsEnclosed()) {
 //          ========================
@@ -251,7 +252,7 @@ GccAna_Circ2d3Tan::
      cote2(1) = 1.0;
      cote3(1) = 1.0;
    }
-   else if (Qualified1.IsOutside() && Qualified2.IsEnclosed() && 
+   else if (Qualified1.IsOutside() && Qualified2.IsEnclosed() &&
 // =============================================================
 	    Qualified3.IsOutside()) {
 //          =======================
@@ -262,7 +263,7 @@ GccAna_Circ2d3Tan::
      cote2(1) = 1.0;
      cote3(1) = -1.0;
    }
-   else if (Qualified1.IsOutside() && Qualified2.IsOutside() && 
+   else if (Qualified1.IsOutside() && Qualified2.IsOutside() &&
 // ============================================================
 	    Qualified3.IsEnclosed()) {
 //          ========================
@@ -273,7 +274,7 @@ GccAna_Circ2d3Tan::
      cote2(1) = -1.0;
      cote3(1) = 1.0;
    }
-   else if (Qualified1.IsOutside() && Qualified2.IsOutside() && 
+   else if (Qualified1.IsOutside() && Qualified2.IsOutside() &&
 // ============================================================
 	    Qualified3.IsOutside()) {
 //          =======================
@@ -488,3 +489,4 @@ GccAna_Circ2d3Tan::
      }
    }
  }
+#endif

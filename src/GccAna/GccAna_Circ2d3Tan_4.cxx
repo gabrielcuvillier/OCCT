@@ -14,6 +14,8 @@
 
 // cas de 2 cercles concentriques JCT 28/11/97
 
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
+
 #include <ElCLib.hxx>
 #include <GccAna_Circ2d3Tan.hxx>
 #include <GccAna_Circ2dBisec.hxx>
@@ -61,16 +63,16 @@ GccAna_Circ2d3Tan::
    par3sol(1,MaxSol)    ,
    pararg1(1,MaxSol)    ,
    pararg2(1,MaxSol)    ,
-   pararg3(1,MaxSol)    
+   pararg3(1,MaxSol)
 {
 
    gp_Dir2d dirx(1.0,0.0);
    Standard_Real Tol = Abs(Tolerance);
    WellDone = Standard_False;
    NbrSol = 0;
-   if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() || 
+   if (!(Qualified1.IsEnclosed() || Qualified1.IsEnclosing() ||
 	 Qualified1.IsOutside() || Qualified1.IsUnqualified()) ||
-       !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() || 
+       !(Qualified2.IsEnclosed() || Qualified2.IsEnclosing() ||
 	 Qualified2.IsOutside() || Qualified2.IsUnqualified())) {
      throw GccEnt_BadQualifier();
      return;
@@ -257,7 +259,7 @@ GccAna_Circ2d3Tan::
 		   cirsol(NbrSol) = gp_Circ2d(gp_Ax2d(Center,dirx),Radius(k1));
 //                 ==========================================================
 		   Standard_Real distcc1 = Center.Distance(center1);
-		   if (!Qualified1.IsUnqualified()) { 
+		   if (!Qualified1.IsUnqualified()) {
 		     qualifier1(NbrSol) = Qualified1.Qualifier();
 		   }
 		   else if (Abs(distcc1+Radius(k1)-R1) < Tol) {
@@ -270,7 +272,7 @@ GccAna_Circ2d3Tan::
 
 //		   Standard_Real distcc2 = Center.Distance(center1);
 		   Standard_Real distcc2 = Center.Distance(center2);
-		   if (!Qualified2.IsUnqualified()) { 
+		   if (!Qualified2.IsUnqualified()) {
 		     qualifier2(NbrSol) = Qualified2.Qualifier();
 		   }
 		   else if (Abs(distcc2+Radius(k1)-R2) < Tol) {
@@ -303,7 +305,7 @@ GccAna_Circ2d3Tan::
 		   else {
 		     TheSame2(NbrSol) = 0;
 		     gp_Dir2d dc(center2.XY()-Center.XY());
-		     // case of concentric circles : 
+		     // case of concentric circles :
 		     // 2nd tangency point is at the other side of the circle solution
 		     Standard_Real alpha = 1.;
 		     if (center1.Distance(center2)<=Tolerance) alpha = -1;
@@ -352,7 +354,7 @@ GccAna_Circ2d3Tan::
        gp_Pnt2d PL = cirsol(ll).Location();
        if (PK.SquareDistance(PL) < Tol2) {
 	 for (Standard_Integer mm = ll+1 ; mm <= NbrSol; mm++) {
-	   cirsol(mm - 1)   = cirsol (mm);   
+	   cirsol(mm - 1)   = cirsol (mm);
 	   pnttg1sol(mm-1)  = pnttg1sol(mm);
 	   pnttg2sol(mm-1)  = pnttg2sol(mm);
 	   pnttg3sol(mm-1)  = pnttg3sol(mm);
@@ -372,3 +374,4 @@ GccAna_Circ2d3Tan::
    }
  }
 
+#endif
