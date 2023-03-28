@@ -9,6 +9,10 @@ if (EMSCRIPTEN)
   message(STATUS "Info: Building for Emscripten/WebAssembly.")
 endif ()
 
+if (MSVC AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]")
+  message(FATAL_ERROR "Clang with MSVC-like command-line found \(aka. \"clang-cl\"\). Prefer using Clang with GNU-like command-line, as it provide more predictable control over compiler flags")
+endif()
+
 # force option /fp:precise for Visual Studio projects.
 #
 # Note that while this option is default for MSVC compiler, Visual Studio
@@ -31,35 +35,42 @@ endif()
 if (MSVC)
   # suppress C26812 on VS2019/C++20 (prefer 'enum class' over 'enum')
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd\"26812\"")
-  # suppress warning on using portable non-secure functions in favor of non-portable secure ones
-  add_definitions (-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE)
-else()
-  if (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]")
-    # Clang with GNU-like command line on Windows: -fPIC is not supported + use portable non-secure functions
-    add_definitions (-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE)
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
-    set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fexceptions")
+
+  # enable structured exceptions handling (SEH)
+  string (REGEX MATCH "EHsc" ISFLAG "${CMAKE_CXX_FLAGS}")
+  if (ISFLAG)
+    string (REGEX REPLACE "EHsc" "EHa" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
   else()
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions -fPIC")
-    set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fexceptions -fPIC")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHa")
+  endif()
+else()
+  # On any other compiler than MSVC, use regular exceptions support
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
+  set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fexceptions")
+
+  if (NOT (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]"))
+    # On anything except Clang on Windows, use fPIC
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+    set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fPIC")
+
+    add_definitions(-DOCC_CONVERT_SIGNALS)
+  else()
+    # Specifically on Clang on Windows, use the experimental -fasync-exceptions to mimic MSVC /EHa behavior
+    # => Not yet working (tested on Clang 16 on Windows)
+    #set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fasync-exceptions")
+    #set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fasync-exceptions")
+    # => enable OCC_CONVERT_SIGNALS instead for now
     add_definitions(-DOCC_CONVERT_SIGNALS)
   endif()
+
+  # enable stack protector
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector")
+  set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fstack-protector")
 endif()
 
-# enable structured exceptions for MSVC
-string (REGEX MATCH "EHsc" ISFLAG "${CMAKE_CXX_FLAGS}")
-if (ISFLAG)
-  string (REGEX REPLACE "EHsc" "EHa" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-elseif (MSVC)
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHa")
-endif()
-
-if (MSVC)
-  # string pooling (GF), function-level linking (Gy)
-  set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /GF /Gy")
-  set (CMAKE_C_FLAGS_RELEASE   "${CMAKE_C_FLAGS_RELEASE}   /GF /Gy")
-  set (CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} /GF /Gy")
-  set (CMAKE_C_FLAGS_MINSIZEREL   "${CMAKE_C_FLAGS_MINSIZEREL}   /GF /Gy")
+if (MSVC OR (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]"))
+  # suppress warning on using portable non-secure functions in favor of non-portable secure ones
+  add_definitions (-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE)
 endif()
 
 # remove _WINDOWS flag if it exists
@@ -103,18 +114,6 @@ if (IS_DEBUG_C)
   string (REGEX REPLACE "-DDEBUG" "" CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
 endif()
 
-string (REGEX MATCH "-D_DEBUG" IS__DEBUG_CXX "${CMAKE_CXX_FLAGS_DEBUG}")
-if (IS__DEBUG_CXX)
-  message (STATUS "Info: -D_DEBUG has been removed from CMAKE_CXX_FLAGS_DEBUG")
-  string (REGEX REPLACE "-D_DEBUG" "" CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
-endif()
-
-string (REGEX MATCH "-D_DEBUG" IS__DEBUG_C "${CMAKE_C_FLAGS_DEBUG}")
-if (IS__DEBUG_C)
-  message (STATUS "Info: -D_DEBUG has been removed from CMAKE_C_FLAGS_DEBUG")
-  string (REGEX REPLACE "-D_DEBUG" "" CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
-endif()
-
 # enable parallel compilation on MSVC 9 and above
 if (MSVC AND (MSVC_VERSION GREATER 1400))
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
@@ -153,7 +152,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]")
   if (APPLE)
     # CLang can be used with both libstdc++ and libc++, however on OS X libstdc++ is outdated.
     set (CMAKE_CXX_FLAGS "-stdlib=libc++ ${CMAKE_CXX_FLAGS}")
-  elseif(NOT MSVC)
+  else()
     # Optimize size of binaries
     set (CMAKE_SHARED_LINKER_FLAGS_RELEASE "-Wl,-s ${CMAKE_SHARED_LINKER_FLAGS_RELEASE}")
     set (CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL "-Wl,-s ${CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL}")
@@ -226,3 +225,9 @@ if (ENABLE_O3 AND (CMAKE_BUILD_TYPE STREQUAL "Release") AND ((CMAKE_CXX_COMPILER
     set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3")
   endif ()
 endif ()
+
+message(Common: ${CMAKE_CXX_FLAGS})
+message(Debug: ${CMAKE_CXX_FLAGS_DEBUG})
+message(Release: ${CMAKE_CXX_FLAGS_RELEASE})
+message(MinSizeRel: ${CMAKE_CXX_FLAGS_MINSIZEREL})
+message(RelWithDebInfo: ${CMAKE_CXX_FLAGS_RELWITHDEBINFO})
