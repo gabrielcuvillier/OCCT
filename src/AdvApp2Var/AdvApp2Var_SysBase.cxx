@@ -20,7 +20,7 @@
 #include <Standard.hxx>
 
 
-static 
+static
 int __i__len();
 
 static
@@ -30,45 +30,45 @@ static
 int macrbrk_();
 
 static
-int macrclw_(intptr_t *iadfld, 
-	     intptr_t *iadflf, 
+int macrclw_(intptr_t *iadfld,
+	     intptr_t *iadflf,
 	     integer *nalloc);
 static
 int macrerr_(intptr_t *iad,
 	     intptr_t *nalloc);
 static
-int macrgfl_(intptr_t *iadfld, 
-	     intptr_t *iadflf, 
-	     integer  *iphase, 
+int macrgfl_(intptr_t *iadfld,
+	     intptr_t *iadflf,
+	     integer  *iphase,
 	     integer  *iznuti);
 static
-int macrmsg_(const char *crout, 
-	     integer *num, 
-	     integer *it, 
-	     doublereal *xt, 
-	     const char *ct, 
+int macrmsg_(const char *crout,
+	     integer *num,
+	     integer *it,
+	     doublereal *xt,
+	     const char *ct,
 	     ftnlen crout_len,
 	     ftnlen ct_len);
 
 static
-int macrstw_(intptr_t *iadfld, 
-	     intptr_t *iadflf, 
+int macrstw_(intptr_t *iadfld,
+	     intptr_t *iadflf,
 	     integer *nalloc);
 
 static
 int madbtbk_(integer *indice);
 
 static
-int magtlog_(const char *cnmlog, 
-	     const char *chaine, 
-	     integer *long__, 
-	     integer *iercod, 
-	     ftnlen cnmlog_len, 
+int magtlog_(const char *cnmlog,
+	     const char *chaine,
+	     integer *long__,
+	     integer *iercod,
+	     ftnlen cnmlog_len,
 	     ftnlen chaine_len);
 
 
 static
-int mamdlng_(char *cmdlng, 
+int mamdlng_(char *cmdlng,
 	     ftnlen cmdlng_len);
 
 static
@@ -78,29 +78,29 @@ static
 int maostrd_();
 
 static
-int maoverf_(integer *nbentr, 
+int maoverf_(integer *nbentr,
 	     doublereal *dtable);
 
 static
-int matrlog_(const char *cnmlog, 
-	     const char *chaine, 
-	     integer *length, 
-	     integer *iercod, 
-	     ftnlen cnmlog_len, 
+int matrlog_(const char *cnmlog,
+	     const char *chaine,
+	     integer *length,
+	     integer *iercod,
+	     ftnlen cnmlog_len,
 	     ftnlen chaine_len);
 
 static
-int matrsym_(const char *cnmsym, 
-	     const char *chaine, 
-	     integer *length, 
-	     integer *iercod, 
-	     ftnlen cnmsym_len, 
+int matrsym_(const char *cnmsym,
+	     const char *chaine,
+	     integer *length,
+	     integer *iercod,
+	     ftnlen cnmsym_len,
 	     ftnlen chaine_len);
 
 static
-int mcrcomm_(integer *kop, 
-	     integer *noct, 
-	     intptr_t *iadr, 
+int mcrcomm_(integer *kop,
+	     integer *noct,
+	     intptr_t *iadr,
 	     integer *ier);
 
 static
@@ -117,12 +117,12 @@ static struct {
     integer lec, imp, keyb, mae, jscrn, itblt, ibb;
 } mblank__;
 
-#define mcrfill_ABS(a)  (((a)<0)?(-(a)):(a)) 
+#define mcrfill_ABS(a)  (((a)<0)?(-(a)):(a))
 
 
 //=======================================================================
 //function : AdvApp2Var_SysBase
-//purpose  : 
+//purpose  :
 //=======================================================================
 AdvApp2Var_SysBase::AdvApp2Var_SysBase()
 {
@@ -132,61 +132,61 @@ AdvApp2Var_SysBase::AdvApp2Var_SysBase()
 
 //=======================================================================
 //function : ~AdvApp2Var_SysBase
-//purpose  : 
+//purpose  :
 //=======================================================================
 AdvApp2Var_SysBase::~AdvApp2Var_SysBase()
 {
   assert (mcrgene_.ncore == 0); //otherwise memory leaking
 }
-  
+
 //=======================================================================
 //function : macinit_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::macinit_(integer *imode, 
+int AdvApp2Var_SysBase::macinit_(integer *imode,
 				 integer *ival)
 
 {
- 
+
   /* ************************************************************************/
   /*     FUNCTION : */
   /*     ---------- */
   /*   INITIALIZATION OF READING WRITING UNITS AND 'IBB' */
-  
+
   /*     KEYWORDS : */
   /*     ----------- */
   /*   MANAGEMENT, CONFIGURATION, UNITS, INITIALIZATION */
-  
+
   /*     INPUT ARGUMENTS  : */
   /*     -------------------- */
-  /*        IMODE : MODE of INITIALIZATION : 
+  /*        IMODE : MODE of INITIALIZATION :
 	    0= DEFAULT, IMP IS 6, IBB 0 and LEC 5 */
   /*        1= FORCE VALUE OF IMP */
   /*        2= FORCE VALUE OF IBB */
   /*        3= FORCE VALUE OF LEC */
-  
+
   /*    ARGUMENT USED ONLY WHEN IMODE IS 1 OR 2 : */
   /*       IVAL : VALUE OF IMP WHEN IMODE IS 1 */
   /*              VALUE OF IBB WHEN IMODE IS 2 */
   /*              VALUE OF LEC WHEN IMODE IS 3 */
   /*    THERE IS NO CONTROL OF VALIDITY OF VALUE OF IVAL . */
-  
+
   /*     OUTPUT ARGUMENTS  : */
   /*     -------------------- */
   /*                NONE */
-  
+
   /*     COMMONS USED : */
   /*     -------------- */
   /*     REFERENCES CALLED : */
   /*     ------------------- */
   /*     DESCRIPTION/NOTES/LIMITATIONS : */
   /*     ------------------------------- */
-  
+
   /*     THIS IS ONLY INITIALIZATION OF THE COMMON BLANK FOR ALL */
   /*     MODULES THAT A PRIORI DO NOT NEED TO KNOW THE COMMONS OF T . */
   /*     WHEN A MODIFICATION OF IBB IS REQUIRED (IMODE=2) AN INFO MESSAGE */
   /*     IS SUBMITTED ON IMP, WITH THE NEW VALUE OF IBB. */
-  
+
   /*       IBB : MODE DEBUG OF STRIM T : RULES OF USE : */
   /*             0 RESTRAINED VERSION  */
   /*             >0 THE GREATER IS IBB THE MORE COMMENTS THE VERSION HAS. */
@@ -213,39 +213,39 @@ int AdvApp2Var_SysBase::macinit_(integer *imode,
 
   /* ----------------------------------------------------------------------*
    */
-  
+
   return 0;
 } /* macinit__ */
 
 //=======================================================================
 //function : macrai4_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::macrai4_(integer *nbelem, 
-				 integer *maxelm, 
+int AdvApp2Var_SysBase::macrai4_(integer *nbelem,
+				 integer *maxelm,
 				 integer *itablo,
 				 intptr_t *iofset,
 				 integer *iercod)
 
 {
-  
+
   /* ***********************************************************************
    */
-  
+
   /*     FUNCTION : */
   /*     ---------- */
   /*       Require dynamic allocation of type INTEGER */
-  
+
   /*     KEYWORDS : */
   /*     ---------- */
   /*       SYSTEM, ALLOCATION, MEMORY, REALISATION */
-  
+
   /*     INPUT ARGUMENTS : */
   /*     ----------------- */
   /*       NBELEM : Number of required units */
   /*       MAXELM : Max number of units available in ITABLO */
   /*       ITABLO : Reference Address of the rented zone */
-  
+
   /*     OUTPUT ARGUMENTS : */
   /*     ------------------- */
   /*       IOFSET : Offset */
@@ -254,29 +254,29 @@ int AdvApp2Var_SysBase::macrai4_(integer *nbelem,
   /*               = 1 : Max nb of allocations attained */
   /*               = 2 : Incorrect arguments */
   /*               = 3 : Refused dynamic allocation */
-  
+
   /*     COMMONS USED : */
   /*     ------------------ */
-  
+
   /*     REFERENCES CALLED : */
   /*     --------------------- */
   /*        MCRRQST */
-  
+
   /*     DESCRIPTION/NOTES/LIMITATIONS : */
   /*     ----------------------------------- */
   /*     (Cf description in the heading of MCRRQST) */
-  
+
   /*     Table ITABLO should be dimensioned to MAXELM by the caller. */
   /*     If the request is lower or equal to MAXELM, IOFSET becomes = 0.    */
   /*     Otherwise the demand of allocation is valid and IOFSET > 0. */
    /* > */
   /* ***********************************************************************
    */
-  
-  integer  iunit; 
-  
-  
-  iunit = sizeof(integer);    
+
+  integer  iunit;
+
+
+  iunit = sizeof(integer);
   /* Function Body */
   if (*nbelem > *maxelm) {
     /*AdvApp2Var_SysBase::*/mcrrqst_(&iunit, nbelem, itablo, iofset, iercod);
@@ -289,12 +289,12 @@ int AdvApp2Var_SysBase::macrai4_(integer *nbelem,
 
 //=======================================================================
 //function : AdvApp2Var_SysBase::macrar8_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::macrar8_(integer *nbelem, 
+int AdvApp2Var_SysBase::macrar8_(integer *nbelem,
 				 integer *maxelm,
-				 doublereal *xtablo, 
-				 intptr_t *iofset, 
+				 doublereal *xtablo,
+				 intptr_t *iofset,
 				 integer *iercod)
 
 {
@@ -302,21 +302,21 @@ int AdvApp2Var_SysBase::macrar8_(integer *nbelem,
 
   /* ***********************************************************************
    */
-  
+
   /*     FUNCTION : */
   /*     ---------- */
   /*       Demand of dynamic allocation of type DOUBLE PRECISION */
-  
+
   /*     KEYWORDS : */
   /*     ----------- */
   /*       SYSTEM, ALLOCATION, MEMORY, REALISATION */
-  
+
   /*     INPUT ARGUMENTS  : */
   /*     ------------------ */
   /*       NBELEM : Nb of units required */
   /*       MAXELM : Max Nb of units available in XTABLO */
   /*       XTABLO : Reference address of the rented zone */
-  
+
   /*     OUTPUT ARGUMENTS : */
   /*     ------------------ */
   /*       IOFSET : Offset */
@@ -325,18 +325,18 @@ int AdvApp2Var_SysBase::macrar8_(integer *nbelem,
   /*               = 1 : Max Nb of allocations reached */
   /*               = 2 : Arguments incorrect */
   /*               = 3 : Refuse of dynamic allocation */
-  
+
   /*     COMMONS USED : */
   /*     ------------------ */
-  
+
   /*     REFERENCES CALLED : */
   /*     --------------------- */
   /*        MCRRQST */
-  
+
   /*     DESCRIPTION/NOTES/LIMITATIONS : */
   /*     ----------------------------------- */
   /*     (Cf description in the heading of MCRRQST) */
-  
+
   /*     Table XTABLO should be dimensioned to MAXELM by the caller. */
   /*     If the request is less or equal to MAXELM, IOFSET becomes = 0.    */
   /*     Otherwise the demand of allocation is valid and IOFSET > 0. */
@@ -344,8 +344,8 @@ int AdvApp2Var_SysBase::macrar8_(integer *nbelem,
   /* > */
   /* ***********************************************************************
    */
-  
-  
+
+
   /* Function Body */
   if (*nbelem > *maxelm) {
     /*AdvApp2Var_SysBase::*/mcrrqst_(&c__8, nbelem, xtablo, iofset, iercod);
@@ -358,7 +358,7 @@ int AdvApp2Var_SysBase::macrar8_(integer *nbelem,
 
 //=======================================================================
 //function : macrbrk_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int macrbrk_()
 {
@@ -367,16 +367,16 @@ int macrbrk_()
 
 //=======================================================================
 //function : macrchk_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int AdvApp2Var_SysBase::macrchk_()
 {
   /* System generated locals */
   integer i__1;
-  
+
   /* Local variables */
   integer  i__, j;
-  
+
 /* ***********************************************************************
  */
 
@@ -468,7 +468,7 @@ int AdvApp2Var_SysBase::macrchk_()
     for (j = 0; j <= 1; ++j) {
       intptr_t* pp = p + j;
       if (*pp != -1) {
-	
+
 	double* t = reinterpret_cast<double*>(*pp);
 	if (*t != -134744073.)
 	{
@@ -476,20 +476,20 @@ int AdvApp2Var_SysBase::macrchk_()
 	     E:',ICORE(J,I) */
 	  /*       AND OF RANK ICORE(12,I) */
 	  macrerr_(pp, p + 2);
-	  
+
 	  /* BACK-PARCING IN PHASE OF PRODUCTION */
 	  maostrb_();
-	  
+
 	  /* REMOVAL OF THE ADDRESS OF FLAG TO AVOID REMAKING ITS CONTROL */
 	  *pp = -1;
-	  
+
 	}
-	
+
       }
-      
+
       /* L100: */
     }
-    
+
     /* L1000: */
   }
   return 0 ;
@@ -497,10 +497,10 @@ int AdvApp2Var_SysBase::macrchk_()
 
 //=======================================================================
 //function : macrclw_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int macrclw_(intptr_t *,//iadfld, 
-	     intptr_t *,//iadflf, 
+int macrclw_(intptr_t *,//iadfld,
+	     intptr_t *,//iadflf,
 	     integer  *)//nalloc)
 
 {
@@ -509,16 +509,16 @@ int macrclw_(intptr_t *,//iadfld,
 
 //=======================================================================
 //function : AdvApp2Var_SysBase::macrdi4_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::macrdi4_(integer *nbelem, 
-				 integer *,//maxelm, 
-				 integer *itablo, 
+int AdvApp2Var_SysBase::macrdi4_(integer *nbelem,
+				 integer *,//maxelm,
+				 integer *itablo,
 				 intptr_t *iofset, /* Offset long (pmn) */
 				 integer *iercod)
 
 {
-  
+
   /* ***********************************************************************
  */
 
@@ -558,14 +558,14 @@ int AdvApp2Var_SysBase::macrdi4_(integer *nbelem,
 /* ***********************************************************************
  */
   integer iunit;
-  
-  iunit = sizeof(integer); 
+
+  iunit = sizeof(integer);
   /* Function Body */
   if (*iofset != 0) {
-    AdvApp2Var_SysBase::mcrdelt_(&iunit, 
-				 nbelem, 
-				 itablo, 
-				 iofset, 
+    AdvApp2Var_SysBase::mcrdelt_(&iunit,
+				 nbelem,
+				 itablo,
+				 iofset,
 				 iercod);
   } else {
     *iercod = 0;
@@ -575,12 +575,12 @@ int AdvApp2Var_SysBase::macrdi4_(integer *nbelem,
 
 //=======================================================================
 //function : AdvApp2Var_SysBase::macrdr8_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int AdvApp2Var_SysBase::macrdr8_(integer *nbelem,
-				 integer *,//maxelm, 
-				 doublereal *xtablo, 
-				 intptr_t *iofset, 
+				 integer *,//maxelm,
+				 doublereal *xtablo,
+				 intptr_t *iofset,
 				 integer *iercod)
 
 {
@@ -591,7 +591,7 @@ int AdvApp2Var_SysBase::macrdr8_(integer *nbelem,
 
 /*     FUNCTION : */
 /*     ---------- */
-/*       Destruction of dynamic allocation of type DOUBLE PRECISION 
+/*       Destruction of dynamic allocation of type DOUBLE PRECISION
 */
 
 /*     KEYWORDS : */
@@ -626,7 +626,7 @@ int AdvApp2Var_SysBase::macrdr8_(integer *nbelem,
 /* > */
 /* ***********************************************************************
  */
-  
+
   /* Function Body */
   if (*iofset != 0) {
     AdvApp2Var_SysBase::mcrdelt_(&c__8, nbelem, xtablo, iofset, iercod);
@@ -638,7 +638,7 @@ int AdvApp2Var_SysBase::macrdr8_(integer *nbelem,
 
 //=======================================================================
 //function : macrerr_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int macrerr_(intptr_t *,//iad,
 	     intptr_t *)//nalloc)
@@ -647,7 +647,7 @@ int macrerr_(intptr_t *,//iad,
   //integer c__1 = 1;
   /* Builtin functions */
   //integer /*do__fio(),*/;
-  
+
   /* Fortran I/O blocks */
   //cilist io___1 = { 0, 6, 0, "(X,A,I9,A,I3)", 0 };
 
@@ -688,46 +688,46 @@ int macrerr_(intptr_t *,//iad,
   do__fio(&c__1, " sur l'allocation ", 18L);
   do__fio(&c__1, (char *)&(*nalloc), (ftnlen)sizeof(integer));
   */
-  
+
   return 0 ;
 } /* macrerr_ */
 
 
 //=======================================================================
 //function : macrgfl_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int macrgfl_(intptr_t *iadfld, 
-	     intptr_t *iadflf, 
-	     integer  *iphase, 
+int macrgfl_(intptr_t *iadfld,
+	     intptr_t *iadflf,
+	     integer  *iphase,
 	     integer  *iznuti)
 
 {
   /* Initialized data */
-  
+
   /* original code used static integer ifois=0 which served as static
      initialization flag and was only used to call matrsym_() once; now
      this flag is not used as matrsym_() always returns 0 and has no
      useful contents
   */
   integer ifois = 1;
-  
+
   char cbid[1] = {};
   integer ibid, ienr;
   integer novfl = 0;
-  
+
   /* ***********************************************************************
    */
-  
+
   /*     FUNCTION : */
   /*     ---------- */
   /*       IMPLEMENTATION OF TWO FLAGS START AND END OF THE ALLOCATED ZONE */
   /*       AND SETTING TO OVERFLOW OF THE USER SPACE IN PHASE OF PRODUCTION. */
-  
+
   /*     KEYWORDS : */
   /*     ----------- */
   /*       ALLOCATION, CONTROL, EXCESS */
-  
+
   /*     INPUT ARGUMENTS  : */
   /*     ------------------ */
   /*       IADFLD : ADDRESS OF THE START FLAG */
@@ -736,41 +736,41 @@ int macrgfl_(intptr_t *iadfld,
   /*                0 = OFFICIAL VERSION  */
   /*                1 = PRODUCTION VERSION */
   /*       IZNUTI : SIZE OF THE USER ZONE IN OCTETS */
-  
+
   /*     OUTPUT ARGUMENTS : */
   /*     ------------------ */
   /*       NONE */
-  
+
   /*     COMMONS USED : */
   /*     ------------------ */
-  
+
   /*     REFERENCES CALLED : */
   /*     ------------------- */
   /*       CRLOCT,MACRCHK */
-  
+
   /*     DESCRIPTION/NOTES/LIMITATIONS : */
   /*     ------------------------------- */
 
   /* > */
   /* ***********************************************************************
    */
-  
- 
+
+
 
   /* ***********************************************************************
    */
-  
+
   /*     FUNCTION : */
   /*     ---------- */
   /*        TABLE FOR MANAGEMENT OF DYNAMIC ALLOCATIONS OF MEMORY */
-  
+
   /*     KEYWORDS : */
   /*     ----------- */
   /*        SYSTEM, MEMORY, ALLOCATION */
-  
+
   /*     DEMSCRIPTION/NOTES/LIMITATIONS : */
   /*     ----------------------------------- */
-  
+
 
   /* > */
   /* ***********************************************************************
@@ -796,62 +796,62 @@ int macrgfl_(intptr_t *iadfld,
 /*   FLAG  : VALUE OF THE FLAG USED FOR EXCESSES */
 
 
-  
-  
+
+
 
   /* ----------------------------------------------------------------------*
    */
-  
+
 
   if (ifois == 0) {
     matrsym_("NO_OVERFLOW", cbid, &novfl, &ibid, 11L, 1L);
     ifois = 1;
   }
-  
- 
+
+
   /* CALCULATE THE OFFSET */
   double* t = reinterpret_cast<double*>(*iadfld);
-  
+
   /*  SET TO OVERFLOW OF THE USER ZONE IN CASE OF PRODUCTION VERSION */
   if (*iphase == 1 && novfl == 0) {
     ienr = *iznuti / 8;
     maoverf_(&ienr, &t[1]);
   }
-    
+
   /*  UPDATE THE START FLAG */
   *t = -134744073.;
-  
+
   /*  FAKE CALL TO STOP THE DEBUGGER : */
   macrbrk_();
-  
+
   /*  UPDATE THE START FLAG */
   t = reinterpret_cast<double*>(*iadflf);
   *t = -134744073.;
-    
+
   /*  FAKE CALL TO STOP THE DEBUGGER : */
   macrbrk_();
-  
+
   return 0 ;
 } /* macrgfl_ */
 
 //=======================================================================
 //function : macrmsg_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int macrmsg_(const char *,//crout, 
-	     integer *,//num, 
-	     integer *it, 
-	     doublereal *xt, 
-	     const char *ct, 
+int macrmsg_(const char *,//crout,
+	     integer *,//num,
+	     integer *it,
+	     doublereal *xt,
+	     const char *ct,
 	     ftnlen ,//crout_len,
 	     ftnlen ct_len)
 
 {
-  
+
   /* Local variables */
   integer inum;
   char /*cfm[80],*/ cln[3];
-  
+
 /* ***********************************************************************
  */
 
@@ -865,7 +865,7 @@ int macrmsg_(const char *,//crout,
 
 /*     INPUT ARGUMENTSEE : */
 /*     ------------------- */
-/*       CROUT : NAME OF THE CALLING ROUTINE : MCRRQST, MCRDELT, MCRLIST 
+/*       CROUT : NAME OF THE CALLING ROUTINE : MCRRQST, MCRDELT, MCRLIST
 */
 /*                ,CRINCR OR CRPROT */
 /*       NUM :  MESSAGE NUMBER */
@@ -914,10 +914,10 @@ int macrmsg_(const char *,//crout,
 
   --xt;
   --it;
-  
+
   /* Function Body */
   mamdlng_(cln, 3L);
-  
+
 /*  INUM : TYPE OF MESSAGE  : 0 AS TEXT, 1 1 INTEGER TO BE WRITTEN */
 /*        -1 MESSAGE INEXISTING (1 INTEGER AND 1 CHAIN) */
 
@@ -955,7 +955,7 @@ ion de memoire  ')", 80L, 65L);
  atteint :',I6)", 80L, 62L);
       } else if (*num == 2) {
 	inum = 1;
-	__s__copy(cfm, "(' Unite d''allocation invalide : ',I12)", 80L, 
+	__s__copy(cfm, "(' Unite d''allocation invalide : ',I12)", 80L,
 		  40L);
       } else if (*num == 3) {
 	inum = 1;
@@ -975,7 +975,7 @@ iste pas')", 80L, 57L);
 ) : ',I12)", 80L, 57L);
       }
     }
-    
+
   } else if (__s__cmp(cln, "DEU", 3L, 3L) == 0) {
     __s__copy(cfm, "('   Es fehlt die Meldung Nummer ',I5,' fuer das Progra\
 mm des Namens : ',A8)", 80L, 76L);
@@ -989,7 +989,7 @@ sung(en) : ',I6,/)", 80L, 65L);
 	__s__copy(cfm, "(' Groesse der Zuweisung = ',I12)", 80L, 33L);
       } else if (*num == 3) {
 	inum = 1;
-	__s__copy(cfm, "(' Gesamtgroesse der Zuweisung = ',I12,/)", 80L, 
+	__s__copy(cfm, "(' Gesamtgroesse der Zuweisung = ',I12,/)", 80L,
 		  41L);
       }
     } else if (__s__cmp(crout, "MCRDELT", crout_len, 7L) == 0) {
@@ -1029,7 +1029,7 @@ stiert nicht !! ')", 80L, 65L);
 : ',I12)", 80L, 55L);
       }
     }
-    
+
   } else {
     __s__copy(cfm, "('   Message number ',I5,' is missing '                \
             ,'for program named: ',A8)", 80L, 93L);
@@ -1062,7 +1062,7 @@ stiert nicht !! ')", 80L, 65L);
 I6)", 80L, 50L);
       } else if (*num == 2) {
 	inum = 1;
-	__s__copy(cfm, "(' incorrect unit of allocation : ',I12)", 80L, 
+	__s__copy(cfm, "(' incorrect unit of allocation : ',I12)", 80L,
 		  40L);
       } else if (*num == 3) {
 	inum = 1;
@@ -1087,7 +1087,7 @@ t !! ')", 80L, 54L);
   /* ----------------------------------------------------------------------*
    */
   /*  iMPLEMENTATION OF WRITE , WITH OR WITHOUT DATA : */
-  
+
   if (inum == 0) {
   } else if (inum == 1) {
     /*
@@ -1100,15 +1100,15 @@ t !! ')", 80L, 54L);
     do__fio(&c__1, crout, crout_len);
     */
   }
-  
+
   return 0;
 } /* macrmsg_ */
 //=======================================================================
 //function : macrstw_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int macrstw_(intptr_t *,//iadfld, 
-	     intptr_t *,//iadflf, 
+int macrstw_(intptr_t *,//iadfld,
+	     intptr_t *,//iadflf,
 	     integer *)//nalloc)
 
 {
@@ -1117,7 +1117,7 @@ int macrstw_(intptr_t *,//iadfld,
 
 //=======================================================================
 //function : madbtbk_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int madbtbk_(integer *indice)
 {
@@ -1127,10 +1127,10 @@ int madbtbk_(integer *indice)
 
 //=======================================================================
 //function : AdvApp2Var_SysBase::maermsg_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::maermsg_(const char *,//cnompg, 
-				 integer *,//icoder, 
+int AdvApp2Var_SysBase::maermsg_(const char *,//cnompg,
+				 integer *,//icoder,
 				 ftnlen )//cnompg_len)
 
 {
@@ -1139,23 +1139,23 @@ int AdvApp2Var_SysBase::maermsg_(const char *,//cnompg,
 
 //=======================================================================
 //function : magtlog_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int magtlog_(const char *cnmlog, 
-	     const char *,//chaine, 
-	     integer *long__, 
-	     integer *iercod, 
-	     ftnlen cnmlog_len, 
+int magtlog_(const char *cnmlog,
+	     const char *,//chaine,
+	     integer *long__,
+	     integer *iercod,
+	     ftnlen cnmlog_len,
 	     ftnlen )//chaine_len)
 
 {
- 
+
   /* Local variables */
   char cbid[255];
   integer ibid, ier;
-  
 
-/* ********************************************************************** 
+
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -1178,7 +1178,7 @@ int magtlog_(const char *cnmlog,
 /*        IERCOD : ERROR CODE */
 /*        IERCOD = 0 : OK */
 /*        IERCOD = 5 : PLACE OF RANKING CORRESPONDING TO INEXISTING LOGIC NAME */
-        
+
 /*        IERCOD = 6 : TRANSLATION TOO LONG FOR THE 'CHAIN' VARIABLE */
 /*        IERCOD = 7 : CRITICAL ERROR */
 
@@ -1223,9 +1223,9 @@ int magtlog_(const char *cnmlog,
 
   *long__ = 0;
   *iercod = 0;
-  
+
   /* CONTROL OF EXISTENCE OF THE LOGIC NAME */
-  
+
   matrlog_(cnmlog, cbid, &ibid, &ier, cnmlog_len, 255L);
   if (ier == 1) {
     goto L9500;
@@ -1233,51 +1233,51 @@ int magtlog_(const char *cnmlog,
   if (ier == 2) {
     goto L9700;
   }
-  
+
   /* CONTROL OF THE LENGTH OF CHAIN */
-  
+
   if (ibid > __i__len()/*chaine, chaine_len)*/) {
     goto L9600;
   }
-  
+
   //__s__copy(chaine, cbid, chaine_len, ibid);
   *long__ = ibid;
-  
+
   goto L9999;
-  
+
   /* ***********************************************************************
    */
   /*              ERROR PROCESSING */
   /* ***********************************************************************
    */
-  
+
  L9500:
   *iercod = 5;
   //__s__copy(chaine, " ", chaine_len, 1L);
   goto L9999;
-  
+
  L9600:
   *iercod = 6;
   //__s__copy(chaine, " ", chaine_len, 1L);
   goto L9999;
-  
+
  L9700:
   *iercod = 7;
   //__s__copy(chaine, " ", chaine_len, 1L);
-  
+
   /* ***********************************************************************
    */
   /*              RETURN TO THE CALLING PROGRAM */
   /* ***********************************************************************
    */
-  
+
  L9999:
   return 0;
 } /* magtlog_ */
 
 //=======================================================================
 //function : mainial_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int AdvApp2Var_SysBase::mainial_()
 {
@@ -1288,27 +1288,27 @@ int AdvApp2Var_SysBase::mainial_()
 
 //=======================================================================
 //function : AdvApp2Var_SysBase::maitbr8_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::maitbr8_(integer *itaill, 
-				 doublereal *xtab, 
-				 doublereal *xval) 
+int AdvApp2Var_SysBase::maitbr8_(integer *itaill,
+				 doublereal *xtab,
+				 doublereal *xval)
 
 {
   integer c__504 = 504;
 
   /* Initialized data */
 
-  doublereal buff0[63] = { 
+  doublereal buff0[63] = {
     0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,
     0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,
     0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,
-    0.,0.,0.,0.,0. 
+    0.,0.,0.,0.,0.
     };
-  
+
   /* System generated locals */
   integer i__1;
-  
+
   /* Local variables */
   integer i__;
   doublereal buffx[63];
@@ -1358,19 +1358,19 @@ int AdvApp2Var_SysBase::maitbr8_(integer *itaill,
 /* ***********************************************************************
  */
 
-  
+
   /* Parameter adjustments */
   --xtab;
-  
+
   /* Function Body */
-  
+
   /* ----------------------------------------------------------------------*
    */
-  
+
   nbfois = *itaill / 63;
   noffst = nbfois * 63;
   nreste = *itaill - noffst;
-  
+
   if (*xval == 0.) {
     if (nbfois >= 1) {
       i__1 = nbfois;
@@ -1379,7 +1379,7 @@ int AdvApp2Var_SysBase::maitbr8_(integer *itaill,
 	/* L1000: */
       }
     }
-    
+
     if (nreste >= 1) {
       i__1 = nreste << 3;
       AdvApp2Var_SysBase::mcrfill_(&i__1, buff0, &xtab[noffst + 1]);
@@ -1396,28 +1396,28 @@ int AdvApp2Var_SysBase::maitbr8_(integer *itaill,
 	/* L3000: */
       }
     }
-    
+
     if (nreste >= 1) {
       i__1 = nreste << 3;
       AdvApp2Var_SysBase::mcrfill_(&i__1, buffx, &xtab[noffst + 1]);
     }
   }
-  
+
   /* ----------------------------------------------------------------------*
    */
-  
+
   return 0;
 } /* maitbr8_ */
 
 //=======================================================================
 //function : mamdlng_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mamdlng_(char *,//cmdlng, 
+int mamdlng_(char *,//cmdlng,
 	     ftnlen )//cmdlng_len)
 
 {
- 
+
 
 /* ***********************************************************************
  */
@@ -1533,13 +1533,13 @@ int mamdlng_(char *,//cmdlng,
 
 /*     NUMBER OF ENTITY TYPES MANAGED BY STRIM 100 */
   //__s__copy(cmdlng, macetat_.chlang, cmdlng_len, 4L);
-  
+
   return 0 ;
 } /* mamdlng_ */
 
 //=======================================================================
 //function : maostrb_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int maostrb_()
 {
@@ -1548,12 +1548,12 @@ int maostrb_()
 
 //=======================================================================
 //function : maostrd_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int maostrd_()
 {
   integer imod;
-  
+
 /* ***********************************************************************
  */
 
@@ -1604,19 +1604,19 @@ int maostrd_()
 
 //=======================================================================
 //function : maoverf_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int maoverf_(integer *nbentr, 
-	     doublereal *dtable) 
+int maoverf_(integer *nbentr,
+	     doublereal *dtable)
 
 {
   /* Initialized data */
-  
+
   integer ifois = 0;
-  
+
   /* System generated locals */
   integer i__1;
-  
+
   /* Local variables */
   integer ibid;
   doublereal buff[63];
@@ -1688,13 +1688,13 @@ int maoverf_(integer *nbentr,
 /*     DTABLE     in DTABLE. */
 /*   __________ */
 /*  !  amorce  !  * Otherwise, the entire buffer is transferred in DTABLE. */
-/*  !__________!  This initiates it. Then a loop is execute, which at each  
+/*  !__________!  This initiates it. Then a loop is execute, which at each
 */
 /*  !  temps 1 !  iteration transfers the part of the already initialized table */
 /*  !__________!  in the one that was not yet initialized. */
-/*  !          !  The size of the zone transferred by each call to MCRFILL 
+/*  !          !  The size of the zone transferred by each call to MCRFILL
 */
-/*  !  temps 2 !  is NLONGR*2**(numero_de_l'iteration). When  
+/*  !  temps 2 !  is NLONGR*2**(numero_de_l'iteration). When
 */
 /*  !          !  the size of the table to be initialized is */
 /*  !__________!  less than the already initialized size, the loop is */
@@ -1757,15 +1757,15 @@ int maoverf_(integer *nbentr,
 /*      DATA */
     /* Parameter adjustments */
   --dtable;
-  
+
   /* Function Body */
-  
+
   /* vJMB R8OVR IS NOT YET initialized, so impossible to use DATA
    */
   /*         DATA BUFF / NLONGR * R8OVR / */
-  
+
   /*    init of BUFF is done only once */
-  
+
   if (ifois == 0) {
     for (icompt = 1; icompt <= 63; ++icompt) {
       buff[icompt - 1] = maovpar_.r8ovr;
@@ -1773,48 +1773,48 @@ int maoverf_(integer *nbentr,
     }
     ifois = 1;
   }
-  
+
   /* ^JMB */
   /* Exception */
   if (*nbentr < 63) {
     nrest = *nbentr << 3;
     AdvApp2Var_SysBase::mcrfill_(&nrest, buff, &dtable[1]);
   } else {
-    
+
     /* Start & initialization */
     ioct = 504;
     AdvApp2Var_SysBase::mcrfill_(&ioct, buff, &dtable[1]);
     indic = 63;
-    
+
     /* Loop. The upper limit is the integer value of the logarithm of base 2
      */
     /* of NBENTR/NLONGR. */
     i__1 = (integer) (log((real) (*nbentr) / (float)63.) / log((float)2.))
       ;
     for (ibid = 1; ibid <= i__1; ++ibid) {
-      
+
       AdvApp2Var_SysBase::mcrfill_(&ioct, &dtable[1], &dtable[indic + 1]);
       ioct += ioct;
       indic += indic;
-      
+
       /* L10: */
     }
-    
+
     nrest = ( *nbentr - indic ) << 3;
-    
+
     if (nrest > 0) {
       AdvApp2Var_SysBase::mcrfill_(&nrest, &dtable[1], &dtable[indic + 1]);
     }
-    
+
   }
   return 0 ;
 } /* maoverf_ */
 
 //=======================================================================
 //function : AdvApp2Var_SysBase::maovsr8_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::maovsr8_(integer *ivalcs) 
+int AdvApp2Var_SysBase::maovsr8_(integer *ivalcs)
 {
   *ivalcs = maovpar_.r8ncs;
   return 0 ;
@@ -1822,31 +1822,31 @@ int AdvApp2Var_SysBase::maovsr8_(integer *ivalcs)
 
 //=======================================================================
 //function : matrlog_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int matrlog_(const char *,//cnmlog, 
-	     const char *,//chaine, 
-	     integer *length, 
-	     integer *iercod, 
-	     ftnlen ,//cnmlog_len, 
+int matrlog_(const char *,//cnmlog,
+	     const char *,//chaine,
+	     integer *length,
+	     integer *iercod,
+	     ftnlen ,//cnmlog_len,
 	     ftnlen )//chaine_len)
 
 {
   *iercod = 1;
   *length = 0;
-  
+
   return 0 ;
 } /* matrlog_ */
 
 //=======================================================================
 //function : matrsym_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int matrsym_(const char *cnmsym, 
-	     const char *,//chaine, 
-	     integer *length, 
-	     integer *iercod, 
-	     ftnlen cnmsym_len, 
+int matrsym_(const char *cnmsym,
+	     const char *,//chaine,
+	     integer *length,
+	     integer *iercod,
+	     ftnlen cnmsym_len,
 	     ftnlen )//chaine_len)
 
 {
@@ -1897,7 +1897,7 @@ int matrsym_(const char *cnmsym,
 
 
 /* SGI...v */
-  
+
   /* SGI  CALL MAGTLOG (CNMSYM,CHAINE,LENGTH,IERCOD) */
   magtlog_(cnmsym, chainx, length, iercod, cnmsym_len, 255L);
   /* SO...v */
@@ -1915,43 +1915,43 @@ int matrsym_(const char *cnmsym,
   }
   //__s__copy(chaine, chainx, chaine_len, 255L);
   /* SGI...^ */
-  
-  
+
+
   /* ***********************************************************************
    */
   /*     ERROR PROCESSING */
   /* ***********************************************************************
    */
-  
-  
+
+
   /* L9999: */
   return 0;
 } /* matrsym_ */
 
 //=======================================================================
 //function : mcrcomm_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int mcrcomm_(integer *kop, 
-	     integer *noct, 
-	     intptr_t *iadr, 
+int mcrcomm_(integer *kop,
+	     integer *noct,
+	     intptr_t *iadr,
 	     integer *ier)
 
 {
   /* Initialized data */
-  
+
   integer ntab = 0;
-  
+
   /* System generated locals */
   integer i__1, i__2;
-  
+
   /* Local variables */
   intptr_t ideb;
   doublereal dtab[32000];
   intptr_t itab[160]	/* was [4][40] */;
   intptr_t ipre;
   integer i__, j, k;
-  
+
 
 /************************************************************************
 *******/
@@ -1996,7 +1996,7 @@ int mcrcomm_(integer *kop,
 /*     DESCRIPTION/NOTES/LIMITATIONS : */
 /*     ----------------------------------- */
 
-/*   ATTENTION .... ITAB ARE NTAB NOT SAVED BETWEEN 2 CALLS.. 
+/*   ATTENTION .... ITAB ARE NTAB NOT SAVED BETWEEN 2 CALLS..
 */
 
 /* > */
@@ -2007,7 +2007,7 @@ int mcrcomm_(integer *kop,
 
 /*  ITAB : TABLE OF MANAGEMENT OF DTAB, ALLOCATED MEMORY ZONE . */
 /*  NTAB : NUMBER OF COMPLETED ALLOCATIONS. */
-/*     FORMAT OF ITAB : NUMBER OF ALLOCATED REAL*8, ADDRESS OF THE 1ST REAL*8 
+/*     FORMAT OF ITAB : NUMBER OF ALLOCATED REAL*8, ADDRESS OF THE 1ST REAL*8
 */
 /*                      , NOCT , VIRTUAL ADDRESS */
 
@@ -2018,9 +2018,9 @@ int mcrcomm_(integer *kop,
  */
 
   *ier = 0;
-  
+
   /*  ALLOCATION : FIND A HOLE */
-  
+
   if (*kop == 1) {
     *iadr = 0;
     if (*noct < 1) {
@@ -2031,7 +2031,7 @@ int mcrcomm_(integer *kop,
       *ier = 2;
       goto L9900;
     }
-    
+
     i__1 = ntab + 1;
     for (i__ = 1; i__ <= i__1; ++i__) {
       if (i__ <= 1) {
@@ -2064,15 +2064,15 @@ int mcrcomm_(integer *kop,
       }
       /* L1001: */
     }
-    
+
     /*  NO HOLE */
-    
+
     *ier = 3;
     goto L9900;
-    
+
     /* ----------------------------------- */
     /*  DESTRUCTION OF THE ALLOCATION NUM : */
-    
+
   } else {
     i__1 = ntab;
     for (i__ = 1; i__ <= i__1; ++i__) {
@@ -2096,35 +2096,35 @@ int mcrcomm_(integer *kop,
     L2001:
       ;
     }
-    
+
     /*        THE ALLOCATION DOES NOT EXIST */
-    
+
     *ier = 4;
     /* PP         GOTO 9900 */
   }
-  
+
  L9900:
   return 0;
 } /* mcrcomm_ */
 
 //=======================================================================
 //function : AdvApp2Var_SysBase::mcrdelt_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::mcrdelt_(integer *iunit, 
-				 integer *isize, 
-				 void *t, 
-				 intptr_t *iofset, 
+int AdvApp2Var_SysBase::mcrdelt_(integer *iunit,
+				 integer *isize,
+				 void *t,
+				 intptr_t *iofset,
 				 integer *iercod)
 
 {
   integer ibid;
   doublereal xbid;
-  integer noct, iver, ksys, i__, n, nrang, 
+  integer noct, iver, ksys, i__, n, nrang,
   ibyte, ier;
   intptr_t iadfd,  iadff, iaddr, loc; /* Les adrresses en long*/
   integer kop;
-  
+
 /* ***********************************************************************
  */
 
@@ -2177,7 +2177,7 @@ int AdvApp2Var_SysBase::mcrdelt_(integer *iunit,
 /*     "THe system refuseS destruction of memory allocation" */
 
 /*     IERCOD=3 CORRESPONDS TO THE CASE WHEN THE ARGUMENTS ARE NOT CORRECT */
-/*     (THEY DO NOT ALLOW TO RECOGNIZE THE ALLOCATION IN THE TABLE) 
+/*     (THEY DO NOT ALLOW TO RECOGNIZE THE ALLOCATION IN THE TABLE)
 */
 
 /*     When the allocation is destroyed, the corresponding IOFSET is set to */
@@ -2255,7 +2255,7 @@ int AdvApp2Var_SysBase::mcrdelt_(integer *iunit,
     loc = reinterpret_cast<intptr_t> (t);
 
     for (i__ = mcrgene_.ncore - 1; i__ >= 0; --i__) {
-	if (*iunit == mcrgene_.icore[i__].unit && *isize == 
+	if (*iunit == mcrgene_.icore[i__].unit && *isize ==
 		mcrgene_.icore[i__].reqsize && loc == mcrgene_.icore[i__].loc
         && *iofset == mcrgene_.icore[i__].offset) {
 	    n = i__;
@@ -2308,14 +2308,14 @@ L1100:
 
 /* UPDATE OF STATISTICS */
     ++mcrstac_.ndelt[ksys];
-    mcrstac_.nbyte[ksys] -= mcrgene_.icore[n].unit * 
+    mcrstac_.nbyte[ksys] -= mcrgene_.icore[n].unit *
 	    mcrgene_.icore[n].reqsize;
 
 /* REMOVAL OF PARAMETERS IN MCRGENE */
     if (n < MAX_ALLOC_NB - 1) {
         noct = (mcrgene_.ncore - (n + 1)) * sizeof(mcrgene_.icore[0]);
-	AdvApp2Var_SysBase::mcrfill_(&noct, 
-				     &mcrgene_.icore[n + 1], 
+	AdvApp2Var_SysBase::mcrfill_(&noct,
+				     &mcrgene_.icore[n + 1],
 				     &mcrgene_.icore[n]);
     }
     --mcrgene_.ncore;
@@ -2378,7 +2378,7 @@ C     INPUT ARGUMENTS :
 C     -----------------
 C        nb_car    : integer*4  number of characters to transfer.
 C        source    : source memory zone.
-C             
+C
 C     OUTPUT ARGUMENTS  :
 C     -------------------
 C        dest      : zone memory destination.
@@ -2400,10 +2400,10 @@ C**********************************************************************
 
 //=======================================================================
 //function : AdvApp2Var_SysBase::mcrfill_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::mcrfill_(integer *size, 
-				 void *tin, 
+int AdvApp2Var_SysBase::mcrfill_(integer *size,
+				 void *tin,
 				 void *tout)
 
 {
@@ -2452,7 +2452,7 @@ int AdvApp2Var_SysBase::mcrfill_(integer *size,
 
 //=======================================================================
 //function : mcrfree_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int mcrfree_(integer *,//ibyte,
 	     intptr_t iadr,
@@ -2477,7 +2477,7 @@ int mcrfree_(integer *,//ibyte,
 /*                                                                        */
 /*               CALL MCRGETV(IBYTE,IADR,IER)                             */
 /*                                                                        */
-/*               IBYTE (INTEGER*4) Nb of Bytes of allocation required     */    
+/*               IBYTE (INTEGER*4) Nb of Bytes of allocation required     */
 /*                                                                        */
 /*               IADR   (INTEGER*4) : Result.                             */
 /*                                                                        */
@@ -2493,14 +2493,14 @@ int mcrfree_(integer *,//ibyte,
 
 //=======================================================================
 //function : mcrgetv_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int mcrgetv_(integer *sz,
 	     intptr_t *iad,
-	     integer *ier)                                            
+	     integer *ier)
 
 {
-  
+
   *ier = 0;
   *iad = (intptr_t)Standard::Allocate(*sz);
   if ( !*iad ) *ier = 1;
@@ -2510,22 +2510,22 @@ int mcrgetv_(integer *sz,
 
 //=======================================================================
 //function : mcrlist_
-//purpose  : 
+//purpose  :
 //=======================================================================
 int AdvApp2Var_SysBase::mcrlist_(integer *ier) const
 
 {
   /* System generated locals */
   integer i__1;
-  
+
   /* Builtin functions */
-  
+
   /* Local variables */
-  char cfmt[1];
+  char cfmt[1]; cfmt[0] = 0;
   doublereal dfmt;
   integer ifmt, i__, nufmt, ntotal;
   char subrou[7];
-  
+
 
 /************************************************************************
 *******/
@@ -2654,12 +2654,12 @@ int AdvApp2Var_SysBase::mcrlist_(integer *ier) const
 
 //=======================================================================
 //function : AdvApp2Var_SysBase::mcrrqst_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::mcrrqst_(integer *iunit, 
-				 integer *isize, 
-				 void *t, 
-				 intptr_t *iofset, 
+int AdvApp2Var_SysBase::mcrrqst_(integer *iunit,
+				 integer *isize,
+				 void *t,
+				 intptr_t *iofset,
 				 integer *iercod)
 
 {
@@ -2674,8 +2674,8 @@ int AdvApp2Var_SysBase::mcrrqst_(integer *iunit,
   intptr_t iadfd, iadff, iaddr,lofset, loc;
   integer izu;
 
-  
-/* ********************************************************************** 
+
+/* **********************************************************************
 */
 
 /*     FUNCTION : */
@@ -2741,7 +2741,7 @@ int AdvApp2Var_SysBase::mcrrqst_(integer *iunit,
 
 /*     IERCOD=3 : REFUSED DYNAMIC ALLOCATION (MORE PLACE IN MEMORY) */
 /*     AND THE FOLLOWING MESSAGE APPEARS IN THE CONSOLE ALPHA : */
-/*    "The system refuses dynamic allocation of memory of N octets" 
+/*    "The system refuses dynamic allocation of memory of N octets"
 */
 /*     with completev display of all allocations carried out till now */
 
@@ -2942,7 +2942,7 @@ int AdvApp2Var_SysBase::mcrrqst_(integer *iunit,
 /* STATISTICS */
 
     ++mcrstac_.nrqst[ksys];
-    mcrstac_.nbyte[ksys] += mcrgene_.icore[mcrgene_.ncore - 1].unit * 
+    mcrstac_.nbyte[ksys] += mcrgene_.icore[mcrgene_.ncore - 1].unit *
 	    mcrgene_.icore[mcrgene_.ncore - 1].reqsize;
 /* Computing MAX */
     i__1 = mcrstac_.mbyte[ksys], i__2 = mcrstac_.nbyte[ksys];
@@ -2991,9 +2991,9 @@ L9900:
 
 //=======================================================================
 //function : AdvApp2Var_SysBase::mgenmsg_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::mgenmsg_(const char *,//nomprg, 
+int AdvApp2Var_SysBase::mgenmsg_(const char *,//nomprg,
 				 ftnlen )//nomprg_len)
 
 {
@@ -3002,9 +3002,9 @@ int AdvApp2Var_SysBase::mgenmsg_(const char *,//nomprg,
 
 //=======================================================================
 //function : AdvApp2Var_SysBase::mgsomsg_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::mgsomsg_(const char *,//nomprg, 
+int AdvApp2Var_SysBase::mgsomsg_(const char *,//nomprg,
 				 ftnlen )//nomprg_len)
 
 {
@@ -3017,7 +3017,7 @@ C
 C*****************************************************************************
 C
 C     FUNCTION : CALL MIRAZ(LENGTH,ITAB)
-C     ---------- 
+C     ----------
 C
 C     RESET TO ZERO A TABLE OF LOGIC OR INTEGER.
 C
@@ -3050,7 +3050,7 @@ C***********************************************************************
 */
 //=======================================================================
 //function : AdvApp2Var_SysBase::miraz_
-//purpose  : 
+//purpose  :
 //=======================================================================
 void AdvApp2Var_SysBase::miraz_(integer *taille,
 				void *adt)
@@ -3060,7 +3060,7 @@ void AdvApp2Var_SysBase::miraz_(integer *taille,
 }
 //=======================================================================
 //function : AdvApp2Var_SysBase::mnfndeb_
-//purpose  : 
+//purpose  :
 //=======================================================================
 integer AdvApp2Var_SysBase::mnfndeb_()
 {
@@ -3071,14 +3071,14 @@ integer AdvApp2Var_SysBase::mnfndeb_()
 
 //=======================================================================
 //function : AdvApp2Var_SysBase::msifill_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::msifill_(integer *nbintg, 
+int AdvApp2Var_SysBase::msifill_(integer *nbintg,
 				 integer *ivecin,
 				 integer *ivecou)
 {
   integer nocte;
-  
+
 /* ***********************************************************************
  */
 
@@ -3126,14 +3126,14 @@ int AdvApp2Var_SysBase::msifill_(integer *nbintg,
 
 //=======================================================================
 //function : AdvApp2Var_SysBase::msrfill_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::msrfill_(integer *nbreel, 
+int AdvApp2Var_SysBase::msrfill_(integer *nbreel,
 				 doublereal *vecent,
 				 doublereal * vecsor)
 {
   integer nocte;
-  
+
 
 /* ***********************************************************************
  */
@@ -3182,9 +3182,9 @@ int AdvApp2Var_SysBase::msrfill_(integer *nbreel,
 
 //=======================================================================
 //function : AdvApp2Var_SysBase::mswrdbg_
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::mswrdbg_(const char *,//ctexte, 
+int AdvApp2Var_SysBase::mswrdbg_(const char *,//ctexte,
 				 ftnlen )//ctexte_len)
 
 {
@@ -3253,15 +3253,15 @@ int __s__cmp()
 
 //=======================================================================
 //function : do__fio
-//purpose  : 
+//purpose  :
 //=======================================================================
-int AdvApp2Var_SysBase::do__fio() 
+int AdvApp2Var_SysBase::do__fio()
 {
 return 0;
 }
 //=======================================================================
 //function : do__lio
-//purpose  : 
+//purpose  :
 //=======================================================================
 int AdvApp2Var_SysBase::do__lio ()
 {
@@ -3272,7 +3272,7 @@ int AdvApp2Var_SysBase::do__lio ()
 C*****************************************************************************
 C
 C     FUNCTION : CALL MVRIRAZ(NBELT,DTAB)
-C     ---------- 
+C     ----------
 C     Reset to zero a table with DOUBLE PRECISION
 C
 C     KEYWORDS :
@@ -3296,14 +3296,14 @@ C     -----------------------
 C
 C     DEMSCRIPTION/NOTES/LIMITATIONS :
 C     -----------------------------------
-C     
+C
 C
 C>
 C***********************************************************************
 */
 //=======================================================================
 //function : AdvApp2Var_SysBase::mvriraz_
-//purpose  : 
+//purpose  :
 //=======================================================================
 void AdvApp2Var_SysBase::mvriraz_(integer *taille,
 				  void *adt)

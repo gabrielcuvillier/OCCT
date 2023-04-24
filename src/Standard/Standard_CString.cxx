@@ -20,7 +20,6 @@
 
 #include <Standard_CLocaleSentry.hxx>
 #include <Standard_CString.hxx>
-#include <Standard_Type.hxx>
 #include <string.h>
 #include <stdarg.h>
 
@@ -82,6 +81,10 @@ Standard_Integer HashCodes (const Standard_CString theString, const Standard_Int
       #error System does not support xlocale. Import/export could be broken if C locale did not specified by application.
     #endif
   #endif
+  // this could work on Clang using Mingw though. Hack to be reconsidered
+  #undef vprintf_l
+  #undef vsprintf_l
+  #undef vfprintf_l
   #define vprintf_l(theLocale, theFormat, theArgPtr)             vprintf(theFormat, theArgPtr)
   #define vsprintf_l(theBuffer, theLocale, theFormat, theArgPtr) vsprintf(theBuffer, theFormat, theArgPtr)
   #define vfprintf_l(theFile,   theLocale, theFormat, theArgPtr) vfprintf(theFile,   theFormat, theArgPtr)
