@@ -110,6 +110,8 @@ int mmcvstd_(integer *ncofmx,
 	     doublereal *crvcan,
 	     doublereal *courbe);
 
+
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 static
 int mmdrvcb_(integer *ideriv,
 	     integer *ndim,
@@ -118,6 +120,7 @@ int mmdrvcb_(integer *ideriv,
 	     doublereal *tparam,
 	     doublereal *tabpnt,
 	     integer *iercod);
+#endif
 
 static
 int mmexthi_(integer *ndegre,
@@ -128,10 +131,11 @@ int mmextrl_(integer *ndegre,
 	     NCollection_Array1<doublereal>& rootlg);
 
 
-
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 static
 int mmherm0_(doublereal *debfin,
 	     integer *iercod);
+
 
 static
 int mmherm1_(doublereal *debfin,
@@ -139,6 +143,8 @@ int mmherm1_(doublereal *debfin,
 	     integer *iordre,
 	     doublereal *hermit,
 	     integer *iercod);
+#endif
+
 static
 int mmloncv_(integer *ndimax,
 	     integer *ndimen,
@@ -148,6 +154,8 @@ int mmloncv_(integer *ndimax,
 	     doublereal *tfinal,
 	     doublereal *xlongc,
 	     integer *iercod);
+
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 static
 int mmpojac_(doublereal *tparam,
 	     integer *iordre,
@@ -155,6 +163,7 @@ int mmpojac_(doublereal *tparam,
 	     integer *nderiv,
        NCollection_Array1<doublereal>& valjac,
 	     integer *iercod);
+#endif
 
 static
 int mmrslw_(integer *normax,
@@ -210,9 +219,12 @@ int mmtrpj6_(integer *ncofmx,
 	     doublereal *ycvmax,
 	     doublereal *epstrc,
 	     integer *ncfnew);
+
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 static
 integer  pow__ii(integer *x,
 		 integer *n);
+#endif
 
 static
 int mvcvin2_(integer *ncoeff,
@@ -249,9 +261,11 @@ static struct {
     integer niterm, niterr;
 } mmprcsn_;
 
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 static struct {
     doublereal tdebut, tfinal, verifi, cmherm[576];
 } mmcmher_;
+#endif
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mdsptpt_
@@ -3299,6 +3313,8 @@ L9999:
     return 0;
 } /* mmdrc11_ */
 
+
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 //=======================================================================
 //function : mmdrvcb_
 //purpose  :
@@ -3474,6 +3490,7 @@ L9999:
     }
     return 0;
 } /* mmdrvcb_ */
+#endif
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmdrvck_
@@ -5071,6 +5088,8 @@ L9999:
 
  return 0   ;
 } /* mmgaus1_ */
+
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 //=======================================================================
 //function : mmherm0_
 //purpose  :
@@ -5624,7 +5643,6 @@ L9999:
  return 0 ;
 } /* mmherm1_ */
 
-#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmhjcan_
 //purpose  :
@@ -6565,6 +6583,7 @@ L9900:
  return 0 ;
 } /* mmloncv_ */
 
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmpobas_
 //purpose  :
@@ -6871,6 +6890,7 @@ L9999:
     }
  return 0 ;
 } /* mmpobas_ */
+#endif
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmpocrb_
@@ -7085,6 +7105,7 @@ L9999:
  return 0 ;
 } /* mmmpocur_ */
 
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 //=======================================================================
 //function : mmpojac_
 //purpose  :
@@ -7308,6 +7329,7 @@ L9999:
     }
  return 0 ;
 } /* mmpojac_ */
+#endif
 
 //=======================================================================
 //function : AdvApp2Var_MathBase::mmposui_
@@ -10206,6 +10228,7 @@ void AdvApp2Var_MathBase::mmwprcs_(doublereal *epsil1,
 /* > */
 /* ***********************************************************************/
 
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 //=======================================================================
 //function : pow__ii
 //purpose  :
@@ -10228,6 +10251,7 @@ integer pow__ii(integer *x,
  }
  return result ;
 }
+#endif
 
 
 /* **********************************************************************

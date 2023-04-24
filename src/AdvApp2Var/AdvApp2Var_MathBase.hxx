@@ -195,12 +195,15 @@ class AdvApp2Var_MathBase {
 				      doublereal *polaux,
 				      doublereal *crvcan);
 
+
+#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
   Standard_EXPORT static int mmpobas_(doublereal *tparam,
 				      integer *iordre,
 				      integer *ncoeff,
 				      integer *nderiv,
 				      doublereal *valbas,
 				      integer *iercod);
+#endif
 
   Standard_EXPORT static int mmmpocur_(integer *ncofmx,
 				       integer *ndim,

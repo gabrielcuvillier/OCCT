@@ -58,7 +58,7 @@ StepData_EnumTool::StepData_EnumTool
 
     void  StepData_EnumTool::AddDefinition (const Standard_CString term)
 {
-  char text[80];
+  char text[80]; text[0] = 0;
   if (!term) return;
   if (term[0] == '\0') return;
   Standard_Integer n0 = 0, n1 = 0;

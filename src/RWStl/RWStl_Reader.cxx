@@ -149,7 +149,7 @@ Standard_Boolean RWStl_Reader::Read (const char* theFile,
   std::streampos theEnd = aStream->tellg();
   aStream->seekg (0, aStream->beg);
 
-  // binary STL files cannot be shorter than 134 bytes 
+  // binary STL files cannot be shorter than 134 bytes
   // (80 bytes header + 4 bytes facet count + 50 bytes for one facet);
   // thus assume files shorter than 134 as Ascii without probing
   // (probing may bring stream to fail state if EOF is reached)
@@ -241,20 +241,18 @@ Standard_Boolean RWStl_Reader::IsAscii (Standard_IStream& theStream,
 #elif defined(_MSC_VER)
   // MSVCRT has equivalents with slightly different syntax
   #define SAVE_TL()
-  #define sscanf_l(theBuffer, theLocale, theFormat, ...) _sscanf_s_l(theBuffer, theFormat, theLocale, __VA_ARGS__)
 #else
   // glibc provides only limited xlocale implementation:
   // strtod_l/strtol_l/strtoll_l functions with explicitly specified locale
   // and newlocale/uselocale/freelocale to switch locale within current thread only.
   // So we switch to C locale temporarily
   #define SAVE_TL() Standard_CLocaleSentry aLocaleSentry;
-  #define sscanf_l(theBuffer, theLocale, theFormat, ...) sscanf(theBuffer, theFormat, __VA_ARGS__)
 #endif
 
 // Macro to get 64-bit position of the file from std::streampos
 #if defined(_MSC_VER) && _MSC_VER < 1700
   // In MSVC 2010, cast of std::streampos to 64-bit int is implemented incorrectly;
-  // work-around (relevant for files larger than 4 GB) is to use internal function seekpos(). 
+  // work-around (relevant for files larger than 4 GB) is to use internal function seekpos().
   // Since MSVC 15.8, seekpos() is deprecated and is said to always return 0.
   #define GETPOS(aPos) aPos.seekpos()
 #else
@@ -272,7 +270,7 @@ static bool ReadVertex (const char* theStr, double& theX, double& theY, double& 
   const char *aStr = theStr;
 
   // skip 'vertex'
-  while (isspace ((unsigned char)*aStr) || isalpha ((unsigned char)*aStr)) 
+  while (isspace ((unsigned char)*aStr) || isalpha ((unsigned char)*aStr))
     ++aStr;
 
   // read values

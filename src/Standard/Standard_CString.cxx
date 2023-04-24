@@ -65,7 +65,6 @@ Standard_Integer HashCodes (const Standard_CString theString, const Standard_Int
 #elif defined(_MSC_VER)
   // MSVCRT has equivalents with slightly different syntax
   #define SAVE_TL()
-  #define strtod_l(thePtr, theNextPtr, theLocale)                _strtod_l(thePtr, theNextPtr, theLocale)
   #define vprintf_l(theLocale, theFormat, theArgPtr)             _vprintf_l(theFormat, theLocale, theArgPtr)
   #define vsprintf_l(theBuffer, theLocale, theFormat, theArgPtr) _vsprintf_l(theBuffer, theFormat, theLocale, theArgPtr)
   #define vfprintf_l(theFile,   theLocale, theFormat, theArgPtr) _vfprintf_l(theFile,   theFormat, theLocale, theArgPtr)
@@ -82,7 +81,6 @@ Standard_Integer HashCodes (const Standard_CString theString, const Standard_Int
     #if !defined(__ANDROID__) && !defined(__QNX__) && !defined(__MINGW32__)
       #error System does not support xlocale. Import/export could be broken if C locale did not specified by application.
     #endif
-    #define strtod_l(thePtr, theNextPtr, theLocale)              strtod(thePtr, theNextPtr)
   #endif
   #define vprintf_l(theLocale, theFormat, theArgPtr)             vprintf(theFormat, theArgPtr)
   #define vsprintf_l(theBuffer, theLocale, theFormat, theArgPtr) vsprintf(theBuffer, theFormat, theArgPtr)
