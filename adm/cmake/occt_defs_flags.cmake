@@ -10,7 +10,8 @@ if (EMSCRIPTEN)
 endif ()
 
 if (MSVC AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]")
-  message(FATAL_ERROR "Clang with MSVC-like command-line found \(aka. \"clang-cl\"\). Prefer using Clang with GNU-like command-line, as it provide more predictable control over compiler flags")
+  message(WARNING "Clang with MSVC-like command-line found \(aka. \"clang-cl\"\). Prefer using Clang with GNU-like command-line, as it provide more predictable control over compiler flags")
+  # Note: on MSVC Release configuration, flags translates roughly to "-O2 -fstack-protector -fexceptions -fbuiltin -ffunction-sections -finline-functions"
 endif()
 
 # force option /fp:precise for Visual Studio projects.
@@ -68,7 +69,7 @@ else()
   set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fstack-protector")
 endif()
 
-if (MSVC OR (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]"))
+if (MSVC OR ((NOT MINGW) AND WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]"))
   # suppress warning on using portable non-secure functions in favor of non-portable secure ones
   add_definitions (-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE)
 endif()
@@ -190,9 +191,8 @@ if (BUILD_RELEASE_DISABLE_EXCEPTIONS)
   set (CMAKE_C_FLAGS_MINSIZEREL  "${CMAKE_C_FLAGS_MINSIZEREL} -DNo_Exception")
 endif()
 
-set(ENABLE_OZ OFF CACHE BOOL "Enable Oz")
-if (ENABLE_OZ AND (CMAKE_BUILD_TYPE STREQUAL "MinSizeRel") AND (CMAKE_CXX_COMPILER_ID STREQUAL "Clang"))
-  # Use 'Oz' optimization level (instead of Os)
+# Use 'Oz' optimization level (instead of Os) on Clang
+if (CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]")
   string(REGEX MATCH "-Os" IS_Os_CXX "${CMAKE_CXX_FLAGS_MINSIZEREL}")
   if (IS_Os_CXX)
     string(REGEX REPLACE "-Os" "-Oz" CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL}")
@@ -206,25 +206,7 @@ if (ENABLE_OZ AND (CMAKE_BUILD_TYPE STREQUAL "MinSizeRel") AND (CMAKE_CXX_COMPIL
   else ()
     set(CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL} -Oz")
   endif ()
-endif ()
-
-set(ENABLE_O3 OFF CACHE BOOL "Enable O3")
-if (ENABLE_O3 AND (CMAKE_BUILD_TYPE STREQUAL "Release") AND ((CMAKE_CXX_COMPILER_ID STREQUAL "Clang") OR (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")))
-  # Use 'O3' optimization level (instead of O2)
-  string(REGEX MATCH "-O2" IS_O2_CXX "${CMAKE_CXX_FLAGS_RELEASE}")
-  if (IS_O2_CXX)
-    string(REGEX REPLACE "-O2" "-O3" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
-  else ()
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
-  endif ()
-
-  string(REGEX MATCH "-O2" IS_O2_C "${CMAKE_C_FLAGS_RELEASE}")
-  if (IS_O2_C)
-    string(REGEX REPLACE "-O2" "-O3" CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}")
-  else ()
-    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3")
-  endif ()
-endif ()
+endif()
 
 message(Common: ${CMAKE_CXX_FLAGS})
 message(Debug: ${CMAKE_CXX_FLAGS_DEBUG})
