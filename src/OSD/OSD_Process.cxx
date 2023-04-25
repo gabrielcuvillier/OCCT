@@ -102,7 +102,8 @@ TCollection_AsciiString OSD_Process::UserName()
 {
 #if defined(__EMSCRIPTEN__)
   // Emscripten SDK raises TODO exception in runtime while calling getpwuid()
-  return TCollection_AsciiString();
+  // "web_user" seems to be the default user name choosen by Emscripten, according to file Emscripten file library_wasi.js:64
+  return TCollection_AsciiString("web_user");
 #else
   struct passwd *anInfos = getpwuid (getuid());
   return TCollection_AsciiString (anInfos ? anInfos->pw_name : "");
@@ -110,12 +111,17 @@ TCollection_AsciiString OSD_Process::UserName()
 }
 
 Standard_Boolean OSD_Process::IsSuperUser (){
+#if defined(__EMSCRIPTEN__)
+  // Does not have sense on Emscripten (note that getuid returns 0 witch is root)
+  return Standard_False;
+#else
   if (getuid()) {
     return Standard_False;
   }
   else {
     return Standard_True;
   }
+#endif
 }
 
 
@@ -266,18 +272,18 @@ Standard_Boolean OSD_Process :: IsSuperUser () {
   _osd_wnt_set_error ( myError, OSD_WProcess );
 
  else {
- 
+
   pSIDadmin = AdminSid ();
 
   for ( int i = 0; i < ( int )pTKgroups -> GroupCount; ++i )
 
    if (  EqualSid ( pTKgroups -> Groups[ i ].Sid, pSIDadmin )  ) {
-   
+
     retVal = TRUE;
     break;
-   
+
    }  // end if
- 
+
  }  // end else
 
  if ( hProcessToken != INVALID_HANDLE_VALUE ) CloseHandle ( hProcessToken );

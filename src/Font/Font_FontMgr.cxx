@@ -22,7 +22,6 @@
 #include <Message_Messenger.hxx>
 #include <NCollection_Buffer.hxx>
 #include <NCollection_Map.hxx>
-#include <OSD_Environment.hxx>
 #include <Standard_Stream.hxx>
 #include <Standard_Type.hxx>
 #include <TCollection_HAsciiString.hxx>
@@ -97,6 +96,11 @@ IMPLEMENT_STANDARD_RTTIEXT(Font_FontMgr,Standard_Transient)
     static Standard_CString myDefaultFontsDirs[] = {"/System/Library/Fonts",
                                                     "/Library/Fonts",
                                                     NULL
+                                                   };
+  #elif defined(__EMSCRIPTEN__)
+    // FS is in memory on Emscripten. Use CSF_CustomFontDirectory environment variable, or "/fonts" by default
+    static Standard_CString myDefaultFontsDirs[] = { getenv("CSF_CustomFontDirectory") ? getenv("CSF_CustomFontDirectory") : "/fonts",
+                                                     NULL
                                                    };
   #else
     // default fonts paths in most Unix systems (Linux and others)
@@ -489,6 +493,11 @@ Font_FontMgr::Font_FontMgr()
   aMono  ->Append (Font_FontAlias ("droid sans mono"));
   aSerif ->Append (Font_FontAlias ("droid serif"));
   aSans  ->Append (Font_FontAlias ("roboto")); // actually DroidSans.ttf
+#elif defined(__EMSCRIPTEN__)
+    // bitstream vera fonts have to be embedded in MemFS on Emscripten (either in CSF_CustomFontDirectory or "/fonts")
+  aMono  ->Append (Font_FontAlias ("bitstream vera sans mono"));
+  aSerif ->Append (Font_FontAlias ("bitstream vera serif"));
+  aSans  ->Append (Font_FontAlias ("bitstream vera sans"));
 #elif !defined(_WIN32) && !defined(__APPLE__) //X11
   aSerif ->Append (Font_FontAlias ("times"));
   aSans  ->Append (Font_FontAlias ("helvetica"));

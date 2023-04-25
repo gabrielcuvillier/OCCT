@@ -217,6 +217,10 @@ void OSD_Parallel::SetUseOcctThreads (Standard_Boolean theToUseOcct)
 //=======================================================================
 Standard_Integer OSD_Parallel::NbLogicalProcessors()
 {
+#if defined(__EMSCRIPTEN__)
+  // Multithreading is not enabled for now
+  return 1;
+#else
   static Standard_Integer aNumLogicalProcessors = 0;
   if ( aNumLogicalProcessors != 0 )
   {
@@ -271,4 +275,5 @@ Standard_Integer OSD_Parallel::NbLogicalProcessors()
   aNumLogicalProcessors = (Standard_Integer)sysconf(_SC_NPROCESSORS_ONLN);
 #endif
   return aNumLogicalProcessors;
+#endif
 }

@@ -49,14 +49,14 @@ else()
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
   set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fexceptions")
 
-  if (NOT (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]"))
-    # On anything except Clang on Windows, use fPIC
+  if (NOT (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]" AND NOT MINGW))
+    # On anything except Clang on Windows with MSVC, use fPIC and OCC_CONVERT_SIGNAL
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
     set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fPIC")
 
     add_definitions(-DOCC_CONVERT_SIGNALS)
   else()
-    # Specifically on Clang on Windows, use the experimental -fasync-exceptions to mimic MSVC /EHa behavior
+    # Specifically on Clang on Windows with MSVC, use the experimental -fasync-exceptions to mimic MSVC /EHa behavior
     # => Not yet working (tested on Clang 16 on Windows)
     #set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fasync-exceptions")
     #set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fasync-exceptions")
