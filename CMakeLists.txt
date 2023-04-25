@@ -19,7 +19,7 @@ endif()
 
 # set using C++ standard
 if (LIGHT_BUILD)
-  set (BUILD_CPP_STANDARD "C++17" CACHE STRING "Select using c++ standard." FORCE)
+  set (BUILD_CPP_STANDARD "C++17" CACHE STRING "Select using c++ standard.")
   set_property(CACHE BUILD_CPP_STANDARD PROPERTY STRINGS "C++17" "C++20" "C++23")
 else()
   set (BUILD_CPP_STANDARD "C++14" CACHE STRING "Select using c++ standard.")
@@ -29,14 +29,19 @@ endif()
 # Set desired C++ standard
 if     ("${BUILD_CPP_STANDARD}" STREQUAL "C++11")
   set (CMAKE_CXX_STANDARD 11)
+  set (CMAKE_C_STANDARD 11)
 elseif ("${BUILD_CPP_STANDARD}" STREQUAL "C++14")
   set (CMAKE_CXX_STANDARD 14)
+  set (CMAKE_C_STANDARD 11)
 elseif ("${BUILD_CPP_STANDARD}" STREQUAL "C++17")
   set (CMAKE_CXX_STANDARD 17)
+  set (CMAKE_C_STANDARD 17)
 elseif ("${BUILD_CPP_STANDARD}" STREQUAL "C++20")
   set (CMAKE_CXX_STANDARD 20)
+  set (CMAKE_C_STANDARD 17)
 elseif ("${BUILD_CPP_STANDARD}" STREQUAL "C++23")
   set (CMAKE_CXX_STANDARD 23)
+  set (CMAKE_C_STANDARD 23)
 else ()
   message (FATAL_ERROR, "misprint in c++ standard name")
 endif()
@@ -433,8 +438,8 @@ endif()
 # whether use optional 3rdparty or not
 if (LIGHT_BUILD)
   set (USE_TK        OFF CACHE BOOL "${USE_TK_DESCR}")
-  set (USE_FREETYPE  OFF CACHE BOOL "${USE_FREETYPE_DESCR}")
-  set (USE_RAPIDJSON ON  CACHE BOOL "${USE_RAPIDJSON_DESCR}" FORCE)
+  set (USE_FREETYPE  ON CACHE BOOL "${USE_FREETYPE_DESCR}")
+  set (USE_RAPIDJSON ON  CACHE BOOL "${USE_RAPIDJSON_DESCR}")
 else()
   set (USE_TK        ON  CACHE BOOL "${USE_TK_DESCR}")
   set (USE_FREETYPE  ON  CACHE BOOL "${USE_FREETYPE_DESCR}")
@@ -626,15 +631,49 @@ endif()
 # FreeType
 if (CAN_USE_FREETYPE)
   if (USE_FREETYPE)
-    message (STATUS "Info: FreeType is used by OCCT")
-    add_definitions (-DHAVE_FREETYPE)
-    OCCT_INCLUDE_CMAKE_FILE ("adm/cmake/freetype")
-  else()
-    OCCT_CHECK_AND_UNSET_GROUP ("3RDPARTY_FREETYPE")
-    OCCT_CHECK_AND_UNSET ("3RDPARTY_FREETYPE_INCLUDE_DIR_freetype2")
-    OCCT_CHECK_AND_UNSET ("3RDPARTY_FREETYPE_INCLUDE_DIR_ft2build")
-    OCCT_CHECK_AND_UNSET ("INSTALL_FREETYPE")
-  endif()
+    message(STATUS "Info: Freetype is used by OCCT")
+    if (LIGHT_BUILD)
+      add_definitions(-DHAVE_FREETYPE)
+      file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/freetype-build)
+      # Configure
+      execute_process(COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/deps/freetype-minimal
+          -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
+          -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/freetype-build/install/freetype
+          -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
+          -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+          -DCMAKE_C_STANDARD=${CMAKE_C_STANDARD}
+          -DCMAKE_C_STANDARD_REQUIRED=${CMAKE_C_STANDARD_REQUIRED}
+          #-DZLIB_ROOT:PATH=${3RDPARTY_ZLIB_DIR}
+          #-DPNG_ROOT:PATH=${3RDPARTY_PNG_DIR}
+          -DBUILD_SHARED_LIBS=OFF
+          #-DFT_WITH_ZLIB=ON
+          #-DFT_WITH_PNG=ON
+          -DFT_WITH_ZLIB=OFF
+          -DFT_WITH_BZIP2=OFF
+          -DFT_WITH_PNG=OFF
+          -DFT_WITH_HARFBUZZ=OFF
+          -DFT_WITH_BROTLI=OFF
+          -G "${CMAKE_GENERATOR}"
+          -T "${CMAKE_GENERATOR_TOOLSET}"
+          RESULT_VARIABLE result
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype-build)
+      # Build
+      execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel
+          RESULT_VARIABLE result
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype-build)
+      # Install
+      execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel --target install
+          RESULT_VARIABLE result
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype-build)
+      # Final
+      set(3RDPARTY_FREETYPE_DIR "${CMAKE_BINARY_DIR}/freetype-build/install/freetype" CACHE PATH "The directory containing freetype")
+      set(INSTALL_FREETYPE 1)
+    endif ()
+    OCCT_INCLUDE_CMAKE_FILE("adm/cmake/freetype")
+  else ()
+    OCCT_CHECK_AND_UNSET_GROUP("3RDPARTY_FREETYPE")
+    OCCT_CHECK_AND_UNSET("INSTALL_FREETYPE")
+  endif ()
 else()
   OCCT_CHECK_AND_UNSET ("USE_FREETYPE")
   OCCT_CHECK_AND_UNSET_GROUP ("3RDPARTY_FREETYPE")

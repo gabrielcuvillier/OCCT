@@ -1,3 +1,6 @@
 [submodule "deps/rapidjson-minimal"]
 	path = deps/rapidjson-minimal
 	url = https://github.com/gabrielcuvillier/rapidjson-minimal.git
+[submodule "deps/freetype-minimal"]
+	path = deps/freetype-minimal
+	url = https://github.com/gabrielcuvillier/freetype-minimal.git
