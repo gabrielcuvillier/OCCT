@@ -17,6 +17,7 @@
 #define VrmlData_ShapeConvert_HeaderFile
 
 #include <VrmlData_Geometry.hxx>
+#include <VrmlData_Appearance.hxx>
 #include <VrmlData_Group.hxx>
 #include <NCollection_List.hxx>
 #include <NCollection_DataMap.hxx>
@@ -36,15 +37,15 @@ class TDF_Label;
  * Algorithm converting one shape or a set of shapes to VrmlData_Scene.
  */
 
-class VrmlData_ShapeConvert 
+class VrmlData_ShapeConvert
 {
  public:
 
-  typedef struct {
+  struct ShapeData {
     TCollection_AsciiString Name;
     TopoDS_Shape            Shape;
     Handle(VrmlData_Node)   Node;
-  } ShapeData;
+  };
 
   // ---------- PUBLIC METHODS ----------
 
@@ -76,21 +77,21 @@ class VrmlData_ShapeConvert
    * Convert all accumulated shapes and store them in myScene.
    * The internal data structures are cleared in the end of conversion.
    * @param theExtractFaces
-   *   If True,  converter extracst faces from the shapes. 
+   *   If True,  converter extracst faces from the shapes.
    * @param theExtractEdges
    *   If True,  converter extracts edges from the shapes.
-   * @param theDeflection 
+   * @param theDeflection
    *   Deflection for tessellation of geometrical lines/surfaces. Existing mesh
    *   is used if its deflection is smaller than the one given by this
    *   parameter.
-   * @param theDeflAngle 
-   *   Angular deflection for tessellation of geometrical lines. 
+   * @param theDeflAngle
+   *   Angular deflection for tessellation of geometrical lines.
    */
   Standard_EXPORT void Convert (const Standard_Boolean theExtractFaces,
 				const Standard_Boolean theExtractEdges,
                                 const Standard_Real    theDeflection = 0.01,
 				const Standard_Real    theDeflAngle = 20.*M_PI/180.);
-                                //this value of theDeflAngle is used by default 
+                                //this value of theDeflAngle is used by default
                                 //for tesselation while shading (Drawer->HLRAngle())
 
   /**

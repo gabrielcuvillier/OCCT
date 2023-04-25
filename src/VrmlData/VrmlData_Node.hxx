@@ -16,10 +16,11 @@
 #ifndef VrmlData_Node_HeaderFile
 #define VrmlData_Node_HeaderFile
 
+#include <Standard_Type.hxx>
 #include <NCollection_List.hxx>
 #include <Standard_Type.hxx>
 #include <Standard_TypeDef.hxx>
-#include <TCollection_AsciiString.hxx> 
+#include <TCollection_AsciiString.hxx>
 #include <VrmlData_ErrorStatus.hxx>
 
 #define VRMLDATA_LCOMPARE(aa, bb) \
@@ -27,6 +28,8 @@
 
 struct VrmlData_InBuffer;
 class VrmlData_Scene;
+class gp_XY;
+class gp_XYZ;
 class TCollection_AsciiString;
 
 /**
@@ -56,7 +59,7 @@ class VrmlData_Node : public Standard_Transient
   /**
    * Query the name
    */
-  inline const char *           Name            () const { return myName; } 
+  inline const char *           Name            () const { return myName; }
 
   /**
    * Read a complete node definition from VRML stream
@@ -97,7 +100,7 @@ class VrmlData_Node : public Standard_Transient
    * Write the closing brace in the end of a node output.
    */
   Standard_EXPORT VrmlData_ErrorStatus
-                                WriteClosing () const;
+                                WriteClosing (const char* theNodeType = 0L) const;
 
   /**
    * Create a copy of this node.
@@ -147,7 +150,7 @@ class VrmlData_Node : public Standard_Transient
 
   /**
    * Define the common Indent in spaces, for writing all nodes.
-   */ 
+   */
   static inline Standard_Integer GlobalIndent ()
   { return 2; }
 
@@ -181,7 +184,7 @@ class VrmlData_Node : public Standard_Transient
  private:
   // ---------- PRIVATE FIELDS ----------
 
-  const VrmlData_Scene  * myScene; 
+  const VrmlData_Scene  * myScene;
   const char            * myName;       ///< name of the node
 #ifdef OCCT_DEBUG
   Standard_Integer      myLineCount;

@@ -16,6 +16,7 @@
 #include <OSD_FileSystem.hxx>
 #include <OSD_Path.hxx>
 #include <Poly_Triangulation.hxx>
+#include <Quantity_HArray1OfColor.hxx>
 #include <Standard_Stream.hxx>
 #include <TColStd_HArray1OfReal.hxx>
 #include <TopAbs_ShapeEnum.hxx>
@@ -23,6 +24,7 @@
 #include <TopoDS.hxx>
 #include <TopoDS_Face.hxx>
 #include <TopoDS_Shape.hxx>
+#include <TopTools_Array1OfShape.hxx>
 #include <Vrml.hxx>
 #include <Vrml_Group.hxx>
 #include <Vrml_Instancing.hxx>
@@ -40,185 +42,193 @@
 #include <VrmlData_Scene.hxx>
 #include <VrmlData_ShapeConvert.hxx>
 
-VrmlAPI_Writer::VrmlAPI_Writer()
-{
-  myDrawer = new VrmlConverter_Drawer;
-  myDeflection = -1;
-  Handle(Quantity_HArray1OfColor) Col1 = new Quantity_HArray1OfColor (1, 1, Quantity_NOC_BLACK);
-  Handle(TColStd_HArray1OfReal) kik1 = new TColStd_HArray1OfReal(1,1,0.0);
-  Handle(TColStd_HArray1OfReal) kik2 = new TColStd_HArray1OfReal(1,1,0.1);
-  myFrontMaterial = new Vrml_Material(Col1,Col1, Col1, Col1, kik1, kik2);
-  myPointsMaterial = new Vrml_Material(Col1,Col1, Col1, Col1, kik1, kik2);
-  myUisoMaterial = new Vrml_Material(Col1,Col1, Col1, Col1, kik1, kik2);
-  myVisoMaterial = new Vrml_Material(Col1,Col1, Col1, Col1, kik1, kik2);
-  myLineMaterial = new Vrml_Material(Col1,Col1, Col1, Col1, kik1, kik2);
-  myWireMaterial = new Vrml_Material(Col1,Col1, Col1, Col1, kik1, kik2);
-  myFreeBoundsMaterial = new Vrml_Material(Col1,Col1, Col1, Col1, kik1, kik2);
-  myUnfreeBoundsMaterial = new Vrml_Material(Col1,Col1, Col1, Col1, kik1, kik2);
-  DX = 1;      
-  DY = -1;  
-  DZ = 1;
-  XUp = 0;
-  YUp = 0;
-  ZUp = 1;
-  Focus = 6;
-  ResetToDefaults();
+VrmlAPI_Writer::VrmlAPI_Writer() {
+    myDrawer = new VrmlConverter_Drawer;
+    myDeflection = -1;
+    Handle(Quantity_HArray1OfColor) Col1 = new Quantity_HArray1OfColor(1, 1, Quantity_NOC_BLACK);
+    Handle(TColStd_HArray1OfReal) kik1 = new TColStd_HArray1OfReal(1, 1, 0.0);
+    Handle(TColStd_HArray1OfReal) kik2 = new TColStd_HArray1OfReal(1, 1, 0.1);
+    myFrontMaterial = new Vrml_Material(Col1, Col1, Col1, Col1, kik1, kik2);
+    myPointsMaterial = new Vrml_Material(Col1, Col1, Col1, Col1, kik1, kik2);
+    myUisoMaterial = new Vrml_Material(Col1, Col1, Col1, Col1, kik1, kik2);
+    myVisoMaterial = new Vrml_Material(Col1, Col1, Col1, Col1, kik1, kik2);
+    myLineMaterial = new Vrml_Material(Col1, Col1, Col1, Col1, kik1, kik2);
+    myWireMaterial = new Vrml_Material(Col1, Col1, Col1, Col1, kik1, kik2);
+    myFreeBoundsMaterial = new Vrml_Material(Col1, Col1, Col1, Col1, kik1, kik2);
+    myUnfreeBoundsMaterial = new Vrml_Material(Col1, Col1, Col1, Col1, kik1, kik2);
+    DX = 1;
+    DY = -1;
+    DZ = 1;
+    XUp = 0;
+    YUp = 0;
+    ZUp = 1;
+    Focus = 6;
+    ResetToDefaults();
 }
 
-void VrmlAPI_Writer::ResetToDefaults() 
-{
-  myTransparency = 0.0;
-  myShininess = 0.1;
-  Handle(TColStd_HArray1OfReal) kik1 = new TColStd_HArray1OfReal(1,1,myTransparency);
-  Handle(TColStd_HArray1OfReal) kik2 = new TColStd_HArray1OfReal(1,1,myShininess);
-  Handle(Quantity_HArray1OfColor) Col = new Quantity_HArray1OfColor(1, 1, Quantity_NOC_BLACK);
-  //
-  myFrontMaterial->SetAmbientColor(Col); myFrontMaterial->SetTransparency(kik1);myFrontMaterial->SetShininess(kik2);
-  myPointsMaterial->SetAmbientColor(Col); myPointsMaterial->SetTransparency(kik1);myPointsMaterial->SetShininess(kik2);
-  myUisoMaterial->SetAmbientColor(Col); myUisoMaterial->SetTransparency(kik1);myUisoMaterial->SetShininess(kik2);
-  myVisoMaterial->SetAmbientColor(Col); myVisoMaterial->SetTransparency(kik1);myVisoMaterial->SetShininess(kik2);
-  myLineMaterial->SetAmbientColor(Col); myLineMaterial->SetTransparency(kik1);myLineMaterial->SetShininess(kik2);
-  myWireMaterial->SetAmbientColor(Col); myWireMaterial->SetTransparency(kik1); myWireMaterial->SetShininess(kik2);
-  myFreeBoundsMaterial->SetAmbientColor(Col); myFreeBoundsMaterial->SetTransparency(kik1);myFreeBoundsMaterial->SetShininess(kik2);
-  myUnfreeBoundsMaterial->SetAmbientColor(Col); myUnfreeBoundsMaterial->SetTransparency(kik1);myUnfreeBoundsMaterial->SetShininess(kik2);
-  //
-  //
-  Handle(Quantity_HArray1OfColor) Col2 = new Quantity_HArray1OfColor(1, 1, Quantity_Color (0.75, 0.75, 0.75, Quantity_TOC_sRGB));
-  Handle(Quantity_HArray1OfColor) Col3 = new Quantity_HArray1OfColor(1, 1, Quantity_Color (0.82, 0.79, 0.42, Quantity_TOC_sRGB));
-  myUisoMaterial->SetDiffuseColor(Col2);
-  myVisoMaterial->SetDiffuseColor(Col2);
-  myFreeBoundsMaterial->SetDiffuseColor(Col2);
-  myUnfreeBoundsMaterial->SetDiffuseColor(Col2);
-  
-  //
+void VrmlAPI_Writer::ResetToDefaults() {
+    myTransparency = 0.0;
+    myShininess = 0.1;
+    Handle(TColStd_HArray1OfReal) kik1 = new TColStd_HArray1OfReal(1, 1, myTransparency);
+    Handle(TColStd_HArray1OfReal) kik2 = new TColStd_HArray1OfReal(1, 1, myShininess);
+    Handle(Quantity_HArray1OfColor) Col = new Quantity_HArray1OfColor(1, 1, Quantity_NOC_BLACK);
+    //
+    myFrontMaterial->SetAmbientColor(Col);
+    myFrontMaterial->SetTransparency(kik1);
+    myFrontMaterial->SetShininess(kik2);
+    myPointsMaterial->SetAmbientColor(Col);
+    myPointsMaterial->SetTransparency(kik1);
+    myPointsMaterial->SetShininess(kik2);
+    myUisoMaterial->SetAmbientColor(Col);
+    myUisoMaterial->SetTransparency(kik1);
+    myUisoMaterial->SetShininess(kik2);
+    myVisoMaterial->SetAmbientColor(Col);
+    myVisoMaterial->SetTransparency(kik1);
+    myVisoMaterial->SetShininess(kik2);
+    myLineMaterial->SetAmbientColor(Col);
+    myLineMaterial->SetTransparency(kik1);
+    myLineMaterial->SetShininess(kik2);
+    myWireMaterial->SetAmbientColor(Col);
+    myWireMaterial->SetTransparency(kik1);
+    myWireMaterial->SetShininess(kik2);
+    myFreeBoundsMaterial->SetAmbientColor(Col);
+    myFreeBoundsMaterial->SetTransparency(kik1);
+    myFreeBoundsMaterial->SetShininess(kik2);
+    myUnfreeBoundsMaterial->SetAmbientColor(Col);
+    myUnfreeBoundsMaterial->SetTransparency(kik1);
+    myUnfreeBoundsMaterial->SetShininess(kik2);
+    //
+    //
+    Handle(Quantity_HArray1OfColor) Col2 = new Quantity_HArray1OfColor(1, 1, Quantity_Color(0.75, 0.75, 0.75,
+                                                                                            Quantity_TOC_sRGB));
+    Handle(Quantity_HArray1OfColor) Col3 = new Quantity_HArray1OfColor(1, 1, Quantity_Color(0.82, 0.79, 0.42,
+                                                                                            Quantity_TOC_sRGB));
+    myUisoMaterial->SetDiffuseColor(Col2);
+    myVisoMaterial->SetDiffuseColor(Col2);
+    myFreeBoundsMaterial->SetDiffuseColor(Col2);
+    myUnfreeBoundsMaterial->SetDiffuseColor(Col2);
+
+    //
 //  Handle(Quantity_HArray1OfColor) Col3 = new Quantity_HArray1OfColor(1,1);
 //  color.SetValues(Quantity_NOC_GOLD);
 //  Col3->SetValue(1,color);
-  myLineMaterial->SetDiffuseColor(Col2);
-  myWireMaterial->SetDiffuseColor(Col2);
-  //
+    myLineMaterial->SetDiffuseColor(Col2);
+    myWireMaterial->SetDiffuseColor(Col2);
+    //
 //  Handle(Quantity_HArray1OfColor) Col4 = new Quantity_HArray1OfColor(1,1);
 //  color.SetValues(Quantity_NOC_GOLD);
 //  Col4->SetValue(1,color);
-  myFrontMaterial->SetDiffuseColor(Col2);
-  myPointsMaterial->SetDiffuseColor(Col2);
-  //
-  
-  myUisoMaterial->SetSpecularColor(Col3);
-  myVisoMaterial->SetSpecularColor(Col3);
-  myFreeBoundsMaterial->SetSpecularColor(Col3);
-  myUnfreeBoundsMaterial->SetSpecularColor(Col3);
-  myLineMaterial->SetSpecularColor(Col3);
-  myWireMaterial->SetSpecularColor(Col3);
-  myFrontMaterial->SetSpecularColor(Col3);
-  myPointsMaterial->SetSpecularColor(Col3);
-  
-  myRepresentation = VrmlAPI_BothRepresentation;
-}
-Handle(VrmlConverter_Drawer) VrmlAPI_Writer::Drawer() const
-{
-  return myDrawer;
-}
-void VrmlAPI_Writer::SetDeflection(const Standard_Real aDef)
-{
-  myDeflection = aDef;
-  if (myDeflection > 0) {
-    myDrawer->SetMaximalChordialDeviation(myDeflection);
-    myDrawer->SetTypeOfDeflection(Aspect_TOD_ABSOLUTE);
-  }
-  else myDrawer->SetTypeOfDeflection(Aspect_TOD_RELATIVE);
-}
-void VrmlAPI_Writer::SetRepresentation(const VrmlAPI_RepresentationOfShape aRep)
-{
-  myRepresentation = aRep;
-}
-void VrmlAPI_Writer::SetTransparencyToMaterial(Handle(Vrml_Material)& aMaterial,const Standard_Real aTransparency) 
-{
-  Handle(TColStd_HArray1OfReal) t = new TColStd_HArray1OfReal(1,1,aTransparency);
-  aMaterial->SetTransparency(t);
+    myFrontMaterial->SetDiffuseColor(Col2);
+    myPointsMaterial->SetDiffuseColor(Col2);
+    //
+
+    myUisoMaterial->SetSpecularColor(Col3);
+    myVisoMaterial->SetSpecularColor(Col3);
+    myFreeBoundsMaterial->SetSpecularColor(Col3);
+    myUnfreeBoundsMaterial->SetSpecularColor(Col3);
+    myLineMaterial->SetSpecularColor(Col3);
+    myWireMaterial->SetSpecularColor(Col3);
+    myFrontMaterial->SetSpecularColor(Col3);
+    myPointsMaterial->SetSpecularColor(Col3);
+
+    myRepresentation = VrmlAPI_BothRepresentation;
 }
 
-void VrmlAPI_Writer::SetShininessToMaterial(Handle(Vrml_Material)& aMaterial,const Standard_Real aShininess) 
-{  
-  Handle(TColStd_HArray1OfReal) s = new TColStd_HArray1OfReal(1,1,aShininess);
-  aMaterial->SetShininess(s);
+Handle(VrmlConverter_Drawer) VrmlAPI_Writer::Drawer() const {
+    return myDrawer;
 }
 
-void VrmlAPI_Writer::SetAmbientColorToMaterial(Handle(Vrml_Material)& aMaterial,const Handle(Quantity_HArray1OfColor)& Color) 
-{
-  aMaterial->SetAmbientColor(Color);
+void VrmlAPI_Writer::SetDeflection(const Standard_Real aDef) {
+    myDeflection = aDef;
+    if (myDeflection > 0) {
+        myDrawer->SetMaximalChordialDeviation(myDeflection);
+        myDrawer->SetTypeOfDeflection(Aspect_TOD_ABSOLUTE);
+    } else myDrawer->SetTypeOfDeflection(Aspect_TOD_RELATIVE);
 }
 
-void VrmlAPI_Writer::SetDiffuseColorToMaterial(Handle(Vrml_Material)& aMaterial,const Handle(Quantity_HArray1OfColor)& Color) 
-{
-  aMaterial->SetDiffuseColor(Color);
+void VrmlAPI_Writer::SetRepresentation(const VrmlAPI_RepresentationOfShape aRep) {
+    myRepresentation = aRep;
 }
 
-void VrmlAPI_Writer::SetSpecularColorToMaterial(Handle(Vrml_Material)& aMaterial,const Handle(Quantity_HArray1OfColor)& Color) 
-{
-  aMaterial->SetSpecularColor(Color);
+void VrmlAPI_Writer::SetTransparencyToMaterial(Handle(Vrml_Material)& aMaterial, const Standard_Real aTransparency) {
+    Handle(TColStd_HArray1OfReal) t = new TColStd_HArray1OfReal(1, 1, aTransparency);
+    aMaterial->SetTransparency(t);
 }
 
-void VrmlAPI_Writer::SetEmissiveColorToMaterial(Handle(Vrml_Material)& aMaterial,const Handle(Quantity_HArray1OfColor)& Color) 
-{
-  aMaterial->SetEmissiveColor(Color);
+void VrmlAPI_Writer::SetShininessToMaterial(Handle(Vrml_Material)& aMaterial, const Standard_Real aShininess) {
+    Handle(TColStd_HArray1OfReal) s = new TColStd_HArray1OfReal(1, 1, aShininess);
+    aMaterial->SetShininess(s);
 }
 
-VrmlAPI_RepresentationOfShape VrmlAPI_Writer::GetRepresentation() const
-{
-  return myRepresentation;  
+void VrmlAPI_Writer::SetAmbientColorToMaterial(Handle(Vrml_Material)& aMaterial,
+                                               const Handle(Quantity_HArray1OfColor)& Color) {
+    aMaterial->SetAmbientColor(Color);
 }
 
-Handle(Vrml_Material) VrmlAPI_Writer::GetFrontMaterial() const
-{
-  return myFrontMaterial;
+void VrmlAPI_Writer::SetDiffuseColorToMaterial(Handle(Vrml_Material)& aMaterial,
+                                               const Handle(Quantity_HArray1OfColor)& Color) {
+    aMaterial->SetDiffuseColor(Color);
 }
 
-Handle(Vrml_Material) VrmlAPI_Writer::GetPointsMaterial() const
-{
-  return myPointsMaterial;
+void VrmlAPI_Writer::SetSpecularColorToMaterial(Handle(Vrml_Material)& aMaterial,
+                                                const Handle(Quantity_HArray1OfColor)& Color) {
+    aMaterial->SetSpecularColor(Color);
 }
 
-Handle(Vrml_Material) VrmlAPI_Writer::GetUisoMaterial() const
-{
-  return myUisoMaterial;
+void VrmlAPI_Writer::SetEmissiveColorToMaterial(Handle(Vrml_Material)& aMaterial,
+                                                const Handle(Quantity_HArray1OfColor)& Color) {
+    aMaterial->SetEmissiveColor(Color);
 }
 
-Handle(Vrml_Material) VrmlAPI_Writer::GetVisoMaterial() const
-{
-  return myVisoMaterial;
+VrmlAPI_RepresentationOfShape VrmlAPI_Writer::GetRepresentation() const {
+    return myRepresentation;
 }
 
-Handle(Vrml_Material) VrmlAPI_Writer::GetLineMaterial() const
-{
-  return myLineMaterial;
+Handle(Vrml_Material) VrmlAPI_Writer::GetFrontMaterial() const {
+    return myFrontMaterial;
 }
 
-Handle(Vrml_Material) VrmlAPI_Writer::GetWireMaterial() const
-{
-  return myWireMaterial;
+Handle(Vrml_Material) VrmlAPI_Writer::GetPointsMaterial() const {
+    return myPointsMaterial;
 }
 
-Handle(Vrml_Material) VrmlAPI_Writer::GetFreeBoundsMaterial() const
-{
-  return myFreeBoundsMaterial;
+Handle(Vrml_Material) VrmlAPI_Writer::GetUisoMaterial() const {
+    return myUisoMaterial;
 }
 
-Handle(Vrml_Material) VrmlAPI_Writer::GetUnfreeBoundsMaterial() const
-{
-  return myUnfreeBoundsMaterial;
+Handle(Vrml_Material) VrmlAPI_Writer::GetVisoMaterial() const {
+    return myVisoMaterial;
 }
 
-Standard_Boolean VrmlAPI_Writer::Write(const TopoDS_Shape& aShape,const Standard_CString aFile, const Standard_Integer aVersion) const
-{
-  if (aVersion == 1)
-    return write_v1 (aShape, aFile);
-  else if (aVersion == 2)
-    return write_v2 (aShape, aFile);
-
-  return Standard_False;
+Handle(Vrml_Material) VrmlAPI_Writer::GetLineMaterial() const {
+    return myLineMaterial;
 }
 
+Handle(Vrml_Material) VrmlAPI_Writer::GetWireMaterial() const {
+    return myWireMaterial;
+}
+
+Handle(Vrml_Material) VrmlAPI_Writer::GetFreeBoundsMaterial() const {
+    return myFreeBoundsMaterial;
+}
+
+Handle(Vrml_Material) VrmlAPI_Writer::GetUnfreeBoundsMaterial() const {
+    return myUnfreeBoundsMaterial;
+}
+
+Standard_Boolean
+VrmlAPI_Writer::Write(const TopoDS_Shape& aShape, const Standard_CString aFile, const Standard_Integer aVersion) const {
+    if (aVersion == 1)
+        return write_v1(aShape, aFile);
+    else if (aVersion == 2)
+        return write_v2(aShape, aFile);
+    else if (aVersion == 3)
+        return write_v3(aShape, aFile);
+
+    return Standard_False;
+}
+
+#if !defined(OCCT_DISABLE_VRML1_EXPORT)
 Standard_Boolean VrmlAPI_Writer::write_v1(const TopoDS_Shape& aShape,const Standard_CString aFile) const
 {
   OSD_Path thePath(aFile);
@@ -281,7 +291,7 @@ Standard_Boolean VrmlAPI_Writer::write_v1(const TopoDS_Shape& aShape,const Stand
   for (; anExp.More(); anExp.Next())
   {
     const TopoDS_Face& aFace = TopoDS::Face (anExp.Current());
-    if (!aFace.IsNull()) 
+    if (!aFace.IsNull())
     {
       Handle(Poly_Triangulation) aTri =
         BRep_Tool::Triangulation (aFace, aLoc);
@@ -300,12 +310,12 @@ Standard_Boolean VrmlAPI_Writer::write_v1(const TopoDS_Shape& aShape,const Stand
 
   VrmlConverter_TypeOfLight Light = VrmlConverter_NoLight;
   VrmlConverter_TypeOfCamera Camera = VrmlConverter_PerspectiveCamera;
-  Handle(VrmlConverter_Projector) projector = new VrmlConverter_Projector (Shapes, 
-									   Focus, 
-									   DX,  DY,  DZ, 
-									   XUp, YUp, ZUp,
-									   Camera,
-									   Light);
+  Handle(VrmlConverter_Projector) projector = new VrmlConverter_Projector (Shapes,
+                                       Focus,
+                                       DX,  DY,  DZ,
+                                       XUp, YUp, ZUp,
+                                       Camera,
+                                       Light);
   Vrml::VrmlHeaderWriter (*anOutFile);
   if (myRepresentation == VrmlAPI_BothRepresentation)
     Vrml::CommentWriter(" This file contents both Shaded and Wire Frame representation of selected Shape ", *anOutFile);
@@ -314,16 +324,16 @@ Standard_Boolean VrmlAPI_Writer::write_v1(const TopoDS_Shape& aShape,const Stand
   if (myRepresentation == VrmlAPI_WireFrameRepresentation)
     Vrml::CommentWriter(" This file contents only Wire Frame representation of selected Shape ", *anOutFile);
   Vrml_Separator S1;
-  S1.Print (*anOutFile); 
+  S1.Print (*anOutFile);
   projector->Add (*anOutFile);
   Light = VrmlConverter_DirectionLight;
   Camera = VrmlConverter_OrthographicCamera;
-  Handle(VrmlConverter_Projector) projector1 = new VrmlConverter_Projector (Shapes, 
-									   Focus, 
-									   DX,  DY,  DZ, 
-									   XUp, YUp, ZUp,
-									   Camera,
-									   Light);
+  Handle(VrmlConverter_Projector) projector1 = new VrmlConverter_Projector (Shapes,
+                                       Focus,
+                                       DX,  DY,  DZ,
+                                       XUp, YUp, ZUp,
+                                       Camera,
+                                       Light);
   projector1->Add (*anOutFile);
   Vrml_Separator S2;
   S2.Print (*anOutFile);
@@ -355,7 +365,7 @@ Standard_Boolean VrmlAPI_Writer::write_v1(const TopoDS_Shape& aShape,const Stand
 Standard_Boolean VrmlAPI_Writer::write_v2(const TopoDS_Shape& aShape,const Standard_CString aFile) const
 {
   Standard_Boolean anExtFace = Standard_False;
-  if(myRepresentation == VrmlAPI_ShadedRepresentation || myRepresentation == VrmlAPI_BothRepresentation) 
+  if(myRepresentation == VrmlAPI_ShadedRepresentation || myRepresentation == VrmlAPI_BothRepresentation)
     anExtFace = Standard_True;
 
   Standard_Boolean anExtEdge = Standard_False;
@@ -378,29 +388,66 @@ Standard_Boolean VrmlAPI_Writer::write_v2(const TopoDS_Shape& aShape,const Stand
   anOutStream.reset();
   return Standard_False;
 }
+#else
+
+Standard_Boolean VrmlAPI_Writer::write_v1(const TopoDS_Shape&, const Standard_CString) const {
+    return Standard_False;
+}
+
+#endif
+
+
+Standard_Boolean VrmlAPI_Writer::write_v3(const TopoDS_Shape& aShape, const Standard_CString aFile) const {
+    Standard_Boolean anExtFace = Standard_False;
+    if (myRepresentation == VrmlAPI_ShadedRepresentation || myRepresentation == VrmlAPI_BothRepresentation)
+        anExtFace = Standard_True;
+
+    Standard_Boolean anExtEdge = Standard_False;
+    if (myRepresentation == VrmlAPI_WireFrameRepresentation || myRepresentation == VrmlAPI_BothRepresentation)
+        anExtEdge = Standard_True;
+
+    VrmlData_Scene aScene;
+    VrmlData_ShapeConvert aConv(aScene);
+    aConv.AddShape(aShape);
+    aConv.Convert(anExtFace, anExtEdge);
+
+    aScene.setX3D(true);
+
+    const Handle(OSD_FileSystem)& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+    std::shared_ptr<std::ostream> anOutFile = aFileSystem->OpenOStream(aFile, std::ios::out | std::ios::binary);
+    if (anOutFile.get() == NULL) {
+        return Standard_False;
+    }
+
+    return Standard_False;
+}
+
 
 //=======================================================================
 //function : WriteDoc
-//purpose  : 
+//purpose  :
 //=======================================================================
 Standard_Boolean VrmlAPI_Writer::WriteDoc(
-  const Handle(TDocStd_Document) &theDoc,
-  const Standard_CString theFile,
-  const Standard_Real theScale) const
-{
-  VrmlData_Scene aScene;
-  VrmlData_ShapeConvert aConv(aScene, theScale);
-  aConv.ConvertDocument(theDoc);
+        const Handle(TDocStd_Document)& theDoc,
+        const Standard_CString theFile,
+        const Standard_Real theScale,
+        const Standard_Integer aVersion) const {
+    VrmlData_Scene aScene;
+    VrmlData_ShapeConvert aConv(aScene, theScale);
+    aConv.ConvertDocument(theDoc);
 
-  const Handle(OSD_FileSystem)& aFileSystem = OSD_FileSystem::DefaultFileSystem();
-  std::shared_ptr<std::ostream> anOutStream = aFileSystem->OpenOStream (theFile, std::ios::out | std::ios::binary);
-  if (anOutStream.get() != NULL)
-  {
-    *anOutStream << aScene;
-    anOutStream->flush();
-    return anOutStream->good();
-  }
-  anOutStream.reset();
-  return Standard_False;
+    if (aVersion == 3) {
+        aScene.setX3D(true);
+    }
+
+    const Handle(OSD_FileSystem)& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+    std::shared_ptr<std::ostream> anOutStream = aFileSystem->OpenOStream(theFile, std::ios::out | std::ios::binary);
+    if (anOutStream.get() != NULL) {
+        *anOutStream << aScene;
+        anOutStream->flush();
+        return anOutStream->good();
+    }
+    anOutStream.reset();
+    return Standard_False;
 }
 

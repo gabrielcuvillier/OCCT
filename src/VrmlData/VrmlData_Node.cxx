@@ -21,6 +21,8 @@
 #include <VrmlData_UnknownNode.hxx>
 #include <VrmlData_Scene.hxx>
 #include <VrmlData_InBuffer.hxx>
+#include <gp_XY.hxx>
+#include <gp_XYZ.hxx>
 #include <VrmlData_Geometry.hxx>
 #include <VrmlData_TextureTransform.hxx>
 #include <VrmlData_Texture.hxx>
@@ -59,7 +61,7 @@ Standard_Integer HashCode (const Handle (VrmlData_Node) & theNode, const Standar
 
 //=======================================================================
 //function : VrmlData_Node
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_Node::VrmlData_Node ()
@@ -101,7 +103,7 @@ Handle(VrmlData_Node) VrmlData_Node::Clone
 
 //=======================================================================
 //function : setName
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void VrmlData_Node::setName (const char * theName, const char * theSuffix)
@@ -121,7 +123,7 @@ void VrmlData_Node::setName (const char * theName, const char * theSuffix)
 
 //=======================================================================
 //function : IsDefault
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean VrmlData_Node::IsDefault () const
@@ -132,7 +134,7 @@ Standard_Boolean VrmlData_Node::IsDefault () const
 
 //=======================================================================
 //function : Write
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_ErrorStatus VrmlData_Node::Write (const char *) const
@@ -142,20 +144,34 @@ VrmlData_ErrorStatus VrmlData_Node::Write (const char *) const
 
 //=======================================================================
 //function : WriteClosing
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-VrmlData_ErrorStatus VrmlData_Node::WriteClosing () const
+VrmlData_ErrorStatus VrmlData_Node::WriteClosing (const char* theNodeType) const
 {
   VrmlData_ErrorStatus aResult = Scene().Status();
-  if (aResult == VrmlData_StatusOK || aResult == VrmlData_NotImplemented)
+  if (aResult == VrmlData_StatusOK || aResult == VrmlData_NotImplemented) {
+    if (Scene().isX3D()) {
+        if (!theNodeType) {
+            aResult = Scene().WriteLine ("/>", 0L, -GlobalIndent(), false, true);
+        }
+        else {
+            TCollection_AsciiString name = "</";
+            name += theNodeType;
+            name += ">";
+            aResult = Scene().WriteLine (name.ToCString(), 0L, -GlobalIndent(), true, true);
+        }
+    }
+    else {
     aResult = Scene().WriteLine ("}", 0L, -GlobalIndent());
+    }
+  }
   return aResult;
 }
 
 //=======================================================================
 //function : readBrace
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_ErrorStatus VrmlData_Node::readBrace (VrmlData_InBuffer& theBuffer)
@@ -172,7 +188,7 @@ VrmlData_ErrorStatus VrmlData_Node::readBrace (VrmlData_InBuffer& theBuffer)
 
 //=======================================================================
 //function : ReadBoolean
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_ErrorStatus VrmlData_Node::ReadBoolean (VrmlData_InBuffer& theBuffer,
@@ -192,7 +208,7 @@ VrmlData_ErrorStatus VrmlData_Node::ReadBoolean (VrmlData_InBuffer& theBuffer,
 
 //=======================================================================
 //function : ReadInteger
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_ErrorStatus VrmlData_Node::ReadInteger (VrmlData_InBuffer& theBuffer,
@@ -215,7 +231,7 @@ VrmlData_ErrorStatus VrmlData_Node::ReadInteger (VrmlData_InBuffer& theBuffer,
 
 //=======================================================================
 //function : ReadString
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_ErrorStatus VrmlData_Node::ReadString
@@ -244,7 +260,7 @@ VrmlData_ErrorStatus VrmlData_Node::ReadString
 
 //=======================================================================
 //function : ReadMultiString
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_ErrorStatus VrmlData_Node::ReadMultiString
@@ -286,7 +302,7 @@ VrmlData_ErrorStatus VrmlData_Node::ReadMultiString
 
 //=======================================================================
 //function : ReadNode
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_ErrorStatus VrmlData_Node::ReadNode
@@ -327,7 +343,7 @@ VrmlData_ErrorStatus VrmlData_Node::ReadNode
 
 //=======================================================================
 //function : VrmlData_ShapeNode::Clone
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Handle(VrmlData_Node) VrmlData_ShapeNode::Clone
@@ -357,7 +373,7 @@ Handle(VrmlData_Node) VrmlData_ShapeNode::Clone
 
 //=======================================================================
 //function : VrmlData_ShapeNode::Read
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_ErrorStatus VrmlData_ShapeNode::Read (VrmlData_InBuffer& theBuffer)
@@ -395,7 +411,7 @@ VrmlData_ErrorStatus VrmlData_ShapeNode::Read (VrmlData_InBuffer& theBuffer)
 
 //=======================================================================
 //function : VrmlData_ShapeNode::Write
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_ErrorStatus VrmlData_ShapeNode::Write (const char * thePrefix) const
@@ -403,21 +419,39 @@ VrmlData_ErrorStatus VrmlData_ShapeNode::Write (const char * thePrefix) const
   VrmlData_ErrorStatus aStatus (VrmlData_StatusOK);
   const VrmlData_Scene& aScene = Scene();
   static char header[] = "Shape {";
-  if (OK (aStatus, aScene.WriteLine (thePrefix, header, GlobalIndent())))
+  static char headerX3D[] = "<Shape";
+  if (OK (aStatus, Scene().isX3D() ?
+  aScene.WriteLine (headerX3D, 0L, GlobalIndent(), true, false):
+  aScene.WriteLine (thePrefix, header, GlobalIndent())))
   {
+    // Attributes
+
+    // Def/Use
+    if (Scene().isX3D()) {
+      if (Scene().WriteDefUse(this) == VrmlData_Use) {
+        aStatus = WriteClosing();
+        return VrmlData_StatusOK;
+      }
+    }
+
+    if (Scene().isX3D()) {
+      aScene.WriteLine(">", 0L, 0, false, true);
+    }
+
+    // Child Nodes
     if (myAppearance.IsNull() == Standard_False)
       aStatus = aScene.WriteNode ("appearance", myAppearance);
     if (myGeometry.IsNull() == Standard_False && OK(aStatus))
       aStatus = aScene.WriteNode ("geometry", myGeometry);
 
-    aStatus = WriteClosing();
+    aStatus = WriteClosing("Shape");
   }
   return aStatus;
-}  
+}
 
 //=======================================================================
 //function : VrmlData_ShapeNode::IsDefault
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean VrmlData_ShapeNode::IsDefault () const
@@ -430,7 +464,7 @@ Standard_Boolean VrmlData_ShapeNode::IsDefault () const
 
 //=======================================================================
 //function : VrmlData_UnknownNode::Read
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_ErrorStatus VrmlData_UnknownNode::Read (VrmlData_InBuffer& theBuffer)
@@ -460,7 +494,7 @@ VrmlData_ErrorStatus VrmlData_UnknownNode::Read (VrmlData_InBuffer& theBuffer)
 
 //=======================================================================
 //function : VrmlData_UnknownNode::IsDefault
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean VrmlData_UnknownNode::IsDefault () const
@@ -470,7 +504,7 @@ Standard_Boolean VrmlData_UnknownNode::IsDefault () const
 
 //=======================================================================
 //function : VrmlData_Appearance::Clone
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Handle(VrmlData_Node) VrmlData_Appearance::Clone
@@ -504,7 +538,7 @@ Handle(VrmlData_Node) VrmlData_Appearance::Clone
 
 //=======================================================================
 //function : VrmlData_Appearance::Read
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_ErrorStatus VrmlData_Appearance::Read (VrmlData_InBuffer& theBuffer)
@@ -547,16 +581,34 @@ VrmlData_ErrorStatus VrmlData_Appearance::Read (VrmlData_InBuffer& theBuffer)
 
 //=======================================================================
 //function : VrmlData_Appearance::Write
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_ErrorStatus VrmlData_Appearance::Write (const char * thePrefix) const
 {
   static char header[] = "Appearance {";
+  static char headerX3D[] = "<Appearance";
   VrmlData_ErrorStatus aStatus;
   const VrmlData_Scene& aScene = Scene();
-  if (OK (aStatus, aScene.WriteLine (thePrefix, header, GlobalIndent())))
+  if (OK (aStatus, Scene().isX3D() ?
+  aScene.WriteLine (headerX3D , 0L, GlobalIndent(), true, false):
+  aScene.WriteLine (thePrefix, header, GlobalIndent())))
   {
+      // Attributes
+
+      // Def/Use
+    if (Scene().isX3D()) {
+      if (Scene().WriteDefUse(this) == VrmlData_Use) {
+        aStatus = WriteClosing();
+        return VrmlData_StatusOK;
+      }
+    }
+
+    if (Scene().isX3D()) {
+      aScene.WriteLine(">", 0L, 0, false, true);
+    }
+
+    // Child Nodes
     if (myMaterial.IsNull() == Standard_False)
       aStatus = aScene.WriteNode ("material", myMaterial);
     if (myTexture.IsNull() == Standard_False && OK(aStatus))
@@ -564,14 +616,14 @@ VrmlData_ErrorStatus VrmlData_Appearance::Write (const char * thePrefix) const
     if (myTTransform.IsNull() == Standard_False && OK(aStatus))
       aStatus = aScene.WriteNode ("textureTransform", myTTransform);
 
-    aStatus = WriteClosing();
+    aStatus = WriteClosing("Appearance");
   }
   return aStatus;
 }
 
 //=======================================================================
 //function : IsDefault
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean VrmlData_Appearance::IsDefault () const
@@ -604,7 +656,7 @@ VrmlData_ImageTexture::VrmlData_ImageTexture (const VrmlData_Scene&  theScene,
 
 //=======================================================================
 //function : VrmlData_ImageTexture::Clone
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Handle(VrmlData_Node) VrmlData_ImageTexture::Clone
@@ -622,7 +674,7 @@ Handle(VrmlData_Node) VrmlData_ImageTexture::Clone
 
 //=======================================================================
 //function : VrmlData_ImageTexture::Read
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_ErrorStatus VrmlData_ImageTexture::Read (VrmlData_InBuffer& theBuffer)
@@ -652,7 +704,7 @@ VrmlData_ErrorStatus VrmlData_ImageTexture::Read (VrmlData_InBuffer& theBuffer)
 
 //=======================================================================
 //function : Write
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 VrmlData_ErrorStatus VrmlData_ImageTexture::Write(const char *thePrefix)  const
@@ -660,19 +712,30 @@ VrmlData_ErrorStatus VrmlData_ImageTexture::Write(const char *thePrefix)  const
   VrmlData_ErrorStatus aStatus = VrmlData_StatusOK;
   const VrmlData_Scene& aScene = Scene();
   static char header[] = "ImageTexture {";
+  static char headerX3D[] = "<ImageTexture";
   if (aScene.IsDummyWrite() == Standard_False &&
-      OK(aStatus, aScene.WriteLine(thePrefix, header, GlobalIndent())))
+    (OK (aStatus, Scene().isX3D() ?
+                     Scene().WriteLine (headerX3D, 0L, GlobalIndent(), true, false):
+                     Scene().WriteLine (thePrefix, header, GlobalIndent()))))
   {
+    if (Scene().isX3D()) {
+      if (Scene().WriteDefUse(this) == VrmlData_Use) {
+        aStatus = WriteClosing();
+        return VrmlData_StatusOK;
+      }
+    }
+
     TCollection_AsciiString url = "\"";
     url += URL().First();
     url += "\"";
 
     try {
-      aStatus = aScene.WriteLine("url ", url.ToCString());
+      aStatus = aScene.WriteLine(Scene().isX3D() ? " url='": "url ", url.ToCString(), 0, !Scene().isX3D(), !Scene().isX3D());
+      aStatus = aScene.WriteLine(Scene().isX3D() ? "'": "", 0L, 0, !Scene().isX3D(), !Scene().isX3D());
     }
-    catch (...)
+    catch (Standard_Failure const&)
     {
-      
+
     }
     aStatus = WriteClosing();
   }

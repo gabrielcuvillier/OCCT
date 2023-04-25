@@ -52,13 +52,13 @@
 
 //=======================================================================
 //function : AddShape
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void VrmlData_ShapeConvert::AddShape (const TopoDS_Shape& theShape,
                                       const char *        theName)
 {
-  ShapeData aData;/* = { - compilation problem on SUN 
+  ShapeData aData;/* = { - compilation problem on SUN
     TCollection_AsciiString(),
     theShape,
     NULL
@@ -230,7 +230,7 @@ Handle(VrmlData_Geometry) VrmlData_ShapeConvert::makeTShapeNode(const TopoDS_Sha
 
 //=======================================================================
 //function : Convert
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void VrmlData_ShapeConvert::Convert (const Standard_Boolean theExtractFaces,
@@ -300,7 +300,7 @@ void VrmlData_ShapeConvert::Convert (const Standard_Boolean theExtractFaces,
             aTrans->SetTransform (aTrsf);
             myScene.AddNode (aTrans, Standard_False);
             aGroup->AddNode (aTrans);
-            
+
             // Store the shape node under the transform.
             aTrans->AddNode (aShapeNode);
           }
@@ -313,7 +313,7 @@ void VrmlData_ShapeConvert::Convert (const Standard_Boolean theExtractFaces,
 
 //=======================================================================
 //function : triToIndexedFaceSet
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Handle(VrmlData_Geometry) VrmlData_ShapeConvert::triToIndexedFaceSet
@@ -517,7 +517,7 @@ Handle(VrmlData_Geometry) VrmlData_ShapeConvert::polToIndexedLineSet
 
 //=======================================================================
 //function : defaultMaterialFace
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Handle(VrmlData_Appearance) VrmlData_ShapeConvert::defaultMaterialFace () const
@@ -544,7 +544,7 @@ Handle(VrmlData_Appearance) VrmlData_ShapeConvert::defaultMaterialFace () const
 
 //=======================================================================
 //function : defaultMaterialEdge
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Handle(VrmlData_Appearance) VrmlData_ShapeConvert::defaultMaterialEdge () const
@@ -552,7 +552,7 @@ Handle(VrmlData_Appearance) VrmlData_ShapeConvert::defaultMaterialEdge () const
   static char aNodeName[] = "__defaultMaterialEdge";
   Handle(VrmlData_Appearance) anAppearance =
     Handle(VrmlData_Appearance)::DownCast(myScene.FindNode(aNodeName));
-  if (anAppearance.IsNull()) { 
+  if (anAppearance.IsNull()) {
     const Handle(VrmlData_Material) aMaterial =
       new VrmlData_Material (myScene, 0L, 0.2, 0.2, 0.2);
     aMaterial->SetDiffuseColor (Quantity_Color(0.2, 0.7, 0.2,
@@ -851,7 +851,7 @@ void VrmlData_ShapeConvert::addAssembly (const Handle(VrmlData_Group)& theParent
 
 //=======================================================================
 //function : ConvertDocument
-//purpose  : 
+//purpose  :
 //=======================================================================
 void VrmlData_ShapeConvert::ConvertDocument(const Handle(TDocStd_Document) &theDoc)
 {
