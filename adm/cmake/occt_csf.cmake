@@ -84,22 +84,11 @@ else()
   set(CSF_JPEG "")
 endif()
 
-# TinyPLY
-if (USE_TINYPLY)
-  if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-    set(CSF_TINYPLY "tinyplyd")
-  else()
-    set(CSF_TINYPLY "tinyply")
-  endif()
-else()
-  set(CSF_TINYPLY "")
-endif()
-
 # RapidJSON
 if (USE_RAPIDJSON)
-  set(CSF_RAPIDJSON "")
+  set(CSF_RapidJSON "")
 else()
-  set(CSF_RAPIDJSON "")
+  set(CSF_RapidJSON "")
 endif()
 
 # OpenVR

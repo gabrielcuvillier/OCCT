@@ -434,15 +434,15 @@ endif()
 if (LIGHT_BUILD)
   set (USE_TK        OFF CACHE BOOL "${USE_TK_DESCR}")
   set (USE_FREETYPE  OFF CACHE BOOL "${USE_FREETYPE_DESCR}")
+  set (USE_RAPIDJSON ON  CACHE BOOL "${USE_RAPIDJSON_DESCR}" FORCE)
 else()
   set (USE_TK        ON  CACHE BOOL "${USE_TK_DESCR}")
   set (USE_FREETYPE  ON  CACHE BOOL "${USE_FREETYPE_DESCR}")
+  set (USE_RAPIDJSON OFF CACHE BOOL "${USE_RAPIDJSON_DESCR}")
 endif()
 set (USE_FREEIMAGE OFF CACHE BOOL "${USE_FREEIMAGE_DESCR}")
 set (USE_FFMPEG    OFF CACHE BOOL "${USE_FFMPEG_DESCR}")
 set (USE_OPENVR    OFF CACHE BOOL "${USE_OPENVR_DESCR}")
-set (USE_RAPIDJSON OFF CACHE BOOL "${USE_RAPIDJSON_DESCR}")
-set (USE_TINYPLY   OFF CACHE BOOL "${USE_TINYPLY_DESCR}")
 set (USE_DRACO     OFF CACHE BOOL "${USE_DRACO_DESCR}")
 set (USE_TBB       OFF CACHE BOOL "${USE_TBB_DESCR}")
 
@@ -573,7 +573,6 @@ else()
 endif()
 
 # search for CSF variable in EXTERNLIB of each being used toolkit
-OCCT_IS_PRODUCT_REQUIRED (CSF_TINYPLY CAN_USE_TINYPLY)
 OCCT_IS_PRODUCT_REQUIRED (CSF_FreeImagePlus CAN_USE_FREEIMAGE)
 OCCT_IS_PRODUCT_REQUIRED (CSF_TclLibs USE_TCL)
 OCCT_IS_PRODUCT_REQUIRED (CSF_TclTkLibs CAN_USE_TK)
@@ -781,13 +780,39 @@ endif()
 # search for CSF_RapidJSON variable in EXTERNLIB of each being used toolkit
 OCCT_IS_PRODUCT_REQUIRED (CSF_RapidJSON CAN_USE_RAPIDJSON)
 if (CAN_USE_RAPIDJSON)
+  # RapidJSON
   if (USE_RAPIDJSON)
-    add_definitions (-DHAVE_RAPIDJSON)
-    OCCT_INCLUDE_CMAKE_FILE ("adm/cmake/rapidjson")
-  else()
-    OCCT_CHECK_AND_UNSET_GROUP ("3RDPARTY_RAPIDJSON")
-    OCCT_CHECK_AND_UNSET ("INSTALL_RAPIDJSON")
-  endif()
+    message(STATUS "Info: RapidJSON is used by OCCT")
+    if (LIGHT_BUILD)
+      add_definitions(-DHAVE_RAPIDJSON)
+      file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/rapidjson-build)
+      # Configure
+      execute_process(COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/deps/rapidjson-minimal
+          -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
+          -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/rapidjson-build/install/rapidjson
+          -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
+          -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+          -G "${CMAKE_GENERATOR}"
+          -T "${CMAKE_GENERATOR_TOOLSET}"
+          RESULT_VARIABLE result
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/rapidjson-build)
+      # Build
+      execute_process(COMMAND ${CMAKE_COMMAND} --build . --config=MinSizeRel
+          RESULT_VARIABLE result
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/rapidjson-build)
+      # Install
+      execute_process(COMMAND ${CMAKE_COMMAND} --build . --config=MinSizeRel --target install
+          RESULT_VARIABLE result
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/rapidjson-build)
+      # Final
+      set(3RDPARTY_RAPIDJSON_DIR "${CMAKE_BINARY_DIR}/rapidjson-build/install/rapidjson" CACHE PATH "The directory containing rapidjson")
+      set(INSTALL_RAPIDJSON 1)
+    endif ()
+    OCCT_INCLUDE_CMAKE_FILE("adm/cmake/rapidjson")
+  else ()
+    OCCT_CHECK_AND_UNSET_GROUP("3RDPARTY_RAPIDJSON")
+    OCCT_CHECK_AND_UNSET("INSTALL_RAPIDJSON")
+  endif ()
 else()
   OCCT_CHECK_AND_UNSET ("USE_RAPIDJSON")
 
