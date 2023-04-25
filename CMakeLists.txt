@@ -18,8 +18,13 @@ if (LIGHT_BUILD)
 endif()
 
 # set using C++ standard
-set (BUILD_CPP_STANDARD "C++14" CACHE STRING "Select using c++ standard.")
-set_property(CACHE BUILD_CPP_STANDARD PROPERTY STRINGS "C++11" "C++14" "C++17" "C++20" "C++23")
+if (LIGHT_BUILD)
+  set (BUILD_CPP_STANDARD "C++17" CACHE STRING "Select using c++ standard." FORCE)
+  set_property(CACHE BUILD_CPP_STANDARD PROPERTY STRINGS "C++17" "C++20" "C++23")
+else()
+  set (BUILD_CPP_STANDARD "C++14" CACHE STRING "Select using c++ standard.")
+  set_property(CACHE BUILD_CPP_STANDARD PROPERTY STRINGS "C++11" "C++14" "C++17" "C++20" "C++23")
+endif()
 
 # Set desired C++ standard
 if     ("${BUILD_CPP_STANDARD}" STREQUAL "C++11")
