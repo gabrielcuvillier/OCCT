@@ -137,14 +137,19 @@ bool Font_FTFont::Init (const Handle(NCollection_Buffer)& theData,
       return false;
     }
   }
-  else
-  {
-    if (FT_New_Face (myFTLib->Instance(), myFontPath.ToCString(), (FT_Long )theFaceId, &myFTFace) != 0)
-    {
-      //Message::SendTrace (TCollection_AsciiString("Font '") + myFontPath + "' failed to load from file");
+  else {
+#if !defined(OCCT_MINIMAL_FREETYPE_BUILD)
+    if (FT_New_Face(myFTLib->Instance(), myFontPath.ToCString(),
+                    (FT_Long)theFaceId, &myFTFace) != 0) {
+      // Message::DefaultMessenger()->Send (TCollection_AsciiString("Font '") + myFontPath + "' failed to load from file", Message_Trace);
       Release();
       return false;
     }
+#else
+    // Do not attempt to use Freetype file I/O on OCCT_MINIMAL_FREETYPE_BUILD
+      Release();
+      return false;
+#endif
   }
 
   if (FT_Select_Charmap (myFTFace, ft_encoding_unicode) != 0)

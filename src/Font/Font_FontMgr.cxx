@@ -69,12 +69,14 @@ IMPLEMENT_STANDARD_RTTIEXT(Font_FontMgr,Standard_Transient)
       "ttf",
       "otf",
       "ttc",
+#if !defined(OCCT_MINIMAL_FREETYPE_BUILD)
       "pfa",
       "pfb",
     #ifdef __APPLE__
       // Datafork TrueType (OS X), obsolete
       //"dfont",
     #endif
+#endif
       NULL
     };
 
@@ -153,6 +155,7 @@ static bool checkFont (NCollection_Sequence<Handle(Font_SystemFont)>& theFonts,
                        signed long theFaceId = -1) // FT_Long
 {
 #ifdef HAVE_FREETYPE
+#if !defined(OCCT_MINIMAL_FREETYPE_BUILD)
   const FT_Long aFaceId = theFaceId != -1 ? theFaceId : 0;
   FT_Face aFontFace;
   FT_Error aFaceError = FT_New_Face (theFTLib->Instance(), theFontPath.ToCString(), aFaceId, &aFontFace);
@@ -285,6 +288,10 @@ static bool checkFont (NCollection_Sequence<Handle(Font_SystemFont)>& theFonts,
 
   FT_Done_Face (aFontFace);
   return true;
+#else
+  // Do not attempt to use Freetype file I/O on OCCT_MINIMAL_FREETYPE_BUILD
+  return false;
+#endif
 #else
   (void )theFonts;
   (void )theFTLib;
