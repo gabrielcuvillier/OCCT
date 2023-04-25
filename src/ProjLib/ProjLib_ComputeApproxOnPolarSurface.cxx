@@ -148,6 +148,8 @@ static void computePeriodicity(const Handle(Adaptor3d_Surface)& theSurf,
   }
 }
 
+#if !defined(OCCT_DISABLE_APPROX_FIT_AND_DIVIDE)
+
 //=======================================================================
 //function : aFuncValue
 //purpose  : compute functional value in (theU,theV) point
@@ -222,7 +224,7 @@ static gp_Pnt2d Function_Value(const Standard_Real theU,
   Standard_Real U0 = p2d.X(), V0 = p2d.Y();
 
   GeomAbs_SurfaceType Type = theData.mySurf->GetType();
-  if((Type != GeomAbs_BSplineSurface) && 
+  if((Type != GeomAbs_BSplineSurface) &&
      (Type != GeomAbs_BezierSurface)  &&
      (Type != GeomAbs_OffsetSurface)    )
   {
@@ -365,7 +367,7 @@ static gp_Pnt2d Function_Value(const Standard_Real theU,
   // Try to run simple search with initial point (U0, V0).
   Extrema_GenLocateExtPS  locext(SurfLittle, theData.myTolU, theData.myTolV);
   locext.Perform(p, U0, V0);
-  if (locext.IsDone()) 
+  if (locext.IsDone())
   {
     locext.Point().Parameter(u, v);
     Dist2Min = anOrthogSqValue(p, theData.mySurf, u, v);
@@ -417,7 +419,7 @@ class ProjLib_PolarFunction : public AppCont_Function
 
   public :
 
-  ProjLib_PolarFunction(const Handle(Adaptor3d_Curve) & C, 
+  ProjLib_PolarFunction(const Handle(Adaptor3d_Curve) & C,
                         const Handle(Adaptor3d_Surface)& Surf,
                         const Handle(Adaptor2d_Curve2d)& InitialCurve2d,
                         const Standard_Real Tol3d)
@@ -465,10 +467,11 @@ class ProjLib_PolarFunction : public AppCont_Function
                       NCollection_Array1<gp_Vec>&   /*theVec*/) const
     {return Standard_False;}
 };
+#endif
 
 //=======================================================================
 //function : ProjLib_ComputeApproxOnPolarSurface
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 ProjLib_ComputeApproxOnPolarSurface::ProjLib_ComputeApproxOnPolarSurface()
@@ -485,7 +488,7 @@ ProjLib_ComputeApproxOnPolarSurface::ProjLib_ComputeApproxOnPolarSurface()
 
 //=======================================================================
 //function : ProjLib_ComputeApproxOnPolarSurface
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 ProjLib_ComputeApproxOnPolarSurface::ProjLib_ComputeApproxOnPolarSurface
@@ -524,8 +527,8 @@ ProjLib_ComputeApproxOnPolarSurface::ProjLib_ComputeApproxOnPolarSurface
   myDist(0.)
 {
   const Handle(Adaptor2d_Curve2d) anInitCurve2d;
-  myBSpline = Perform(anInitCurve2d, theCurve, theSurface);  
-} 
+  myBSpline = Perform(anInitCurve2d, theCurve, theSurface);
+}
 
 //=======================================================================
 //function : ProjLib_ComputeApproxOnPolarSurface
@@ -547,7 +550,7 @@ ProjLib_ComputeApproxOnPolarSurface::ProjLib_ComputeApproxOnPolarSurface
   myBndPnt(AppParCurves_TangencyPoint),
   myDist(0.)
 {
-  // InitialCurve2d and InitialCurve2dBis are two pcurves of the sewing 
+  // InitialCurve2d and InitialCurve2dBis are two pcurves of the sewing
   Handle(Geom2d_BSplineCurve) bsc =
     Perform(theInitialCurve2d, theCurve, theSurface);
 
@@ -577,7 +580,7 @@ ProjLib_ComputeApproxOnPolarSurface::ProjLib_ComputeApproxOnPolarSurface
 
 //=======================================================================
 //function : Concat
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 static Handle(Geom2d_BSplineCurve) Concat(Handle(Geom2d_BSplineCurve) C1,
@@ -588,7 +591,7 @@ static Handle(Geom2d_BSplineCurve) Concat(Handle(Geom2d_BSplineCurve) C1,
   Standard_Integer deg, deg1, deg2;
   deg1 = C1->Degree();
   deg2 = C2->Degree();
-  
+
   if ( deg1 < deg2) {
     C1->IncreaseDegree(deg2);
     deg = deg2;
@@ -644,26 +647,26 @@ static Handle(Geom2d_BSplineCurve) Concat(Handle(Geom2d_BSplineCurve) C1,
     P(count).SetY(P2(i).Y() + theVJump);
   }
 
-  Handle(Geom2d_BSplineCurve) BS = 
+  Handle(Geom2d_BSplineCurve) BS =
     new Geom2d_BSplineCurve(P,K,M,deg);
   return BS;
 }
 
 //=======================================================================
 //function : Perform
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void ProjLib_ComputeApproxOnPolarSurface::Perform
 (const Handle(Adaptor3d_Curve)& Curve, const Handle(Adaptor3d_Surface)& S)
 {
   const Handle(Adaptor2d_Curve2d) anInitCurve2d;
-  myBSpline = Perform(anInitCurve2d, Curve, S);  
+  myBSpline = Perform(anInitCurve2d, Curve, S);
 }
 
 //=======================================================================
 //function : Perform
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Handle(Geom2d_BSplineCurve) ProjLib_ComputeApproxOnPolarSurface::Perform
@@ -672,12 +675,12 @@ Handle(Geom2d_BSplineCurve) ProjLib_ComputeApproxOnPolarSurface::Perform
  const Handle(Adaptor3d_Surface)& S)
 {
   //OCC217
-  Standard_Real Tol3d = myTolerance; 
+  Standard_Real Tol3d = myTolerance;
   Standard_Real ParamTol = Precision::PApproximation();
 
   Handle(Adaptor2d_Curve2d) AHC2d = InitialCurve2d;
   Handle(Adaptor3d_Curve) AHC = Curve;
-  
+
 // if the curve 3d is a BSpline with degree C0, it is cut into sections with degree C1
 // -> bug cts18237
   GeomAbs_CurveType typeCurve = Curve->GetType();
@@ -695,19 +698,19 @@ Handle(Geom2d_BSplineCurve) ProjLib_ComputeApproxOnPolarSurface::Perform
       // initialization 3d
       GTC = new Geom_TrimmedCurve(BSC, firstinter, secondinter);
       AHC = new GeomAdaptor_Curve(GTC);
-      
-      // if there is an initialization curve: 
+
+      // if there is an initialization curve:
       // - either this is a BSpline C0, with discontinuity at the same parameters of nodes
       // and the sections C1 are taken
       // - or this is a curve C1 and the sections of interest are taken otherwise the curve is created.
-      
+
       // initialization 2d
       Standard_Integer nbInter2d;
       Standard_Boolean C2dIsToCompute;
       C2dIsToCompute = InitialCurve2d.IsNull();
       Handle(Geom2d_BSplineCurve) BSC2d;
       Handle(Geom2d_Curve) G2dC;
-      
+
       if(!C2dIsToCompute) {
 	nbInter2d = InitialCurve2d->NbIntervals(GeomAbs_C1);
 	TColStd_Array1OfReal Inter2d(1,nbInter2d+1);
@@ -723,7 +726,7 @@ Handle(Geom2d_BSplineCurve) ProjLib_ComputeApproxOnPolarSurface::Perform
 	  C2dIsToCompute = Standard_True;
 	}
       }
-      
+
       if(C2dIsToCompute) {
 	AHC2d = BuildInitialCurve2d(AHC, S);
       }
@@ -783,10 +786,10 @@ Handle(Geom2d_BSplineCurve) ProjLib_ComputeApproxOnPolarSurface::Perform
 	  C2dIsToCompute = Standard_True;
 	}
       }
-	
+
       if(myProjIsDone) {
 	BSC2d = ProjectUsingInitialCurve2d(AHC, S, AHC2d);
- 	if(BSC2d.IsNull()) 
+ 	if(BSC2d.IsNull())
         {
             return Handle(Geom2d_BSplineCurve)();
         }
@@ -795,7 +798,7 @@ Handle(Geom2d_BSplineCurve) ProjLib_ComputeApproxOnPolarSurface::Perform
       else {
 	return Handle(Geom2d_BSplineCurve)();
       }
-      
+
       Standard_Integer nbK2d = BSC2d->NbKnots();
       Standard_Integer deg = BSC2d->Degree();
 
@@ -805,7 +808,7 @@ Handle(Geom2d_BSplineCurve) ProjLib_ComputeApproxOnPolarSurface::Perform
 	// general case 3d
 	GTC->SetTrim(iinter, ip1inter);
 	AHC = new GeomAdaptor_Curve(GTC);
-	
+
 	// general case 2d
 	if(C2dIsToCompute) {
 	  AHC2d = BuildInitialCurve2d(AHC, S);
@@ -855,7 +858,7 @@ Handle(Geom2d_BSplineCurve) ProjLib_ComputeApproxOnPolarSurface::Perform
       LOfBSpline2d.RemoveFirst();
       for (Standard_Integer ii = 2; ii <= NbC; ii++)
       {
-        Handle(Geom2d_BSplineCurve) BS = 
+        Handle(Geom2d_BSplineCurve) BS =
           Handle(Geom2d_BSplineCurve)::DownCast(LOfBSpline2d.First());
 
         //Check for period jump in point of contact.
@@ -883,22 +886,22 @@ Handle(Geom2d_BSplineCurve) ProjLib_ComputeApproxOnPolarSurface::Perform
       return CurBS;
     }
   }
-  
+
   if(InitialCurve2d.IsNull()) {
     AHC2d = BuildInitialCurve2d(Curve, S);
-    if(!myProjIsDone) 
-      return Handle(Geom2d_BSplineCurve)(); 
+    if(!myProjIsDone)
+      return Handle(Geom2d_BSplineCurve)();
   }
-  return ProjectUsingInitialCurve2d(AHC, S, AHC2d);     
+  return ProjectUsingInitialCurve2d(AHC, S, AHC2d);
 }
 
 
 //=======================================================================
 //function : ProjLib_BuildInitialCurve2d
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-Handle(Adaptor2d_Curve2d) 
+Handle(Adaptor2d_Curve2d)
      ProjLib_ComputeApproxOnPolarSurface::
      BuildInitialCurve2d(const Handle(Adaptor3d_Curve)&   Curve,
 			 const Handle(Adaptor3d_Surface)& Surf)
@@ -906,9 +909,9 @@ Handle(Adaptor2d_Curve2d)
   //  discretize the Curve with quasiuniform deflection
   //  density at least NbOfPnts points
   myProjIsDone = Standard_False;
-  
+
   //OCC217
-  Standard_Real Tol3d = myTolerance; 
+  Standard_Real Tol3d = myTolerance;
   Standard_Real TolU = Surf->UResolution(Tol3d), TolV = Surf->VResolution(Tol3d);
   Standard_Real DistTol3d = 100.0*Tol3d;
   if(myMaxDist > 0.)
@@ -923,22 +926,22 @@ Handle(Adaptor2d_Curve2d)
   //Standard_Real TolU = myTolerance, TolV = myTolerance;
   //Standard_Real Tol3d = 100*myTolerance; // At random Balthazar.
 
-  Standard_Integer NbOfPnts = 61; 
+  Standard_Integer NbOfPnts = 61;
   GCPnts_QuasiUniformAbscissa QUA (*Curve,NbOfPnts);
   NbOfPnts = QUA.NbPoints();
   TColgp_Array1OfPnt Pts(1,NbOfPnts);
   TColStd_Array1OfReal Param(1,NbOfPnts);
   Standard_Integer i, j;
-  for( i = 1; i <= NbOfPnts ; i++ ) { 
+  for( i = 1; i <= NbOfPnts ; i++ ) {
     Param(i) = QUA.Parameter(i);
     Pts(i) = Curve->Value(Param(i));
   }
-  
+
   TColgp_Array1OfPnt2d Pts2d(1,NbOfPnts);
   TColStd_Array1OfInteger Mult(1,NbOfPnts);
   Mult.Init(1);
   Mult(1) = Mult(NbOfPnts) = 2;
-  
+
   Standard_Real Uinf, Usup, Vinf, Vsup;
   Uinf = Surf->FirstUParameter();
   Usup = Surf->LastUParameter();
@@ -948,13 +951,13 @@ Handle(Adaptor2d_Curve2d)
   if((Type != GeomAbs_BSplineSurface) && (Type != GeomAbs_BezierSurface) &&
      (Type != GeomAbs_OffsetSurface)) {
     Standard_Real S, T;
-//    Standard_Integer usens = 0, vsens = 0; 
+//    Standard_Integer usens = 0, vsens = 0;
     // to know the position relatively to the period
     switch (Type) {
 //    case GeomAbs_Plane:
 //      {
 //	gp_Pln Plane = Surf->Plane();
-//	for ( i = 1 ; i <= NbOfPnts ; i++) { 
+//	for ( i = 1 ; i <= NbOfPnts ; i++) {
 //	  ElSLib::Parameters( Plane, Pts(i), S, T);
 //	  Pts2d(i).SetCoord(S,T);
 //	}
@@ -969,7 +972,7 @@ Handle(Adaptor2d_Curve2d)
         gp_Cylinder Cylinder = Surf->Cylinder();
         ElSLib::Parameters( Cylinder, Pts(1), S, T);
         Pts2d(1).SetCoord(S,T);
-        for ( i = 2 ; i <= NbOfPnts ; i++) { 
+        for ( i = 2 ; i <= NbOfPnts ; i++) {
           Sloc = S;
           ElSLib::Parameters( Cylinder, Pts(i), S, T);
           if(Abs(Sloc - S) > M_PI) {
@@ -991,7 +994,7 @@ Handle(Adaptor2d_Curve2d)
         gp_Cone Cone = Surf->Cone();
         ElSLib::Parameters( Cone, Pts(1), S, T);
         Pts2d(1).SetCoord(S,T);
-        for ( i = 2 ; i <= NbOfPnts ; i++) { 
+        for ( i = 2 ; i <= NbOfPnts ; i++) {
           Sloc = S;
           ElSLib::Parameters( Cone, Pts(i), S, T);
           if(Abs(Sloc - S) > M_PI) {
@@ -1013,7 +1016,7 @@ Handle(Adaptor2d_Curve2d)
 	gp_Sphere Sphere = Surf->Sphere();
 	ElSLib::Parameters( Sphere, Pts(1), S, T);
 	Pts2d(1).SetCoord(S,T);
-	for ( i = 2 ; i <= NbOfPnts ; i++) { 
+	for ( i = 2 ; i <= NbOfPnts ; i++) {
 	  Sloc = S;Tloc = T;
 	  ElSLib::Parameters( Sphere, Pts(i), S, T);
 	  if(1.6*M_PI < Abs(Sloc - S)) {
@@ -1035,10 +1038,10 @@ Handle(Adaptor2d_Curve2d)
 	  }
 	  if(vparit) {
 	    Pts2d(i).SetCoord(S+usens*M_PI,(M_PI - T)*(vsens-1));
-	  }	  
+	  }
 	  else {
 	    Pts2d(i).SetCoord(S+usens*M_PI,T+vsens*M_PI);
-	    
+
 	  }
 	}
 	myProjIsDone = Standard_True;
@@ -1051,7 +1054,7 @@ Handle(Adaptor2d_Curve2d)
 	gp_Torus Torus = Surf->Torus();
 	ElSLib::Parameters( Torus, Pts(1), S, T);
 	Pts2d(1).SetCoord(S,T);
-	for ( i = 2 ; i <= NbOfPnts ; i++) { 
+	for ( i = 2 ; i <= NbOfPnts ; i++) {
 	  Sloc = S; Tloc = T;
 	  ElSLib::Parameters( Torus, Pts(i), S, T);
 	  if(Abs(Sloc - S) > M_PI) {
@@ -1083,7 +1086,7 @@ Handle(Adaptor2d_Curve2d)
 
     TColgp_SequenceOfPnt2d Sols;
     Standard_Boolean areManyZeros = Standard_False;
-    
+
     pntproj = Pts(1);
     Extrema_ExtPS  aExtPS(pntproj, *Surf, TolU, TolV) ;
     Standard_Real aMinSqDist = RealLast();
@@ -1101,7 +1104,7 @@ Handle(Adaptor2d_Curve2d)
       TolU = Min(TolU, Precision::PConfusion());
       TolV = Min(TolV, Precision::PConfusion());
       aExtPS.Initialize(*Surf,
-                        Surf->FirstUParameter(), Surf->LastUParameter(), 
+                        Surf->FirstUParameter(), Surf->LastUParameter(),
                         Surf->FirstVParameter(), Surf->LastVParameter(),
                         TolU, TolV);
       aExtPS.Perform(pntproj);
@@ -1202,7 +1205,7 @@ Handle(Adaptor2d_Curve2d)
 		    aPn = gp_Pnt2d(u,v);
                     isFound = Standard_True;
 		    break;
-		  }	
+		  }
 		}
 	      }
 
@@ -1246,17 +1249,17 @@ Handle(Adaptor2d_Curve2d)
 	  }
 	}
       }
-      
+
       //  calculate the following points with GenLocate_ExtPS
       // (and store the result and each parameter in a sequence)
-      Standard_Integer usens = 0, vsens = 0; 
+      Standard_Integer usens = 0, vsens = 0;
       // to know the position relatively to the period
       Standard_Real U0 = u, V0 = v, U1 = u, V1 = v;
-      // U0 and V0 are the points in the initialized period 
+      // U0 and V0 are the points in the initialized period
       // (period with u and v),
       // U1 and V1 are the points for construction of poles
       myDist = Dist2Min;
-      for ( i = 2 ; i <= NbOfPnts ; i++) 
+      for ( i = 2 ; i <= NbOfPnts ; i++)
 	if(myProjIsDone) {
 	  myProjIsDone = Standard_False;
 	  Dist2Min = RealLast();
@@ -1326,7 +1329,7 @@ Handle(Adaptor2d_Curve2d)
                   if((i == 2) && (!IsEqual(uperiod, 0.0) || !IsEqual(vperiod, 0.0)))
                   {//Make 1st point more precise for periodic surfaces
                     const Standard_Integer aSize = 3;
-                    const gp_Pnt2d aP(Pts2d(2)); 
+                    const gp_Pnt2d aP(Pts2d(2));
                     Standard_Real aUpar[aSize], aVpar[aSize];
                     Pts2d(1).Coord(aUpar[1], aVpar[1]);
                     aUpar[0] = aUpar[1] - uperiod;
@@ -1362,9 +1365,9 @@ Handle(Adaptor2d_Curve2d)
 	    Standard_Real aUinf, aUsup, Uaux;
 	    aUinf = Surf->FirstUParameter();
 	    aUsup = Surf->LastUParameter();
-	    if((aUsup - U0) > (U0 - aUinf)) 
+	    if((aUsup - U0) > (U0 - aUinf))
 	      Uaux = 2*aUinf - U0 + uperiod;
-	    else 
+	    else
 	      Uaux = 2*aUsup - U0 - uperiod;
 
             Extrema_GenLocateExtPS  locext (*Surf, TolU, TolV);
@@ -1378,9 +1381,9 @@ Handle(Adaptor2d_Curve2d)
                   myDist = locext.SquareDistance();
                 }
 		(locext.Point()).Parameter(u,v);
-		if((aUsup - U0) > (U0 - aUinf)) 
+		if((aUsup - U0) > (U0 - aUinf))
 		  usens--;
-		else 
+		else
 		  usens++;
 		U0 = u; V0 = v;
 		U1 = U0 + usens*uperiod;
@@ -1393,9 +1396,9 @@ Handle(Adaptor2d_Curve2d)
 	    Standard_Real aVinf, aVsup, Vaux;
 	    aVinf = Surf->FirstVParameter();
 	    aVsup = Surf->LastVParameter();
-	    if((aVsup - V0) > (V0 - aVinf)) 
+	    if((aVsup - V0) > (V0 - aVinf))
 	      Vaux = 2*aVinf - V0 + vperiod;
-	    else 
+	    else
 	      Vaux = 2*aVsup - V0 - vperiod;
 
             Extrema_GenLocateExtPS  locext (*Surf, TolU, TolV);
@@ -1409,9 +1412,9 @@ Handle(Adaptor2d_Curve2d)
                   myDist = locext.SquareDistance();
                 }
                 (locext.Point()).Parameter(u, v);
-		if((aVsup - V0) > (V0 - aVinf)) 
+		if((aVsup - V0) > (V0 - aVinf))
 		  vsens--;
-		else 
+		else
 		  vsens++;
 		U0 = u; V0 = v;
 		U1 = U0 + usens*uperiod;
@@ -1419,16 +1422,16 @@ Handle(Adaptor2d_Curve2d)
 		Pts2d(i).SetCoord(U1,V1);
 		myProjIsDone = Standard_True;
 	      }
-	  }	
+	  }
 	  if(!myProjIsDone && uperiod && vperiod) {
 	    Standard_Real Uaux, Vaux;
-	    if((Usup - U0) > (U0 - Uinf)) 
+	    if((Usup - U0) > (U0 - Uinf))
 	      Uaux = 2*Uinf - U0 + uperiod;
-	    else 
+	    else
 	      Uaux = 2*Usup - U0 - uperiod;
-	    if((Vsup - V0) > (V0 - Vinf)) 
+	    if((Vsup - V0) > (V0 - Vinf))
 	      Vaux = 2*Vinf - V0 + vperiod;
-	    else 
+	    else
 	      Vaux = 2*Vsup - V0 - vperiod;
 
             Extrema_GenLocateExtPS  locext (*Surf, TolU, TolV);
@@ -1442,13 +1445,13 @@ Handle(Adaptor2d_Curve2d)
                   myDist = locext.SquareDistance();
                 }
                 (locext.Point()).Parameter(u, v);
-		if((Usup - U0) > (U0 - Uinf)) 
+		if((Usup - U0) > (U0 - Uinf))
 		  usens--;
-		else 
+		else
 		  usens++;
-		if((Vsup - V0) > (V0 - Vinf)) 
+		if((Vsup - V0) > (V0 - Vinf))
 		  vsens--;
-		else 
+		else
 		  vsens++;
 		U0 = u; V0 = v;
 		U1 = U0 + usens*uperiod;
@@ -1502,7 +1505,7 @@ Handle(Adaptor2d_Curve2d)
 	  }
 	}
 	else break;
-    }    
+    }
   }
   // -- Pnts2d is transformed into Geom2d_BSplineCurve, with the help of Param and Mult
   if(myProjIsDone) {
@@ -1558,14 +1561,14 @@ Handle(Adaptor2d_Curve2d)
 
 //=======================================================================
 //function : ProjLib_ProjectUsingInitialCurve2d
-//purpose  : 
+//purpose  :
 //=======================================================================
-Handle(Geom2d_BSplineCurve) 
+Handle(Geom2d_BSplineCurve)
      ProjLib_ComputeApproxOnPolarSurface::
      ProjectUsingInitialCurve2d(const Handle(Adaptor3d_Curve)& Curve,
 				const Handle(Adaptor3d_Surface)& Surf,
 				const Handle(Adaptor2d_Curve2d)& InitCurve2d)
-{  
+{
   //OCC217
   Standard_Real Tol3d = myTolerance;
   Standard_Real DistTol3d = 100.0*Tol3d;
@@ -1575,7 +1578,6 @@ Handle(Geom2d_BSplineCurve)
   }
   Standard_Real DistTol3d2 = DistTol3d * DistTol3d;
   Standard_Real TolU = Surf->UResolution(Tol3d), TolV = Surf->VResolution(Tol3d);
-  Standard_Real Tol2d = Max(Sqrt(TolU*TolU + TolV*TolV), Precision::PConfusion());
 
   Standard_Integer i;
   GeomAbs_SurfaceType TheTypeS = Surf->GetType();
@@ -1597,13 +1599,13 @@ Handle(Geom2d_BSplineCurve)
       BSC->Multiplicities(Mults);
       if(BSC->IsRational()) {
 	TColStd_Array1OfReal Weights(1, BSC->NbPoles());
-	BSC->Weights(Weights); 
+	BSC->Weights(Weights);
 	return new Geom2d_BSplineCurve(Poles2d, Weights, Knots, Mults,
 				       BSC->Degree(), BSC->IsPeriodic()) ;
       }
       return new Geom2d_BSplineCurve(Poles2d, Knots, Mults,
 				     BSC->Degree(), BSC->IsPeriodic()) ;
-      
+
     }
     if(TheTypeC == GeomAbs_BezierCurve) {
       myTolReached = Precision::Confusion();
@@ -1620,7 +1622,7 @@ Handle(Geom2d_BSplineCurve)
       Mults.Init(BC->NbPoles());
       if(BC->IsRational()) {
 	TColStd_Array1OfReal Weights(1, BC->NbPoles());
-	BC->Weights(Weights); 
+	BC->Weights(Weights);
 	return new Geom2d_BSplineCurve(Poles2d, Weights, Knots, Mults,
 				       BC->Degree(), BC->IsPeriodic()) ;
       }
@@ -1639,7 +1641,7 @@ Handle(Geom2d_BSplineCurve)
       gp_Pnt p22 = BSS->Pole(2,2);
       gp_Vec V1(p11,p12);
       gp_Vec V2(p21,p22);
-      if(V1.IsEqual(V2,Tol3d,Tol3d/(p11.Distance(p12)*180/M_PI))){  
+      if(V1.IsEqual(V2,Tol3d,Tol3d/(p11.Distance(p12)*180/M_PI))){
 	Standard_Integer Dist2Min = IntegerLast();
 	Standard_Real u,v;
 	if(TheTypeC == GeomAbs_BSplineCurve) {
@@ -1655,7 +1657,7 @@ Handle(Geom2d_BSplineCurve)
 
 	    if (extrloc.IsDone()) {
 	      Dist2Min = (Standard_Integer ) extrloc.SquareDistance();
-	      if (Dist2Min < DistTol3d2) {  
+	      if (Dist2Min < DistTol3d2) {
 		(extrloc.Point()).Parameter(u,v);
 		Poles2d(i).SetCoord(u,v);
 		myProjIsDone = Standard_True;
@@ -1663,7 +1665,7 @@ Handle(Geom2d_BSplineCurve)
 	      else break;
 	    }
 	    else break;
-	    if(!myProjIsDone) 
+	    if(!myProjIsDone)
 	      break;
 	  }
 	  if(myProjIsDone) {
@@ -1673,16 +1675,16 @@ Handle(Geom2d_BSplineCurve)
 	    BSC->Multiplicities(Mults);
 	    if(BSC->IsRational()) {
 	      TColStd_Array1OfReal Weights(1, BSC->NbPoles());
-	      BSC->Weights(Weights); 
+	      BSC->Weights(Weights);
 	      return new Geom2d_BSplineCurve(Poles2d, Weights, Knots, Mults,
 					     BSC->Degree(), BSC->IsPeriodic()) ;
 	    }
 	    return new Geom2d_BSplineCurve(Poles2d, Knots, Mults,
 					   BSC->Degree(), BSC->IsPeriodic()) ;
-	    
-	    
+
+
 	  }
-	} 
+	}
 	if(TheTypeC == GeomAbs_BezierCurve) {
           myTolReached = Tol3d;
 	  Handle(Geom_BezierCurve) BC = Curve->Bezier();
@@ -1695,7 +1697,7 @@ Handle(Geom2d_BSplineCurve)
 
 	    if (extrloc.IsDone()) {
 	      Dist2Min = (Standard_Integer ) extrloc.SquareDistance();
-	      if (Dist2Min < DistTol3d2) {  
+	      if (Dist2Min < DistTol3d2) {
 		(extrloc.Point()).Parameter(u,v);
 		Poles2d(i).SetCoord(u,v);
 		myProjIsDone = Standard_True;
@@ -1703,7 +1705,7 @@ Handle(Geom2d_BSplineCurve)
 	      else break;
 	    }
 	    else break;
-	    if(myProjIsDone) 
+	    if(myProjIsDone)
 	      myProjIsDone = Standard_False;
 	    else break;
 	  }
@@ -1715,14 +1717,14 @@ Handle(Geom2d_BSplineCurve)
 	    Mults.Init(BC->NbPoles());
 	    if(BC->IsRational()) {
 	      TColStd_Array1OfReal Weights(1, BC->NbPoles());
-	      BC->Weights(Weights); 
+	      BC->Weights(Weights);
 	      return new Geom2d_BSplineCurve(Poles2d, Weights, Knots, Mults,
 						    BC->Degree(), BC->IsPeriodic()) ;
 	    }
 	    return new Geom2d_BSplineCurve(Poles2d, Knots, Mults,
 						  BC->Degree(), BC->IsPeriodic()) ;
 	  }
-	} 
+	}
       }
     }
   }
@@ -1737,10 +1739,10 @@ Handle(Geom2d_BSplineCurve)
       gp_Pnt p22 = BS->Pole(2,2);
       gp_Vec V1(p11,p12);
       gp_Vec V2(p21,p22);
-      if(V1.IsEqual(V2,Tol3d,Tol3d/(p11.Distance(p12)*180/M_PI))){ 
+      if(V1.IsEqual(V2,Tol3d,Tol3d/(p11.Distance(p12)*180/M_PI))){
 	Standard_Integer Dist2Min = IntegerLast();
 	Standard_Real u,v;
- 
+
 //	gp_Pnt pntproj;
 	if(TheTypeC == GeomAbs_BSplineCurve) {
           myTolReached = Tol3d;
@@ -1755,7 +1757,7 @@ Handle(Geom2d_BSplineCurve)
 
 	    if (extrloc.IsDone()) {
 	      Dist2Min = (Standard_Integer ) extrloc.SquareDistance();
-	      if (Dist2Min < DistTol3d2) {  
+	      if (Dist2Min < DistTol3d2) {
 		(extrloc.Point()).Parameter(u,v);
 		Poles2d(i).SetCoord(u,v);
 		myProjIsDone = Standard_True;
@@ -1763,7 +1765,7 @@ Handle(Geom2d_BSplineCurve)
 	      else break;
 	    }
 	    else break;
-	    if(!myProjIsDone) 
+	    if(!myProjIsDone)
 	      break;
 	  }
 	  if(myProjIsDone) {
@@ -1773,16 +1775,16 @@ Handle(Geom2d_BSplineCurve)
 	    BSC->Multiplicities(Mults);
 	    if(BSC->IsRational()) {
 	      TColStd_Array1OfReal Weights(1, BSC->NbPoles());
-	      BSC->Weights(Weights); 
+	      BSC->Weights(Weights);
 	      return new Geom2d_BSplineCurve(Poles2d, Weights, Knots, Mults,
 						    BSC->Degree(), BSC->IsPeriodic()) ;
 	    }
 	    return new Geom2d_BSplineCurve(Poles2d, Knots, Mults,
 						  BSC->Degree(), BSC->IsPeriodic()) ;
-	    
-	    
+
+
 	  }
-	} 
+	}
 	if(TheTypeC == GeomAbs_BezierCurve) {
           myTolReached = Tol3d;
 	  Handle(Geom_BezierCurve) BC = Curve->Bezier();
@@ -1795,7 +1797,7 @@ Handle(Geom2d_BSplineCurve)
 
 	    if (extrloc.IsDone()) {
 	      Dist2Min = (Standard_Integer ) extrloc.SquareDistance();
-	      if (Dist2Min < DistTol3d2) {  
+	      if (Dist2Min < DistTol3d2) {
 		(extrloc.Point()).Parameter(u,v);
 		Poles2d(i).SetCoord(u,v);
 		myProjIsDone = Standard_True;
@@ -1803,7 +1805,7 @@ Handle(Geom2d_BSplineCurve)
 	      else break;
 	    }
 	    else break;
-	    if(myProjIsDone) 
+	    if(myProjIsDone)
 	      myProjIsDone = Standard_False;
 	    else break;
 	  }
@@ -1815,27 +1817,29 @@ Handle(Geom2d_BSplineCurve)
 	    Mults.Init(BC->NbPoles());
 	    if(BC->IsRational()) {
 	      TColStd_Array1OfReal Weights(1, BC->NbPoles());
-	      BC->Weights(Weights); 
+	      BC->Weights(Weights);
 	      return new Geom2d_BSplineCurve(Poles2d, Weights, Knots, Mults,
 						    BC->Degree(), BC->IsPeriodic()) ;
 	    }
 	    return new Geom2d_BSplineCurve(Poles2d, Knots, Mults,
 						  BC->Degree(), BC->IsPeriodic()) ;
 	  }
-	} 
+	}
       }
     }
   }
 
-  ProjLib_PolarFunction F(Curve, Surf, InitCurve2d, Tol3d) ;  
+#if !defined(OCCT_DISABLE_APPROX_FIT_AND_DIVIDE)
+
+  ProjLib_PolarFunction F(Curve, Surf, InitCurve2d, Tol3d) ;
 
 #ifdef OCCT_DEBUG
   Standard_Integer Nb = 50;
-  
+
   Standard_Real U, U1, U2;
   U1 = F.FirstParameter();
   U2 = F.LastParameter();
-  
+
   TColgp_Array1OfPnt2d    DummyPoles(1,Nb+1);
   TColStd_Array1OfReal    DummyKnots(1,Nb+1);
   TColStd_Array1OfInteger DummyMults(1,Nb+1);
@@ -1855,9 +1859,9 @@ Handle(Geom2d_BSplineCurve)
   DrawTrSurf::Set(Temp,DummyC2d);
 #endif
 //  DrawTrSurf::Set((Standard_CString ) "bs2d",DummyC2d);
-  Handle(Geom2dAdaptor_Curve) DDD = 
+  Handle(Geom2dAdaptor_Curve) DDD =
     Handle(Geom2dAdaptor_Curve)::DownCast(InitCurve2d);
-  
+
 #ifdef DRAW
   Temp = "initc2d";
   DrawTrSurf::Set(Temp,DDD->ChangeCurve2d().Curve());
@@ -1866,8 +1870,8 @@ Handle(Geom2d_BSplineCurve)
 #endif
 
   Standard_Integer Deg1,Deg2;
-  Deg1 = 2; 
-  Deg2 = 8;  
+  Deg1 = 2;
+  Deg2 = 8;
   if(myDegMin > 0)
   {
     Deg1 = myDegMin;
@@ -1884,16 +1888,17 @@ Handle(Geom2d_BSplineCurve)
   AppParCurves_Constraint aFistC = AppParCurves_TangencyPoint, aLastC = AppParCurves_TangencyPoint;
   if(myBndPnt != AppParCurves_TangencyPoint)
   {
-    aFistC = myBndPnt; 
+    aFistC = myBndPnt;
     aLastC = myBndPnt;
   }
 
   if (myDist > 10.*Tol3d)
   {
-    aFistC = AppParCurves_PassPoint; 
+    aFistC = AppParCurves_PassPoint;
     aLastC = AppParCurves_PassPoint;
   }
 
+  Standard_Real Tol2d = Max(Sqrt(TolU*TolU + TolV*TolV), Precision::PConfusion());
   Approx_FitAndDivide2d Fit(Deg1, Deg2, Tol3d, Tol2d, Standard_True, aFistC, aLastC);
   Fit.SetMaxSegments(aMaxSegments);
   if (InitCurve2d->GetType() == GeomAbs_Line)
@@ -1908,7 +1913,7 @@ Handle(Geom2d_BSplineCurve)
     Standard_Integer j;
     Standard_Integer NbCurves = Fit.NbMultiCurves();
     Standard_Integer MaxDeg = 0;
-    // To transform the MultiCurve into BSpline, it is required that all  
+    // To transform the MultiCurve into BSpline, it is required that all
     // Bezier constituing it have the same degree -> Calculation of MaxDeg
     Standard_Integer NbPoles  = 1;
     for (j = 1; j <= NbCurves; j++) {
@@ -1922,23 +1927,23 @@ Handle(Geom2d_BSplineCurve)
     //
     NbPoles = MaxDeg * NbCurves + 1;               //Tops on the BSpline
     TColgp_Array1OfPnt2d  Poles( 1, NbPoles);
-      
+
     TColgp_Array1OfPnt2d TempPoles( 1, MaxDeg + 1);//to augment the degree
-    
+
     TColStd_Array1OfReal Knots( 1, NbCurves + 1);  //Nodes of the BSpline
-    
+
     Standard_Integer Compt = 1;
     for (i = 1; i <= NbCurves; i++) {
-      Fit.Parameters(i, Knots(i), Knots(i+1)); 
+      Fit.Parameters(i, Knots(i), Knots(i+1));
       AppParCurves_MultiCurve MC = Fit.Value( i);       //Load the Ith Curve
       TColgp_Array1OfPnt2d Poles2d( 1, MC.Degree() + 1);//Retrieve the tops
       MC.Curve(1, Poles2d);
-      
+
       //Eventual augmentation of the degree
       Standard_Integer Inc = MaxDeg - MC.Degree();
       if ( Inc > 0) {
-//	BSplCLib::IncreaseDegree( Inc, Poles2d, PLib::NoWeights(), 
-	BSplCLib::IncreaseDegree( MaxDeg, Poles2d, BSplCLib::NoWeights(), 
+//	BSplCLib::IncreaseDegree( Inc, Poles2d, PLib::NoWeights(),
+	BSplCLib::IncreaseDegree( MaxDeg, Poles2d, BSplCLib::NoWeights(),
 			 TempPoles, BSplCLib::NoWeights());
 	//update of tops of the PCurve
 	for (Standard_Integer k = 1 ; k <= MaxDeg + 1; k++) {
@@ -1952,11 +1957,11 @@ Handle(Geom2d_BSplineCurve)
 	  Poles.SetValue( Compt, Poles2d( k));
 	  Compt++;
 	}
-      } 
-      
+      }
+
       Compt--;
     }
-    
+
     //update of fields of  ProjLib_Approx
     Standard_Integer NbKnots = NbCurves + 1;
 
@@ -1967,7 +1972,7 @@ Handle(Geom2d_BSplineCurve)
     myProjIsDone = Standard_True;
     Handle(Geom2d_BSplineCurve) Dummy =
       new Geom2d_BSplineCurve(Poles,Knots,Mults,MaxDeg);
-    
+
     // try to smoother the Curve GeomAbs_C1.
 
     Standard_Boolean OK = Standard_True;
@@ -1977,38 +1982,46 @@ Handle(Geom2d_BSplineCurve)
       aSmoothTol *= 10.;
     }
     for (Standard_Integer ij = 2; ij < NbKnots; ij++) {
-      OK = OK && Dummy->RemoveKnot(ij,MaxDeg-1, aSmoothTol);  
+      OK = OK && Dummy->RemoveKnot(ij,MaxDeg-1, aSmoothTol);
     }
 #ifdef OCCT_DEBUG
     if (!OK) {
       std::cout << "ProjLib_ComputeApproxOnPolarSurface : Smoothing echoue"<<std::endl;
     }
-#endif 
+#endif
     return Dummy;
   }
+#else
+  static Standard_Boolean WarnOnce_UnavailableApproxFitAndDivide = Standard_True;
+  if (WarnOnce_UnavailableApproxFitAndDivide) {
+    std::cerr << "ProjLib_ComputeApproxOnPolarSurface: FitAndDivide not available" << std::endl;
+    WarnOnce_UnavailableApproxFitAndDivide = Standard_False;
+  }
+  (void)InitCurve2d;
+#endif
   return Handle(Geom2d_BSplineCurve)();
 }
 
 //=======================================================================
 //function : BSpline
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-Handle(Geom2d_BSplineCurve)  
-     ProjLib_ComputeApproxOnPolarSurface::BSpline() const 
-     
+Handle(Geom2d_BSplineCurve)
+     ProjLib_ComputeApproxOnPolarSurface::BSpline() const
+
 {
   return myBSpline ;
 }
 
 //=======================================================================
 //function : Curve2d
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-Handle(Geom2d_Curve)  
-     ProjLib_ComputeApproxOnPolarSurface::Curve2d() const 
-     
+Handle(Geom2d_Curve)
+     ProjLib_ComputeApproxOnPolarSurface::Curve2d() const
+
 {
   Standard_NoSuchObject_Raise_if
     (!myProjIsDone,
@@ -2019,30 +2032,30 @@ Handle(Geom2d_Curve)
 
 //=======================================================================
 //function : IsDone
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-Standard_Boolean ProjLib_ComputeApproxOnPolarSurface::IsDone() const 
-     
+Standard_Boolean ProjLib_ComputeApproxOnPolarSurface::IsDone() const
+
 {
   return myProjIsDone;
 }
 //=======================================================================
 //function : SetTolerance
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-void ProjLib_ComputeApproxOnPolarSurface::SetTolerance(const Standard_Real theTol) 
-     
+void ProjLib_ComputeApproxOnPolarSurface::SetTolerance(const Standard_Real theTol)
+
 {
   myTolerance = theTol;
 }
 //=======================================================================
 //function : SetDegree
-//purpose  : 
+//purpose  :
 //=======================================================================
 void ProjLib_ComputeApproxOnPolarSurface::SetDegree(
-                                       const Standard_Integer theDegMin, 
+                                       const Standard_Integer theDegMin,
                                        const Standard_Integer theDegMax)
 {
   myDegMin = theDegMin;
@@ -2050,7 +2063,7 @@ void ProjLib_ComputeApproxOnPolarSurface::SetDegree(
 }
 //=======================================================================
 //function : SetMaxSegments
-//purpose  : 
+//purpose  :
 //=======================================================================
 void ProjLib_ComputeApproxOnPolarSurface::SetMaxSegments(
                                    const Standard_Integer theMaxSegments)
@@ -2060,7 +2073,7 @@ void ProjLib_ComputeApproxOnPolarSurface::SetMaxSegments(
 
 //=======================================================================
 //function : SetBndPnt
-//purpose  : 
+//purpose  :
 //=======================================================================
 void ProjLib_ComputeApproxOnPolarSurface::SetBndPnt(
                                  const AppParCurves_Constraint theBndPnt)
@@ -2070,7 +2083,7 @@ void ProjLib_ComputeApproxOnPolarSurface::SetBndPnt(
 
 //=======================================================================
 //function : SetMaxDist
-//purpose  : 
+//purpose  :
 //=======================================================================
 void ProjLib_ComputeApproxOnPolarSurface::SetMaxDist(
                                           const Standard_Real theMaxDist)
@@ -2080,11 +2093,11 @@ void ProjLib_ComputeApproxOnPolarSurface::SetMaxDist(
 
 //=======================================================================
 //function : Tolerance
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-Standard_Real ProjLib_ComputeApproxOnPolarSurface::Tolerance() const 
-     
+Standard_Real ProjLib_ComputeApproxOnPolarSurface::Tolerance() const
+
 {
   return myTolReached;
 }

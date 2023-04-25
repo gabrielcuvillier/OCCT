@@ -49,11 +49,12 @@
 #endif
 #ifdef OCCT_DEBUG
 //static Standard_Boolean AffichValue = Standard_False;
-#endif    
+#endif
 
+#if !defined(OCCT_DISABLE_APPROX_FIT_AND_DIVIDE)
 //=======================================================================
 //function : IsEqual
-//purpose  : 
+//purpose  :
 //=======================================================================
 // OFV:
 static inline Standard_Boolean IsEqual(Standard_Real Check,Standard_Real With,Standard_Real Toler)
@@ -64,18 +65,18 @@ static inline Standard_Boolean IsEqual(Standard_Real Check,Standard_Real With,St
 
 //=======================================================================
 //function : Value
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 static gp_Pnt2d Function_Value(const Standard_Real U,
 			       const Handle(Adaptor3d_Curve)&   myCurve,
 			       const Handle(Adaptor3d_Surface)& mySurface,
 			       const Standard_Real U1,
-			       const Standard_Real U2, 
+			       const Standard_Real U2,
 			       const Standard_Real V1,
 			       const Standard_Real V2,
 			       const Standard_Boolean UCouture,
-			       const Standard_Boolean VCouture ) 
+			       const Standard_Boolean VCouture )
 {
   Standard_Real S = 0., T = 0.;
 
@@ -83,7 +84,7 @@ static gp_Pnt2d Function_Value(const Standard_Real U,
   GeomAbs_SurfaceType SType = mySurface->GetType();
 
   switch ( SType ) {
-    
+
   case GeomAbs_Plane:
     {
       gp_Pln Plane = mySurface->Plane();
@@ -124,7 +125,7 @@ static gp_Pnt2d Function_Value(const Standard_Real U,
         S = ElCLib::InPeriod(S, U1, U2);
     }
   }
- 
+
   if ( VCouture) {
     if(SType == GeomAbs_Sphere) {
       if ( Abs( S - U1 ) > M_PI ) {
@@ -142,15 +143,15 @@ static gp_Pnt2d Function_Value(const Standard_Real U,
 }
 //=======================================================================
 //function : D1
-//purpose  : 
+//purpose  :
 //=======================================================================
-static Standard_Boolean Function_D1( const Standard_Real U, 
+static Standard_Boolean Function_D1( const Standard_Real U,
 				    gp_Pnt2d&            P,
 				    gp_Vec2d&            D,
 				    const Handle(Adaptor3d_Curve)&   myCurve,
 				    const Handle(Adaptor3d_Surface)& mySurface,
 				    const Standard_Real U1,
-				    const Standard_Real U2, 
+				    const Standard_Real U2,
 				    const Standard_Real V1,
 				    const Standard_Real V2,
 				    const Standard_Boolean UCouture,
@@ -158,46 +159,46 @@ static Standard_Boolean Function_D1( const Standard_Real U,
 {
   gp_Pnt P3d;
   Standard_Real dU, dV;
-  
+
   P = Function_Value(U,myCurve,mySurface,U1,U2,V1,V2,UCouture,VCouture);
 
   GeomAbs_SurfaceType Type = mySurface->GetType();
-  
+
   switch ( Type) {
   case GeomAbs_Plane:
   case GeomAbs_Cone:
   case GeomAbs_Cylinder:
   case GeomAbs_Sphere:
-  case GeomAbs_Torus: 
+  case GeomAbs_Torus:
     {
       gp_Vec D1U, D1V;
       gp_Vec T;
       myCurve->D1(U,P3d,T);
       mySurface->D1(P.X(),P.Y(),P3d,D1U,D1V);
-      
+
       dU = T.Dot(D1U);
       dV = T.Dot(D1V);
       Standard_Real Nu = D1U.SquareMagnitude();
-      Standard_Real Nv = D1V.SquareMagnitude(); 
-      
+      Standard_Real Nv = D1V.SquareMagnitude();
+
       if ( Nu < Epsilon(1.) || Nv < Epsilon(1.))
 	      return Standard_False;
-      
+
       dU /= Nu;
       dV /= Nv;
-      D = gp_Vec2d( dU, dV);   
+      D = gp_Vec2d( dU, dV);
     }
     break;
-    
+
   default:
     return Standard_False;
   }
-  
+
   return Standard_True;
 }
 //=======================================================================
 //function : Function_ComputeStep
-//purpose  : 
+//purpose  :
 //=======================================================================
 static Standard_Real Function_ComputeStep(
   const Handle(Adaptor3d_Curve)&   myCurve,
@@ -224,16 +225,16 @@ static Standard_Real Function_ComputeStep(
 }
 //=======================================================================
 //function : Function_SetUVBounds
-//purpose  : 
+//purpose  :
 //=======================================================================
-static void Function_SetUVBounds(Standard_Real& myU1, 
+static void Function_SetUVBounds(Standard_Real& myU1,
 				 Standard_Real& myU2,
 				 Standard_Real& myV1,
 				 Standard_Real& myV2,
 				 Standard_Boolean& UCouture,
 				 Standard_Boolean& VCouture,
 				 const Handle(Adaptor3d_Curve)&   myCurve,
-				 const Handle(Adaptor3d_Surface)& mySurface) 
+				 const Handle(Adaptor3d_Surface)& mySurface)
 {
   Standard_Real W1, W2, W;
   gp_Pnt P1, P2, P;
@@ -286,7 +287,7 @@ static void Function_SetUVBounds(Standard_Real& myU1,
         myU2 = Max(U1,U2);
         if (  ( U1 < U  &&  U < U2 ) && !myCurve->IsClosed() ) {
           UCouture = Standard_False;
-        }      
+        }
         else {
           UCouture = Standard_True;
           myU2 = myU1 + 2*M_PI;
@@ -294,7 +295,7 @@ static void Function_SetUVBounds(Standard_Real& myU1,
 
       }
       break;
-      default:	  { 
+      default:	  {
         Standard_Real U1, V1, U , V, Delta = 0., d = 0., pmin = W1, pmax = W1, dmax = 0., Uf, Ul;
         ElSLib::Parameters( Cone, P1, U1, V1);
         ElSLib::Parameters( Cone, P2, Ul, V1);
@@ -324,7 +325,7 @@ static void Function_SetUVBounds(Standard_Real& myU1,
           d = U - U1;
           if(d > M_PI)
           {
-            if( ( (IsEqual(U,(2*M_PI),1.e-10) && (U1 >= 0. && U1 <= M_PI)) && 
+            if( ( (IsEqual(U,(2*M_PI),1.e-10) && (U1 >= 0. && U1 <= M_PI)) &&
               (IsEqual(U,Ul,1.e-10) && !IsEqual(Uf,0.,1.e-10)) ) && isclandper )
               U = 0.0;
             else
@@ -481,7 +482,7 @@ static void Function_SetUVBounds(Standard_Real& myU1,
     }
   }
   break;
-  //    
+  //
   case GeomAbs_Sphere:{
     VCouture = Standard_False;
     gp_Sphere SP = mySurface->Sphere();
@@ -490,7 +491,7 @@ static void Function_SetUVBounds(Standard_Real& myU1,
 
       // on cherche a savoir le nombre de fois que la couture est
       // traversee.
-      // si 0 ou 2 fois : la PCurve est fermee et dans l`intervalle 
+      // si 0 ou 2 fois : la PCurve est fermee et dans l`intervalle
       //                  [Uc-PI, Uc+PI] (Uc: U du centre du cercle)
       // si 1 fois      : la PCurve est ouverte et dans l`intervalle
       //                  [U1, U1 +/- 2*PI]
@@ -534,10 +535,10 @@ static void Function_SetUVBounds(Standard_Real& myU1,
           Standard_Real xx;
           delta = Sqrt(delta);
           xx = -A*D+delta;
-          //	  
+          //
           if ( xx > Tol) NbSolutions++;
           xx = -A*D-delta;
-          //	
+          //
           if ( xx > Tol) NbSolutions++;
         }
       }
@@ -547,7 +548,7 @@ static void Function_SetUVBounds(Standard_Real& myU1,
       Standard_Real UU = 0.;
       ElSLib::Parameters(SP, P1, U1, V1);
       Standard_Real eps = 10.*Epsilon(1.);
-      Standard_Real dt = Max(Precision::PConfusion(), 0.01*(W2-W1)); 
+      Standard_Real dt = Max(Precision::PConfusion(), 0.01*(W2-W1));
       if(Abs(U1) < eps)
       {
         //May be U1 must be equal 2*PI?
@@ -667,7 +668,7 @@ static void Function_SetUVBounds(Standard_Real& myU1,
 
       // box+sphere >>
       myV1 = -1.e+100; myV2 = 1.e+100;
-      
+
       //+This fragment was the reason of bug # 26008.
       //+It has been deleted on April, 03 2015.
       //Standard_Real UU1 = myU1, UU2 = myU2;
@@ -737,7 +738,7 @@ static void Function_SetUVBounds(Standard_Real& myU1,
     }
   }
   break;
-  //     
+  //
   case GeomAbs_Torus:{
     gp_Torus TR = mySurface->Torus();
     Standard_Real U1, V1, U , V, dU, dV;
@@ -838,7 +839,7 @@ static void Function_SetUVBounds(Standard_Real& myU1,
 //
 //=======================================================================
 //classn : ProjLib_Function
-//purpose  : 
+//purpose  :
 //=======================================================================
 class ProjLib_Function : public AppCont_Function
 {
@@ -851,7 +852,7 @@ class ProjLib_Function : public AppCont_Function
   Standard_Real    myU1,myU2,myV1,myV2;
   Standard_Boolean UCouture,VCouture;
 
-  ProjLib_Function(const Handle(Adaptor3d_Curve)&   C, 
+  ProjLib_Function(const Handle(Adaptor3d_Curve)&   C,
                    const Handle(Adaptor3d_Surface)& S)
 : myCurve(C),
   mySurface(S),
@@ -924,7 +925,7 @@ class ProjLib_Function : public AppCont_Function
 
 //=======================================================================
 //function : ComputeTolU
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 static Standard_Real ComputeTolU(const Handle(Adaptor3d_Surface)& theSurf,
@@ -941,7 +942,7 @@ static Standard_Real ComputeTolU(const Handle(Adaptor3d_Surface)& theSurf,
 
 //=======================================================================
 //function : ComputeTolV
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 static Standard_Real ComputeTolV(const Handle(Adaptor3d_Surface)& theSurf,
@@ -955,9 +956,11 @@ static Standard_Real ComputeTolV(const Handle(Adaptor3d_Surface)& theSurf,
 
   return aTolV;
 }
+#endif
+
 //=======================================================================
 //function : ProjLib_ComputeApprox
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 ProjLib_ComputeApprox::ProjLib_ComputeApprox():
@@ -970,7 +973,7 @@ ProjLib_ComputeApprox::ProjLib_ComputeApprox():
 
 //=======================================================================
 //function : ProjLib_ComputeApprox
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 ProjLib_ComputeApprox::ProjLib_ComputeApprox
@@ -987,7 +990,7 @@ ProjLib_ComputeApprox::ProjLib_ComputeApprox
 
 //=======================================================================
 //function : Perform
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void ProjLib_ComputeApprox::Perform
@@ -1021,7 +1024,7 @@ void ProjLib_ComputeApprox::Perform
 
   if (CType == GeomAbs_BSplineCurve &&
       SType == GeomAbs_Plane ) {
-    
+
     // get the poles and eventually the weights
     Handle(Geom_BSplineCurve) BS = C->BSpline();
     NbPoles = BS->NbPoles();
@@ -1040,7 +1043,7 @@ void ProjLib_ComputeApprox::Perform
     TColStd_Array1OfReal     Knots(1,NbKnots);
     TColStd_Array1OfInteger  Mults(1,NbKnots);
     BS->Knots(Knots) ;
-    BS->Multiplicities(Mults) ; 
+    BS->Multiplicities(Mults) ;
     // get the knots and mults if BSplineCurve
     if ( BS->IsRational()) {
       myBSpline = new Geom2d_BSplineCurve(Poles,
@@ -1060,7 +1063,7 @@ void ProjLib_ComputeApprox::Perform
   }
   else if (CType == GeomAbs_BezierCurve &&
 	   SType == GeomAbs_Plane ) {
-    
+
     // get the poles and eventually the weights
     Handle(Geom_BezierCurve) BezierCurvePtr = C->Bezier() ;
     NbPoles = BezierCurvePtr->NbPoles();
@@ -1070,10 +1073,10 @@ void ProjLib_ComputeApprox::Perform
     if ( BezierCurvePtr->IsRational()) {
       BezierCurvePtr->Weights(Weights);
     }
-    BezierCurvePtr->Poles( P3d);  
-    
+    BezierCurvePtr->Poles( P3d);
+
     // project the 3D-Poles on the plane
-    
+
     gp_Pln Plane = S->Plane();
     Standard_Real U,V;
     for ( Standard_Integer i = 1; i <= NbPoles; i++) {
@@ -1088,6 +1091,7 @@ void ProjLib_ComputeApprox::Perform
     }
   }
   else {
+#if !defined(OCCT_DISABLE_APPROX_FIT_AND_DIVIDE)
     ProjLib_Function F( C, S);
 
 #ifdef OCCT_DEBUG
@@ -1103,7 +1107,7 @@ void ProjLib_ComputeApprox::Perform
     //  for ( Standard_Integer i = 1; i <= Nb+1; i++) {
     //   U = U1 + (i-1)*dU;
     //   Poles(i) = F.Value(U);
-    //   std::cout << "i = " << i << ": U = " << U << 
+    //   std::cout << "i = " << i << ": U = " << U <<
     //      ", p(" << Poles(i).X() << ", " << Poles(i).Y() << ");" << std::endl;
     //   Knots(i) = i;
     //   Mults(i) = 1;
@@ -1115,7 +1119,7 @@ void ProjLib_ComputeApprox::Perform
     //  Handle(Geom2d_Curve) aCC = new Geom2d_BSplineCurve(Poles,Knots,Mults,1);
     //  AffichValue = Standard_False;
     //}
-#endif    
+#endif
 
 //-----------
     Standard_Integer Deg1 = 5, Deg2;
@@ -1127,12 +1131,12 @@ void ProjLib_ComputeApprox::Perform
     }
     if(myDegMin > 0)
     {
-      Deg1 = myDegMin; 
+      Deg1 = myDegMin;
     }
     //
     if(myDegMax > 0)
     {
-      Deg2 = myDegMax; 
+      Deg2 = myDegMax;
     }
     //
     Standard_Integer aMaxSegments = 1000;
@@ -1143,10 +1147,10 @@ void ProjLib_ComputeApprox::Perform
     AppParCurves_Constraint aFistC = AppParCurves_TangencyPoint, aLastC = AppParCurves_TangencyPoint;
     if(myBndPnt != AppParCurves_TangencyPoint)
     {
-      aFistC = myBndPnt; 
+      aFistC = myBndPnt;
       aLastC = myBndPnt;
     }
-  
+
 //-------------
     const Standard_Real aTolU = ComputeTolU(S, myTolerance);
     const Standard_Real aTolV = ComputeTolV(S, myTolerance);
@@ -1164,7 +1168,7 @@ void ProjLib_ComputeApprox::Perform
     if(Fit.IsAllApproximated()) {
       Standard_Integer i;
       Standard_Integer NbCurves = Fit.NbMultiCurves();
-    
+
     // on essaie de rendre la courbe au moins C1
       Convert_CompBezierCurves2dToBSplineCurve2d Conv;
 
@@ -1174,7 +1178,7 @@ void ProjLib_ComputeApprox::Perform
               aNewTol2d = Max(aNewTol2d, Tol2d);
 	      AppParCurves_MultiCurve MC = Fit.Value( i);       //Charge la Ieme Curve
 	      TColgp_Array1OfPnt2d Poles2d( 1, MC.Degree() + 1);//Recupere les poles
-	      MC.Curve(1, Poles2d);        
+	      MC.Curve(1, Poles2d);
 	      Conv.AddCurve(Poles2d);
       }
 
@@ -1220,7 +1224,7 @@ void ProjLib_ComputeApprox::Perform
         Standard_Boolean OK = Standard_True;
         Standard_Real aSmoothTol = Max(Precision::Confusion(), aNewTol2d);
         for (Standard_Integer ij = 2; ij < NbKnots; ij++) {
-          OK = OK && myBSpline->RemoveKnot(ij, aDeg-1, aSmoothTol);  
+          OK = OK && myBSpline->RemoveKnot(ij, aDeg-1, aSmoothTol);
         }
       }
     }
@@ -1235,7 +1239,7 @@ void ProjLib_ComputeApprox::Perform
 
     // restore tolerance 3d from 2d
 
-    //Here we consider that 
+    //Here we consider that
     //   aTolU(new)/aTolV(new) = aTolU(old)/aTolV(old)
     //(it is assumption indeed).
     //Then,
@@ -1287,7 +1291,7 @@ void ProjLib_ComputeApprox::Perform
     Standard_Real du = 0., dv = 0.;
     Standard_Integer number;
     if (F.VCouture)
-    { 
+    {
       if (SType == GeomAbs_Sphere && Abs(u-F.myU1) > M_PI)
       {
         ToMirror = Standard_True;
@@ -1303,7 +1307,7 @@ void ProjLib_ComputeApprox::Perform
       Standard_Real aNbPer;
       gp_Pnt2d P2d = F.Value (Umid);
       du = u - P2d.X();
-      du = (du < 0) ? (du - Precision::PConfusion()) : 
+      du = (du < 0) ? (du - Precision::PConfusion()) :
         (du + Precision::PConfusion());
       modf(du/M_PI, &aNbPer);
       number = (Standard_Integer)aNbPer;
@@ -1320,11 +1324,18 @@ void ProjLib_ComputeApprox::Perform
         myBSpline->Mirror( Axe );
       }
     }
+#else
+    static Standard_Boolean WarnOnce_UnavailableApproxFitAndDivide = Standard_True;
+    if (WarnOnce_UnavailableApproxFitAndDivide) {
+      std::cerr << "ProjLib_ComputeApprox: FitAndDivide not available" << std::endl;
+      WarnOnce_UnavailableApproxFitAndDivide = Standard_False;
+    }
+#endif
   }
 }
 //=======================================================================
 //function : SetTolerance
-//purpose  : 
+//purpose  :
 //=======================================================================
 void ProjLib_ComputeApprox::SetTolerance(const Standard_Real theTolerance)
 {
@@ -1333,9 +1344,9 @@ void ProjLib_ComputeApprox::SetTolerance(const Standard_Real theTolerance)
 
 //=======================================================================
 //function : SetDegree
-//purpose  : 
+//purpose  :
 //=======================================================================
-void ProjLib_ComputeApprox::SetDegree(const Standard_Integer theDegMin, 
+void ProjLib_ComputeApprox::SetDegree(const Standard_Integer theDegMin,
                                        const Standard_Integer theDegMax)
 {
   myDegMin = theDegMin;
@@ -1343,7 +1354,7 @@ void ProjLib_ComputeApprox::SetDegree(const Standard_Integer theDegMin,
 }
 //=======================================================================
 //function : SetMaxSegments
-//purpose  : 
+//purpose  :
 //=======================================================================
 void ProjLib_ComputeApprox::SetMaxSegments(const Standard_Integer theMaxSegments)
 {
@@ -1352,7 +1363,7 @@ void ProjLib_ComputeApprox::SetMaxSegments(const Standard_Integer theMaxSegments
 
 //=======================================================================
 //function : SetBndPnt
-//purpose  : 
+//purpose  :
 //=======================================================================
 void ProjLib_ComputeApprox::SetBndPnt(const AppParCurves_Constraint theBndPnt)
 {
@@ -1361,10 +1372,10 @@ void ProjLib_ComputeApprox::SetBndPnt(const AppParCurves_Constraint theBndPnt)
 
 //=======================================================================
 //function : BSpline
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-Handle(Geom2d_BSplineCurve)  ProjLib_ComputeApprox::BSpline() const 
+Handle(Geom2d_BSplineCurve)  ProjLib_ComputeApprox::BSpline() const
 
 {
   return myBSpline ;
@@ -1372,10 +1383,10 @@ Handle(Geom2d_BSplineCurve)  ProjLib_ComputeApprox::BSpline() const
 
 //=======================================================================
 //function : Bezier
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-Handle(Geom2d_BezierCurve)  ProjLib_ComputeApprox::Bezier()  const 
+Handle(Geom2d_BezierCurve)  ProjLib_ComputeApprox::Bezier()  const
 
 {
   return myBezier ;
@@ -1384,10 +1395,10 @@ Handle(Geom2d_BezierCurve)  ProjLib_ComputeApprox::Bezier()  const
 
 //=======================================================================
 //function : Tolerance
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-Standard_Real ProjLib_ComputeApprox::Tolerance() const 
+Standard_Real ProjLib_ComputeApprox::Tolerance() const
 {
   return myTolerance;
 }

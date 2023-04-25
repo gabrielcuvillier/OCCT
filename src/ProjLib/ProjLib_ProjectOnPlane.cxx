@@ -100,7 +100,7 @@ static gp_Vec OnPlane_DN(const Standard_Real U,
 
 //=======================================================================
 //function : OnPlane_D1
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 static Standard_Boolean OnPlane_D1(const Standard_Real U,
@@ -126,10 +126,10 @@ static Standard_Boolean OnPlane_D1(const Standard_Real U,
 
 
   // evaluate the derivative.
-  // 
+  //
   //   d(Proj)  d(P)       1        d(P)
   //   ------ = ---  - -------- * ( --- . Z ) * D
-  //     dU     dU     ( D . Z)     dU  
+  //     dU     dU     ( D . Z)     dU
   //
 
   Alpha = Vector * gp_Vec(Z);
@@ -141,7 +141,7 @@ static Standard_Boolean OnPlane_D1(const Standard_Real U,
 }
 //=======================================================================
 //function : OnPlane_D2
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 static Standard_Boolean OnPlane_D2(const Standard_Real U,
@@ -168,10 +168,10 @@ static Standard_Boolean OnPlane_D2(const Standard_Real U,
   P.SetXYZ(Point.XYZ() + Alpha * D.XYZ());
 
   // evaluate the derivative.
-  // 
+  //
   //   d(Proj)  d(P)       1        d(P)
   //   ------ = ---  - -------- * ( --- . Z ) * D
-  //     dU     dU     ( D . Z)     dU  
+  //     dU     dU     ( D . Z)     dU
   //
 
   Alpha = Vector1 * gp_Vec(Z);
@@ -188,7 +188,7 @@ static Standard_Boolean OnPlane_D2(const Standard_Real U,
 
 //=======================================================================
 //function : OnPlane_D3
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 static Standard_Boolean OnPlane_D3(const Standard_Real U,
@@ -217,10 +217,10 @@ static Standard_Boolean OnPlane_D3(const Standard_Real U,
   P.SetXYZ(Point.XYZ() + Alpha * D.XYZ());
 
   // evaluate the derivative.
-  // 
+  //
   //   d(Proj)  d(P)       1        d(P)
   //   ------ = ---  - -------- * ( --- . Z ) * D
-  //     dU     dU     ( D . Z)     dU  
+  //     dU     dU     ( D . Z)     dU
   //
 
   Alpha = Vector1 * gp_Vec(Z);
@@ -238,6 +238,8 @@ static Standard_Boolean OnPlane_D3(const Standard_Real U,
   V3.SetXYZ(Vector3.XYZ() - Alpha * D.XYZ());
   return Standard_True;
 }
+
+#if !defined(OCCT_DISABLE_APPROX_FIT_AND_DIVIDE)
 
 //=======================================================================
 //  class  : ProjLib_OnPlane
@@ -290,11 +292,11 @@ public:
     return OnPlane_D1(theT, aDummyPnt, theVec(1), myCurve, myPlane, myDirection);
   }
 };
-
+#endif
 
 //=======================================================================
 //  class  : ProjLib_MaxCurvature
-//purpose  : Use to search apex of parabola or hyperbola, which is its projection  
+//purpose  : Use to search apex of parabola or hyperbola, which is its projection
 //           on a plane. Apex is point with maximal curvature
 //=======================================================================
 
@@ -315,17 +317,17 @@ public:
     F = -myProps->Curvature();
     return Standard_True;
   }
-  
+
 private:
 
   LProp3d_CLProps* myProps;
- 
+
 };
 
 
 //=====================================================================//
 //                                                                     //
-//  D E S C R I P T I O N   O F   T H E   C L A S S  :                 // 
+//  D E S C R I P T I O N   O F   T H E   C L A S S  :                 //
 //                                                                     //
 //         P r o j L i b _ A p p r o x P r o j e c t O n P l a n e     //
 //                                                                     //
@@ -335,7 +337,7 @@ private:
 
 //=======================================================================
 //function : PerformApprox
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 static void  PerformApprox(const Handle(Adaptor3d_Curve)& C,
@@ -344,6 +346,7 @@ static void  PerformApprox(const Handle(Adaptor3d_Curve)& C,
   Handle(Geom_BSplineCurve) &BSplineCurvePtr)
 
 {
+#if !defined(OCCT_DISABLE_APPROX_FIT_AND_DIVIDE)
   ProjLib_OnPlane F(C, Pl, D);
 
   Standard_Integer Deg1, Deg2;
@@ -361,7 +364,7 @@ static void  PerformApprox(const Handle(Adaptor3d_Curve)& C,
   }
   Approx_FitAndDivide Fit(Deg1, Deg2, Precision::Approximation(),
     Precision::PApproximation(), Standard_True);
-  Fit.SetMaxSegments(aNbSegm); 
+  Fit.SetMaxSegments(aNbSegm);
   Fit.Perform(F);
   if (!Fit.IsAllApproximated())
   {
@@ -371,7 +374,7 @@ static void  PerformApprox(const Handle(Adaptor3d_Curve)& C,
   Standard_Integer NbCurves = Fit.NbMultiCurves();
   Standard_Integer MaxDeg = 0;
 
-  // Pour transformer la MultiCurve en BSpline, il faut que toutes 
+  // Pour transformer la MultiCurve en BSpline, il faut que toutes
   // les Bezier la constituant aient le meme degre -> Calcul de MaxDeg
   Standard_Integer NbPoles = 1;
   for (i = 1; i <= NbCurves; i++) {
@@ -440,13 +443,23 @@ static void  PerformApprox(const Handle(Adaptor3d_Curve)& C,
       BSplineCurvePtr->RemoveKnot(i, m1, anErrMax);
     }
   }
-
+#else
+  static Standard_Boolean WarnOnce_UnavailableApproxFitAndDivide = Standard_True;
+  if (WarnOnce_UnavailableApproxFitAndDivide) {
+    std::cerr << "ProjLib_ProjectOnPlane: FitAndDivide not available" << std::endl;
+    WarnOnce_UnavailableApproxFitAndDivide = Standard_False;
+  }
+  (void)C;
+  (void)Pl;
+  (void)D;
+  (void)BSplineCurvePtr;
+#endif
 }
 
 
 //=======================================================================
 //function : ProjectOnPlane
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 ProjLib_ProjectOnPlane::ProjLib_ProjectOnPlane() :
@@ -461,7 +474,7 @@ ProjLib_ProjectOnPlane::ProjLib_ProjectOnPlane() :
 
 //=======================================================================
 //function : ProjLib_ProjectOnPlane
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 ProjLib_ProjectOnPlane::ProjLib_ProjectOnPlane(const gp_Ax3& Pl) :
@@ -478,7 +491,7 @@ ProjLib_ProjectOnPlane::ProjLib_ProjectOnPlane(const gp_Ax3& Pl) :
 
 //=======================================================================
 //function : ProjLib_ProjectOnPlane
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 ProjLib_ProjectOnPlane::ProjLib_ProjectOnPlane(const gp_Ax3& Pl,
@@ -500,7 +513,7 @@ ProjLib_ProjectOnPlane::ProjLib_ProjectOnPlane(const gp_Ax3& Pl,
 
 //=======================================================================
 //function : ShallowCopy
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Handle(Adaptor3d_Curve) ProjLib_ProjectOnPlane::ShallowCopy() const
@@ -529,7 +542,7 @@ Handle(Adaptor3d_Curve) ProjLib_ProjectOnPlane::ShallowCopy() const
 
 //=======================================================================
 //function : Project
-//purpose  : Returns the projection of a point <Point> on a plane 
+//purpose  : Returns the projection of a point <Point> on a plane
 //           <ThePlane>  along a direction <TheDir>.
 //=======================================================================
 
@@ -551,7 +564,7 @@ static gp_Pnt ProjectPnt(const gp_Ax3& ThePlane,
 
 //=======================================================================
 //function : Project
-//purpose  : Returns the projection of a Vector <Vec> on a plane 
+//purpose  : Returns the projection of a Vector <Vec> on a plane
 //           <ThePlane> along a direction <TheDir>.
 //=======================================================================
 
@@ -569,7 +582,7 @@ static gp_Vec ProjectVec(const gp_Ax3& ThePlane,
 
 //=======================================================================
 //function : Load
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void ProjLib_ProjectOnPlane::Load(const Handle(Adaptor3d_Curve)&    C,
@@ -607,7 +620,7 @@ void ProjLib_ProjectOnPlane::Load(const Handle(Adaptor3d_Curve)&    C,
   case GeomAbs_Line:
   {
     //     P(u) = O + u * Xc
-    // ==> Q(u) = f(P(u)) 
+    // ==> Q(u) = f(P(u))
     //          = f(O) + u * f(Xc)
 
     gp_Lin L = myCurve->Line();
@@ -672,7 +685,7 @@ void ProjLib_ProjectOnPlane::Load(const Handle(Adaptor3d_Curve)&    C,
         myType = GeomAbs_BSplineCurve;
         //
         // make a linear BSpline of degree 1 between the end points of
-        // the projected line 
+        // the projected line
         //
         Handle(Geom_TrimmedCurve) NewTrimCurvePtr =
           new Geom_TrimmedCurve(GeomLinePtr,
@@ -703,7 +716,7 @@ void ProjLib_ProjectOnPlane::Load(const Handle(Adaptor3d_Curve)&    C,
     // Pour le cercle et l ellipse on a les relations suivantes:
     // ( Rem : pour le cercle R1 = R2 = R)
     //     P(u) = O + R1 * Cos(u) * Xc + R2 * Sin(u) * Yc
-    // ==> Q(u) = f(P(u)) 
+    // ==> Q(u) = f(P(u))
     //          = f(O) + R1 * Cos(u) * f(Xc) + R2 * Sin(u) * f(Yc)
 
     gp_Circ Circ = myCurve->Circle();
@@ -860,7 +873,7 @@ void ProjLib_ProjectOnPlane::Load(const Handle(Adaptor3d_Curve)&    C,
   case GeomAbs_Parabola:
   {
     //     P(u) = O + (u*u)/(4*f) * Xc + u * Yc
-    // ==> Q(u) = f(P(u)) 
+    // ==> Q(u) = f(P(u))
     //          = f(O) + (u*u)/(4*f) * f(Xc) + u * f(Yc)
 
     gp_Parab Parab = myCurve->Parabola();
@@ -885,7 +898,7 @@ void ProjLib_ProjectOnPlane::Load(const Handle(Adaptor3d_Curve)&    C,
       GeomParabolaPtr =
         new Geom_Parabola(aProjParab);
     }
-    else if (Yc.Magnitude() < Precision::Confusion() || 
+    else if (Yc.Magnitude() < Precision::Confusion() ||
       Yc.IsParallel(Xc, Precision::Angular()))
     {
       myIsApprox = Standard_True;
@@ -913,7 +926,7 @@ void ProjLib_ProjectOnPlane::Load(const Handle(Adaptor3d_Curve)&    C,
   case GeomAbs_Hyperbola:
   {
     //     P(u) = O + R1 * Cosh(u) * Xc + R2 * Sinh(u) * Yc
-    // ==> Q(u) = f(P(u)) 
+    // ==> Q(u) = f(P(u))
     //          = f(O) + R1 * Cosh(u) * f(Xc) + R2 * Sinh(u) * f(Yc)
 
     gp_Hypr Hypr = myCurve->Hyperbola();
@@ -999,7 +1012,7 @@ void ProjLib_ProjectOnPlane::Load(const Handle(Adaptor3d_Curve)&    C,
     Handle(Geom_BSplineCurve) BSplineCurvePtr =
       myCurve->BSpline();
     //
-    //    make a copy of the curve and projects its poles 
+    //    make a copy of the curve and projects its poles
     //
     Handle(Geom_BSplineCurve) ProjectedBSplinePtr =
       Handle(Geom_BSplineCurve)::DownCast(BSplineCurvePtr->Copy());
@@ -1035,7 +1048,7 @@ void ProjLib_ProjectOnPlane::Load(const Handle(Adaptor3d_Curve)&    C,
 
 //=======================================================================
 //function : GetPlane
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 const gp_Ax3& ProjLib_ProjectOnPlane::GetPlane() const
@@ -1045,7 +1058,7 @@ const gp_Ax3& ProjLib_ProjectOnPlane::GetPlane() const
 
 //=======================================================================
 //function : GetDirection
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 const gp_Dir& ProjLib_ProjectOnPlane::GetDirection() const
@@ -1055,7 +1068,7 @@ const gp_Dir& ProjLib_ProjectOnPlane::GetDirection() const
 
 //=======================================================================
 //function : GetCurve
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 const Handle(Adaptor3d_Curve)& ProjLib_ProjectOnPlane::GetCurve() const
@@ -1065,7 +1078,7 @@ const Handle(Adaptor3d_Curve)& ProjLib_ProjectOnPlane::GetCurve() const
 
 //=======================================================================
 //function : GetResult
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 const Handle(GeomAdaptor_Curve)& ProjLib_ProjectOnPlane::GetResult() const
@@ -1076,7 +1089,7 @@ const Handle(GeomAdaptor_Curve)& ProjLib_ProjectOnPlane::GetResult() const
 
 //=======================================================================
 //function : FirstParameter
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Real ProjLib_ProjectOnPlane::FirstParameter() const
@@ -1090,7 +1103,7 @@ Standard_Real ProjLib_ProjectOnPlane::FirstParameter() const
 
 //=======================================================================
 //function : LastParameter
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Real ProjLib_ProjectOnPlane::LastParameter() const
@@ -1104,7 +1117,7 @@ Standard_Real ProjLib_ProjectOnPlane::LastParameter() const
 
 //=======================================================================
 //function : Continuity
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 GeomAbs_Shape ProjLib_ProjectOnPlane::Continuity() const
@@ -1115,7 +1128,7 @@ GeomAbs_Shape ProjLib_ProjectOnPlane::Continuity() const
 
 //=======================================================================
 //function : NbIntervals
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer ProjLib_ProjectOnPlane::NbIntervals(const GeomAbs_Shape S) const
@@ -1126,7 +1139,7 @@ Standard_Integer ProjLib_ProjectOnPlane::NbIntervals(const GeomAbs_Shape S) cons
 
 //=======================================================================
 //function : Intervals
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void ProjLib_ProjectOnPlane::Intervals(TColStd_Array1OfReal& T,
@@ -1137,7 +1150,7 @@ void ProjLib_ProjectOnPlane::Intervals(TColStd_Array1OfReal& T,
 
 //=======================================================================
 //function : Trim
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Handle(Adaptor3d_Curve)
@@ -1156,7 +1169,7 @@ ProjLib_ProjectOnPlane::Trim(const Standard_Real First,
 
 //=======================================================================
 //function : IsClosed
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean ProjLib_ProjectOnPlane::IsClosed() const
@@ -1167,7 +1180,7 @@ Standard_Boolean ProjLib_ProjectOnPlane::IsClosed() const
 
 //=======================================================================
 //function : IsPeriodic
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean ProjLib_ProjectOnPlane::IsPeriodic() const
@@ -1181,7 +1194,7 @@ Standard_Boolean ProjLib_ProjectOnPlane::IsPeriodic() const
 
 //=======================================================================
 //function : Period
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Real ProjLib_ProjectOnPlane::Period() const
@@ -1199,7 +1212,7 @@ Standard_Real ProjLib_ProjectOnPlane::Period() const
 
 //=======================================================================
 //function : Value
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 gp_Pnt ProjLib_ProjectOnPlane::Value(const Standard_Real U) const
@@ -1219,7 +1232,7 @@ gp_Pnt ProjLib_ProjectOnPlane::Value(const Standard_Real U) const
 
 //=======================================================================
 //function : D0
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void ProjLib_ProjectOnPlane::D0(const Standard_Real U, gp_Pnt& P) const
@@ -1238,7 +1251,7 @@ void ProjLib_ProjectOnPlane::D0(const Standard_Real U, gp_Pnt& P) const
 
 //=======================================================================
 //function : D1
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void ProjLib_ProjectOnPlane::D1(const Standard_Real U,
@@ -1261,7 +1274,7 @@ void ProjLib_ProjectOnPlane::D1(const Standard_Real U,
 
 //=======================================================================
 //function : D2
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void ProjLib_ProjectOnPlane::D2(const Standard_Real U,
@@ -1286,7 +1299,7 @@ void ProjLib_ProjectOnPlane::D2(const Standard_Real U,
 
 //=======================================================================
 //function : D3
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void ProjLib_ProjectOnPlane::D3(const Standard_Real U,
@@ -1313,7 +1326,7 @@ void ProjLib_ProjectOnPlane::D3(const Standard_Real U,
 
 //=======================================================================
 //function : DN
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 gp_Vec ProjLib_ProjectOnPlane::DN(const Standard_Real U,
@@ -1335,7 +1348,7 @@ gp_Vec ProjLib_ProjectOnPlane::DN(const Standard_Real U,
 
 //=======================================================================
 //function : Resolution
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Real ProjLib_ProjectOnPlane::Resolution
@@ -1352,7 +1365,7 @@ Standard_Real ProjLib_ProjectOnPlane::Resolution
 
 //=======================================================================
 //function : GetType
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 GeomAbs_CurveType ProjLib_ProjectOnPlane::GetType() const
@@ -1363,7 +1376,7 @@ GeomAbs_CurveType ProjLib_ProjectOnPlane::GetType() const
 
 //=======================================================================
 //function : Line
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 gp_Lin ProjLib_ProjectOnPlane::Line() const
@@ -1377,7 +1390,7 @@ gp_Lin ProjLib_ProjectOnPlane::Line() const
 
 //=======================================================================
 //function : Circle
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 gp_Circ ProjLib_ProjectOnPlane::Circle() const
@@ -1391,7 +1404,7 @@ gp_Circ ProjLib_ProjectOnPlane::Circle() const
 
 //=======================================================================
 //function : Ellipse
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 gp_Elips ProjLib_ProjectOnPlane::Ellipse() const
@@ -1405,7 +1418,7 @@ gp_Elips ProjLib_ProjectOnPlane::Ellipse() const
 
 //=======================================================================
 //function : Hyperbola
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 gp_Hypr ProjLib_ProjectOnPlane::Hyperbola() const
@@ -1419,7 +1432,7 @@ gp_Hypr ProjLib_ProjectOnPlane::Hyperbola() const
 
 //=======================================================================
 //function : Parabola
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 gp_Parab ProjLib_ProjectOnPlane::Parabola() const
@@ -1432,7 +1445,7 @@ gp_Parab ProjLib_ProjectOnPlane::Parabola() const
 
 //=======================================================================
 //function : Degree
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer ProjLib_ProjectOnPlane::Degree() const
@@ -1449,7 +1462,7 @@ Standard_Integer ProjLib_ProjectOnPlane::Degree() const
 
 //=======================================================================
 //function : IsRational
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean ProjLib_ProjectOnPlane::IsRational() const
@@ -1466,7 +1479,7 @@ Standard_Boolean ProjLib_ProjectOnPlane::IsRational() const
 
 //=======================================================================
 //function : NbPoles
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer ProjLib_ProjectOnPlane::NbPoles() const
@@ -1483,7 +1496,7 @@ Standard_Integer ProjLib_ProjectOnPlane::NbPoles() const
 
 //=======================================================================
 //function : NbKnots
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer ProjLib_ProjectOnPlane::NbKnots() const
@@ -1500,7 +1513,7 @@ Standard_Integer ProjLib_ProjectOnPlane::NbKnots() const
 
 //=======================================================================
 //function : Bezier
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Handle(Geom_BezierCurve)  ProjLib_ProjectOnPlane::Bezier() const
@@ -1513,7 +1526,7 @@ Handle(Geom_BezierCurve)  ProjLib_ProjectOnPlane::Bezier() const
 
 //=======================================================================
 //function : BSpline
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Handle(Geom_BSplineCurve)  ProjLib_ProjectOnPlane::BSpline() const
@@ -1526,7 +1539,7 @@ Handle(Geom_BSplineCurve)  ProjLib_ProjectOnPlane::BSpline() const
 
 //=======================================================================
 //function : GetTrimmedResult
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void  ProjLib_ProjectOnPlane::GetTrimmedResult(const Handle(Geom_Curve)& theProjCurve)
@@ -1597,7 +1610,7 @@ void  ProjLib_ProjectOnPlane::GetTrimmedResult(const Handle(Geom_Curve)& theProj
 
 //=======================================================================
 //function : BuildParabolaByApex
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean ProjLib_ProjectOnPlane::BuildParabolaByApex(Handle(Geom_Curve)& theGeomParabolaPtr)
@@ -1619,7 +1632,7 @@ Standard_Boolean ProjLib_ProjectOnPlane::BuildParabolaByApex(Handle(Geom_Curve)&
   {
     return Standard_False;
   }
-  
+
   Standard_Real aT;
   aT = aSolver.Location();
   aProps.SetParameter(aT);
@@ -1649,7 +1662,7 @@ Standard_Boolean ProjLib_ProjectOnPlane::BuildParabolaByApex(Handle(Geom_Curve)&
   }
 
   gp_Parab aProjParab = aMkParab.Value();
-  
+
   myType = GeomAbs_Parabola;
   theGeomParabolaPtr = new Geom_Parabola(aProjParab);
   //GetTrimmedResult(theGeomParabolaPtr);
@@ -1659,7 +1672,7 @@ Standard_Boolean ProjLib_ProjectOnPlane::BuildParabolaByApex(Handle(Geom_Curve)&
 
 //=======================================================================
 //function : BuildHyperbolaByApex
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean ProjLib_ProjectOnPlane::BuildHyperbolaByApex(Handle(Geom_Curve)& theGeomHyperbolaPtr)
@@ -1718,7 +1731,7 @@ Standard_Boolean ProjLib_ProjectOnPlane::BuildHyperbolaByApex(Handle(Geom_Curve)
 
 //=======================================================================
 //function : BuilByApprox
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void ProjLib_ProjectOnPlane::BuildByApprox(const Standard_Real theLimitParameter)
