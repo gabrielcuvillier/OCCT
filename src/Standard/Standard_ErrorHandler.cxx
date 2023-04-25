@@ -27,6 +27,18 @@
 #include <windows.h>
 #endif
 
+namespace {
+#if !(defined(_WIN32) || defined(__WIN32__))
+  const Standard_Boolean ToUseThreads =
+#if !defined(OCCT_DISABLE_THREADS)
+    Standard_True;
+#else
+    Standard_False;
+#endif
+#endif
+}
+
+
 // ===========================================================================
 // The class "Standard_ErrorHandler" variables
 // ===========================================================================
@@ -53,18 +65,22 @@ static Standard_Mutex& GetMutex()
 static inline Standard_ThreadId GetThreadID()
 {
 #ifndef _WIN32
-  return (Standard_ThreadId)pthread_self();
+  if Standard_IF_CONSTEXPR(ToUseThreads) {
+    return (Standard_ThreadId)pthread_self();
+  } else {
+    return (Standard_ThreadId)0;
+  }
 #else
   return GetCurrentThreadId();
 #endif
 }
 
 //============================================================================
-//====  Constructor : Create a ErrorHandler structure. And add it at the 
+//====  Constructor : Create a ErrorHandler structure. And add it at the
 //====                'Top' of "ErrorHandler's stack".
 //============================================================================
 
-Standard_ErrorHandler::Standard_ErrorHandler () : 
+Standard_ErrorHandler::Standard_ErrorHandler () :
        myStatus(Standard_HandlerVoid), myCallbackPtr(0)
 {
   myThread   = GetThreadID();
@@ -94,28 +110,28 @@ void Standard_ErrorHandler::Destroy()
 
 //=======================================================================
 //function : Unlink
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void Standard_ErrorHandler::Unlink()
 {
   // put a lock on the stack
   GetMutex().Lock();
-  
+
   Standard_ErrorHandler* aPrevious = 0;
   Standard_ErrorHandler* aCurrent = Top;
-  
+
   // locate this handler in the stack
   while(aCurrent!=0 && this!=aCurrent) {
     aPrevious = aCurrent;
     aCurrent = aCurrent->myPrevious;
   }
-  
+
   if(aCurrent==0) {
     GetMutex().Unlock();
     return;
   }
-  
+
   if(aPrevious==0) {
     // a top exception taken
     Top = aCurrent->myPrevious;
@@ -172,16 +188,16 @@ void Standard_ErrorHandler::Abort (const Handle(Standard_Failure)& theError)
 
 
 //============================================================================
-//==== Catches: If there is a 'Error', and it is in good type 
+//==== Catches: If there is a 'Error', and it is in good type
 //====          returns True and clean 'Error', else returns False.
 //============================================================================
 
-Standard_Boolean Standard_ErrorHandler::Catches (const Handle(Standard_Type)& AType) 
+Standard_Boolean Standard_ErrorHandler::Catches (const Handle(Standard_Type)& AType)
 {
   Standard_ErrorHandler* anActive = FindHandler(Standard_HandlerJumped, Standard_False);
   if(anActive==0)
     return Standard_False;
-  
+
   if(anActive->myCaughtError.IsNull())
     return Standard_False;
 
@@ -197,9 +213,9 @@ Handle(Standard_Failure) Standard_ErrorHandler::LastCaughtError()
 {
   Handle(Standard_Failure) aHandle;
   Standard_ErrorHandler* anActive = FindHandler(Standard_HandlerProcessed, Standard_False);
-  if(anActive!=0) 
+  if(anActive!=0)
     aHandle = anActive->myCaughtError;
-  
+
   return aHandle;
 }
 
@@ -224,14 +240,14 @@ Standard_ErrorHandler* Standard_ErrorHandler::FindHandler(const Standard_Handler
 {
   // lock the stack
   GetMutex().Lock();
-    
+
   // Find the current ErrorHandler Accordin tread
   Standard_ErrorHandler* aPrevious = 0;
   Standard_ErrorHandler* aCurrent = Top;
   Standard_ErrorHandler* anActive = 0;
   Standard_Boolean aStop = Standard_False;
   Standard_ThreadId aTreadId = GetThreadID();
-  
+
   // searching an exception with correct ID number
   // which is not processed for the moment
   while(!aStop) {
@@ -239,10 +255,10 @@ Standard_ErrorHandler* Standard_ErrorHandler::FindHandler(const Standard_Handler
       aPrevious = aCurrent;
       aCurrent = aCurrent->myPrevious;
     }
-    
+
     if(aCurrent!=NULL) {
       if(theStatus!=aCurrent->myStatus) {
-        
+
         if(theUnlink) {
           //unlink current
           if(aPrevious==0) {
@@ -253,7 +269,7 @@ Standard_ErrorHandler* Standard_ErrorHandler::FindHandler(const Standard_Handler
             aPrevious->myPrevious=aCurrent->myPrevious;
           }
         }
-        
+
         //shift
         aCurrent = aCurrent->myPrevious;
       }
@@ -269,7 +285,7 @@ Standard_ErrorHandler* Standard_ErrorHandler::FindHandler(const Standard_Handler
     }
   }
   GetMutex().Unlock();
-  
+
   return anActive;
 }
 

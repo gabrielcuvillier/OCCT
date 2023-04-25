@@ -29,8 +29,8 @@
   #include <time.h>
 #endif
 
-/** 
-  * @brief Mutex: a class to synchronize access to shared data. 
+/**
+  * @brief Mutex: a class to synchronize access to shared data.
   *
   * This is simple encapsulation of tools provided by the
   * operating system to synchronize access to shared data
@@ -55,11 +55,11 @@
   * Note that this class provides one feature specific to Open CASCADE:
   * safe unlocking the mutex when signal is raised and converted to OCC
   * exceptions (Note that with current implementation of this functionality
-  * on UNIX and Linux, C longjumps are used for that, thus destructors of 
+  * on UNIX and Linux, C longjumps are used for that, thus destructors of
   * classes are not called automatically).
-  * 
+  *
   * To use this feature, call RegisterCallback() after Lock() or successful
-  * TryLock(), and UnregisterCallback() before Unlock() (or use Sentry classes). 
+  * TryLock(), and UnregisterCallback() before Unlock() (or use Sentry classes).
   */
 
 class Standard_Mutex : public Standard_ErrorHandler::Callback
@@ -67,14 +67,14 @@ class Standard_Mutex : public Standard_ErrorHandler::Callback
 public:
   /**
     * @brief Simple sentry class providing convenient interface to mutex.
-    * 
+    *
     * Provides automatic locking and unlocking a mutex in its constructor
-    * and destructor, thus ensuring correct unlock of the mutex even in case of 
+    * and destructor, thus ensuring correct unlock of the mutex even in case of
     * raising an exception or signal from the protected code.
     *
     * Create instance of that class when entering critical section.
     */
-  class Sentry 
+  class Sentry
   {
   public:
 
@@ -85,7 +85,7 @@ public:
     {
       Lock();
     }
-    
+
     //! Constructor - initializes the sentry object by pointer to a
     //! mutex and locks the mutex if its pointer is not NULL
     Sentry (Standard_Mutex* theMutex)
@@ -129,17 +129,17 @@ public:
   private:
     Standard_Mutex* myMutex;
   };
-   
+
 public:
-  
+
   //! Constructor: creates a mutex object and initializes it.
-  //! It is strongly recommended that mutexes were created as 
+  //! It is strongly recommended that mutexes were created as
   //! static objects whenever possible.
   Standard_EXPORT Standard_Mutex ();
-  
+
   //! Destructor: destroys the mutex object
   Standard_EXPORT ~Standard_Mutex ();
-  
+
   //! Method to lock the mutex; waits until the mutex is released
   //! by other threads, locks it and then returns
   Standard_EXPORT void Lock ();
@@ -156,31 +156,22 @@ private:
 
   //! Callback method to unlock the mutex if OCC exception or signal is raised
   Standard_EXPORT virtual void DestroyCallback() Standard_OVERRIDE;
-  
+
   //! This method should not be called (prohibited).
   Standard_Mutex (const Standard_Mutex &);
   //! This method should not be called (prohibited).
   Standard_Mutex& operator = (const Standard_Mutex &);
-  
+
 private:
 #if (defined(_WIN32) || defined(__WIN32__))
   CRITICAL_SECTION myMutex;
 #else
   pthread_mutex_t myMutex;
-#endif  
+#endif
 };
 
 typedef NCollection_Shared<Standard_Mutex> Standard_HMutex;
 
-// Implementation of the method Unlock is inline, since it is 
-// just a shortcut to system function
-inline void Standard_Mutex::Unlock ()
-{
-#if (defined(_WIN32) || defined(__WIN32__))
-  LeaveCriticalSection (&myMutex);
-#else
-  pthread_mutex_unlock (&myMutex);
-#endif
-}
+
 
 #endif /* _Standard_Mutex_HeaderFile */

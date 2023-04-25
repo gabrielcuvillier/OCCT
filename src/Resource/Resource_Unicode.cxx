@@ -23,6 +23,8 @@
 #include <NCollection_UtfString.hxx>
 #include <Standard_NotImplemented.hxx>
 #include "Resource_CodePages.pxx"
+
+#if !defined(OCCT_DISABLE_UNICODE_CONVERSIONS)
 #include "Resource_GBK.pxx"
 #include "Resource_Big5.pxx"
 
@@ -46,7 +48,7 @@ void Resource_Unicode::ConvertSJISToUnicode(const Standard_CString fromstr,TColl
   // BIG INDIAN USED HERE
   while(*currentstr != '\0') {
     if (issjis1(*currentstr)) {
-      
+
       ph = ((unsigned int) *currentstr);
       // Be Careful with first and second !!
 
@@ -54,7 +56,7 @@ void Resource_Unicode::ConvertSJISToUnicode(const Standard_CString fromstr,TColl
 
       pl =  ((unsigned int) *currentstr);
       currentstr++;
-      
+
       Resource_sjis_to_unicode(&ph,&pl);
       Standard_ExtCharacter curcar = ((Standard_ExtCharacter) ((ph << 8) | pl));
       TCollection_ExtendedString curext(curcar);
@@ -78,7 +80,7 @@ void Resource_Unicode::ConvertEUCToUnicode(const Standard_CString fromstr,TColle
   // BIG INDIAN USED HERE
   while(*currentstr != '\0') {
     if (iseuc(*currentstr)) {
-      
+
       ph = ((unsigned int) *currentstr);
       // Be Careful with first and second !!
 
@@ -86,7 +88,7 @@ void Resource_Unicode::ConvertEUCToUnicode(const Standard_CString fromstr,TColle
 
       pl =  ((unsigned int) *currentstr);
       currentstr++;
-      
+
       Resource_euc_to_unicode(&ph,&pl);
       Standard_ExtCharacter curcar = ((Standard_ExtCharacter) ((ph << 8) | pl));
       TCollection_ExtendedString curext(curcar);
@@ -109,7 +111,7 @@ void Resource_Unicode::ConvertGBToUnicode(const Standard_CString fromstr,TCollec
   // BIG INDIAN USED HERE
   while(*currentstr != '\0') {
     if (isshift(*currentstr)) {
-      
+
       ph = ((unsigned int) *currentstr);
       // Be Careful with first and second !!
 
@@ -117,7 +119,7 @@ void Resource_Unicode::ConvertGBToUnicode(const Standard_CString fromstr,TCollec
 
       pl =  ((unsigned int) *currentstr);
       currentstr++;
-      
+
       Resource_gb_to_unicode(&ph,&pl);
       Standard_ExtCharacter curcar = ((Standard_ExtCharacter) ((ph << 8) | pl));
       TCollection_ExtendedString curext(curcar);
@@ -367,7 +369,7 @@ Standard_Boolean Resource_Unicode::ConvertUnicodeToSJIS(const TCollection_Extend
   Standard_ExtCharacter curcar;
   unsigned int pl,ph;
   // BIG INDIAN USED HERE
-  
+
   while (!finished) {
     if (nbext > fromstr.Length()) {
       finished = Standard_True;
@@ -405,7 +407,7 @@ Standard_Boolean Resource_Unicode::ConvertUnicodeToSJIS(const TCollection_Extend
   }
   return Standard_True;
 }
-	  
+
 Standard_Boolean Resource_Unicode::ConvertUnicodeToEUC(const TCollection_ExtendedString& fromstr,
 						       Standard_PCharacter& tostr,
 						       const Standard_Integer maxsize)
@@ -416,7 +418,7 @@ Standard_Boolean Resource_Unicode::ConvertUnicodeToEUC(const TCollection_Extende
   Standard_ExtCharacter curcar;
   unsigned int pl,ph;
   // BIG INDIAN USED HERE
-  
+
   while (!finished) {
     if (nbext > fromstr.Length()) {
       finished = Standard_True;
@@ -454,7 +456,7 @@ Standard_Boolean Resource_Unicode::ConvertUnicodeToEUC(const TCollection_Extende
   }
   return Standard_True;
 }
-	  
+
 Standard_Boolean Resource_Unicode::ConvertUnicodeToGB(const TCollection_ExtendedString& fromstr,
 						      Standard_PCharacter& tostr,
 						      const Standard_Integer maxsize)
@@ -465,7 +467,7 @@ Standard_Boolean Resource_Unicode::ConvertUnicodeToGB(const TCollection_Extended
   Standard_ExtCharacter curcar;
   unsigned int pl,ph;
   // BIG INDIAN USED HERE
-  
+
   while (!finished) {
     if (nbext > fromstr.Length()) {
       finished = Standard_True;
@@ -503,7 +505,8 @@ Standard_Boolean Resource_Unicode::ConvertUnicodeToGB(const TCollection_Extended
   }
   return Standard_True;
 }
-	  
+#endif
+
 Standard_Boolean Resource_Unicode::ConvertUnicodeToANSI(const TCollection_ExtendedString& fromstr,
 							Standard_PCharacter& tostr,
 							const Standard_Integer maxsize)
@@ -514,7 +517,7 @@ Standard_Boolean Resource_Unicode::ConvertUnicodeToANSI(const TCollection_Extend
   Standard_ExtCharacter curcar;
   unsigned int pl,ph;
   // BIG INDIAN USED HERE
-  
+
   while (!finished) {
     if (nbext > fromstr.Length()) {
       finished = Standard_True;
@@ -543,7 +546,7 @@ Standard_Boolean Resource_Unicode::ConvertUnicodeToANSI(const TCollection_Extend
 }
 
 static Standard_Boolean AlreadyRead = Standard_False;
-	  
+
 static Resource_FormatType& Resource_Current_Format()
 {
   static Resource_FormatType theformat = Resource_ANSI;

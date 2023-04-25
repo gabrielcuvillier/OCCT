@@ -46,8 +46,17 @@
 #define OCCT_MMGT_OPT_DEFAULT 0
 #endif
 
+namespace {
+  const Standard_Boolean ToUseOptMemAlloc =
+#if !defined(OCCT_DISABLE_OPTIMIZED_MEMORY_ALLOCATOR)
+    Standard_True;
+#else
+    Standard_False;
+#endif
+}
+
 //=======================================================================
-//class    : Standard_MMgrFactory 
+//class    : Standard_MMgrFactory
 //purpose  : Container for pointer to memory manager;
 //           used to construct appropriate memory manager according
 //           to environment settings, and to ensure destruction upon exit
@@ -97,9 +106,13 @@ Standard_MMgrFactory::Standard_MMgrFactory()
   Standard_STATIC_ASSERT(sizeof(Standard_WideChar) == sizeof(Standard_Utf16Char));
 #endif
 
-  char* aVar;
-  aVar = getenv ("MMGT_OPT");
-  Standard_Integer anAllocId   = (aVar ?  atoi (aVar): OCCT_MMGT_OPT_DEFAULT);
+  char *aVar = nullptr;
+  Standard_Integer anAllocId = 0;
+
+  if Standard_IF_CONSTEXPR(ToUseOptMemAlloc) {
+    aVar = getenv("MMGT_OPT");
+    anAllocId = (aVar ? atoi(aVar) : OCCT_MMGT_OPT_DEFAULT);
+  }
 
 #if defined(HAVE_TBB) && defined(_M_IX86)
   if (anAllocId == 2)
@@ -148,33 +161,38 @@ Standard_MMgrFactory::Standard_MMgrFactory()
   }
 #endif
 
-  switch (anAllocId)
-  {
-    case 1:  // OCCT optimized memory allocator
-    {
-      aVar = getenv ("MMGT_MMAP");
-      Standard_Boolean bMMap       = (aVar ? (atoi (aVar) != 0) : Standard_True);
-      aVar = getenv ("MMGT_CELLSIZE");
-      Standard_Integer aCellSize   = (aVar ?  atoi (aVar) : 200);
-      aVar = getenv ("MMGT_NBPAGES");
-      Standard_Integer aNbPages    = (aVar ?  atoi (aVar) : 1000);
-      aVar = getenv ("MMGT_THRESHOLD");
-      Standard_Integer aThreshold  = (aVar ?  atoi (aVar) : 40000);
-      myFMMgr = new Standard_MMgrOpt (toClear, bMMap, aCellSize, aNbPages, aThreshold);
-      break;
-    }
-    case 2:  // TBB memory allocator
-      myFMMgr = new Standard_MMgrTBBalloc (toClear);
-      break;
-    case 0:
-    default: // system default memory allocator
-      myFMMgr = new Standard_MMgrRaw (toClear);
+  if Standard_IF_CONSTEXPR(ToUseOptMemAlloc) {
+      switch (anAllocId)
+      {
+        case 1:  // OCCT optimized memory allocator
+        {
+          aVar = getenv ("MMGT_MMAP");
+          Standard_Boolean bMMap       = (aVar ? (atoi (aVar) != 0) : Standard_True);
+          aVar = getenv ("MMGT_CELLSIZE");
+          Standard_Integer aCellSize   = (aVar ?  atoi (aVar) : 200);
+          aVar = getenv ("MMGT_NBPAGES");
+          Standard_Integer aNbPages    = (aVar ?  atoi (aVar) : 1000);
+          aVar = getenv ("MMGT_THRESHOLD");
+          Standard_Integer aThreshold  = (aVar ?  atoi (aVar) : 40000);
+          myFMMgr = new Standard_MMgrOpt (toClear, bMMap, aCellSize, aNbPages, aThreshold);
+          break;
+        }
+        case 2:  // TBB memory allocator
+          myFMMgr = new Standard_MMgrTBBalloc (toClear);
+          break;
+        case 0:
+        default: // system default memory allocator
+          myFMMgr = new Standard_MMgrRaw (toClear);
+      }
+  }
+  else {
+    myFMMgr = new Standard_MMgrRaw (toClear);
   }
 }
 
 //=======================================================================
 //function : ~Standard_MMgrFactory
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_MMgrFactory::~Standard_MMgrFactory()
@@ -186,38 +204,38 @@ Standard_MMgrFactory::~Standard_MMgrFactory()
 //=======================================================================
 // function: GetMMgr
 //
-// This static function has a purpose to wrap static holder for memory 
-// manager instance. 
+// This static function has a purpose to wrap static holder for memory
+// manager instance.
 //
 // Wrapping holder inside a function is needed to ensure that it will
 // be initialized not later than the first call to memory manager (that
-// would be impossible to guarantee if holder was static variable on 
-// global or file scope, because memory manager may be called from 
+// would be impossible to guarantee if holder was static variable on
+// global or file scope, because memory manager may be called from
 // constructors of other static objects).
 //
-// Note that at the same time we could not guarantee that the holder 
-// object is destroyed after last call to memory manager, since that 
+// Note that at the same time we could not guarantee that the holder
+// object is destroyed after last call to memory manager, since that
 // last call may be from static Handle() object which has been initialized
 // dynamically during program execution rather than in its constructor.
 //
-// Therefore holder currently does not call destructor of the memory manager 
+// Therefore holder currently does not call destructor of the memory manager
 // but only its method Purge() with Standard_True.
 //
-// To free the memory completely, we probably could use compiler-specific 
-// pragmas (such as '#pragma fini' on SUN Solaris and '#pragma init_seg' on 
+// To free the memory completely, we probably could use compiler-specific
+// pragmas (such as '#pragma fini' on SUN Solaris and '#pragma init_seg' on
 // WNT MSVC++) to put destructing function in code segment that is called
-// after destructors of other (even static) objects. However, this is not 
-// done by the moment since it is compiler-dependent and there is no guarantee 
+// after destructors of other (even static) objects. However, this is not
+// done by the moment since it is compiler-dependent and there is no guarantee
 // that some other object calling memory manager is not placed also in that segment...
 //
-// Note that C runtime function atexit() could not help in this problem 
-// since its behaviour is the same as for destructors of static objects 
+// Note that C runtime function atexit() could not help in this problem
+// since its behaviour is the same as for destructors of static objects
 // (see ISO 14882:1998 "Programming languages -- C++" 3.6.3)
 //
-// The correct approach to deal with the problem would be to have memory manager 
-// to properly control its memory allocation and caching free blocks so 
+// The correct approach to deal with the problem would be to have memory manager
+// to properly control its memory allocation and caching free blocks so
 // as to release all memory as soon as it is returned to it, and probably
-// even delete itself if all memory it manages has been released and 
+// even delete itself if all memory it manages has been released and
 // last call to method Purge() was with True.
 //
 // Note that one possible method to control memory allocations could
@@ -232,7 +250,7 @@ Standard_MMgrRoot* Standard_MMgrFactory::GetMMgr()
 
 //=======================================================================
 //function : Allocate
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Address Standard::Allocate(const Standard_Size size)
@@ -242,7 +260,7 @@ Standard_Address Standard::Allocate(const Standard_Size size)
 
 //=======================================================================
 //function : Free
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void Standard::Free (Standard_Address theStorage)
@@ -252,7 +270,7 @@ void Standard::Free (Standard_Address theStorage)
 
 //=======================================================================
 //function : Reallocate
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Address Standard::Reallocate (Standard_Address theStorage,
@@ -263,7 +281,7 @@ Standard_Address Standard::Reallocate (Standard_Address theStorage,
 
 //=======================================================================
 //function : Purge
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer Standard::Purge()

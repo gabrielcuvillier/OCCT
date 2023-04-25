@@ -18,7 +18,6 @@
 
 #ifdef _WIN32
   #include <windows.h>
-  #include <process.h>
 #else
   #include <sys/types.h>
   #include <unistd.h>
@@ -173,6 +172,7 @@ namespace {
   }
 #endif
 
+namespace {
 const Standard_Boolean ToUseThreads =
 #if !defined(OCCT_DISABLE_THREADS)
     Standard_True;
@@ -181,11 +181,12 @@ const Standard_Boolean ToUseThreads =
 #endif
 
   static Standard_Boolean OSD_Parallel_ToUseOcctThreads =
-  #ifdef HAVE_TBB
+#ifdef HAVE_TBB
     Standard_False;
-  #else
+#else
     ToUseThreads;
-  #endif
+#endif
+}
 }
 
 //=======================================================================

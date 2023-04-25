@@ -14,7 +14,7 @@
 
 //! @file
 //! This file is intended to be the first file included to any
-//! Open CASCADE source. It defines platform-specific pre-processor 
+//! Open CASCADE source. It defines platform-specific pre-processor
 //! macros necessary for correct compilation of Open CASCADE code.
 
 #ifndef _Standard_Macro_HeaderFile
@@ -26,7 +26,7 @@
 
 //! @def Standard_OVERRIDE
 //! Should be used in declarations of virtual methods overridden in the
-//! derived classes, to cause compilation error in the case if that virtual 
+//! derived classes, to cause compilation error in the case if that virtual
 //! function disappears or changes its signature in the base class.
 //!
 //! Expands to C++11 keyword "override" on compilers that are known to
@@ -56,12 +56,12 @@
 //! @def Standard_FALLTHROUGH
 //! Should be used in a switch statement immediately before a case label,
 //! if code associated with the previous case label may fall through to that
-//! next label (i.e. does not end with "break" or "return" etc.). 
-//! This macro indicates that the fall through is intentional and should not be 
+//! next label (i.e. does not end with "break" or "return" etc.).
+//! This macro indicates that the fall through is intentional and should not be
 //! diagnosed by a compiler that warns on fallthrough.
 //!
-//! Expands to C++17 attribute statement "[[fallthrough]];" on compilers that 
-//! declare support of C++17, or to "__attribute__((fallthrough));" on 
+//! Expands to C++17 attribute statement "[[fallthrough]];" on compilers that
+//! declare support of C++17, or to "__attribute__((fallthrough));" on
 //! GCC 7+.
 #if defined(__cplusplus) && (__cplusplus >= 201703L)
   // part of C++17 standard
@@ -71,6 +71,13 @@
   #define Standard_FALLTHROUGH __attribute__((fallthrough));
 #else
   #define Standard_FALLTHROUGH
+#endif
+
+#if defined(__cplusplus) && (__cplusplus >= 201703L) \
+  // part of C++17 standard
+  #define Standard_IF_CONSTEXPR constexpr
+#else
+  #define Standard_IF_CONSTEXPR
 #endif
 
 //! @def Standard_NODISCARD
@@ -146,7 +153,7 @@
 
 //! @def Standard_DEPRECATED("message")
 //! Can be used in declaration of a method or a class to mark it as deprecated.
-//! Use of such method or class will cause compiler warning (if supported by 
+//! Use of such method or class will cause compiler warning (if supported by
 //! compiler and unless disabled).
 //! If macro OCCT_NO_DEPRECATED is defined, Standard_DEPRECATED is defined empty.
 #ifdef OCCT_NO_DEPRECATED
@@ -190,7 +197,7 @@
 # ifdef _WIN32
 
 // We must be careful including windows.h: it is really poisonous stuff!
-// The most annoying are #defines of many identifiers that you could use in 
+// The most annoying are #defines of many identifiers that you could use in
 // normal code without knowing that Windows has its own knowledge of them...
 // So lets protect ourselves by switching OFF as much as possible of this in advance.
 // If someone needs more from windows.h, he is encouraged to #undef these symbols
@@ -216,7 +223,7 @@
 #define NOGDI NOGDI           /* avoid #define SetPrinter (winspool.h) etc. */
 #endif
 #ifndef NOSERVICE
-#define NOSERVICE NOSERVICE   
+#define NOSERVICE NOSERVICE
 #endif
 #ifndef NOKERNEL
 #define NOKERNEL NOKERNEL
@@ -234,12 +241,12 @@
 #endif
 
 //! @def Standard_EXPORT
-//! This macro should be used in declarations of public methods 
+//! This macro should be used in declarations of public methods
 //! to ensure that they are exported from DLL on Windows and thus
 //! can be called from other (dependent) libraries or applications.
 //!
 //! If macro OCCT_STATIC_BUILD is defined, then Standard_EXPORT
-//! is set to empty. 
+//! is set to empty.
 
 # if defined(_WIN32) && !defined(OCCT_STATIC_BUILD) && !defined(HAVE_NO_DLL)
 
@@ -310,7 +317,7 @@
 #if (defined(__cplusplus) && __cplusplus >= 201100L) || (defined(_MSC_VER) && _MSC_VER >= 1800) || \
     (defined(__GNUC__) && ((__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7)))
   #define Standard_HASATOMIC
-  #define Standard_ATOMIC(theType) std::atomic<theType> 
+  #define Standard_ATOMIC(theType) std::atomic<theType>
 #else
   #define Standard_ATOMIC(theType) theType
 #endif

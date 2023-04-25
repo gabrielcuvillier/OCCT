@@ -14,6 +14,8 @@
  commercial license or contractual agreement.
 */
 
+#if !defined(OCCT_DISABLE_UNICODE_CONVERSIONS)
+
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
@@ -123,7 +125,7 @@ void Resource_sjis_to_unicode (unsigned int *ph, unsigned int *pl)
 {
   char16 sjis ;
   char16 uni  ;
-	
+
   if ( (*ph & 0xFFFFFF00) || (*pl & 0xFFFFFF00) ) {
     *ph = 0 ;
     *pl = 0 ;
@@ -144,7 +146,7 @@ void Resource_unicode_to_sjis (unsigned int *ph, unsigned int *pl)
 {
   char16 sjis ;
   char16 uni  ;
-	
+
   if ( (*ph & 0xFFFFFF00) || (*pl & 0xFFFFFF00) ) {
     *ph = 0 ;
     *pl = 0 ;
@@ -193,7 +195,7 @@ void Resource_gb_to_unicode (unsigned int *ph, unsigned int *pl)
 {
   char16 gb   ;
   char16 uni  ;
-	
+
 
   if ( (*ph & 0xFFFFFF00) || (*pl & 0xFFFFFF00) ) {
     *ph = 0 ;
@@ -218,7 +220,7 @@ void Resource_unicode_to_gb (unsigned int *ph, unsigned int *pl)
 {
   char16 gb   ;
   char16 uni  ;
-	
+
   if ( (*ph & 0xFFFFFF00) || (*pl & 0xFFFFFF00) ) {
     *ph = 0 ;
     *pl = 0 ;
@@ -238,3 +240,5 @@ void Resource_unicode_to_gb (unsigned int *ph, unsigned int *pl)
     *pl = 0 ;
   }
 }
+
+#endif

@@ -117,12 +117,13 @@ void  OSD_SharedLibrary::SetName(const Standard_CString aName)  {
 //
 // ----------------------------------------------------------------
 Standard_Boolean  OSD_SharedLibrary::DlOpen(const OSD_LoadMode aMode ) {
-if (aMode == OSD_RTLD_LAZY){
-  myHandle = dlopen (myName,RTLD_LAZY);
-}
-else if (aMode == OSD_RTLD_NOW){
-  myHandle = dlopen (myName,RTLD_NOW);
-}
+  if Standard_IF_CONSTEXPR(ToUseSharedLibrary) {
+    if (aMode == OSD_RTLD_LAZY) {
+      myHandle = dlopen(myName, RTLD_LAZY);
+    } else if (aMode == OSD_RTLD_NOW) {
+      myHandle = dlopen(myName, RTLD_NOW);
+    }
+  }
 
 if (!BAD(myHandle)){
   return Standard_True;
@@ -140,8 +141,11 @@ else {
 //
 // ----------------------------------------------------------------
 OSD_Function  OSD_SharedLibrary::DlSymb(const Standard_CString aName )const{
-void (*fp)();
-fp =  (void (*)()) dlsym (myHandle,aName);
+  void (*fp)() = nullptr;
+  if Standard_IF_CONSTEXPR(ToUseSharedLibrary) {
+    fp = (void (*)()) dlsym(myHandle, aName);
+  }
+
 if (!BAD(fp)){
   return (OSD_Function)fp;
  }
@@ -158,7 +162,9 @@ else {
 //
 // ----------------------------------------------------------------
 void OSD_SharedLibrary::DlClose()const{
- dlclose(myHandle);
+  if Standard_IF_CONSTEXPR(ToUseSharedLibrary) {
+    dlclose(myHandle);
+  }
 }
 // ----------------------------------------------------------------
 //
@@ -167,7 +173,12 @@ void OSD_SharedLibrary::DlClose()const{
 //
 // ----------------------------------------------------------------
 Standard_CString OSD_SharedLibrary::DlError()const{
-return (char*) dlerror();
+  if Standard_IF_CONSTEXPR(ToUseSharedLibrary) {
+    return (char *) dlerror();
+  }
+  else {
+    return nullptr;
+  }
 }
 // ----------------------------------------------------------------------------
 // Destroy
