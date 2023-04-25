@@ -41,7 +41,9 @@
 #include <Standard_Failure.hxx>
 #include <Standard_Type.hxx>
 #include <StdPrs_HLRPolyShape.hxx>
+#if !defined(OCCT_DISABLE_HLR_IN_VISUALIZATION)
 #include <StdPrs_HLRShape.hxx>
+#endif
 #include <StdPrs_ShadedShape.hxx>
 #include <StdPrs_WFShape.hxx>
 #include <StdSelect.hxx>
@@ -264,10 +266,13 @@ void AIS_Shape::computeHlrPresentation (const Handle(Graphic3d_Camera)& theProje
       OCC_CATCH_SIGNALS
       switch (theDrawer->TypeOfHLR())
       {
+
         case Prs3d_TOH_Algo:
         {
+#if !defined(OCCT_DISABLE_HLR_IN_VISUALIZATION)
           StdPrs_HLRShape aBuilder;
           aBuilder.ComputeHLR (thePrs, theShape, theDrawer, theProjector);
+#endif
           break;
         }
         case Prs3d_TOH_PolyAlgo:
@@ -292,7 +297,7 @@ void AIS_Shape::computeHlrPresentation (const Handle(Graphic3d_Camera)& theProje
 
 //=======================================================================
 //function : ComputeSelection
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void AIS_Shape::ComputeSelection(const Handle(SelectMgr_Selection)& aSelection,
@@ -558,7 +563,7 @@ bool AIS_Shape::setWidth (const Handle(Prs3d_Drawer)& theDrawer,
 
 //=======================================================================
 //function : SetWidth
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void AIS_Shape::SetWidth (const Standard_Real theLineWidth)
@@ -780,10 +785,10 @@ void AIS_Shape::UnsetTransparency()
 
 //=======================================================================
 //function : BoundingBox
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-const Bnd_Box& AIS_Shape::BoundingBox()  
+const Bnd_Box& AIS_Shape::BoundingBox()
 {
   if (myshape.ShapeType() == TopAbs_COMPOUND && myshape.NbChildren() == 0)
   {
@@ -830,7 +835,7 @@ Standard_Boolean AIS_Shape::SetOwnDeviationAngle ()
 
 //=======================================================================
 //function : SetOwnDeviationCoefficient
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void AIS_Shape::SetOwnDeviationCoefficient ( const Standard_Real  aCoefficient )
@@ -841,7 +846,7 @@ void AIS_Shape::SetOwnDeviationCoefficient ( const Standard_Real  aCoefficient )
 
 //=======================================================================
 //function : SetOwnDeviationAngle
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void AIS_Shape::SetOwnDeviationAngle (const Standard_Real theAngle)
@@ -851,7 +856,7 @@ void AIS_Shape::SetOwnDeviationAngle (const Standard_Real theAngle)
 }
 //=======================================================================
 //function : SetOwnDeviationAngle
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void AIS_Shape::SetAngleAndDeviation ( const Standard_Real  anAngle )
@@ -866,7 +871,7 @@ void AIS_Shape::SetAngleAndDeviation ( const Standard_Real  anAngle )
 
 //=======================================================================
 //function : UserAngle
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Real AIS_Shape::UserAngle() const
@@ -876,7 +881,7 @@ Standard_Real AIS_Shape::UserAngle() const
 
 //=======================================================================
 //function : OwnDeviationCoefficient
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean AIS_Shape::OwnDeviationCoefficient ( Standard_Real &  aCoefficient,
@@ -889,20 +894,20 @@ Standard_Boolean AIS_Shape::OwnDeviationCoefficient ( Standard_Real &  aCoeffici
 
 //=======================================================================
 //function : OwnDeviationAngle
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean AIS_Shape::OwnDeviationAngle ( Standard_Real &  anAngle,
                                                 Standard_Real & aPreviousAngle ) const
 {
   anAngle = myDrawer->DeviationAngle();
-  aPreviousAngle = myDrawer->PreviousDeviationAngle (); 
+  aPreviousAngle = myDrawer->PreviousDeviationAngle ();
   return myDrawer->HasOwnDeviationAngle();
 }
 
 //=======================================================================
 //function : DumpJson
-//purpose  : 
+//purpose  :
 //=======================================================================
 void AIS_Shape::DumpJson (Standard_OStream& theOStream, Standard_Integer theDepth) const
 {
