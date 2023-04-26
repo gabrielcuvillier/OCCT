@@ -999,6 +999,7 @@ bool Image_AlienPixMap::Save (const TCollection_AsciiString& theFileName)
       }
       break;
     }
+#if !defined(OCCT_MINIMAL_FREEIMAGE_BUILD)
     case FIF_HDR:
     case FIF_EXR:
     {
@@ -1024,6 +1025,7 @@ bool Image_AlienPixMap::Save (const TCollection_AsciiString& theFileName)
       }
       break;
     }
+#endif
     default:
     {
       if (FreeImage_GetImageType (myLibImage) != FIT_BITMAP)
