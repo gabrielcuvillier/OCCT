@@ -14,7 +14,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
 #include <GccAna_Circ2d3Tan.hxx>
 #include <GccEnt_QualifiedCirc.hxx>
 #include <GccEnt_QualifiedLin.hxx>
@@ -648,7 +647,3 @@ Standard_Boolean Geom2dGcc_Circ2d3Tan::
   if (TheSame3(Index) == 0) { return Standard_False; }
   return Standard_True;
 }
-
-
-
-#endif

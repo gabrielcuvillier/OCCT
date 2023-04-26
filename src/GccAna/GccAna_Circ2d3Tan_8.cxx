@@ -12,8 +12,6 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
-#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
-
 #include <ElCLib.hxx>
 #include <GccAna_Circ2d3Tan.hxx>
 #include <GccAna_LinPnt2dBisec.hxx>
@@ -162,5 +160,3 @@ GccAna_Circ2d3Tan::
      }
    }
  }
-
-#endif

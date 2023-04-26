@@ -14,8 +14,6 @@
 
 // cas de 2 cercles concentriques JCT 28/11/97
 
-#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
-
 #include <ElCLib.hxx>
 #include <GccAna_Circ2d3Tan.hxx>
 #include <GccAna_Circ2dBisec.hxx>
@@ -373,5 +371,3 @@ GccAna_Circ2d3Tan::
      }
    }
  }
-
-#endif

@@ -14,8 +14,6 @@
 
 // init. de MinRad et MaxRad (PRO15604), JCT 09/10/98
 
-#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
-
 #include <ElCLib.hxx>
 #include <GccAna_Circ2d3Tan.hxx>
 #include <GccAna_CircLin2dBisec.hxx>
@@ -258,4 +256,3 @@ GccAna_Circ2d3Tan::
      }
    }
  }
-#endif

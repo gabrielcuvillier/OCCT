@@ -22,10 +22,17 @@
 
 #include <NCollection_DefineAlloc.hxx>
 
+#if defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))
+  // this class does some weird trick (pointing to unusable memory areas for out of bound columns/rows), leading GCC array bound checking
+  // detector to complain
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Warray-bounds"
+#endif
+
 // *********************************************** Template for Array2 class
 /**
-* Purpose:   The class Array2 represents bi-dimensional arrays 
-*            of fixed size known at run time. 
+* Purpose:   The class Array2 represents bi-dimensional arrays
+*            of fixed size known at run time.
 *            The ranges of indices are user defined.
 *
 *            Class allocates one 1D array storing full data (all Rows and Columns)
@@ -34,10 +41,10 @@
 * Warning:   Programs clients of such class must be independent
 *            of the range of the first element. Then, a C++ for
 *            loop must be written like this
-*            
+*
 *            for (i = A.LowerRow(); i <= A.UpperRow(); i++)
 *              for (j = A.LowerCol(); j <= A.UpperCol(); j++)
-*/            
+*/
 template <class TheItemType>
 class NCollection_Array2
 {
@@ -62,10 +69,10 @@ public:
       myArray   ((NCollection_Array2 *) &theArray) {}
     //! Initialisation
     void Init (const NCollection_Array2& theArray)
-    { 
+    {
       myCurrent = 0;
       mySize    = theArray.Length();
-      myArray   = (NCollection_Array2 *) &theArray; 
+      myArray   = (NCollection_Array2 *) &theArray;
     }
     //! Check end
     Standard_Boolean More (void) const
@@ -114,7 +121,7 @@ public:
     myDeletable                                 (Standard_True)
   { Allocate(); }
 
-  //! Copy constructor 
+  //! Copy constructor
   NCollection_Array2 (const NCollection_Array2& theOther) :
     myLowerRow                                  (theOther.LowerRow()),
     myUpperRow                                  (theOther.UpperRow()),
@@ -158,7 +165,7 @@ public:
   }
 
   //! Initialise the values
-  void Init (const TheItemType& theValue) 
+  void Init (const TheItemType& theValue)
   {
     TheItemType *pCur, *pEnd=myStart+Size();
     for(pCur = myStart; pCur<pEnd; pCur++)
@@ -203,7 +210,7 @@ public:
 
   //! Assignment
   NCollection_Array2& Assign (const NCollection_Array2& theOther)
-  { 
+  {
     if (&theOther == this)
       return *this;
     Standard_DimensionMismatch_Raise_if (Length() != theOther.Length(), "NCollection_Array2::operator=");
@@ -212,7 +219,7 @@ public:
     const Standard_Integer iSize = Length();
     for (Standard_Integer i=0; i < iSize; i++, pItem++, pMyItem++)
       *pMyItem = *pItem;
-    return *this; 
+    return *this;
   }
 
   //! Move assignment.
@@ -250,7 +257,7 @@ public:
 
   //! Assignment operator
   NCollection_Array2& operator= (const NCollection_Array2& theOther)
-  { 
+  {
     return Assign (theOther);
   }
 
@@ -371,7 +378,7 @@ public:
 
   //! Destructor - releases the memory
   ~NCollection_Array2 (void)
-  { 
+  {
     if (myDeletable) delete [] myStart;
     if (myData != NULL)
     {
@@ -433,5 +440,9 @@ public:
  friend class Iterator;
 
 };
+
+#if defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))
+  #pragma GCC diagnostic pop
+#endif
 
 #endif

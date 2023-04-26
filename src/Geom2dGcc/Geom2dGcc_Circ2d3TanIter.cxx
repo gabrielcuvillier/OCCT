@@ -23,7 +23,7 @@
 //                                                  Cercle.               +
 //                                                  Courbes.              +
 //=========================================================================
-#ifndef OCCT_DISABLE_FUNCTIONS_WITH_WARNINGS
+
 #include <GccAna_Circ2d3Tan.hxx>
 #include <GccEnt_BadQualifier.hxx>
 #include <GccEnt_QualifiedCirc.hxx>
@@ -1394,4 +1394,3 @@ IsTheSame3 () const
 
   return Standard_True;
 }
-#endif

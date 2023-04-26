@@ -14,13 +14,13 @@
  commercial license or contractual agreement.
 */
 
-#if !defined(OCCT_DISABLE_UNICODE_CONVERSIONS)
-
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
 
 typedef unsigned short char16 ;
+
+#if !defined(OCCT_DISABLE_UNICODE_CONVERSIONS)
 
 #include "Resource_Shiftjis.pxx"
 #include "Resource_GB2312.pxx"

@@ -16,6 +16,16 @@
 #ifndef NCollection_Array1_HeaderFile
 #define NCollection_Array1_HeaderFile
 
+#if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
+// gcc emits -Warray-bounds warning when NCollection_Array1 is initialized
+    // from local array with lower index 1 (so that (&theBegin - 1) points out of array bounds).
+    // NCollection_Array1 initializes myData with a shift to avoid this shift within per-element access.
+    // It is undesired changing this logic, and -Warray-bounds is not useful here.
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Warray-bounds"
+    #pragma GCC diagnostic ignored "-Wfree-nonheap-object"
+#endif
+
 #include <Standard_DimensionMismatch.hxx>
 #include <Standard_OutOfMemory.hxx>
 #include <Standard_OutOfRange.hxx>
@@ -75,7 +85,7 @@ public:
 
     //! Initialisation
     void Init (const NCollection_Array1& theArray)
-    { 
+    {
       myPtrCur = const_cast<TheItemType*> (&theArray.First());
       myPtrEnd = const_cast<TheItemType*> (&theArray.Last() + 1);
     }
@@ -83,7 +93,7 @@ public:
     //! Check end
     Standard_Boolean More (void) const
     { return myPtrCur < myPtrEnd; }
-    
+
     //! Increment operator
     void Next (void)
     { ++myPtrCur; }
@@ -105,7 +115,7 @@ public:
     { return *myPtrCur; }
 
     //! Variable value access
-    TheItemType& ChangeValue (void) const 
+    TheItemType& ChangeValue (void) const
     { return *myPtrCur; }
 
     //! Performs comparison of two iterators
@@ -128,7 +138,7 @@ public:
 
   //! Returns an iterator referring to the past-the-end element in the array.
   iterator end() const { return Iterator (*this, true); }
-  
+
   //! Returns a const iterator pointing to the first element in the array.
   const_iterator cbegin() const { return Iterator (*this, false); }
 
@@ -163,7 +173,7 @@ public:
     myData = pBegin - theLower;
   }
 
-  //! Copy constructor 
+  //! Copy constructor
   NCollection_Array1 (const NCollection_Array1& theOther) :
     myLowerBound                                (theOther.Lower()),
     myUpperBound                                (theOther.Upper()),
@@ -209,22 +219,13 @@ public:
     myDeletable                                 (Standard_False)
   {
     Standard_RangeError_Raise_if (theUpper < theLower, "NCollection_Array1::Create");
-  #if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
-    // gcc emits -Warray-bounds warning when NCollection_Array1 is initialized
-    // from local array with lower index 1 (so that (&theBegin - 1) points out of array bounds).
-    // NCollection_Array1 initializes myData with a shift to avoid this shift within per-element access.
-    // It is undesired changing this logic, and -Warray-bounds is not useful here.
-    #pragma GCC diagnostic push
-    #pragma GCC diagnostic ignored "-Warray-bounds"
-  #endif
+
     myData = (TheItemType *) &theBegin - theLower;
-  #if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
-    #pragma GCC diagnostic pop
-  #endif
+
   }
 
   //! Initialise the items with theValue
-  void Init (const TheItemType& theValue) 
+  void Init (const TheItemType& theValue)
   {
     TheItemType *pCur = &myData[myLowerBound], *pEnd=&myData[myUpperBound];
     for(; pCur <= pEnd; pCur++)
@@ -305,7 +306,7 @@ public:
 
   //! Assignment operator; @sa Assign()
   NCollection_Array1& operator= (const NCollection_Array1& theOther)
-  { 
+  {
     return Assign (theOther);
   }
 
@@ -367,7 +368,7 @@ public:
   //! operator[] - alias to ChangeValue
   TheItemType& operator[] (Standard_Integer theIndex) { return ChangeValue (theIndex); }
 
-  //! Set value 
+  //! Set value
   void SetValue (const Standard_Integer theIndex,
                  const TheItemType&     theItem)
   {
@@ -425,8 +426,8 @@ public:
 
   //! Destructor - releases the memory
   ~NCollection_Array1 (void)
-  { 
-    if (myDeletable) 
+  {
+    if (myDeletable)
       delete [] &(myData[myLowerBound]);
   }
 
@@ -437,5 +438,9 @@ public:
   Standard_Boolean     myDeletable; //!< Flag showing who allocated the array
   TheItemType*         myData;      //!< Pointer to '0'th array item
 };
+
+#if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
+#pragma GCC diagnostic pop
+#endif
 
 #endif
