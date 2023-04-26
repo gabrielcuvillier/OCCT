@@ -438,14 +438,15 @@ endif()
 # whether use optional 3rdparty or not
 if (LIGHT_BUILD)
   set (USE_TK        OFF CACHE BOOL "${USE_TK_DESCR}")
-  set (USE_FREETYPE  ON CACHE BOOL "${USE_FREETYPE_DESCR}")
-  set (USE_RAPIDJSON ON  CACHE BOOL "${USE_RAPIDJSON_DESCR}")
+  set (USE_FREETYPE  ON CACHE BOOL "${USE_FREETYPE_DESCR}" FORCE)
+  set (USE_RAPIDJSON ON  CACHE BOOL "${USE_RAPIDJSON_DESCR}" FORCE)
+  set (USE_FREEIMAGE ON CACHE BOOL "${USE_FREEIMAGE_DESCR}" FORCE)
 else()
   set (USE_TK        ON  CACHE BOOL "${USE_TK_DESCR}")
   set (USE_FREETYPE  ON  CACHE BOOL "${USE_FREETYPE_DESCR}")
   set (USE_RAPIDJSON OFF CACHE BOOL "${USE_RAPIDJSON_DESCR}")
+  set (USE_FREEIMAGE OFF CACHE BOOL "${USE_FREEIMAGE_DESCR}")
 endif()
-set (USE_FREEIMAGE OFF CACHE BOOL "${USE_FREEIMAGE_DESCR}")
 set (USE_FFMPEG    OFF CACHE BOOL "${USE_FFMPEG_DESCR}")
 set (USE_OPENVR    OFF CACHE BOOL "${USE_OPENVR_DESCR}")
 set (USE_DRACO     OFF CACHE BOOL "${USE_DRACO_DESCR}")
@@ -586,6 +587,13 @@ OCCT_IS_PRODUCT_REQUIRED (CSF_FREETYPE CAN_USE_FREETYPE)
 OCCT_IS_PRODUCT_REQUIRED (CSF_OpenGlLibs CAN_USE_OPENGL)
 OCCT_IS_PRODUCT_REQUIRED (CSF_OpenGlesLibs CAN_USE_GLES2)
 OCCT_IS_PRODUCT_REQUIRED (CSF_TBB CAN_USE_TBB)
+if ((CAN_USE_FREEIMAGE AND USE_FREEIMAGE) OR (CAN_USE_FREETYPE AND USE_FREETYPE))
+  OCCT_IS_PRODUCT_REQUIRED (CSF_ZLIB USE_ZLIB)
+  OCCT_IS_PRODUCT_REQUIRED (CSF_PNG USE_PNG)
+endif()
+if (CAN_USE_FREEIMAGE AND USE_FREEIMAGE)
+  OCCT_IS_PRODUCT_REQUIRED (CSF_JPEG USE_JPEG)
+endif()
 
 # define CSF variable
 OCCT_INCLUDE_CMAKE_FILE ("adm/cmake/occt_csf")
@@ -627,6 +635,118 @@ if (CAN_USE_XLIB)
 else()
   OCCT_CHECK_AND_UNSET ("USE_XLIB")
 endif()
+
+if (USE_ZLIB)
+  message(STATUS "Info: zlib is used by libpng,Freetype,Freeimage")
+  if (LIGHT_BUILD)
+    file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/zlib-build)
+    # Configure
+    execute_process(COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/deps/zlib-minimal
+        -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
+        -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/zlib-build/install/zlib
+        -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
+        -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+        -DCMAKE_C_STANDARD=${CMAKE_C_STANDARD}
+        -DCMAKE_C_STANDARD_REQUIRED=${CMAKE_C_STANDARD_REQUIRED}
+        -DBUILD_SHARED_LIBS=OFF
+        -DZLIB_FORCE_LIBZ_OUTPUT_NAME=ON
+        -G "${CMAKE_GENERATOR}"
+        -T "${CMAKE_GENERATOR_TOOLSET}"
+        RESULT_VARIABLE result
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/zlib-build)
+    # Build
+    execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel
+        RESULT_VARIABLE result
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/zlib-build)
+    # Install
+    execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel --target install
+        RESULT_VARIABLE result
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/zlib-build)
+    # Final
+    set(3RDPARTY_ZLIB_DIR "${CMAKE_BINARY_DIR}/zlib-build/install/zlib" CACHE PATH "The directory containing zlib")
+    set(INSTALL_ZLIB 1)
+  endif ()
+  OCCT_INCLUDE_CMAKE_FILE("adm/cmake/zlib")
+else ()
+  OCCT_CHECK_AND_UNSET_GROUP("3RDPARTY_ZLIB")
+  OCCT_CHECK_AND_UNSET("INSTALL_ZLIB")
+endif ()
+
+if (USE_PNG)
+  message(STATUS "Info: libpng is used by Freetype,Freeimage")
+  if (LIGHT_BUILD)
+    file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/libpng-build)
+    # Configure
+    execute_process(COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/deps/libpng-minimal
+        -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
+        -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/libpng-build/install/libpng
+        -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
+        -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+        -DCMAKE_C_STANDARD=${CMAKE_C_STANDARD}
+        -DCMAKE_C_STANDARD_REQUIRED=${CMAKE_C_STANDARD_REQUIRED}
+        -DZLIB_ROOT:PATH=${3RDPARTY_ZLIB_DIR}
+        -DBUILD_SHARED_LIBS=OFF
+        -DPNG_DISABLE_AWK=ON        # Awk scripts might fail on some platforms for unknown reason (eg. Ubuntu 18.04)
+        -DPNG_BUILD_ZLIB=OFF        # Use external zlib through ZLIB_ROOT
+        -DPNG_MSVC_DO_NOT_PREFIX_LIB=ON
+        -G "${CMAKE_GENERATOR}"
+        -T "${CMAKE_GENERATOR_TOOLSET}"
+        RESULT_VARIABLE result
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/libpng-build)
+    # Build
+    execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel
+        RESULT_VARIABLE result
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/libpng-build)
+    # Install
+    execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel --target install
+        RESULT_VARIABLE result
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/libpng-build)
+    # Final
+    set(3RDPARTY_PNG_DIR "${CMAKE_BINARY_DIR}/libpng-build/install/libpng" CACHE PATH "The directory containing libpng")
+    set(INSTALL_PNG 1)
+  endif ()
+  OCCT_INCLUDE_CMAKE_FILE("adm/cmake/libpng")
+else ()
+  OCCT_CHECK_AND_UNSET_GROUP("3RDPARTY_PNG")
+  OCCT_CHECK_AND_UNSET("INSTALL_PNG")
+endif ()
+
+if (USE_JPEG)
+  message(STATUS "Info: libjpeg is used by Freeimage")
+  if (LIGHT_BUILD)
+    file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/libjpeg-build)
+    # Configure
+    execute_process(COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/deps/libjpeg-minimal
+        -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
+        -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/libjpeg-build/install/libjpeg
+        -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
+        -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+        -DCMAKE_C_STANDARD=${CMAKE_C_STANDARD}
+        -DCMAKE_C_STANDARD_REQUIRED=${CMAKE_C_STANDARD_REQUIRED}
+        -DBUILD_SHARED_LIBS=OFF
+        -DBUILD_EXECUTABLES=OFF
+        -DBUILD_TESTS=OFF
+        -G "${CMAKE_GENERATOR}"
+        -T "${CMAKE_GENERATOR_TOOLSET}"
+        RESULT_VARIABLE result
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/libjpeg-build)
+    # Build
+    execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel
+        RESULT_VARIABLE result
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/libjpeg-build)
+    # Install
+    execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel --target install
+        RESULT_VARIABLE result
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/libjpeg-build)
+    # Final
+    set(3RDPARTY_JPEG_DIR "${CMAKE_BINARY_DIR}/libjpeg-build/install/libjpeg" CACHE PATH "The directory containing libjpeg")
+    set(INSTALL_JPEG 1)
+  endif ()
+  OCCT_INCLUDE_CMAKE_FILE("adm/cmake/libjpeg")
+else ()
+  OCCT_CHECK_AND_UNSET_GROUP("3RDPARTY_JPEG")
+  OCCT_CHECK_AND_UNSET("INSTALL_JPEG")
+endif ()
 
 # FreeType
 if (CAN_USE_FREETYPE)
@@ -699,12 +819,46 @@ endif()
 # FREEIMAGE
 if (CAN_USE_FREEIMAGE)
   if (USE_FREEIMAGE)
-    add_definitions (-DHAVE_FREEIMAGE)
-    OCCT_INCLUDE_CMAKE_FILE ("adm/cmake/freeimage")
-  else()
-    OCCT_CHECK_AND_UNSET_GROUP ("3RDPARTY_FREEIMAGE")
-    OCCT_CHECK_AND_UNSET ("INSTALL_FREEIMAGE")
-  endif()
+    message(STATUS "Info: Freeimage is used by OCCT")
+    if (LIGHT_BUILD)
+      add_definitions(-DHAVE_FREEIMAGE)
+      file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/freeimage-build)
+      # Configure
+      execute_process(COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/deps/freeimage-minimal
+          -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
+          -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/freeimage-build/install/freeimage
+          -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
+          -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+          -DCMAKE_C_STANDARD=${CMAKE_C_STANDARD}
+          -DCMAKE_C_STANDARD_REQUIRED=${CMAKE_C_STANDARD_REQUIRED}
+          -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+          -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
+          -DCMAKE_CXX_STANDARD_REQUIRED=${CMAKE_CXX_STANDARD_REQUIRED}
+          -DZLIB_ROOT:PATH=${3RDPARTY_ZLIB_DIR}
+          -DPNG_ROOT:PATH=${3RDPARTY_PNG_DIR}
+          -DJPEG_ROOT:PATH=${3RDPARTY_JPEG_DIR}
+          -DBUILD_SHARED_LIBS=OFF
+          -G "${CMAKE_GENERATOR}"
+          -T "${CMAKE_GENERATOR_TOOLSET}"
+          RESULT_VARIABLE result
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freeimage-build)
+      # Build
+      execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel
+          RESULT_VARIABLE result
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freeimage-build)
+      # Install
+      execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel --target install
+          RESULT_VARIABLE result
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freeimage-build)
+      # Final
+      set(3RDPARTY_FREEIMAGE_DIR "${CMAKE_BINARY_DIR}/freeimage-build/install/freeimage" CACHE PATH "The directory containing freeimage")
+      set(INSTALL_FREEIMAGE 1)
+    endif ()
+    OCCT_INCLUDE_CMAKE_FILE("adm/cmake/freeimage")
+  else ()
+    OCCT_CHECK_AND_UNSET_GROUP("3RDPARTY_FREEIMAGE")
+    OCCT_CHECK_AND_UNSET("INSTALL_FREEIMAGE")
+  endif ()
 else()
   OCCT_CHECK_AND_UNSET ("USE_FREEIMAGE")
 
