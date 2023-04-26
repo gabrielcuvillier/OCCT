@@ -28,9 +28,7 @@
 
 #ifdef HAVE_FREETYPE
 
-#if !defined(OCCT_MINIMAL_FREETYPE_BUILD)
 #include "Font_DejavuSans_Latin_woff.pxx"
-#endif
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -73,6 +71,7 @@ namespace
     "ttf",
     "otf",
     "ttc",
+    "woff",
 #if !defined(OCCT_MINIMAL_FREETYPE_BUILD)
     "pfa",
     "pfb",
@@ -1113,7 +1112,7 @@ Handle(Font_SystemFont) Font_FontMgr::Font_FontMap::Find(const TCollection_Ascii
 // purpose  :
 // =======================================================================
 Handle(NCollection_Buffer) Font_FontMgr::EmbedFallbackFont() {
-#if defined(HAVE_FREETYPE) && !defined(OCCT_MINIMAL_FREETYPE_BUILD)
+#if defined(HAVE_FREETYPE)
     return new NCollection_Buffer(Handle(NCollection_BaseAllocator)(),
                                   Font_DejavuSans_Latin_woff_size,
                                   const_cast<Standard_Byte*>(Font_DejavuSans_Latin_woff));
