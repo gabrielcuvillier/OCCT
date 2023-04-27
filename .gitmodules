@@ -16,3 +16,6 @@
 [submodule "deps/zlib-minimal"]
 	path = deps/zlib-minimal
 	url = https://github.com/gabrielcuvillier/zlib-minimal.git
+[submodule "deps/draco-minimal"]
+	path = deps/draco-minimal
+	url = https://github.com/gabrielcuvillier/draco-minimal

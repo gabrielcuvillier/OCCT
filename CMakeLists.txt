@@ -441,15 +441,17 @@ if (LIGHT_BUILD)
   set (USE_FREETYPE  ON CACHE BOOL "${USE_FREETYPE_DESCR}" FORCE)
   set (USE_RAPIDJSON ON  CACHE BOOL "${USE_RAPIDJSON_DESCR}" FORCE)
   set (USE_FREEIMAGE ON CACHE BOOL "${USE_FREEIMAGE_DESCR}" FORCE)
+  set (USE_DRACO     ON CACHE BOOL "${USE_DRACO_DESCR}" FORCE)
 else()
   set (USE_TK        ON  CACHE BOOL "${USE_TK_DESCR}")
   set (USE_FREETYPE  ON  CACHE BOOL "${USE_FREETYPE_DESCR}")
   set (USE_RAPIDJSON OFF CACHE BOOL "${USE_RAPIDJSON_DESCR}")
   set (USE_FREEIMAGE OFF CACHE BOOL "${USE_FREEIMAGE_DESCR}")
+  set (USE_DRACO     OFF CACHE BOOL "${USE_DRACO_DESCR}")
 endif()
 set (USE_FFMPEG    OFF CACHE BOOL "${USE_FFMPEG_DESCR}")
 set (USE_OPENVR    OFF CACHE BOOL "${USE_OPENVR_DESCR}")
-set (USE_DRACO     OFF CACHE BOOL "${USE_DRACO_DESCR}")
+
 set (USE_TBB       OFF CACHE BOOL "${USE_TBB_DESCR}")
 
 if (WIN32 OR ANDROID OR IOS OR EMSCRIPTEN)
@@ -759,8 +761,8 @@ endif ()
 if (CAN_USE_FREETYPE)
   if (USE_FREETYPE)
     message(STATUS "Info: Freetype is used by OCCT")
+    add_definitions(-DHAVE_FREETYPE)
     if (LIGHT_BUILD)
-      add_definitions(-DHAVE_FREETYPE)
       file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/freetype-build)
       # Configure
       execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/freetype-minimal
@@ -826,8 +828,8 @@ endif()
 if (CAN_USE_FREEIMAGE)
   if (USE_FREEIMAGE)
     message(STATUS "Info: Freeimage is used by OCCT")
+    add_definitions(-DHAVE_FREEIMAGE)
     if (LIGHT_BUILD)
-      add_definitions(-DHAVE_FREEIMAGE)
       file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/freeimage-build)
       # Configure
       execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/freeimage-minimal
@@ -982,8 +984,8 @@ if (CAN_USE_RAPIDJSON)
   # RapidJSON
   if (USE_RAPIDJSON)
     message(STATUS "Info: RapidJSON is used by OCCT")
+    add_definitions(-DHAVE_RAPIDJSON)
     if (LIGHT_BUILD)
-      add_definitions(-DHAVE_RAPIDJSON)
       file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/rapidjson-build)
       if (CMAKE_CXX_STANDARD EQUAL "C++11" OR CMAKE_CXX_STANDARD EQUAL "C++14")
         set(RAPIDJSON_BUILD_CXX11 ON)
@@ -1037,7 +1039,42 @@ endif()
 OCCT_IS_PRODUCT_REQUIRED (CSF_Draco CAN_USE_DRACO)
 if (CAN_USE_DRACO)
   if (USE_DRACO)
+    message(STATUS "Info: Draco is used by OCCT")
     add_definitions (-DHAVE_DRACO)
+    if (LIGHT_BUILD)
+      file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/draco-build)
+      if (EMSCRIPTEN)
+        set(DRACO_WASM ON)
+      else()
+        set(DRACO_WASM OFF)
+      endif()
+      # Configure
+      execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/draco-minimal
+          -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
+          -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/draco-build/install/draco
+          -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
+          -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+          -DDRACO_TRANSCODER_SUPPORTED=OFF
+          -DDRACO_POINT_CLOUD_COMPRESSION=OFF
+          -DDRACO_JS_GLUE=OFF
+          -DDRACO_PREDICTIVE_EDGEBREAKER=OFF
+          -DDRACO_WASM=${DRACO_WASM}
+          -G "${CMAKE_GENERATOR}"
+          -T "${CMAKE_GENERATOR_TOOLSET}"
+          RESULT_VARIABLE result
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/draco-build)
+      # Build
+      execute_process(COMMAND ${CMAKE_COMMAND} --build . --config=MinSizeRel
+          RESULT_VARIABLE result
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/draco-build)
+      # Install
+      execute_process(COMMAND ${CMAKE_COMMAND} --build . --config=MinSizeRel --target install
+          RESULT_VARIABLE result
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/draco-build)
+      # Final
+      set(3RDPARTY_DRACO_DIR "${CMAKE_BINARY_DIR}/draco-build/install/draco" CACHE PATH "The directory containing draco")
+      set(INSTALL_DRACO 1)
+    endif ()
     OCCT_INCLUDE_CMAKE_FILE ("adm/cmake/draco")
   else()
     OCCT_CHECK_AND_UNSET_GROUP ("3RDPARTY_DRACO")
