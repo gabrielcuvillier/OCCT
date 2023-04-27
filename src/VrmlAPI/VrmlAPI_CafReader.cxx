@@ -53,6 +53,7 @@ namespace
       case VrmlData_NonSupportedFeature:   return "NonSupportedFeature";
       case VrmlData_OutputStreamUndefined: return "OutputStreamUndefined";
       case VrmlData_NotImplemented:        return "NotImplemented";
+      case VrmlData_Use:                   return "USE";
     }
     return "UNKNOWN";
   }
