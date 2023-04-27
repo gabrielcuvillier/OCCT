@@ -650,6 +650,7 @@ if (USE_ZLIB)
         -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
         -DCMAKE_C_FLAGS_MINSIZEREL=${CMAKE_C_FLAGS_MINSIZEREL}
         -DBUILD_SHARED_LIBS=OFF
+        -DFORCE_LIBZ_NAME=ON
         -G "${CMAKE_GENERATOR}"
         -T "${CMAKE_GENERATOR_TOOLSET}"
         RESULT_VARIABLE result
@@ -677,17 +678,23 @@ if (USE_PNG)
   if (LIGHT_BUILD)
     file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/libpng-build)
     # Configure
-    execute_process(COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/deps/libpng-minimal
+    execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/libpng-minimal
         -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
         -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/libpng-build/install/libpng
         -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
         -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
         -DCMAKE_C_STANDARD=${CMAKE_C_STANDARD}
+        -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
+        -DCMAKE_C_FLAGS_MINSIZEREL=${CMAKE_C_FLAGS_MINSIZEREL}
         -DZLIB_ROOT:PATH=${3RDPARTY_ZLIB_DIR}
         -DBUILD_SHARED_LIBS=OFF
-        -DPNG_DISABLE_AWK=ON        # Awk scripts might fail on some platforms for unknown reason (eg. Ubuntu 18.04)
+        -DPNG_SHARED=OFF
+        -DPNG_STATIC=ON
+        -DPNG_EXECUTABLES=OFF
+        -DPNG_TESTS=OFF
+        -DPNG_DEBUG=OFF
+        -DPNG_HARDWARE_OPTIMIZATIONS=OFF
         -DPNG_BUILD_ZLIB=OFF        # Use external zlib through ZLIB_ROOT
-        -DPNG_MSVC_DO_NOT_PREFIX_LIB=ON
         -G "${CMAKE_GENERATOR}"
         -T "${CMAKE_GENERATOR_TOOLSET}"
         RESULT_VARIABLE result
@@ -715,12 +722,14 @@ if (USE_JPEG)
   if (LIGHT_BUILD)
     file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/libjpeg-build)
     # Configure
-    execute_process(COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/deps/libjpeg-minimal
+    execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/libjpeg-minimal
         -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
         -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/libjpeg-build/install/libjpeg
         -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
         -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
         -DCMAKE_C_STANDARD=${CMAKE_C_STANDARD}
+        -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
+        -DCMAKE_C_FLAGS_MINSIZEREL=${CMAKE_C_FLAGS_MINSIZEREL}
         -DBUILD_SHARED_LIBS=OFF
         -DBUILD_EXECUTABLES=OFF
         -DBUILD_TESTS=OFF
@@ -754,12 +763,14 @@ if (CAN_USE_FREETYPE)
       add_definitions(-DHAVE_FREETYPE)
       file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/freetype-build)
       # Configure
-      execute_process(COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/deps/freetype-minimal
+      execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/freetype-minimal
           -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
           -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/freetype-build/install/freetype
           -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
           -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
           -DCMAKE_C_STANDARD=${CMAKE_C_STANDARD}
+          -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
+          -DCMAKE_C_FLAGS_MINSIZEREL=${CMAKE_C_FLAGS_MINSIZEREL}
           -DZLIB_ROOT:PATH=${3RDPARTY_ZLIB_DIR}
           #-DPNG_ROOT:PATH=${3RDPARTY_PNG_DIR}
           -DBUILD_SHARED_LIBS=OFF
@@ -819,17 +830,19 @@ if (CAN_USE_FREEIMAGE)
       add_definitions(-DHAVE_FREEIMAGE)
       file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/freeimage-build)
       # Configure
-      execute_process(COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/deps/freeimage-minimal
+      execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/freeimage-minimal
           -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
           -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/freeimage-build/install/freeimage
           -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
-          -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-          -DCMAKE_C_STANDARD=${CMAKE_C_STANDARD}
           -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
           -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
+          -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
+          -DCMAKE_CXX_FLAGS_MINSIZEREL=${CMAKE_CXX_FLAGS_MINSIZEREL}
           -DZLIB_ROOT:PATH=${3RDPARTY_ZLIB_DIR}
           -DPNG_ROOT:PATH=${3RDPARTY_PNG_DIR}
           -DJPEG_ROOT:PATH=${3RDPARTY_JPEG_DIR}
+          -DENABLE_PNG=1
+          -DENABLE_JPEG=1
           -DBUILD_SHARED_LIBS=OFF
           -G "${CMAKE_GENERATOR}"
           -T "${CMAKE_GENERATOR_TOOLSET}"
@@ -972,12 +985,25 @@ if (CAN_USE_RAPIDJSON)
     if (LIGHT_BUILD)
       add_definitions(-DHAVE_RAPIDJSON)
       file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/rapidjson-build)
+      if (CMAKE_CXX_STANDARD EQUAL "C++11" OR CMAKE_CXX_STANDARD EQUAL "C++14")
+        set(RAPIDJSON_BUILD_CXX11 ON)
+        set(RAPIDJSON_BUILD_CXX17 OFF)
+      else()
+        set(RAPIDJSON_BUILD_CXX11 OFF)
+        set(RAPIDJSON_BUILD_CXX17 ON)
+      endif()
       # Configure
-      execute_process(COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/deps/rapidjson-minimal
+      execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/rapidjson-minimal
           -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
           -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/rapidjson-build/install/rapidjson
           -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
           -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+          -DRAPIDJSON_BUILD_DOC=OFF
+          -DRAPIDJSON_BUILD_EXAMPLES=OFF
+          -DRAPIDJSON_BUILD_TESTS=OFF
+          -DRAPIDJSON_ENABLE_INSTRUMENTATION_OPT=OFF
+          -DRAPIDJSON_BUILD_CXX11=${RAPIDJSON_BUILD_CXX11}
+          -DRAPIDJSON_BUILD_CXX17=${RAPIDJSON_BUILD_CXX17}
           -G "${CMAKE_GENERATOR}"
           -T "${CMAKE_GENERATOR_TOOLSET}"
           RESULT_VARIABLE result

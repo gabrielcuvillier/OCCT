@@ -32,8 +32,8 @@ struct FIBITMAP;
 //! - *.gif - GIF (Graphical Interchange Format), lossy format. Color stored using palette (up to 256 distinct colors).
 //! - *.exr - OpenEXR high dynamic-range format (supports float pixel formats).
 //!
-//! On light build mode supported formats are: bmp, png, jpg and ppm are supported (no *.tga, *.gif, *.exr, *.tif)
-//! Rationale: formats supported by both major Web Browsers and GLTF format + bmp as bonus + ppm for legacy reasons
+//! On light build mode supported formats are: bmp, ppm, png, jpg and tga are supported (no *.exr or *.tif)
+//! Rationale: formats supported by both major Web Browsers and GLTF format + bmp/tga as bonus + ppm for legacy reasons
 class Image_AlienPixMap : public Image_PixMap
 {
   DEFINE_STANDARD_RTTIEXT(Image_AlienPixMap, Image_PixMap)
