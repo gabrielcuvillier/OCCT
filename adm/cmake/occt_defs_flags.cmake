@@ -47,7 +47,6 @@ if (MSVC)
 else()
   # On any other compiler than MSVC, use regular exceptions support
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
-  set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fexceptions")
 
   if (NOT (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]" AND NOT MINGW))
     # On anything except Clang on Windows with MSVC, use fPIC and OCC_CONVERT_SIGNAL
@@ -137,7 +136,7 @@ if (MSVC)
   endif()
 elseif (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]"))
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
-  if (CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]")
+  if (CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]" AND NOT EMSCRIPTEN)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wshorten-64-to-32")
   endif()
   if (BUILD_SHARED_LIBS)
