@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.1 FATAL_ERROR)
+cmake_minimum_required (VERSION 3.12 FATAL_ERROR)
 
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/adm/cmake")
 
@@ -637,7 +637,7 @@ else()
 endif()
 
 if (USE_ZLIB)
-  message(STATUS "Info: zlib is used by libpng,Freetype,Freeimage")
+  message(STATUS "Info: zlib is used by libpng, Freetype and Freeimage")
   if (LIGHT_BUILD)
     file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/zlib-build)
     # Configure
@@ -674,7 +674,7 @@ else ()
 endif ()
 
 if (USE_PNG)
-  message(STATUS "Info: libpng is used by Freetype,Freeimage")
+  message(STATUS "Info: libpng is used by Freeimage")
   if (LIGHT_BUILD)
     file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/libpng-build)
     # Configure
@@ -759,13 +759,13 @@ endif ()
 if (CAN_USE_FREETYPE)
   if (USE_FREETYPE)
     message(STATUS "Info: Freetype is used by OCCT")
+    add_definitions(-DHAVE_FREETYPE)
     if (LIGHT_BUILD)
-      add_definitions(-DHAVE_FREETYPE)
-      file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/freetype-build)
+      file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/freetype2-build)
       # Configure
-      execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/freetype-minimal
+      execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/freetype2-minimal
           -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
-          -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/freetype-build/install/freetype
+          -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/freetype2-build/install/freetype
           -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
           -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
           -DCMAKE_C_STANDARD=${CMAKE_C_STANDARD}
@@ -774,25 +774,26 @@ if (CAN_USE_FREETYPE)
           -DZLIB_ROOT:PATH=${3RDPARTY_ZLIB_DIR}
           #-DPNG_ROOT:PATH=${3RDPARTY_PNG_DIR}
           -DBUILD_SHARED_LIBS=OFF
-          -DFT_WITH_ZLIB=ON
-          -DFT_WITH_PNG=OFF
-          -DFT_WITH_BZIP2=OFF
-          -DFT_WITH_HARFBUZZ=OFF
-          -DFT_WITH_BROTLI=OFF
+          -DFT_DISABLE_ZLIB=OFF
+          -DFT_REQUIRE_ZLIB=ON
+          -DFT_DISABLE_BZIP2=ON
+          -DFT_DISABLE_PNG=ON
+          -DFT_DISABLE_HARFBUZZ=ON
+          -DFT_DISABLE_BROTLI=ON
           -G "${CMAKE_GENERATOR}"
           -T "${CMAKE_GENERATOR_TOOLSET}"
           RESULT_VARIABLE result
-          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype-build)
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype2-build)
       # Build
       execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel
           RESULT_VARIABLE result
-          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype-build)
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype2-build)
       # Install
       execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel --target install
           RESULT_VARIABLE result
-          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype-build)
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype2-build)
       # Final
-      set(3RDPARTY_FREETYPE_DIR "${CMAKE_BINARY_DIR}/freetype-build/install/freetype" CACHE PATH "The directory containing freetype")
+      set(3RDPARTY_FREETYPE_DIR "${CMAKE_BINARY_DIR}/freetype2-build/install/freetype" CACHE PATH "The directory containing freetype")
       set(INSTALL_FREETYPE 1)
     endif ()
     OCCT_INCLUDE_CMAKE_FILE("adm/cmake/freetype")
@@ -826,8 +827,8 @@ endif()
 if (CAN_USE_FREEIMAGE)
   if (USE_FREEIMAGE)
     message(STATUS "Info: Freeimage is used by OCCT")
+    add_definitions(-DHAVE_FREEIMAGE)
     if (LIGHT_BUILD)
-      add_definitions(-DHAVE_FREEIMAGE)
       file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/freeimage-build)
       # Configure
       execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/freeimage-minimal
@@ -982,8 +983,8 @@ if (CAN_USE_RAPIDJSON)
   # RapidJSON
   if (USE_RAPIDJSON)
     message(STATUS "Info: RapidJSON is used by OCCT")
+    add_definitions(-DHAVE_RAPIDJSON)
     if (LIGHT_BUILD)
-      add_definitions(-DHAVE_RAPIDJSON)
       file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/rapidjson-build)
       if (CMAKE_CXX_STANDARD EQUAL "C++11" OR CMAKE_CXX_STANDARD EQUAL "C++14")
         set(RAPIDJSON_BUILD_CXX11 ON)
