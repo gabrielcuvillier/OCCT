@@ -348,6 +348,13 @@ namespace
 Image_AlienPixMap::Image_AlienPixMap()
 : myLibImage (NULL)
 {
+#ifdef HAVE_FREEIMAGE
+  static const int _initFreeImage = ([]() {
+    FreeImage_Initialise(TRUE);
+    return 1;
+  })();
+  (void)_initFreeImage;
+#endif
   SetTopDown (false);
 }
 
