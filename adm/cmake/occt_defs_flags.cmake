@@ -66,6 +66,10 @@ else()
   # enable stack protector
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector")
   set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fstack-protector")
+
+  if (EMSCRIPTEN)
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fwasm-exceptions")
+  endif()
 endif()
 
 if (MSVC OR ((NOT MINGW) AND WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]"))
