@@ -154,6 +154,35 @@ void Wasm_Window::Size (Standard_Integer& theWidth,
 #endif
 }
 
+
+// =======================================================================
+// function : IsMapped
+// purpose  :
+// =======================================================================
+Standard_Boolean Wasm_Window::IsMapped() const
+{
+  if (IsVirtual()) {
+    return myIsMapped;
+  }
+
+#if defined(__EMSCRIPTEN__)
+  EmscriptenVisibilityChangeEvent aVis;
+  if (emscripten_get_visibility_status(&aVis) == EMSCRIPTEN_RESULT_SUCCESS) {
+    if (aVis.hidden == 0) {
+      return Standard_True;
+    }
+    else {
+      return Standard_False;
+    }
+  }
+  else {
+    return Standard_False;
+  }
+#else
+  return myIsMapped;
+#endif
+}
+
 // =======================================================================
 // function : SetSizeLogical
 // purpose  :
