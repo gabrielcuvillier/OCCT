@@ -1,7 +1,6 @@
 // This file has been automatically generated from resource file src/Shaders/TangentSpaceNormal.glsl
 
 static const char Shaders_TangentSpaceNormal_glsl[] =
-  "//! Calculates transformation from tangent space and apply it to value from normal map to get normal in object space\n"
   "vec3 TangentSpaceNormal (in mat2 theDeltaUVMatrix,\n"
   "                         in mat2x3 theDeltaVectorMatrix,\n"
   "                         in vec3 theNormalMapValue,\n"

@@ -1,13 +1,6 @@
 // This file has been automatically generated from resource file src/Shaders/PBRSpotLight.glsl
 
 static const char Shaders_PBRSpotLight_glsl[] =
-  "//! Function computes contribution of spotlight source\n"
-  "//! into global variable DirectLighting (PBR shading).\n"
-  "//! @param theId      light source index\n"
-  "//! @param theNormal  surface normal\n"
-  "//! @param theView    view direction\n"
-  "//! @param thePoint   3D position (world space)\n"
-  "//! @param theIsFront front/back face flag\n"
   "void occSpotLight (in int  theId,\n"
   "                   in vec3 theNormal,\n"
   "                   in vec3 theView,\n"
@@ -16,13 +9,11 @@ static const char Shaders_PBRSpotLight_glsl[] =
   "                   in float theShadow)\n"
   "{\n"
   "  vec3 aLight = occLight_Position (theId) - thePoint;\n"
-  "\n"
   "  float aDist = length (aLight);\n"
   "  float aRange = occLight_Range (theId);\n"
   "  float anAtten = occPointLightAttenuation (aDist, aRange);\n"
   "  if (anAtten <= 0.0) return;\n"
   "  aLight /= aDist;\n"
-  "\n"
   "  vec3 aSpotDir = occLight_SpotDirection (theId);\n"
   "  // light cone\n"
   "  float aCosA = dot (aSpotDir, -aLight);\n"

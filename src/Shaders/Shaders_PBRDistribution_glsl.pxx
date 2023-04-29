@@ -1,7 +1,6 @@
 // This file has been automatically generated from resource file src/Shaders/PBRDistribution.glsl
 
 static const char Shaders_PBRDistribution_glsl[] =
-  "//! Calculates micro facet normals distribution.\n"
   "float occPBRDistribution (in float theCosH,\n"
   "                          in float theRoughness)\n"
   "{\n"

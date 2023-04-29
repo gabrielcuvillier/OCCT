@@ -1,7 +1,6 @@
 // This file has been automatically generated from resource file src/Shaders/PBRCookTorrance.glsl
 
 static const char Shaders_PBRCookTorrance_glsl[] =
-  "//! Calculates Cook-Torrance BRDF.\n"
   "vec3 occPBRCookTorrance (in vec3  theView,\n"
   "                         in vec3  theLight,\n"
   "                         in vec3  theNormal,\n"
