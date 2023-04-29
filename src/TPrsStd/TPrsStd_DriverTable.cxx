@@ -17,20 +17,24 @@
 
 #include <Standard_GUID.hxx>
 #include <Standard_Type.hxx>
-#include <TDataXtd_Axis.hxx>
-#include <TDataXtd_Constraint.hxx>
-#include <TDataXtd_Geometry.hxx>
-#include <TDataXtd_Plane.hxx>
-#include <TDataXtd_Point.hxx>
-#include <TNaming_NamedShape.hxx>
-#include <TPrsStd_AxisDriver.hxx>
-#include <TPrsStd_ConstraintDriver.hxx>
+
 #include <TPrsStd_Driver.hxx>
 #include <TPrsStd_DriverTable.hxx>
+
+#if !defined(OCCT_DISABLE_PRESENTATION_DRIVERS_IN_VCAF)
 #include <TPrsStd_GeometryDriver.hxx>
 #include <TPrsStd_NamedShapeDriver.hxx>
 #include <TPrsStd_PlaneDriver.hxx>
 #include <TPrsStd_PointDriver.hxx>
+#include <TPrsStd_AxisDriver.hxx>
+#include <TPrsStd_ConstraintDriver.hxx>
+#include <TDataXtd_Point.hxx>
+#include <TNaming_NamedShape.hxx>
+#include <TDataXtd_Axis.hxx>
+#include <TDataXtd_Constraint.hxx>
+#include <TDataXtd_Geometry.hxx>
+#include <TDataXtd_Plane.hxx>
+#endif
 
 IMPLEMENT_STANDARD_RTTIEXT(TPrsStd_DriverTable,Standard_Transient)
 

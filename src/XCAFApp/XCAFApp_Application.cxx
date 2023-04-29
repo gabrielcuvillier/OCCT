@@ -16,19 +16,21 @@
 
 #include <Resource_Manager.hxx>
 #include <Standard_Dump.hxx>
-#include <TDF_Label.hxx>
+#if !defined(OCCT_DISABLE_VCAF_IN_XDE)
 #include <TPrsStd_DriverTable.hxx>
+#include <XCAFPrs_Driver.hxx>
+#endif
 #include <XCAFApp_Application.hxx>
 #include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFPrs_Driver.hxx>
+
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFApp_Application,TDocStd_Application)
 
 //=======================================================================
 //function : GetApplication
-//purpose  : 
+//purpose  :
 //=======================================================================
-Handle(XCAFApp_Application) XCAFApp_Application::GetApplication() 
+Handle(XCAFApp_Application) XCAFApp_Application::GetApplication()
 {
   static Handle(XCAFApp_Application) locApp;
   if ( locApp.IsNull() ) locApp = new XCAFApp_Application;
@@ -37,22 +39,27 @@ Handle(XCAFApp_Application) XCAFApp_Application::GetApplication()
 
 //=======================================================================
 //function : XCAFApp_Application
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 XCAFApp_Application::XCAFApp_Application()
 {
+#if !defined(OCCT_DISABLE_VCAF_IN_XDE)
+  // NB: Registration of XCAFPrs drivers is NO more done in an XCAFApp_Application, to remove dependency to TKVCAF, TKXCAFPrs, and TKV3d
+  // This have to be done separately for any kind of application that want to use XCAFPrs_Driver. See for example XDEDRAW::Init
+  //
   // register driver for presentation
   Handle(TPrsStd_DriverTable) table  = TPrsStd_DriverTable::Get();
   table->AddDriver (XCAFPrs_Driver::GetID(), new XCAFPrs_Driver);
+#endif
 }
 
 //=======================================================================
 //function : ResourcesName
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-Standard_CString XCAFApp_Application::ResourcesName() 
+Standard_CString XCAFApp_Application::ResourcesName()
 {
   return Standard_CString("XCAF");
 //  return Standard_CString("Standard");
@@ -60,7 +67,7 @@ Standard_CString XCAFApp_Application::ResourcesName()
 
 //=======================================================================
 //function : InitDocument
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void XCAFApp_Application::InitDocument(const Handle(CDM_Document)& aDoc) const
@@ -70,7 +77,7 @@ void XCAFApp_Application::InitDocument(const Handle(CDM_Document)& aDoc) const
 
 //=======================================================================
 //function : DumpJson
-//purpose  : 
+//purpose  :
 //=======================================================================
 void XCAFApp_Application::DumpJson (Standard_OStream& theOStream, Standard_Integer theDepth) const
 {

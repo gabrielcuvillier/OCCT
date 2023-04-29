@@ -16,7 +16,11 @@
 #include <XCAFPrs_AISObject.hxx>
 
 #include <BRep_Builder.hxx>
+#if !defined(OCCT_DISABLE_MESHING_IN_XDE)
 #include <BRepBndLib.hxx>
+#else
+#include <BRepBndLibApprox.hxx>
+#endif
 #include <gp_Pnt.hxx>
 #include <Graphic3d_AspectFillArea3d.hxx>
 #include <Prs3d_Drawer.hxx>
@@ -37,7 +41,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XCAFPrs_AISObject,AIS_ColoredShape)
 
 //=======================================================================
 //function : XCAFPrs_AISObject
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 XCAFPrs_AISObject::XCAFPrs_AISObject (const TDF_Label& theLabel)
@@ -53,7 +57,7 @@ XCAFPrs_AISObject::XCAFPrs_AISObject (const TDF_Label& theLabel)
 
 //=======================================================================
 //function : DisplayText
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 static void DisplayText (const TDF_Label& aLabel,
@@ -69,8 +73,12 @@ static void DisplayText (const TDF_Label& aLabel,
       // find the position to display as middle of the bounding box
       aShape.Move (aLocation);
       Bnd_Box aBox;
+#if !defined(OCCT_DISABLE_MESHING_IN_XDE)
       BRepBndLib::Add (aShape, aBox);
-      if ( ! aBox.IsVoid() ) 
+#else
+      BRepBndLibApprox::Add (aShape, aBox);
+#endif
+      if ( ! aBox.IsVoid() )
       {
 	Standard_Real aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
 	aBox.Get (aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
@@ -81,7 +89,7 @@ static void DisplayText (const TDF_Label& aLabel,
   }
 
   TDF_LabelSequence seq;
-  
+
   // attributes of subshapes
   if (XCAFDoc_ShapeTool::GetSubShapes (aLabel, seq)) {
     Standard_Integer i = 1;
@@ -90,7 +98,7 @@ static void DisplayText (const TDF_Label& aLabel,
       DisplayText (aL, aPrs, anAspect, aLocation); //suppose that subshapes do not contain locations
     }
   }
-  
+
   // attributes of components
   seq.Clear();
   if (XCAFDoc_ShapeTool::GetComponents (aLabel, seq)) {
@@ -99,7 +107,7 @@ static void DisplayText (const TDF_Label& aLabel,
       TDF_Label aL = seq.Value (i);
       DisplayText (aL, aPrs, anAspect, aLocation);
       TDF_Label aRefLabel;
-      
+
       // attributes of references
       TopLoc_Location aLoc = XCAFDoc_ShapeTool::GetLocation (aL);
       if (XCAFDoc_ShapeTool::GetReferredShape (aL, aRefLabel)) {
