@@ -1056,21 +1056,28 @@ if (CAN_USE_DRACO)
       else()
         set(DRACO_WASM OFF)
       endif()
+      # Some Hacks are needed for the generator
+      if (NOT SINGLE_GENERATOR)
+        set(DRACO_DEPS_GENERATOR_ARGS_2   -DCMAKE_BUILD_TYPE=MinSizeRel) # For some reason this is still needed
+      endif()
       # Configure
       execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/draco-minimal
           ${DEPS_GENERATOR_ARGS}
+          ${DRACO_DEPS_GENERATOR_ARGS_2}
+          -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
           -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/draco-build/install/draco
           -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
           -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
           -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
           -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
           -DCMAKE_C_STANDARD=${CMAKE_C_STANDARD}
+          #-DDRACO_VERBOSE=ON
           -DDRACO_GLTF_BITSTREAM=ON
           -DDRACO_JS_GLUE=OFF
           -DDRACO_POINT_CLOUD_COMPRESSION=OFF
-          -DDRACO_POINT_CLOUD_COMPRESSION=OFF
           -DDRACO_PREDICTIVE_EDGEBREAKER=OFF
           -DDRACO_BACKWARDS_COMPATIBILITY=OFF
+          -DDRACO_TRANSCODER_SUPPORTED=OFF
           -DDRACO_WASM=${DRACO_WASM}
           -G "${CMAKE_GENERATOR}"
           -T "${CMAKE_GENERATOR_TOOLSET}"

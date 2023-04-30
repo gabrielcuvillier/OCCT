@@ -18,4 +18,4 @@
 	url = https://github.com/gabrielcuvillier/freetype2-minimal.git
 [submodule "deps/draco-minimal"]
 	path = deps/draco-minimal
-	url = https://github.com/gabrielcuvillier/draco-minimal
+	url = https://github.com/gabrielcuvillier/draco-minimal.git
