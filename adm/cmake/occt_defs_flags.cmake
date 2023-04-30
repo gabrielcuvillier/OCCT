@@ -162,7 +162,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]")
   endif()
 
   #disable warning not yet managed in source code when using clang
-  if  (NOT CMAKE_C_COMPILER_VERSION VERSION_LESS "15.0.0")
+  if  (NOT CMAKE_C_COMPILER_VERSION VERSION_LESS "14.0.0")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-but-set-variable")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-but-set-parameter")
   endif()
