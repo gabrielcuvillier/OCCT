@@ -426,16 +426,8 @@ public:
   //! Destructor - releases the memory
   ~NCollection_Array1 (void)
   {
-#if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
-    #pragma GCC diagnostic push
-    #pragma GCC diagnostic ignored "-Wfree-nonheap-object"
-#endif
     if (myDeletable)
       delete [] &(myData[myLowerBound]);
-#if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
-#pragma GCC diagnostic pop
-#endif
-
   }
 
  protected:
