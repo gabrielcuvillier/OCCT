@@ -16,16 +16,6 @@
 #ifndef NCollection_Array1_HeaderFile
 #define NCollection_Array1_HeaderFile
 
-#if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
-// gcc emits -Warray-bounds warning when NCollection_Array1 is initialized
-    // from local array with lower index 1 (so that (&theBegin - 1) points out of array bounds).
-    // NCollection_Array1 initializes myData with a shift to avoid this shift within per-element access.
-    // It is undesired changing this logic, and -Warray-bounds is not useful here.
-    #pragma GCC diagnostic push
-    #pragma GCC diagnostic ignored "-Warray-bounds"
-    #pragma GCC diagnostic ignored "-Wfree-nonheap-object"
-#endif
-
 #include <Standard_DimensionMismatch.hxx>
 #include <Standard_OutOfMemory.hxx>
 #include <Standard_OutOfRange.hxx>
@@ -219,9 +209,18 @@ public:
     myDeletable                                 (Standard_False)
   {
     Standard_RangeError_Raise_if (theUpper < theLower, "NCollection_Array1::Create");
-
+  #if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
+    // gcc emits -Warray-bounds warning when NCollection_Array1 is initialized
+    // from local array with lower index 1 (so that (&theBegin - 1) points out of array bounds).
+    // NCollection_Array1 initializes myData with a shift to avoid this shift within per-element access.
+    // It is undesired changing this logic, and -Warray-bounds is not useful here.
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Warray-bounds"
+  #endif
     myData = (TheItemType *) &theBegin - theLower;
-
+  #if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
+    #pragma GCC diagnostic pop
+  #endif
   }
 
   //! Initialise the items with theValue
@@ -427,8 +426,16 @@ public:
   //! Destructor - releases the memory
   ~NCollection_Array1 (void)
   {
+#if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wfree-nonheap-object"
+#endif
     if (myDeletable)
       delete [] &(myData[myLowerBound]);
+#if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
+#pragma GCC diagnostic pop
+#endif
+
   }
 
  protected:
@@ -438,9 +445,5 @@ public:
   Standard_Boolean     myDeletable; //!< Flag showing who allocated the array
   TheItemType*         myData;      //!< Pointer to '0'th array item
 };
-
-#if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
-#pragma GCC diagnostic pop
-#endif
 
 #endif
