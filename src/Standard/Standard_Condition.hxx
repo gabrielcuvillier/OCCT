@@ -18,7 +18,9 @@
 #include <Standard.hxx>
 
 #ifndef _WIN32
-  #include <pthread.h>
+#if !defined(OCCT_DISABLE_THREADS)
+#include <pthread.h>
+#endif
 #endif
 
 //! This is boolean flag intended for communication between threads.
@@ -75,12 +77,14 @@ private:
 
 #ifdef _WIN32
   void*           myEvent;
-#else
+#elif !defined(OCCT_DISABLE_THREADS)
   pthread_mutex_t myMutex;
   pthread_cond_t  myCond;
-  bool            myFlag;
+#else
+  void* myMutex;
+  void* myCond;
 #endif
-
+  bool            myFlag;
 };
 
 #endif // _Standard_Condition_HeaderFile

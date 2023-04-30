@@ -25,14 +25,6 @@ if (MSVC)
   set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   /fp:precise")
 endif()
 
-# add SSE2 option for old MSVC compilers (VS 2005 - 2010, 32 bit only)
-if (NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
-  if (MSVC AND ((MSVC_VERSION EQUAL 1400) OR (MSVC_VERSION EQUAL 1500) OR (MSVC_VERSION EQUAL 1600)))
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /arch:SSE2")
-    set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   /arch:SSE2")
-  endif()
-endif()
-
 if (MSVC)
   # suppress C26812 on VS2019/C++20 (prefer 'enum class' over 'enum')
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd\"26812\"")
@@ -45,27 +37,36 @@ if (MSVC)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHa")
   endif()
 else()
-  # On any other compiler than MSVC, use regular exceptions support
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
+  if (EMSCRIPTEN)
+    # enable WebAssembly Exceptions support
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fwasm-exceptions")
+    set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fwasm-exceptions")
+    # enforce STRICT mode
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -sSTRICT=1")
+    set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -sSTRICT=1")
+  elseif (NOT (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]" AND NOT MINGW))
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
 
-  if (NOT (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]" AND NOT MINGW))
     # On anything except Clang on Windows with MSVC, use fPIC and OCC_CONVERT_SIGNAL
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
     set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fPIC")
 
     add_definitions(-DOCC_CONVERT_SIGNALS)
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector")
+    set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fstack-protector")
   else()
     # Specifically on Clang on Windows with MSVC, use the experimental -fasync-exceptions to mimic MSVC /EHa behavior
     # => Not yet working (tested on Clang 16 on Windows)
     #set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fasync-exceptions")
     #set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fasync-exceptions")
+
+    # Workaround
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
     # => enable OCC_CONVERT_SIGNALS instead for now
     add_definitions(-DOCC_CONVERT_SIGNALS)
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector")
+    set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fstack-protector")
   endif()
-
-  # enable stack protector
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector")
-  set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fstack-protector")
 endif()
 
 if (MSVC OR ((NOT MINGW) AND WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]"))
@@ -161,8 +162,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]")
   endif()
 
   #disable warning not yet managed in source code when using clang
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-but-set-variable")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-but-set-parameter")
+  if  (NOT CMAKE_C_COMPILER_VERSION VERSION_LESS "14.0.0")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-but-set-variable")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-but-set-parameter")
+  endif()
 elseif(MINGW)
   add_definitions(-D_WIN32_WINNT=0x0601)
   # _WIN32_WINNT=0x0601 (use Windows 7 SDK)

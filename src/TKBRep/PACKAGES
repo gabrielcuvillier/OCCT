@@ -2,6 +2,7 @@ TopoDS
 TopExp
 TopTools
 BRep
+BRepBndLibApprox
 BRepLProp
 BRepAdaptor
 BRepTools

@@ -413,7 +413,7 @@ void OSD::SetFloatingSignal (Standard_Boolean theFloatingSignal)
 {
   _fpreset();
   _clearfp();
-  
+
   // Note: zero bit means exception will be raised
   _controlfp (theFloatingSignal ? 0 : _OSD_FPX, _OSD_FPX);
 }
@@ -731,7 +731,9 @@ LONG _osd_debug ( void ) {
 #include <Standard_ErrorHandler.hxx>
 
 // POSIX threads
+#if !defined(OCCT_DISABLE_THREADS)
 #include <pthread.h>
+#endif
 
 #ifdef __linux__
 #include  <cfenv>

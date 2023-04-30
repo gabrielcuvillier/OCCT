@@ -67,7 +67,7 @@ public:
   Standard_EXPORT virtual ~Wasm_Window();
 
   //! Return true if window is not hidden.
-  virtual Standard_Boolean IsMapped() const Standard_OVERRIDE { return myIsMapped; }
+  virtual Standard_Boolean IsMapped() const Standard_OVERRIDE;
 
   //! Change window mapped flag to TRUE.
   virtual void Map()   const Standard_OVERRIDE { myIsMapped = Standard_True; }

@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.1 FATAL_ERROR)
+cmake_minimum_required (VERSION 3.12 FATAL_ERROR)
 
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/adm/cmake")
 
@@ -26,22 +26,19 @@ else()
   set_property(CACHE BUILD_CPP_STANDARD PROPERTY STRINGS "C++11" "C++14" "C++17" "C++20" "C++23")
 endif()
 
+set (CMAKE_C_STANDARD 11)
+
 # Set desired C++ standard
 if     ("${BUILD_CPP_STANDARD}" STREQUAL "C++11")
   set (CMAKE_CXX_STANDARD 11)
-  set (CMAKE_C_STANDARD 11)
 elseif ("${BUILD_CPP_STANDARD}" STREQUAL "C++14")
   set (CMAKE_CXX_STANDARD 14)
-  set (CMAKE_C_STANDARD 11)
 elseif ("${BUILD_CPP_STANDARD}" STREQUAL "C++17")
   set (CMAKE_CXX_STANDARD 17)
-  set (CMAKE_C_STANDARD 17)
 elseif ("${BUILD_CPP_STANDARD}" STREQUAL "C++20")
   set (CMAKE_CXX_STANDARD 20)
-  set (CMAKE_C_STANDARD 17)
 elseif ("${BUILD_CPP_STANDARD}" STREQUAL "C++23")
   set (CMAKE_CXX_STANDARD 23)
-  set (CMAKE_C_STANDARD 23)
 else ()
   message (FATAL_ERROR, "misprint in c++ standard name")
 endif()
@@ -437,10 +434,13 @@ endif()
 
 # whether use optional 3rdparty or not
 if (LIGHT_BUILD)
-  set (USE_TK        OFF CACHE BOOL "${USE_TK_DESCR}")
+  set (USE_TK        OFF CACHE BOOL "${USE_TK_DESCR}" FORCE)
   set (USE_FREETYPE  ON CACHE BOOL "${USE_FREETYPE_DESCR}" FORCE)
   set (USE_RAPIDJSON ON  CACHE BOOL "${USE_RAPIDJSON_DESCR}" FORCE)
   set (USE_FREEIMAGE ON CACHE BOOL "${USE_FREEIMAGE_DESCR}" FORCE)
+  set (USE_TBB       OFF CACHE BOOL "${USE_TBB_DESCR}" FORCE)
+  set (USE_FFMPEG    OFF CACHE BOOL "${USE_FFMPEG_DESCR}" FORCE)
+  set (USE_OPENVR    OFF CACHE BOOL "${USE_OPENVR_DESCR}" FORCE)
   set (USE_DRACO     ON CACHE BOOL "${USE_DRACO_DESCR}" FORCE)
 else()
   set (USE_TK        ON  CACHE BOOL "${USE_TK_DESCR}")
@@ -449,10 +449,13 @@ else()
   set (USE_FREEIMAGE OFF CACHE BOOL "${USE_FREEIMAGE_DESCR}")
   set (USE_DRACO     OFF CACHE BOOL "${USE_DRACO_DESCR}")
 endif()
-set (USE_FFMPEG    OFF CACHE BOOL "${USE_FFMPEG_DESCR}")
-set (USE_OPENVR    OFF CACHE BOOL "${USE_OPENVR_DESCR}")
+  set (USE_TBB       OFF CACHE BOOL "${USE_TBB_DESCR}")
+  set (USE_FFMPEG    OFF CACHE BOOL "${USE_FFMPEG_DESCR}")
+  set (USE_OPENVR    OFF CACHE BOOL "${USE_OPENVR_DESCR}")
 
 set (USE_TBB       OFF CACHE BOOL "${USE_TBB_DESCR}")
+endif()
+set (USE_DRACO     OFF CACHE BOOL "${USE_DRACO_DESCR}")
 
 if (WIN32 OR ANDROID OR IOS OR EMSCRIPTEN)
   # no Xlib
@@ -638,13 +641,21 @@ else()
   OCCT_CHECK_AND_UNSET ("USE_XLIB")
 endif()
 
+if (SINGLE_GENERATOR)
+  set(DEPS_GENERATOR_ARGS -DCMAKE_BUILD_TYPE=MinSizeRel)
+  set(DEPS_BUILD_ARGS)
+else()
+  set(DEPS_GENERATOR_ARGS -DCMAKE_CONFIGURATION_TYPES=MinSizeRel)
+  set(DEPS_BUILD_ARGS --config=MinSizeRel)
+endif()
+
 if (USE_ZLIB)
-  message(STATUS "Info: zlib is used by libpng,Freetype,Freeimage")
+  message(STATUS "Info: zlib is used by libpng, Freetype and Freeimage")
   if (LIGHT_BUILD)
     file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/zlib-build)
     # Configure
     execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/zlib-minimal
-        -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
+        ${DEPS_GENERATOR_ARGS}
         -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/zlib-build/install/zlib
         -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
         -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
@@ -658,11 +669,11 @@ if (USE_ZLIB)
         RESULT_VARIABLE result
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/zlib-build)
     # Build
-    execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel
+    execute_process(COMMAND ${CMAKE_COMMAND} --build . ${DEPS_BUILD_ARGS}
         RESULT_VARIABLE result
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/zlib-build)
     # Install
-    execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel --target install
+    execute_process(COMMAND ${CMAKE_COMMAND} --build . ${DEPS_BUILD_ARGS} --target install
         RESULT_VARIABLE result
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/zlib-build)
     # Final
@@ -676,12 +687,12 @@ else ()
 endif ()
 
 if (USE_PNG)
-  message(STATUS "Info: libpng is used by Freetype,Freeimage")
+  message(STATUS "Info: libpng is used by Freeimage")
   if (LIGHT_BUILD)
     file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/libpng-build)
     # Configure
     execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/libpng-minimal
-        -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
+        ${DEPS_GENERATOR_ARGS}
         -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/libpng-build/install/libpng
         -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
         -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
@@ -697,16 +708,17 @@ if (USE_PNG)
         -DPNG_DEBUG=OFF
         -DPNG_HARDWARE_OPTIMIZATIONS=OFF
         -DPNG_BUILD_ZLIB=OFF        # Use external zlib through ZLIB_ROOT
+        -DPNG_NO_AWK=ON
         -G "${CMAKE_GENERATOR}"
         -T "${CMAKE_GENERATOR_TOOLSET}"
         RESULT_VARIABLE result
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/libpng-build)
     # Build
-    execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel
+    execute_process(COMMAND ${CMAKE_COMMAND} --build . ${DEPS_BUILD_ARGS}
         RESULT_VARIABLE result
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/libpng-build)
     # Install
-    execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel --target install
+    execute_process(COMMAND ${CMAKE_COMMAND} --build . ${DEPS_BUILD_ARGS} --target install
         RESULT_VARIABLE result
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/libpng-build)
     # Final
@@ -725,7 +737,7 @@ if (USE_JPEG)
     file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/libjpeg-build)
     # Configure
     execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/libjpeg-minimal
-        -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
+        ${DEPS_GENERATOR_ARGS}
         -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/libjpeg-build/install/libjpeg
         -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
         -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
@@ -740,11 +752,11 @@ if (USE_JPEG)
         RESULT_VARIABLE result
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/libjpeg-build)
     # Build
-    execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel
+    execute_process(COMMAND ${CMAKE_COMMAND} --build . ${DEPS_BUILD_ARGS}
         RESULT_VARIABLE result
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/libjpeg-build)
     # Install
-    execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel --target install
+    execute_process(COMMAND ${CMAKE_COMMAND} --build . ${DEPS_BUILD_ARGS} --target install
         RESULT_VARIABLE result
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/libjpeg-build)
     # Final
@@ -763,38 +775,38 @@ if (CAN_USE_FREETYPE)
     message(STATUS "Info: Freetype is used by OCCT")
     add_definitions(-DHAVE_FREETYPE)
     if (LIGHT_BUILD)
-      file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/freetype-build)
+      file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/freetype2-build)
       # Configure
-      execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/freetype-minimal
-          -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
-          -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/freetype-build/install/freetype
+      execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/freetype2-minimal
+          ${DEPS_GENERATOR_ARGS}
+          -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/freetype2-build/install/freetype
           -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
           -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
           -DCMAKE_C_STANDARD=${CMAKE_C_STANDARD}
           -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
           -DCMAKE_C_FLAGS_MINSIZEREL=${CMAKE_C_FLAGS_MINSIZEREL}
           -DZLIB_ROOT:PATH=${3RDPARTY_ZLIB_DIR}
-          #-DPNG_ROOT:PATH=${3RDPARTY_PNG_DIR}
           -DBUILD_SHARED_LIBS=OFF
-          -DFT_WITH_ZLIB=ON
-          -DFT_WITH_PNG=OFF
-          -DFT_WITH_BZIP2=OFF
-          -DFT_WITH_HARFBUZZ=OFF
-          -DFT_WITH_BROTLI=OFF
+          -DFT_DISABLE_ZLIB=OFF
+          -DFT_REQUIRE_ZLIB=ON
+          -DFT_DISABLE_BZIP2=ON
+          -DFT_DISABLE_PNG=ON
+          -DFT_DISABLE_HARFBUZZ=ON
+          -DFT_DISABLE_BROTLI=ON
           -G "${CMAKE_GENERATOR}"
           -T "${CMAKE_GENERATOR_TOOLSET}"
           RESULT_VARIABLE result
-          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype-build)
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype2-build)
       # Build
-      execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel
+      execute_process(COMMAND ${CMAKE_COMMAND} --build . ${DEPS_BUILD_ARGS}
           RESULT_VARIABLE result
-          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype-build)
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype2-build)
       # Install
-      execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel --target install
+      execute_process(COMMAND ${CMAKE_COMMAND} --build . ${DEPS_BUILD_ARGS} --target install
           RESULT_VARIABLE result
-          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype-build)
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freetype2-build)
       # Final
-      set(3RDPARTY_FREETYPE_DIR "${CMAKE_BINARY_DIR}/freetype-build/install/freetype" CACHE PATH "The directory containing freetype")
+      set(3RDPARTY_FREETYPE_DIR "${CMAKE_BINARY_DIR}/freetype2-build/install/freetype" CACHE PATH "The directory containing freetype")
       set(INSTALL_FREETYPE 1)
     endif ()
     OCCT_INCLUDE_CMAKE_FILE("adm/cmake/freetype")
@@ -833,7 +845,7 @@ if (CAN_USE_FREEIMAGE)
       file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/freeimage-build)
       # Configure
       execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/freeimage-minimal
-          -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
+          ${DEPS_GENERATOR_ARGS}
           -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/freeimage-build/install/freeimage
           -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
           -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
@@ -851,11 +863,11 @@ if (CAN_USE_FREEIMAGE)
           RESULT_VARIABLE result
           WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freeimage-build)
       # Build
-      execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel
+      execute_process(COMMAND ${CMAKE_COMMAND} --build . ${DEPS_BUILD_ARGS}
           RESULT_VARIABLE result
           WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freeimage-build)
       # Install
-      execute_process(COMMAND ${CMAKE_COMMAND} --build . --config MinSizeRel --target install
+      execute_process(COMMAND ${CMAKE_COMMAND} --build . ${DEPS_BUILD_ARGS} --target install
           RESULT_VARIABLE result
           WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/freeimage-build)
       # Final
@@ -996,7 +1008,7 @@ if (CAN_USE_RAPIDJSON)
       endif()
       # Configure
       execute_process(COMMAND ${CMAKE_COMMAND} -Wno-dev ${CMAKE_SOURCE_DIR}/deps/rapidjson-minimal
-          -DCMAKE_CONFIGURATION_TYPES=MinSizeRel
+          ${DEPS_GENERATOR_ARGS}
           -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/rapidjson-build/install/rapidjson
           -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
           -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
@@ -1011,11 +1023,11 @@ if (CAN_USE_RAPIDJSON)
           RESULT_VARIABLE result
           WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/rapidjson-build)
       # Build
-      execute_process(COMMAND ${CMAKE_COMMAND} --build . --config=MinSizeRel
+      execute_process(COMMAND ${CMAKE_COMMAND} --build . ${DEPS_BUILD_ARGS}
           RESULT_VARIABLE result
           WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/rapidjson-build)
       # Install
-      execute_process(COMMAND ${CMAKE_COMMAND} --build . --config=MinSizeRel --target install
+      execute_process(COMMAND ${CMAKE_COMMAND} --build . ${DEPS_BUILD_ARGS} --target install
           RESULT_VARIABLE result
           WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/rapidjson-build)
       # Final

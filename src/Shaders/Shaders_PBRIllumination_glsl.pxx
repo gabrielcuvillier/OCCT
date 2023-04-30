@@ -1,7 +1,6 @@
 // This file has been automatically generated from resource file src/Shaders/PBRIllumination.glsl
 
 static const char Shaders_PBRIllumination_glsl[] =
-  "//! Calculates direct illumination using Cook-Torrance BRDF.\n"
   "vec3 occPBRIllumination (in vec3  theView,\n"
   "                         in vec3  theLight,\n"
   "                         in vec3  theNormal,\n"

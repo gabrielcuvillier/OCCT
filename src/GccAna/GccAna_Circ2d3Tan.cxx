@@ -25,6 +25,10 @@
 #include <StdFail_NotDone.hxx>
 #include <TColStd_Array1OfReal.hxx>
 
+#if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfree-nonheap-object"
+#endif
 //=========================================================================
 //   Creation of a circle tangent to three circles.                        +
 //=========================================================================
@@ -37,7 +41,6 @@ GccAna_Circ2d3Tan::
 //=========================================================================
 //   Initialization of fields.                                           +
 //=========================================================================
-
   cirsol(1,16)   ,
   qualifier1(1,16),
   qualifier2(1,16),
@@ -781,6 +784,9 @@ GccAna_Circ2d3Tan::
   }
   WellDone = Standard_True;
 }
+#if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
+#pragma GCC diagnostic pop
+#endif
 
 //=========================================================================
 

@@ -22,21 +22,12 @@
 #include <Standard.hxx>
 
 #ifndef _WIN32
+#if !defined(OCCT_DISABLE_THREADS)
 #include <pthread.h>
+#endif
 #else
 #include <windows.h>
 #endif
-
-namespace {
-#if !(defined(_WIN32) || defined(__WIN32__))
-  const Standard_Boolean ToUseThreads =
-#if !defined(OCCT_DISABLE_THREADS)
-    Standard_True;
-#else
-    Standard_False;
-#endif
-#endif
-}
 
 
 // ===========================================================================
@@ -65,11 +56,11 @@ static Standard_Mutex& GetMutex()
 static inline Standard_ThreadId GetThreadID()
 {
 #ifndef _WIN32
-  if Standard_IF_CONSTEXPR(ToUseThreads) {
-    return (Standard_ThreadId)pthread_self();
-  } else {
-    return (Standard_ThreadId)0;
-  }
+#if !defined(OCCT_DISABLE_THREADS)
+  return (Standard_ThreadId)pthread_self();
+#else
+  return (Standard_ThreadId)0;
+#endif
 #else
   return GetCurrentThreadId();
 #endif

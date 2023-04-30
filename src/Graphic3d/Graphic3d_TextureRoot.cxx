@@ -78,7 +78,10 @@ TCollection_AsciiString Graphic3d_TextureRoot::TexturesFolder()
       std::cerr << " CSF_MDTVTexturesDirectory or CASROOT not correctly set\n";
       std::cerr << " not all files are found in : "<< VarName.ToCString() << std::endl;
 #endif
+
+#if !defined(__EMSCRIPTEN__)  // Don't fail on emscripten, in case they are not embedded
       throw Standard_Failure("CSF_MDTVTexturesDirectory or CASROOT not correctly set");
+#endif
     }
   }
   return VarName;

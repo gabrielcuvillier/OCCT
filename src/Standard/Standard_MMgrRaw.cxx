@@ -18,7 +18,7 @@
 
 //=======================================================================
 //function : Standard_MMgrRaw
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_MMgrRaw::Standard_MMgrRaw(const Standard_Boolean aClear)
@@ -28,7 +28,7 @@ Standard_MMgrRaw::Standard_MMgrRaw(const Standard_Boolean aClear)
 
 //=======================================================================
 //function : Allocate
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Address Standard_MMgrRaw::Allocate(const Standard_Size aSize)
@@ -46,7 +46,7 @@ Standard_Address Standard_MMgrRaw::Allocate(const Standard_Size aSize)
 
 //=======================================================================
 //function : Free
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void Standard_MMgrRaw::Free(Standard_Address theStorage)
@@ -56,7 +56,7 @@ void Standard_MMgrRaw::Free(Standard_Address theStorage)
 
 //=======================================================================
 //function : Reallocate
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Address Standard_MMgrRaw::Reallocate(Standard_Address theStorage,

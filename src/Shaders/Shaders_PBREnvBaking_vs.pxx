@@ -2,11 +2,9 @@
 
 static const char Shaders_PBREnvBaking_vs[] =
   "THE_SHADER_OUT vec3 ViewDirection; //!< direction of fetching from environment cubemap\n"
-  "\n"
   "uniform int uCurrentSide; //!< current side of cubemap\n"
   "uniform int uYCoeff;      //!< coefficient of Y controlling horizontal flip of cubemap\n"
   "uniform int uZCoeff;      //!< coefficient of Z controlling vertical flip of cubemap\n"
-  "\n"
   "void main()\n"
   "{\n"
   "  vec3 aDir;\n"
