@@ -16,9 +16,11 @@
 
 
 #include <Standard.hxx>
+#if !defined(OCCT_DISABLE_OPTIMIZED_MEMORY_ALLOCATOR)
 #include <Standard_MMgrOpt.hxx>
-#include <Standard_MMgrRaw.hxx>
 #include <Standard_MMgrTBBalloc.hxx>
+#endif
+#include <Standard_MMgrRaw.hxx>
 #include <Standard_Assert.hxx>
 
 #include <stdlib.h>
@@ -45,15 +47,6 @@
 #ifndef OCCT_MMGT_OPT_DEFAULT
 #define OCCT_MMGT_OPT_DEFAULT 0
 #endif
-
-namespace {
-  const Standard_Boolean ToUseOptMemAlloc =
-#if !defined(OCCT_DISABLE_OPTIMIZED_MEMORY_ALLOCATOR)
-    Standard_True;
-#else
-    Standard_False;
-#endif
-}
 
 //=======================================================================
 //class    : Standard_MMgrFactory
@@ -107,12 +100,13 @@ Standard_MMgrFactory::Standard_MMgrFactory()
 #endif
 
   char *aVar = nullptr;
+#if !defined(OCCT_DISABLE_OPTIMIZED_MEMORY_ALLOCATOR)
+
   Standard_Integer anAllocId = 0;
 
-  if Standard_IF_CONSTEXPR(ToUseOptMemAlloc) {
-    aVar = getenv("MMGT_OPT");
-    anAllocId = (aVar ? atoi(aVar) : OCCT_MMGT_OPT_DEFAULT);
-  }
+  aVar = getenv("MMGT_OPT");
+  anAllocId = (aVar ? atoi(aVar) : OCCT_MMGT_OPT_DEFAULT);
+#endif
 
 #if defined(HAVE_TBB) && defined(_M_IX86)
   if (anAllocId == 2)
@@ -161,7 +155,7 @@ Standard_MMgrFactory::Standard_MMgrFactory()
   }
 #endif
 
-  if Standard_IF_CONSTEXPR(ToUseOptMemAlloc) {
+#if !defined(OCCT_DISABLE_OPTIMIZED_MEMORY_ALLOCATOR)
       switch (anAllocId)
       {
         case 1:  // OCCT optimized memory allocator
@@ -184,10 +178,9 @@ Standard_MMgrFactory::Standard_MMgrFactory()
         default: // system default memory allocator
           myFMMgr = new Standard_MMgrRaw (toClear);
       }
-  }
-  else {
+#else
     myFMMgr = new Standard_MMgrRaw (toClear);
-  }
+#endif
 }
 
 //=======================================================================

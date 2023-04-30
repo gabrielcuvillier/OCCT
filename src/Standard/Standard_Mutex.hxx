@@ -22,11 +22,11 @@
 #include <NCollection_Shared.hxx>
 
 #if defined(_WIN32)
-  #include <windows.h>
-#else
-  #include <pthread.h>
-  #include <unistd.h>
-  #include <time.h>
+#include <windows.h>
+#elif !defined(OCCT_DISABLE_THREADS)
+#include <pthread.h>
+#include <unistd.h>
+#include <time.h>
 #endif
 
 /**
@@ -165,8 +165,10 @@ private:
 private:
 #if (defined(_WIN32) || defined(__WIN32__))
   CRITICAL_SECTION myMutex;
-#else
+#elif !defined(OCCT_DISABLE_THREADS)
   pthread_mutex_t myMutex;
+#else
+  void* myMutex;
 #endif
 };
 

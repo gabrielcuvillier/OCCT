@@ -41,18 +41,11 @@ extern "C" {int     dlclose (       void  *handle  );}
 extern "C" {void    *dlerror (void);}
 #endif
 
+#if !defined(OCCT_DISABLE_SHAREDLIBRARY)
 #include <dlfcn.h>
+#endif
 
 #define BAD(X)  ((X) == NULL)
-
-namespace {
-const Standard_Boolean ToUseSharedLibrary =
-#if !defined(OCCT_DISABLE_SHAREDLIBRARY)
-        Standard_True;
-#else
-        Standard_False;
-#endif
-}
 
 // ----------------------------------------------------------------
 //
@@ -117,13 +110,15 @@ void  OSD_SharedLibrary::SetName(const Standard_CString aName)  {
 //
 // ----------------------------------------------------------------
 Standard_Boolean  OSD_SharedLibrary::DlOpen(const OSD_LoadMode aMode ) {
-  if Standard_IF_CONSTEXPR(ToUseSharedLibrary) {
-    if (aMode == OSD_RTLD_LAZY) {
-      myHandle = dlopen(myName, RTLD_LAZY);
-    } else if (aMode == OSD_RTLD_NOW) {
-      myHandle = dlopen(myName, RTLD_NOW);
-    }
+#if !defined(OCCT_DISABLE_SHAREDLIBRARY)
+  if (aMode == OSD_RTLD_LAZY) {
+    myHandle = dlopen(myName, RTLD_LAZY);
+  } else if (aMode == OSD_RTLD_NOW) {
+    myHandle = dlopen(myName, RTLD_NOW);
   }
+#else
+  (void)aMode;
+#endif
 
 if (!BAD(myHandle)){
   return Standard_True;
@@ -142,9 +137,11 @@ else {
 // ----------------------------------------------------------------
 OSD_Function  OSD_SharedLibrary::DlSymb(const Standard_CString aName )const{
   void (*fp)() = nullptr;
-  if Standard_IF_CONSTEXPR(ToUseSharedLibrary) {
-    fp = (void (*)()) dlsym(myHandle, aName);
-  }
+#if !defined(OCCT_DISABLE_SHAREDLIBRARY)
+  fp = (void (*)()) dlsym(myHandle, aName);
+#else
+  (void)aName;
+#endif
 
 if (!BAD(fp)){
   return (OSD_Function)fp;
@@ -162,9 +159,9 @@ else {
 //
 // ----------------------------------------------------------------
 void OSD_SharedLibrary::DlClose()const{
-  if Standard_IF_CONSTEXPR(ToUseSharedLibrary) {
-    dlclose(myHandle);
-  }
+#if !defined(OCCT_DISABLE_SHAREDLIBRARY)
+  dlclose(myHandle);
+#endif
 }
 // ----------------------------------------------------------------
 //
@@ -173,12 +170,11 @@ void OSD_SharedLibrary::DlClose()const{
 //
 // ----------------------------------------------------------------
 Standard_CString OSD_SharedLibrary::DlError()const{
-  if Standard_IF_CONSTEXPR(ToUseSharedLibrary) {
-    return (char *) dlerror();
-  }
-  else {
-    return nullptr;
-  }
+#if !defined(OCCT_DISABLE_SHAREDLIBRARY)
+  return (char *) dlerror();
+#else
+  return nullptr;
+#endif
 }
 // ----------------------------------------------------------------------------
 // Destroy

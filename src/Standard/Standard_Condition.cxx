@@ -13,12 +13,12 @@
 // commercial license or contractual agreement.
 
 #ifdef _WIN32
-  #include <windows.h>
-#else
-  #include <pthread.h>
-  #include <unistd.h>
-  #include <errno.h>
-  #include <sys/time.h>
+#include <windows.h>
+#elif !defined(OCCT_DISABLE_THREADS)
+#include <pthread.h>
+#include <unistd.h>
+#include <errno.h>
+#include <sys/time.h>
 #endif
 
 #include "Standard_Condition.hxx"
@@ -26,6 +26,7 @@
 namespace
 {
 #ifndef _WIN32
+#if !defined(OCCT_DISABLE_THREADS)
   //! clock_gettime() wrapper.
   static void conditionGetRealTime (struct timespec& theTime)
   {
@@ -38,6 +39,7 @@ namespace
     clock_gettime (CLOCK_REALTIME, &theTime);
   #endif
   }
+#endif
 #endif
 }
 
@@ -53,8 +55,13 @@ Standard_Condition::Standard_Condition (bool theIsSet)
 #endif
 {
 #ifndef _WIN32
+#if !defined(OCCT_DISABLE_THREADS)
   pthread_mutex_init(&myMutex, 0);
   pthread_cond_init (&myCond,  0);
+#else
+  myMutex = 0;
+  myCond = 0;
+#endif
 #endif
 }
 
@@ -67,8 +74,10 @@ Standard_Condition::~Standard_Condition()
 #ifdef _WIN32
   ::CloseHandle ((HANDLE )myEvent);
 #else
+#if !defined(OCCT_DISABLE_THREADS)
   pthread_mutex_destroy(&myMutex);
   pthread_cond_destroy (&myCond);
+#endif
 #endif
 }
 
@@ -81,10 +90,15 @@ void Standard_Condition::Set()
 #ifdef _WIN32
   ::SetEvent ((HANDLE )myEvent);
 #else
+#if !defined(OCCT_DISABLE_THREADS)
   pthread_mutex_lock(&myMutex);
+#endif
   myFlag = true;
+#if !defined(OCCT_DISABLE_THREADS)
   pthread_cond_broadcast(&myCond);
   pthread_mutex_unlock  (&myMutex);
+#endif
+
 #endif
 }
 
@@ -97,9 +111,13 @@ void Standard_Condition::Reset()
 #ifdef _WIN32
   ::ResetEvent ((HANDLE )myEvent);
 #else
+#if !defined(OCCT_DISABLE_THREADS)
   pthread_mutex_lock (&myMutex);
+#endif
   myFlag = false;
+#if !defined(OCCT_DISABLE_THREADS)
   pthread_mutex_unlock (&myMutex);
+#endif
 #endif
 }
 
@@ -112,12 +130,14 @@ void Standard_Condition::Wait()
 #ifdef _WIN32
   ::WaitForSingleObject ((HANDLE )myEvent, INFINITE);
 #else
+#if !defined(OCCT_DISABLE_THREADS)
   pthread_mutex_lock (&myMutex);
   if (!myFlag)
   {
     pthread_cond_wait (&myCond, &myMutex);
   }
   pthread_mutex_unlock (&myMutex);
+#endif
 #endif
 }
 
@@ -131,6 +151,7 @@ bool Standard_Condition::Wait (int theTimeMilliseconds)
   return (::WaitForSingleObject ((HANDLE )myEvent, (DWORD )theTimeMilliseconds) != WAIT_TIMEOUT);
 #else
   bool isSignalled = true;
+#if !defined(OCCT_DISABLE_THREADS)
   pthread_mutex_lock (&myMutex);
   if (!myFlag)
   {
@@ -149,6 +170,9 @@ bool Standard_Condition::Wait (int theTimeMilliseconds)
     isSignalled = (pthread_cond_timedwait (&myCond, &myMutex, &aTimeout) != ETIMEDOUT);
   }
   pthread_mutex_unlock (&myMutex);
+#else
+  (void)theTimeMilliseconds;
+#endif
   return isSignalled;
 #endif
 }
@@ -163,6 +187,7 @@ bool Standard_Condition::Check()
   return (::WaitForSingleObject ((HANDLE )myEvent, (DWORD )0) != WAIT_TIMEOUT);
 #else
   bool isSignalled = true;
+#if !defined(OCCT_DISABLE_THREADS)
   pthread_mutex_lock (&myMutex);
   if (!myFlag)
   {
@@ -174,6 +199,7 @@ bool Standard_Condition::Check()
     isSignalled = (pthread_cond_timedwait (&myCond, &myMutex, &aTimeout) != ETIMEDOUT);
   }
   pthread_mutex_unlock (&myMutex);
+#endif
   return isSignalled;
 #endif
 }
@@ -189,8 +215,11 @@ bool Standard_Condition::CheckReset()
   ::ResetEvent ((HANDLE )myEvent);
   return wasSignalled;
 #else
+#if !defined(OCCT_DISABLE_THREADS)
   pthread_mutex_lock (&myMutex);
+#endif
   bool wasSignalled = myFlag;
+#if !defined(OCCT_DISABLE_THREADS)
   if (!myFlag)
   {
     struct timespec aNow;
@@ -202,6 +231,7 @@ bool Standard_Condition::CheckReset()
   }
   myFlag = false;
   pthread_mutex_unlock (&myMutex);
+#endif
   return wasSignalled;
 #endif
 }

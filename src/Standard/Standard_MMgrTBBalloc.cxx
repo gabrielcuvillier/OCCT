@@ -13,6 +13,8 @@
 // Alternatively, this file may be used under the terms of Open CASCADE
 // commercial license or contractual agreement.
 
+#if !defined(OCCT_DISABLE_OPTIMIZED_MEMORY_ALLOCATOR)
+
 #include <Standard_MMgrTBBalloc.hxx>
 #include <Standard_OutOfMemory.hxx>
 
@@ -30,7 +32,7 @@ using namespace tbb;
 
 //=======================================================================
 //function : Standard_MMgrTBBalloc
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_MMgrTBBalloc::Standard_MMgrTBBalloc(const Standard_Boolean aClear)
@@ -40,7 +42,7 @@ Standard_MMgrTBBalloc::Standard_MMgrTBBalloc(const Standard_Boolean aClear)
 
 //=======================================================================
 //function : Allocate
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Address Standard_MMgrTBBalloc::Allocate(const Standard_Size aSize)
@@ -58,7 +60,7 @@ Standard_Address Standard_MMgrTBBalloc::Allocate(const Standard_Size aSize)
 
 //=======================================================================
 //function : Free
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void Standard_MMgrTBBalloc::Free (Standard_Address theStorage)
@@ -68,7 +70,7 @@ void Standard_MMgrTBBalloc::Free (Standard_Address theStorage)
 
 //=======================================================================
 //function : Reallocate
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Address Standard_MMgrTBBalloc::Reallocate (Standard_Address theStorage,
@@ -85,3 +87,5 @@ Standard_Address Standard_MMgrTBBalloc::Reallocate (Standard_Address theStorage,
   // in order to do that we would need using memset...
   return newStorage;
 }
+
+#endif
