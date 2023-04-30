@@ -306,6 +306,7 @@ Standard_Boolean OSD_Thread::Wait (const Standard_Integer theTimeMs,
   myThreadId = 0;
   return Standard_True;
 #else
+  (void)theTimeMs;
   return Standard_True;
 #endif
 }
