@@ -16,7 +16,6 @@
 
 #include <StdPrs_HLRPolyShape.hxx>
 
-#include <BRepMesh_IncrementalMesh.hxx>
 #include <Graphic3d_ArrayOfSegments.hxx>
 #include <Graphic3d_Group.hxx>
 #include <HLRAlgo_EdgeIterator.hxx>
@@ -71,7 +70,7 @@ void StdPrs_HLRPolyShape::ComputeHLR (const Handle(Prs3d_Presentation)& aPresent
   {
     StdPrs_ToolTriangulatedShape::Tessellate (aShape, aDrawer);
   }
-  
+
   Handle(HLRBRep_PolyAlgo) hider = new HLRBRep_PolyAlgo(aShape);
   hider->Projector (aProj);
   hider->Update();
@@ -84,15 +83,15 @@ void StdPrs_HLRPolyShape::ComputeHLR (const Handle(Prs3d_Presentation)& aPresent
   TopoDS_Shape S;
 
   HLRBRep_ListOfBPoint BiPntVis, BiPntHid;
-  
+
   for (hider->InitHide(); hider->MoreHide(); hider->NextHide())
   {
     Coordinates = &hider->Hide(status, S, reg1, regn, outl, intl);
-    
+
     dx = PntX2 - PntX1;
     dy = PntY2 - PntY1;
     dz = PntZ2 - PntZ1;
-    
+
     for (It.InitVisible(status); It.MoreVisible(); It.NextVisible())
     {
       It.Visible(sta,tolsta,end,tolend);
@@ -102,7 +101,7 @@ void StdPrs_HLRPolyShape::ComputeHLR (const Handle(Prs3d_Presentation)& aPresent
             PntX1 + end * dx,PntY1 + end * dy,PntZ1 + end * dz,
             S,reg1,regn,outl,intl));
     }
-    
+
     for (It.InitHidden(status); It.MoreHidden(); It.NextHidden())
     {
       It.Hidden(sta,tolsta,end,tolend);
@@ -110,7 +109,7 @@ void StdPrs_HLRPolyShape::ComputeHLR (const Handle(Prs3d_Presentation)& aPresent
         (HLRBRep_BiPoint
            (PntX1 + sta * dx,PntY1 + sta * dy,PntZ1 + sta * dz,
             PntX1 + end * dx,PntY1 + end * dy,PntZ1 + end * dz,
-            S,reg1,regn,outl,intl));	
+            S,reg1,regn,outl,intl));
     }
   }
 
@@ -173,4 +172,4 @@ void StdPrs_HLRPolyShape::ComputeHLR (const Handle(Prs3d_Presentation)& aPresent
       aGroup->AddPrimitiveArray (aSeenArray);
     }
   }
-}   
+}

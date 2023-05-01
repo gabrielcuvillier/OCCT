@@ -18,13 +18,13 @@
 #include <AIS_InteractiveContext.hxx>
 #include <BRep_Builder.hxx>
 #include <BRepTools.hxx>
+#if !defined(OCCT_DISABLE_MESHING_IN_VISUALIZATION)
 #include <BRepMesh_IncrementalMesh.hxx>
-#include <Graphic3d_AspectFillArea3d.hxx>
+#endif
 #include <Graphic3d_AspectLine3d.hxx>
 #include <Graphic3d_ArrayOfTriangles.hxx>
 #include <Graphic3d_ArrayOfSegments.hxx>
 #include <Graphic3d_Group.hxx>
-#include <Graphic3d_StructureManager.hxx>
 #include <Precision.hxx>
 #include <Prs3d_Presentation.hxx>
 #include <Prs3d_ShadingAspect.hxx>
@@ -488,7 +488,9 @@ void AIS_ColoredShape::ComputeSelection (const Handle(SelectMgr_Selection)& theS
   if (myDrawer->IsAutoTriangulation()
   && !BRepTools::Triangulation (myshape, Precision::Infinite()))
   {
+#if !defined(OCCT_DISABLE_MESHING_IN_VISUALIZATION)
     BRepMesh_IncrementalMesh aMesher (myshape, aDeflection, Standard_False, aDeviationAngle);
+#endif
   }
 
   AIS_DataMapOfShapeDrawer aSubshapeDrawerMap;

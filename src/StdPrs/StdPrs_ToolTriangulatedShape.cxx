@@ -17,7 +17,9 @@
 #include <StdPrs_ToolTriangulatedShape.hxx>
 
 #include <BRepBndLib.hxx>
+#if !defined(OCCT_DISABLE_MESHING_IN_VISUALIZATION)
 #include <BRepMesh_DiscretFactory.hxx>
+#endif
 #include <BRepTools.hxx>
 #include <BRep_Tool.hxx>
 #include <Prs3d.hxx>
@@ -176,6 +178,7 @@ Standard_Boolean StdPrs_ToolTriangulatedShape::Tessellate (const TopoDS_Shape&  
     return wasRecomputed;
   }
 
+#if !defined(OCCT_DISABLE_MESHING_IN_VISUALIZATION)
   const Standard_Real aDeflection = GetDeflection (theShape, theDrawer);
 
   // retrieve meshing tool from Factory
@@ -187,6 +190,7 @@ Standard_Boolean StdPrs_ToolTriangulatedShape::Tessellate (const TopoDS_Shape&  
     aMeshAlgo->Perform();
     wasRecomputed = Standard_True;
   }
+#endif
 
   return wasRecomputed;
 }

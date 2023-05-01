@@ -1217,6 +1217,7 @@ void SelectMgr_ViewerSelector::Pick (const TColgp_Array1OfPnt2d& thePolyline,
 {
   updateZLayers (theView);
 
+#if !defined(OCCT_DISABLE_MESHING_IN_VISUALIZATION)
   mySelectingVolumeMgr.InitPolylineSelectingVolume (thePolyline);
   mySelectingVolumeMgr.SetCamera (theView->Camera());
   Standard_Integer aWidth = 0, aHeight = 0;
@@ -1226,6 +1227,9 @@ void SelectMgr_ViewerSelector::Pick (const TColgp_Array1OfPnt2d& thePolyline,
   mySelectingVolumeMgr.SetViewClipping (theView->ClipPlanes(), Handle(Graphic3d_SequenceOfHClipPlane)(), NULL);
 
   TraverseSensitives (theView->View()->Identification());
+#else
+  (void)thePolyline;
+#endif
 }
 
 //=======================================================================
@@ -1357,9 +1361,9 @@ void SelectMgr_ViewerSelector::DisplaySensitive (const Handle(SelectMgr_Selectio
 
 //=======================================================================
 //function : DumpJson
-//purpose  : 
+//purpose  :
 //=======================================================================
-void SelectMgr_ViewerSelector::DumpJson (Standard_OStream& theOStream, Standard_Integer theDepth) const 
+void SelectMgr_ViewerSelector::DumpJson (Standard_OStream& theOStream, Standard_Integer theDepth) const
 {
   OCCT_DUMP_TRANSIENT_CLASS_BEGIN (theOStream)
 
@@ -1400,7 +1404,7 @@ void SelectMgr_ViewerSelector::DumpJson (Standard_OStream& theOStream, Standard_
 
 //=======================================================================
 //function : SetToPrebuildBVH
-//purpose  : 
+//purpose  :
 //=======================================================================
 void SelectMgr_ViewerSelector::SetToPrebuildBVH (Standard_Boolean theToPrebuild, Standard_Integer theThreadsNum)
 {
@@ -1417,7 +1421,7 @@ void SelectMgr_ViewerSelector::SetToPrebuildBVH (Standard_Boolean theToPrebuild,
 
 //=======================================================================
 //function : QueueBVHBuild
-//purpose  : 
+//purpose  :
 //=======================================================================
 void SelectMgr_ViewerSelector::QueueBVHBuild (const Handle(Select3D_SensitiveEntity)& theEntity)
 {
@@ -1429,7 +1433,7 @@ void SelectMgr_ViewerSelector::QueueBVHBuild (const Handle(Select3D_SensitiveEnt
 
 //=======================================================================
 //function : WaitForBVHBuild
-//purpose  : 
+//purpose  :
 //=======================================================================
 void SelectMgr_ViewerSelector::WaitForBVHBuild()
 {

@@ -15,8 +15,10 @@
 
 #include <SelectMgr_TriangularFrustumSet.hxx>
 
+#if !defined(OCCT_DISABLE_MESHING_IN_VISUALIZATION)
 #include <BRepMesh_DataStructureOfDelaun.hxx>
 #include <BRepMesh_Delaun.hxx>
+#endif
 #include <Geom_Plane.hxx>
 #include <GeomInt_IntSS.hxx>
 #include <Geom_Circle.hxx>
@@ -71,6 +73,7 @@ void SelectMgr_TriangularFrustumSet::Init (const TColgp_Array1OfPnt2d& thePoints
 // =======================================================================
 void SelectMgr_TriangularFrustumSet::Build()
 {
+#if !defined(OCCT_DISABLE_MESHING_IN_VISUALIZATION)
   Standard_ASSERT_RAISE (mySelectionType == SelectMgr_SelectionType_Polyline || !mySelPolyline.Points.IsNull(),
     "Error! SelectMgr_TriangularFrustumSet::Build() should be called after selection frustum initialization");
 
@@ -145,6 +148,7 @@ void SelectMgr_TriangularFrustumSet::Build()
 
   aMeshStructure.Nullify();
   anAllocator.Nullify();
+#endif
 }
 
 // =======================================================================
@@ -951,7 +955,7 @@ gp_Pnt SelectMgr_TriangularFrustumSet::DetectedPoint (const Standard_Real theDep
 
 //=======================================================================
 //function : DumpJson
-//purpose  : 
+//purpose  :
 //=======================================================================
 void SelectMgr_TriangularFrustumSet::DumpJson (Standard_OStream& theOStream, Standard_Integer theDepth) const
 {

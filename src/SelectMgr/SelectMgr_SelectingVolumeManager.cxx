@@ -679,9 +679,9 @@ void SelectMgr_SelectingVolumeManager::SetViewClipping (const SelectMgr_Selectin
 
 //=======================================================================
 //function : DumpJson
-//purpose  : 
+//purpose  :
 //=======================================================================
-void SelectMgr_SelectingVolumeManager::DumpJson (Standard_OStream& theOStream, Standard_Integer theDepth) const 
+void SelectMgr_SelectingVolumeManager::DumpJson (Standard_OStream& theOStream, Standard_Integer theDepth) const
 {
   OCCT_DUMP_CLASS_BEGIN (theOStream, SelectMgr_SelectingVolumeManager)
 

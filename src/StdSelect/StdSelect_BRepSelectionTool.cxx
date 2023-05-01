@@ -19,11 +19,12 @@
 #include <BRep_Tool.hxx>
 #include <BRepAdaptor_Curve.hxx>
 #include <BRepAdaptor_Surface.hxx>
+#if !defined(OCCT_DISABLE_MESHING_IN_VISUALIZATION)
 #include <BRepMesh_IncrementalMesh.hxx>
+#endif
 #include <BRepTools.hxx>
 #include <BRepTools_WireExplorer.hxx>
 #include <GCPnts_TangentialDeflection.hxx>
-#include <GeomAbs_SurfaceType.hxx>
 #include <Geom_ConicalSurface.hxx>
 #include <Geom_CylindricalSurface.hxx>
 #include <Geom_Plane.hxx>
@@ -45,7 +46,6 @@
 #include <Select3D_SensitiveSphere.hxx>
 #include <Select3D_SensitiveTriangulation.hxx>
 #include <Select3D_SensitiveWire.hxx>
-#include <Select3D_TypeOfSensitivity.hxx>
 #include <SelectMgr_EntityOwner.hxx>
 #include <SelectMgr_SelectableObject.hxx>
 #include <SelectMgr_Selection.hxx>
@@ -115,7 +115,9 @@ void StdSelect_BRepSelectionTool::Load (const Handle(SelectMgr_Selection)& theSe
   if (isAutoTriangulation
   && !BRepTools::Triangulation (theShape, Precision::Infinite(), true))
   {
+#if !defined(OCCT_DISABLE_MESHING_IN_VISUALIZATION)
     BRepMesh_IncrementalMesh aMesher(theShape, theDeflection, Standard_False, theDeviationAngle);
+#endif
   }
 
   Handle(StdSelect_BRepOwner) aBrepOwner;

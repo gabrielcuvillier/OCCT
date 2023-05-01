@@ -14,20 +14,20 @@
 // commercial license or contractual agreement.
 
 #include <AIS_RubberBand.hxx>
+#if !defined(OCCT_DISABLE_MESHING_IN_VISUALIZATION)
 #include <BRepMesh_DataStructureOfDelaun.hxx>
 #include <BRepMesh_Delaun.hxx>
-#include <Graphic3d_ArrayOfPolygons.hxx>
+#endif
 #include <Graphic3d_ArrayOfPolylines.hxx>
 #include <Graphic3d_AspectFillArea3d.hxx>
 #include <Graphic3d_GraphicDriver.hxx>
-#include <Graphic3d_ArrayOfTriangles.hxx>
-#include <Graphic3d_TransModeFlags.hxx>
 #include <Graphic3d_ZLayerId.hxx>
 #include <SelectMgr_EntityOwner.hxx>
 #include <V3d_View.hxx>
 
-
+#if !defined(OCCT_DISABLE_MESHING_IN_VISUALIZATION)
 #define MEMORY_BLOCK_SIZE 512 * 7
+#endif
 
 IMPLEMENT_STANDARD_RTTIEXT(AIS_RubberBand, AIS_InteractiveObject)
 //=======================================================================
@@ -294,6 +294,7 @@ void AIS_RubberBand::SetPolygonClosed(Standard_Boolean theIsPolygonClosed)
 //=======================================================================
 Standard_Boolean AIS_RubberBand::fillTriangles()
 {
+#if !defined(OCCT_DISABLE_MESHING_IN_VISUALIZATION)
   Handle(NCollection_IncAllocator) anAllocator = new NCollection_IncAllocator (MEMORY_BLOCK_SIZE);
   Handle(BRepMesh_DataStructureOfDelaun) aMeshStructure = new BRepMesh_DataStructureOfDelaun(anAllocator);
   Standard_Integer aPtsLower = myPoints.Lower();
@@ -381,6 +382,9 @@ Standard_Boolean AIS_RubberBand::fillTriangles()
   anAllocator.Nullify();
 
   return Standard_True;
+#else
+  return Standard_False;
+#endif
 }
 
 //=======================================================================
