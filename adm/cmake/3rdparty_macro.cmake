@@ -49,13 +49,13 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
         set (3RDPARTY_${PRODUCT_NAME}_LIBRARY_DIR_${LIBRARY_NAME}           "" CACHE PATH "The directory containing ${PRODUCT_NAME} library \"${LIBRARY_NAME}\"")
       endif()
 
-      if (WIN32)
+      if (WIN32 AND BUILD_SHARED_LIBS)
         if (NOT DEFINED 3RDPARTY_${PRODUCT_NAME}_DLL_${LIBRARY_NAME} OR NOT 3RDPARTY_${PRODUCT_NAME}_DLL_DIR_${LIBRARY_NAME} OR NOT EXISTS "${3RDPARTY_${PRODUCT_NAME}_DLL_DIR_${LIBRARY_NAME}}")
           set (3RDPARTY_${PRODUCT_NAME}_DLL_${LIBRARY_NAME}                 "" CACHE FILEPATH "${PRODUCT_NAME} shared library \"${LIBRARY_NAME}\"" FORCE)
         endif()
       endif()
 
-      if (WIN32)
+      if (WIN32 AND BUILD_SHARED_LIBS)
         if (NOT DEFINED 3RDPARTY_${PRODUCT_NAME}_DLL_DIR_${LIBRARY_NAME})
           set (3RDPARTY_${PRODUCT_NAME}_DLL_DIR_${LIBRARY_NAME}             "" CACHE PATH "The directory containing ${PRODUCT_NAME} shared library \"${LIBRARY_NAME}\"")
         endif()
@@ -75,7 +75,7 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
           CHECK_PATH_FOR_CONSISTENCY (3RDPARTY_${PRODUCT_NAME}_DIR 3RDPARTY_${PRODUCT_NAME}_LIBRARY_DIR_${LIBRARY_NAME} PATH "The directory containing ${PRODUCT_NAME} library \"${LIBRARY_NAME}\"")
         endif()
 
-        if (WIN32)
+        if (WIN32 AND BUILD_SHARED_LIBS)
           CHECK_PATH_FOR_CONSISTENCY (3RDPARTY_${PRODUCT_NAME}_DIR 3RDPARTY_${PRODUCT_NAME}_DLL_${LIBRARY_NAME} FILEPATH "the path to ${PRODUCT_NAME} shared library \"${LIBRARY_NAME}\"")
 
           if (3RDPARTY_${PRODUCT_NAME}_DLL_${LIBRARY_NAME} AND EXISTS "${3RDPARTY_${PRODUCT_NAME}_DLL_${LIBRARY_NAME}}")
@@ -117,7 +117,7 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
 
   foreach (LIBRARY_NAME ${${LIBRARY_CSF_NAME}})
     string (REPLACE "." "" LIBRARY_NAME_SUFFIX "${LIBRARY_NAME}")
-    if (BUILD_SHARED_LIBS)
+    #if (BUILD_SHARED_LIBS)
       # library
       if (NOT 3RDPARTY_${PRODUCT_NAME}_LIBRARY_${LIBRARY_NAME_SUFFIX} OR NOT EXISTS "${3RDPARTY_${PRODUCT_NAME}_LIBRARY_${LIBRARY_NAME_SUFFIX}}")
         set (CMAKE_FIND_LIBRARY_SUFFIXES .lib .so .dylib .a)
@@ -177,7 +177,7 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
       endif()
 
       # shared library
-      if (WIN32)
+      if (WIN32 AND BUILD_SHARED_LIBS)
         if (NOT 3RDPARTY_${PRODUCT_NAME}_DLL_${LIBRARY_NAME_SUFFIX} OR NOT EXISTS "${3RDPARTY_${PRODUCT_NAME}_DLL_${LIBRARY_NAME_SUFFIX}}")
 
           set (CMAKE_FIND_LIBRARY_SUFFIXES .dll)
@@ -221,7 +221,7 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
         endif()
       endif()
 
-      if (WIN32)
+      if (WIN32 AND BUILD_SHARED_LIBS)
         set (3RDPARTY_${PRODUCT_NAME}_DLL_DIRS "")
       else()
         set (3RDPARTY_${PRODUCT_NAME}_LIBRARY_DIRS "")
@@ -229,7 +229,7 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
 
       foreach (LIBRARY_NAME ${${LIBRARY_CSF_NAME}})
         string (REPLACE "." "" LIBRARY_NAME_SUFFIX "${LIBRARY_NAME}")
-        if (WIN32)
+        if (WIN32 AND BUILD_SHARED_LIBS)
           set (3RDPARTY_${PRODUCT_NAME}_DLL_DIRS "${3RDPARTY_${PRODUCT_NAME}_DLL_DIR_${LIBRARY_NAME_SUFFIX}};${3RDPARTY_${PRODUCT_NAME}_DLL_DIRS}")
           set (3RDPARTY_${PRODUCT_NAME}_LIBRARY_DIRS "${3RDPARTY_${PRODUCT_NAME}_LIBRARY_DIR_${LIBRARY_NAME_SUFFIX}}")
         else()
@@ -244,7 +244,7 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
         OCCT_MAKE_COMPILER_SHORT_NAME()
         set (USED_3RDPARTY_${PRODUCT_NAME}_DIR "")
 
-        if (WIN32)
+        if (WIN32 AND BUILD_SHARED_LIBS)
           if (SINGLE_GENERATOR)
             install (FILES "${3RDPARTY_${PRODUCT_NAME}_DLL_${LIBRARY_NAME_SUFFIX}}" DESTINATION "${INSTALL_DIR_BIN}")
           else()
@@ -264,49 +264,63 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
         else()
           get_filename_component(ABS_PATH ${3RDPARTY_${PRODUCT_NAME}_LIBRARY_${LIBRARY_NAME_SUFFIX}} REALPATH)
 
-          if ("${PRODUCT_NAME}" STREQUAL "FREEIMAGE")
-            get_filename_component(FREEIMLIB ${3RDPARTY_${PRODUCT_NAME}_LIBRARY_${LIBRARY_NAME_SUFFIX}} NAME)
-
+          if(LIGHT_BUILD)
             if (SINGLE_GENERATOR)
-              install (FILES "${ABS_PATH}" DESTINATION "${INSTALL_DIR_LIB}" RENAME ${FREEIMLIB}.3)
+              install (FILES "${ABS_PATH}" DESTINATION "${INSTALL_DIR_LIB}")
             else()
               install (FILES "${ABS_PATH}"
                        CONFIGURATIONS Release
-                       DESTINATION "${INSTALL_DIR_LIB}"
-                       RENAME ${FREEIMLIB}.3)
+                       DESTINATION "${INSTALL_DIR_LIB}")
               install (FILES "${ABS_PATH}"
                        CONFIGURATIONS RelWithDebInfo
-                       DESTINATION "${INSTALL_DIR_LIB}i"
-                       RENAME ${FREEIMLIB}.3)
+                       DESTINATION "${INSTALL_DIR_LIB}i")
               install (FILES "${ABS_PATH}"
                        CONFIGURATIONS Debug
-                       DESTINATION "${INSTALL_DIR_LIB}d"
-                       RENAME ${FREEIMLIB}.3)
+                       DESTINATION "${INSTALL_DIR_LIB}d")
               install (FILES "${ABS_PATH}"
                        CONFIGURATIONS MinSizeRel
-                       DESTINATION "${INSTALL_DIR_LIB}z"
-                       RENAME ${FREEIMLIB}.3)
+                       DESTINATION "${INSTALL_DIR_LIB}z")
+            endif()
+          else()
+            if ("${PRODUCT_NAME}" STREQUAL "FREEIMAGE")
+              get_filename_component(FREEIMLIB ${3RDPARTY_${PRODUCT_NAME}_LIBRARY_${LIBRARY_NAME_SUFFIX}} NAME)
+
+              if (SINGLE_GENERATOR)
+                install (FILES "${ABS_PATH}" DESTINATION "${INSTALL_DIR_LIB}" RENAME ${FREEIMLIB}.3)
+              else()
+                install (FILES "${ABS_PATH}"
+                    CONFIGURATIONS Release
+                    DESTINATION "${INSTALL_DIR_LIB}"
+                    RENAME ${FREEIMLIB}.3)
+                install (FILES "${ABS_PATH}"
+                    CONFIGURATIONS RelWithDebInfo
+                    DESTINATION "${INSTALL_DIR_LIB}i"
+                    RENAME ${FREEIMLIB}.3)
+                install (FILES "${ABS_PATH}"
+                    CONFIGURATIONS Debug
+                    DESTINATION "${INSTALL_DIR_LIB}d"
+                    RENAME ${FREEIMLIB}.3)
+              endif()
             endif()
           endif()
-
         endif()
       else()
         # the library directory for using by the executable
         foreach (LIBRARY_NAME ${${LIBRARY_CSF_NAME}})
           string (REPLACE "." "" LIBRARY_NAME_SUFFIX "${LIBRARY_NAME}")
-          if (WIN32)
+          if (WIN32 AND BUILD_SHARED_LIBS)
             set (USED_3RDPARTY_${PRODUCT_NAME}_DIRS "${3RDPARTY_${PRODUCT_NAME}_DLL_DIR_${LIBRARY_NAME_SUFFIX}};${USED_3RDPARTY_${PRODUCT_NAME}_DIRS}")
           else()
             set (USED_3RDPARTY_${PRODUCT_NAME}_DIRS "${3RDPARTY_${PRODUCT_NAME}_LIBRARY_DIR_${LIBRARY_NAME_SUFFIX}}:${USED_3RDPARTY_${PRODUCT_NAME}_DIRS}")
           endif()
         endforeach()
-        if (WIN32)
+        if (WIN32 AND BUILD_SHARED_LIBS)
           set (USED_3RDPARTY_${PRODUCT_NAME}_DIR ${3RDPARTY_${PRODUCT_NAME}_DLL_DIR_${LIBRARY_NAME_SUFFIX}})
         endif()
       endif()
 
       mark_as_advanced (3RDPARTY_${PRODUCT_NAME}_LIBRARY_${LIBRARY_NAME_SUFFIX} 3RDPARTY_${PRODUCT_NAME}_DLL_${LIBRARY_NAME_SUFFIX})
-    endif()
+    #endif()
   endforeach()
 endmacro()
 
@@ -332,7 +346,7 @@ macro (COMPLIANCE_PRODUCT_CONSISTENCY LIBNAME)
       endif()
 
       # shared library dir
-      if (WIN32)
+      if (WIN32 AND BUILD_SHARED_LIBS)
         set (DOES_PATH_CONTAIN FALSE)
         if (3RDPARTY_${LIBNAME}_DLL_DIR AND EXISTS "${3RDPARTY_${LIBNAME}_DLL_DIR}")
           string (REGEX MATCH "${3RDPARTY_${LIBNAME}_DIR}" DOES_PATH_CONTAIN "${3RDPARTY_${LIBNAME}_DLL_DIR}")
@@ -357,7 +371,7 @@ macro (COMPLIANCE_PRODUCT_CONSISTENCY LIBNAME)
     endif()
 
     # check shared library
-    if (WIN32)
+    if (WIN32 AND BUILD_SHARED_LIBS)
       set (DOES_PATH_CONTAIN FALSE)
       if (3RDPARTY_${LIBNAME}_DLL_DIR AND EXISTS "${3RDPARTY_${LIBNAME}_DLL_DIR}")
         if (3RDPARTY_${LIBNAME}_DLL AND EXISTS "${3RDPARTY_${LIBNAME}_DLL}")
