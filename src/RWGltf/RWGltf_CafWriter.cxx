@@ -47,6 +47,8 @@
 
 #ifdef HAVE_DRACO
   #include <Standard_WarningsDisable.hxx>
+  #pragma GCC diagnostic ignored "-Wdeprecated-copy"
+  #pragma GCC diagnostic ignored "-Wignored-qualifiers"
   #include <draco/compression/encode.h>
   #include <Standard_WarningsRestore.hxx>
 #endif
@@ -186,7 +188,7 @@ public:
     myRanges(0, int(theMeshes.size()) - 1),
     myMeshes(&theMeshes),
     myEncoderBuffers(&theEncoderBuffers)
-  { 
+  {
     for (int anIndex = 0; anIndex != int(theMeshes.size()); ++anIndex)
     {
       myRanges.SetValue(anIndex, myProgress.Next());
@@ -743,7 +745,7 @@ bool RWGltf_CafWriter::writeBinData (const Handle(TDocStd_Document)& theDocument
       {
         continue;
       }
-      
+
       std::shared_ptr<RWGltf_CafWriter::Mesh> aMeshPtr;
       ++aMeshIndex;
     #ifdef HAVE_DRACO

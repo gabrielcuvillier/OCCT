@@ -23,6 +23,8 @@
 
 #ifdef HAVE_DRACO
   #include <Standard_WarningsDisable.hxx>
+  #pragma GCC diagnostic ignored "-Wdeprecated-copy"
+  #pragma GCC diagnostic ignored "-Wignored-qualifiers"
   #include <draco/compression/decode.h>
   #include <Standard_WarningsRestore.hxx>
 #endif
