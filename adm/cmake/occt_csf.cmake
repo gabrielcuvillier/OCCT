@@ -42,7 +42,6 @@ else()
   endif()
 endif()
 
-
 # ZLIB
 if (USE_ZLIB)
   set(CSF_ZLIB "z")
@@ -52,11 +51,7 @@ endif()
 
 # PNG
 if (USE_PNG)
-  if (UNIX OR MINGW)
-    set(CSF_PNG "png16")
-  else()
-    set(CSF_PNG "png16_static")
-  endif()
+  set(CSF_PNG "png16")
 else()
   set(CSF_PNG "")
 endif()

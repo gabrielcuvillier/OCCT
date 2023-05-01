@@ -719,6 +719,7 @@ if (LIGHT_BUILD)
         -DPNG_HARDWARE_OPTIMIZATIONS=OFF
         -DPNG_BUILD_ZLIB=OFF        # Use external zlib through ZLIB_ROOT
         -DPNG_NO_AWK=ON
+        -DPNG_FORCE_REGULAR_NAMING=ON
         -G "${CMAKE_GENERATOR}"
         -T "${CMAKE_GENERATOR_TOOLSET}"
         RESULT_VARIABLE result
@@ -1048,6 +1049,7 @@ if (CAN_USE_RAPIDJSON)
       set(3RDPARTY_RAPIDJSON_DIR "${CMAKE_BINARY_DIR}/rapidjson-build/install/rapidjson" CACHE PATH "The directory containing rapidjson")
     endif ()
     OCCT_INCLUDE_CMAKE_FILE("adm/cmake/rapidjson")
+    set(INSTALL_RAPIDJSON 1)
   else ()
     OCCT_CHECK_AND_UNSET_GROUP("3RDPARTY_RAPIDJSON")
     OCCT_CHECK_AND_UNSET("INSTALL_RAPIDJSON")
