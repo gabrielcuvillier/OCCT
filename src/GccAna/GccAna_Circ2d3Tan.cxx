@@ -29,6 +29,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wfree-nonheap-object"
 #endif
+
 //=========================================================================
 //   Creation of a circle tangent to three circles.                        +
 //=========================================================================
@@ -784,9 +785,6 @@ GccAna_Circ2d3Tan::
   }
   WellDone = Standard_True;
 }
-#if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
-#pragma GCC diagnostic pop
-#endif
 
 //=========================================================================
 
@@ -934,3 +932,7 @@ Standard_Boolean GccAna_Circ2d3Tan::
 
   return Standard_True;
 }
+
+#if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
+#pragma GCC diagnostic pop
+#endif

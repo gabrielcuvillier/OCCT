@@ -42,13 +42,18 @@ typedef TColgp_Array1OfPnt Array1OfPnt;
 typedef TColStd_Array1OfReal Array1OfReal;
 typedef TColStd_Array1OfInteger Array1OfInteger;
 
+#if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfree-nonheap-object"
+#endif
+
 //=======================================================================
 //class : BSplCLib_LocalMatrix
 //purpose: Auxiliary class optimizing creation of matrix buffer for
 //         evaluation of bspline (using stack allocation for main matrix)
 //=======================================================================
 
-class BSplCLib_LocalMatrix : public math_Matrix 
+class BSplCLib_LocalMatrix : public math_Matrix
 {
 public:
   BSplCLib_LocalMatrix (Standard_Integer DerivativeRequest, Standard_Integer Order)
@@ -67,7 +72,7 @@ public:
 
 //=======================================================================
 //function : Hunt
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void BSplCLib::Hunt (const TColStd_Array1OfReal& theArray,
@@ -109,12 +114,12 @@ void BSplCLib::Hunt (const TColStd_Array1OfReal& theArray,
 
 //=======================================================================
 //function : FirstUKnotIndex
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer BSplCLib::FirstUKnotIndex (const Standard_Integer Degree,
 				   const TColStd_Array1OfInteger& Mults)
-{ 
+{
   Standard_Integer Index = Mults.Lower();
   Standard_Integer SigmaMult = Mults(Index);
 
@@ -127,12 +132,12 @@ Standard_Integer BSplCLib::FirstUKnotIndex (const Standard_Integer Degree,
 
 //=======================================================================
 //function : LastUKnotIndex
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer BSplCLib::LastUKnotIndex  (const Standard_Integer Degree,
-				   const Array1OfInteger& Mults) 
-{ 
+				   const Array1OfInteger& Mults)
+{
    Standard_Integer Index = Mults.Upper();
    Standard_Integer SigmaMult = Mults(Index);
 
@@ -145,7 +150,7 @@ Standard_Integer BSplCLib::LastUKnotIndex  (const Standard_Integer Degree,
 
 //=======================================================================
 //function : FlatIndex
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer  BSplCLib::FlatIndex
@@ -196,7 +201,7 @@ void BSplCLib::LocateParameter
 
 //=======================================================================
 //function : LocateParameter
-//purpose  : For plane nodes 
+//purpose  : For plane nodes
 //   pmn  28-01-97 -> There is a need of the degre to calculate
 //   the eventual period
 //=======================================================================
@@ -210,13 +215,13 @@ void BSplCLib::LocateParameter
  const Standard_Integer          ToK2,
  Standard_Integer&               KnotIndex,
  Standard_Real&                  NewU)
-{ 
+{
   if (IsPeriodic)
     BSplCLib::LocateParameter(Knots, U, IsPeriodic, FromK1, ToK2,
 			      KnotIndex, NewU,
 			      Knots(Knots.Lower() + Degree),
 			      Knots(Knots.Upper() - Degree));
-  else 
+  else
     BSplCLib::LocateParameter(Knots, U, IsPeriodic, FromK1, ToK2,
 			      KnotIndex, NewU,
 			      0.,
@@ -226,11 +231,11 @@ void BSplCLib::LocateParameter
 //=======================================================================
 //function : LocateParameter
 //purpose  : Effective computation
-// pmn 28-01-97 : Add limits of the period as input argument,  
+// pmn 28-01-97 : Add limits of the period as input argument,
 //                as it is impossible to produce them at this level.
 //=======================================================================
 
-void BSplCLib::LocateParameter 
+void BSplCLib::LocateParameter
 (const TColStd_Array1OfReal& Knots,
  const Standard_Real         U,
  const Standard_Boolean      IsPeriodic,
@@ -243,7 +248,7 @@ void BSplCLib::LocateParameter
 {
   /*
   Let Knots are distributed as follows (the array is sorted in ascending order):
-    
+
       K1, K1,..., K1, K1, K2, K2,..., K2, K2,..., Kn, Kn,..., Kn
            M1 times             M2 times             Mn times
 
@@ -266,9 +271,9 @@ void BSplCLib::LocateParameter
   NewU = U;
   if (IsPeriodic && (NewU < UFirst || NewU > ULast))
     NewU = ElCLib::InPeriod(NewU, UFirst, ULast);
-  
+
   BSplCLib::Hunt (Knots, NewU, KnotIndex);
-  
+
   Standard_Real val;
   const Standard_Integer  KLower = Knots.Lower(),
                           KUpper = Knots.Upper();
@@ -281,11 +286,11 @@ void BSplCLib::LocateParameter
     val = NewU - knots[KnotIndex + 1];
     if (val < 0) val = - val;
     // <= to be coherent with Segment where Eps corresponds to a bit of error.
-    if (val <= Eps) KnotIndex++; 
+    if (val <= Eps) KnotIndex++;
   }
   if (KnotIndex < First) KnotIndex = First;
   if (KnotIndex > Last1) KnotIndex = Last1;
-  
+
   if (KnotIndex != Last1) {
     Standard_Real K1 = knots[KnotIndex];
     Standard_Real K2 = knots[KnotIndex + 1];
@@ -312,14 +317,14 @@ void BSplCLib::LocateParameter
 //pmn  28-01-97 -> eventual computation of the period.
 //=======================================================================
 
-void BSplCLib::LocateParameter 
+void BSplCLib::LocateParameter
 (const Standard_Integer         Degree,
  const TColStd_Array1OfReal&    Knots,
  const TColStd_Array1OfInteger* Mults,
  const Standard_Real            U,
  const Standard_Boolean         Periodic,
  Standard_Integer&              KnotIndex,
- Standard_Real&                 NewU) 
+ Standard_Real&                 NewU)
 {
   Standard_Integer first,last;
   if (Mults) {
@@ -345,7 +350,7 @@ void BSplCLib::LocateParameter
 
 //=======================================================================
 //function : MaxKnotMult
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer BSplCLib::MaxKnotMult
@@ -366,7 +371,7 @@ Standard_Integer BSplCLib::MaxKnotMult
 
 //=======================================================================
 //function : MinKnotMult
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer BSplCLib::MinKnotMult
@@ -387,7 +392,7 @@ Standard_Integer BSplCLib::MinKnotMult
 
 //=======================================================================
 //function : NbPoles
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer BSplCLib::NbPoles(const Standard_Integer Degree,
@@ -415,7 +420,7 @@ Standard_Integer BSplCLib::NbPoles(const Standard_Integer Degree,
     if (Ml > Deg1) return 0;
     sigma = Mf + Ml - Deg1;
   }
-    
+
   for (i = f + 1; i < l; i++) {
     if (pmu[i] <= 0    ) return 0;
     if (pmu[i] > Degree) return 0;
@@ -426,7 +431,7 @@ Standard_Integer BSplCLib::NbPoles(const Standard_Integer Degree,
 
 //=======================================================================
 //function : KnotSequenceLength
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer BSplCLib::KnotSequenceLength
@@ -448,10 +453,10 @@ Standard_Integer BSplCLib::KnotSequenceLength
 
 //=======================================================================
 //function : KnotSequence
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-void BSplCLib::KnotSequence 
+void BSplCLib::KnotSequence
 (const TColStd_Array1OfReal&    Knots,
  const TColStd_Array1OfInteger& Mults,
  TColStd_Array1OfReal&          KnotSeq,
@@ -462,10 +467,10 @@ void BSplCLib::KnotSequence
 
 //=======================================================================
 //function : KnotSequence
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-void BSplCLib::KnotSequence 
+void BSplCLib::KnotSequence
 (const TColStd_Array1OfReal&    Knots,
  const TColStd_Array1OfInteger& Mults,
  const Standard_Integer         Degree,
@@ -488,8 +493,8 @@ void BSplCLib::KnotSequence
     Mult = pmu[i];
     K    = pkn[i];
 
-    for (j = 1; j <= Mult; j++) { 
-      KnotSeq (index) = K;   
+    for (j = 1; j <= Mult; j++) {
+      KnotSeq (index) = K;
       index++;
     }
   }
@@ -523,13 +528,13 @@ void BSplCLib::KnotSequence
 
 //=======================================================================
 //function : KnotsLength
-//purpose  : 
+//purpose  :
 //=======================================================================
  Standard_Integer BSplCLib::KnotsLength(const TColStd_Array1OfReal& SeqKnots,
 //					const Standard_Boolean Periodic)
 					const Standard_Boolean )
 {
-  Standard_Integer sizeMult = 1; 
+  Standard_Integer sizeMult = 1;
   Standard_Real val = SeqKnots(1);
   for (Standard_Integer jj=2;
        jj<=SeqKnots.Length();jj++)
@@ -546,9 +551,9 @@ void BSplCLib::KnotSequence
 
 //=======================================================================
 //function : Knots
-//purpose  : 
+//purpose  :
 //=======================================================================
-void BSplCLib::Knots(const TColStd_Array1OfReal& SeqKnots, 
+void BSplCLib::Knots(const TColStd_Array1OfReal& SeqKnots,
 		     TColStd_Array1OfReal &knots,
 		     TColStd_Array1OfInteger &mult,
 //		     const Standard_Boolean Periodic)
@@ -578,7 +583,7 @@ void BSplCLib::Knots(const TColStd_Array1OfReal& SeqKnots,
 
 //=======================================================================
 //function : KnotForm
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 BSplCLib_KnotDistribution BSplCLib::KnotForm
@@ -622,7 +627,7 @@ BSplCLib_KnotDistribution BSplCLib::KnotForm
 
 //=======================================================================
 //function : MultForm
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 BSplCLib_MultDistribution BSplCLib::MultForm
@@ -648,10 +653,10 @@ BSplCLib_MultDistribution BSplCLib::MultForm
   BSplCLib_MultDistribution MForm = BSplCLib_Constant;
   Standard_Integer i    = First + 1;
   Standard_Integer Mult = Mults(i);
-  
+
 //  while (MForm != BSplCLib_NonUniform && i <= Last) { ???????????JR????????
   while (MForm != BSplCLib_NonConstant && i <= Last) {
-    if (i == First + 1) {  
+    if (i == First + 1) {
       if (Mult != FirstMult)      MForm = BSplCLib_QuasiConstant;
     }
     else if (i == Last)  {
@@ -673,7 +678,7 @@ BSplCLib_MultDistribution BSplCLib::MultForm
 
 //=======================================================================
 //function : KnotAnalysis
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void BSplCLib::KnotAnalysis (const Standard_Integer         Degree,
@@ -685,25 +690,25 @@ void BSplCLib::KnotAnalysis (const Standard_Integer         Degree,
 {
   KnotForm = GeomAbs_NonUniform;
 
-  BSplCLib_KnotDistribution KSet = 
+  BSplCLib_KnotDistribution KSet =
     BSplCLib::KnotForm (CKnots, 1, CKnots.Length());
-  
+
 
   if (KSet == BSplCLib_Uniform) {
     BSplCLib_MultDistribution MSet =
       BSplCLib::MultForm (CMults, 1, CMults.Length());
     switch (MSet) {
-    case BSplCLib_NonConstant   :       
+    case BSplCLib_NonConstant   :
       break;
-    case BSplCLib_Constant      : 
+    case BSplCLib_Constant      :
       if (CKnots.Length() == 2) {
         KnotForm = GeomAbs_PiecewiseBezier;
       }
       else {
-        if (CMults (1) == 1)  KnotForm = GeomAbs_Uniform;   
+        if (CMults (1) == 1)  KnotForm = GeomAbs_Uniform;
       }
       break;
-    case BSplCLib_QuasiConstant :   
+    case BSplCLib_QuasiConstant :
       if (CMults (1) == Degree + 1) {
         Standard_Real M = CMults (2);
         if (M == Degree )   KnotForm = GeomAbs_PiecewiseBezier;
@@ -713,7 +718,7 @@ void BSplCLib::KnotAnalysis (const Standard_Integer         Degree,
     }
   }
 
-  Standard_Integer FirstKM = 
+  Standard_Integer FirstKM =
     Periodic ? CKnots.Lower() :  BSplCLib::FirstUKnotIndex (Degree,CMults);
   Standard_Integer LastKM =
     Periodic ? CKnots.Upper() :  BSplCLib::LastUKnotIndex (Degree,CMults);
@@ -729,7 +734,7 @@ void BSplCLib::KnotAnalysis (const Standard_Integer         Degree,
 
 //=======================================================================
 //function : Reparametrize
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void BSplCLib::Reparametrize
@@ -775,7 +780,7 @@ void BSplCLib::Reparametrize
 
 //=======================================================================
 //function : Reverse
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void  BSplCLib::Reverse(TColStd_Array1OfReal& Knots)
@@ -803,7 +808,7 @@ void  BSplCLib::Reverse(TColStd_Array1OfReal& Knots)
 
 //=======================================================================
 //function : Reverse
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void  BSplCLib::Reverse(TColStd_Array1OfInteger& Mults)
@@ -823,7 +828,7 @@ void  BSplCLib::Reverse(TColStd_Array1OfInteger& Mults)
 
 //=======================================================================
 //function : Reverse
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void  BSplCLib::Reverse(TColStd_Array1OfReal& Weights,
@@ -846,7 +851,7 @@ void  BSplCLib::Reverse(TColStd_Array1OfReal& Weights,
 
 //=======================================================================
 //function : IsRational
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean  BSplCLib::IsRational(const TColStd_Array1OfReal& Weights,
@@ -873,8 +878,8 @@ Standard_Boolean  BSplCLib::IsRational(const TColStd_Array1OfReal& Weights,
 
 void  BSplCLib::Eval(const Standard_Real U,
 		     const Standard_Integer Degree,
-		     Standard_Real& Knots, 
-		     const Standard_Integer Dimension, 
+		     Standard_Real& Knots,
+		     const Standard_Integer Dimension,
 		     Standard_Real& Poles)
 {
   Standard_Integer step,i,Dms,Dm1,Dpi,Sti;
@@ -882,16 +887,16 @@ void  BSplCLib::Eval(const Standard_Real U,
   Dm1 = Dms = Degree;
   Dm1--;
   Dms++;
-  switch (Dimension) { 
+  switch (Dimension) {
 
   case 1 : {
-    
+
     for (step = - 1; step < Dm1; step++) {
       Dms--;
       poles = &Poles;
       Dpi   = Dm1;
       Sti   = step;
-      
+
       for (i = 0; i < Dms; i++) {
 	Dpi++;
 	Sti++;
@@ -904,13 +909,13 @@ void  BSplCLib::Eval(const Standard_Real U,
     break;
   }
   case 2 : {
-    
+
     for (step = - 1; step < Dm1; step++) {
       Dms--;
       poles = &Poles;
       Dpi   = Dm1;
       Sti   = step;
-      
+
       for (i = 0; i < Dms; i++) {
 	Dpi++;
 	Sti++;
@@ -924,13 +929,13 @@ void  BSplCLib::Eval(const Standard_Real U,
     break;
   }
   case 3 : {
-    
+
     for (step = - 1; step < Dm1; step++) {
       Dms--;
       poles = &Poles;
       Dpi   = Dm1;
       Sti   = step;
-      
+
       for (i = 0; i < Dms; i++) {
 	Dpi++;
 	Sti++;
@@ -945,13 +950,13 @@ void  BSplCLib::Eval(const Standard_Real U,
     break;
   }
   case 4 : {
-    
+
     for (step = - 1; step < Dm1; step++) {
       Dms--;
       poles = &Poles;
       Dpi   = Dm1;
       Sti   = step;
-      
+
       for (i = 0; i < Dms; i++) {
 	Dpi++;
 	Sti++;
@@ -968,19 +973,19 @@ void  BSplCLib::Eval(const Standard_Real U,
   }
     default : {
       Standard_Integer k;
-      
+
       for (step = - 1; step < Dm1; step++) {
 	Dms--;
 	poles = &Poles;
 	Dpi   = Dm1;
 	Sti   = step;
-	
+
 	for (i = 0; i < Dms; i++) {
 	  Dpi++;
 	  Sti++;
 	  X = (knots[Dpi] - U) / (knots[Dpi] - knots[Sti]);
 	  Y = 1 - X;
-	  
+
 	  for (k = 0; k < Dimension; k++) {
 	    poles[k] *= X;
 	    poles[k] += Y * poles[k + Dimension];
@@ -994,15 +999,15 @@ void  BSplCLib::Eval(const Standard_Real U,
 
 //=======================================================================
 //function : BoorScheme
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void  BSplCLib::BoorScheme(const Standard_Real U,
 			   const Standard_Integer Degree,
-			   Standard_Real& Knots, 
-			   const Standard_Integer Dimension, 
-			   Standard_Real& Poles, 
-			   const Standard_Integer Depth, 
+			   Standard_Real& Knots,
+			   const Standard_Integer Dimension,
+			   Standard_Real& Poles,
+			   const Standard_Integer Depth,
 			   const Standard_Integer Length)
 {
   //
@@ -1010,7 +1015,7 @@ void  BSplCLib::BoorScheme(const Standard_Real U,
   //
   //  P(i,j) (U).
   //
-  // for i = 0 to Depth, 
+  // for i = 0 to Depth,
   // j = 0 to Length - i
   //
   //  The Boor scheme is :
@@ -1045,7 +1050,7 @@ void  BSplCLib::BoorScheme(const Standard_Real U,
     for (i = step; i < Length; i++) {
       pole += 2 * Dimension;
       // coefficient
-      Standard_Real X = (knots[i+Degree-step] - U) 
+      Standard_Real X = (knots[i+Degree-step] - U)
 	/ (knots[i+Degree-step] - knots[i]);
       Standard_Real Y = 1. - X;
       // Value
@@ -1059,15 +1064,15 @@ void  BSplCLib::BoorScheme(const Standard_Real U,
 
 //=======================================================================
 //function : AntiBoorScheme
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean  BSplCLib::AntiBoorScheme(const Standard_Real    U,
 					   const Standard_Integer Degree,
-					   Standard_Real&         Knots, 
-					   const Standard_Integer Dimension, 
-					   Standard_Real&         Poles, 
-					   const Standard_Integer Depth, 
+					   Standard_Real&         Knots,
+					   const Standard_Integer Dimension,
+					   Standard_Real&         Poles,
+					   const Standard_Integer Depth,
 					   const Standard_Integer Length,
 					   const Standard_Real    Tolerance)
 {
@@ -1077,7 +1082,7 @@ Standard_Boolean  BSplCLib::AntiBoorScheme(const Standard_Real    U,
   Standard_Real *knots = &Knots;
   Standard_Real z,X,Y,*pole, *firstpole = &Poles + (Depth-1) * Dimension;
 
-  // Test the special case length = 1 
+  // Test the special case length = 1
   // only verification of the central point
 
   if (Length == 1) {
@@ -1086,7 +1091,7 @@ Standard_Boolean  BSplCLib::AntiBoorScheme(const Standard_Real    U,
 
     for (k = 0; k < Dimension; k++) {
       z = X * firstpole[k] + Y * firstpole[k+2*Dimension];
-      if (Abs(z - firstpole[k+Dimension]) > Tolerance) 
+      if (Abs(z - firstpole[k+Dimension]) > Tolerance)
 	return Standard_False;
     }
     return Standard_True;
@@ -1116,10 +1121,10 @@ Standard_Boolean  BSplCLib::AntiBoorScheme(const Standard_Real    U,
     pole += 4* Dimension;
     half_length = (Length - 1 + step) / 2  ;
     //
-    // only do half of the way from right to left 
-    // otherwise it start degenerating because of 
+    // only do half of the way from right to left
+    // otherwise it start degenerating because of
     // overflows
-    // 
+    //
 
     for (i = Length-1; i > half_length ; i--) {
       pole -= 2 * Dimension;
@@ -1130,7 +1135,7 @@ Standard_Boolean  BSplCLib::AntiBoorScheme(const Standard_Real    U,
 
       for (k = 0; k < Dimension; k++) {
 	z = (pole[k] - Y * pole[k+Dimension]) / X;
-	if (Abs(z-pole[k-Dimension]) > Tolerance) 
+	if (Abs(z-pole[k-Dimension]) > Tolerance)
 	  return Standard_False;
 	pole[k-Dimension] += z;
 	pole[k-Dimension] /= 2.;
@@ -1142,14 +1147,14 @@ Standard_Boolean  BSplCLib::AntiBoorScheme(const Standard_Real    U,
 
 //=======================================================================
 //function : Derivative
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-void  BSplCLib::Derivative(const Standard_Integer Degree, 
-			   Standard_Real& Knots, 
-			   const Standard_Integer Dimension, 
-			   const Standard_Integer Length, 
-			   const Standard_Integer Order, 
+void  BSplCLib::Derivative(const Standard_Integer Degree,
+			   Standard_Real& Knots,
+			   const Standard_Integer Dimension,
+			   const Standard_Integer Length,
+			   const Standard_Integer Order,
 			   Standard_Real& Poles)
 {
   Standard_Integer i,k,step,span = Degree;
@@ -1173,7 +1178,7 @@ void  BSplCLib::Derivative(const Standard_Integer Degree,
 
 //=======================================================================
 //function : Bohm
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void  BSplCLib::Bohm(const Standard_Real U,
@@ -1191,17 +1196,17 @@ void  BSplCLib::Bohm(const Standard_Real U,
   else            min = Degree;
   Degm1 = Degree - 1;
   DDmi = (Degree << 1) + 1;
-  switch (Dimension) { 
+  switch (Dimension) {
   case 1 : {
     psDD     = psav + Degree;
     psDDmDim = psDD - 1;
-    
+
     for (i = 0; i < Degree; i++) {
       DDmi--;
       pole = psDD;
       tbis = psDDmDim;
       jDmi = DDmi;
-      
+
       for (j = Degm1; j >= i; j--) {
 	jDmi--;
 	*pole -= *tbis;
@@ -1212,13 +1217,13 @@ void  BSplCLib::Bohm(const Standard_Real U,
     }
     // Second phase, dependant of U
     iDim = - 1;
-    
+
     for (i = 0; i < Degree; i++) {
       iDim += 1;
       pole  = psav + iDim;
       tbis  = pole + 1;
       coef  = U - knot[i];
-      
+
       for (j = i; j >= 0; j--) {
 	*pole += coef * (*tbis);
 	pole--;
@@ -1229,7 +1234,7 @@ void  BSplCLib::Bohm(const Standard_Real U,
     coef = Degree;
     Dmi  = Degree;
     pole = psav + 1;
-    
+
     for (i = 1; i <= min; i++) {
       *pole *= coef; pole++;
       Dmi--;
@@ -1240,13 +1245,13 @@ void  BSplCLib::Bohm(const Standard_Real U,
   case 2 : {
     psDD     = psav + (Degree << 1);
     psDDmDim = psDD - 2;
-    
+
     for (i = 0; i < Degree; i++) {
       DDmi--;
       pole = psDD;
       tbis = psDDmDim;
       jDmi = DDmi;
-      
+
       for (j = Degm1; j >= i; j--) {
 	jDmi--;
 	coef   = (knot[jDmi] == knot[j]) ? 0.0 : 1. / (knot[jDmi] - knot[j]);
@@ -1258,13 +1263,13 @@ void  BSplCLib::Bohm(const Standard_Real U,
     }
     // Second phase, dependant of U
     iDim = - 2;
-    
+
     for (i = 0; i < Degree; i++) {
       iDim += 2;
       pole  = psav + iDim;
       tbis  = pole + 2;
       coef  = U - knot[i];
-      
+
       for (j = i; j >= 0; j--) {
 	*pole += coef * (*tbis); pole++; tbis++;
 	*pole += coef * (*tbis);
@@ -1276,7 +1281,7 @@ void  BSplCLib::Bohm(const Standard_Real U,
     coef = Degree;
     Dmi  = Degree;
     pole = psav + 2;
-    
+
     for (i = 1; i <= min; i++) {
       *pole *= coef; pole++;
       *pole *= coef; pole++;
@@ -1288,13 +1293,13 @@ void  BSplCLib::Bohm(const Standard_Real U,
   case 3 : {
     psDD     = psav + (Degree << 1) + Degree;
     psDDmDim = psDD - 3;
-    
+
     for (i = 0; i < Degree; i++) {
       DDmi--;
       pole = psDD;
       tbis = psDDmDim;
       jDmi = DDmi;
-      
+
       for (j = Degm1; j >= i; j--) {
 	jDmi--;
 	coef   = (knot[jDmi] == knot[j]) ? 0.0 : 1. / (knot[jDmi] - knot[j]);
@@ -1307,13 +1312,13 @@ void  BSplCLib::Bohm(const Standard_Real U,
     }
     // Second phase, dependant of U
     iDim = - 3;
-    
+
     for (i = 0; i < Degree; i++) {
       iDim += 3;
       pole  = psav + iDim;
       tbis  = pole + 3;
       coef  = U - knot[i];
-      
+
       for (j = i; j >= 0; j--) {
 	*pole += coef * (*tbis); pole++; tbis++;
 	*pole += coef * (*tbis); pole++; tbis++;
@@ -1326,7 +1331,7 @@ void  BSplCLib::Bohm(const Standard_Real U,
     coef = Degree;
     Dmi  = Degree;
     pole = psav + 3;
-    
+
     for (i = 1; i <= min; i++) {
       *pole *= coef; pole++;
       *pole *= coef; pole++;
@@ -1339,13 +1344,13 @@ void  BSplCLib::Bohm(const Standard_Real U,
   case 4 : {
     psDD     = psav + (Degree << 2);
     psDDmDim = psDD - 4;
-    
+
     for (i = 0; i < Degree; i++) {
       DDmi--;
       pole = psDD;
       tbis = psDDmDim;
       jDmi = DDmi;
-      
+
       for (j = Degm1; j >= i; j--) {
 	jDmi--;
 	coef   = (knot[jDmi]  == knot[j]) ? 0.0 : 1. /(knot[jDmi] - knot[j]) ;
@@ -1359,13 +1364,13 @@ void  BSplCLib::Bohm(const Standard_Real U,
     }
     // Second phase, dependant of U
     iDim = - 4;
-    
+
     for (i = 0; i < Degree; i++) {
       iDim += 4;
       pole  = psav + iDim;
       tbis  = pole + 4;
       coef  = U - knot[i];
-      
+
       for (j = i; j >= 0; j--) {
 	*pole += coef * (*tbis); pole++; tbis++;
 	*pole += coef * (*tbis); pole++; tbis++;
@@ -1376,10 +1381,10 @@ void  BSplCLib::Bohm(const Standard_Real U,
       }
     }
     // multiply by the degrees
-    coef = Degree; 
+    coef = Degree;
     Dmi  = Degree;
     pole = psav + 4;
-   
+
     for (i = 1; i <= min; i++) {
       *pole *= coef; pole++;
       *pole *= coef; pole++;
@@ -1395,17 +1400,17 @@ void  BSplCLib::Bohm(const Standard_Real U,
       Standard_Integer Dim2 = Dimension << 1;
       psDD     = psav + Degree * Dimension;
       psDDmDim = psDD - Dimension;
-      
+
       for (i = 0; i < Degree; i++) {
 	DDmi--;
 	pole = psDD;
 	tbis = psDDmDim;
 	jDmi = DDmi;
-	
+
 	for (j = Degm1; j >= i; j--) {
 	  jDmi--;
 	  coef = (knot[jDmi] == knot[j]) ? 0.0 : 1. / (knot[jDmi] - knot[j]);
-	  
+
 	  for (k = 0; k < Dimension; k++) {
 	    *pole -= *tbis; *pole *= coef; pole++; tbis++;
 	  }
@@ -1415,15 +1420,15 @@ void  BSplCLib::Bohm(const Standard_Real U,
       }
       // Second phase, dependant of U
       iDim = - Dimension;
-      
+
       for (i = 0; i < Degree; i++) {
 	iDim += Dimension;
 	pole  = psav + iDim;
 	tbis  = pole + Dimension;
 	coef  = U - knot[i];
-	
+
 	for (j = i; j >= 0; j--) {
-	  
+
 	  for (k = 0; k < Dimension; k++) {
 	    *pole += coef * (*tbis); pole++; tbis++;
 	  }
@@ -1435,9 +1440,9 @@ void  BSplCLib::Bohm(const Standard_Real U,
       coef = Degree;
       Dmi  = Degree;
       pole = psav + Dimension;
-      
+
       for (i = 1; i <= min; i++) {
-	
+
 	for (k = 0; k < Dimension; k++) {
 	  *pole *= coef; pole++;
 	}
@@ -1450,7 +1455,7 @@ void  BSplCLib::Bohm(const Standard_Real U,
 
 //=======================================================================
 //function : BuildKnots
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void BSplCLib::BuildKnots(const Standard_Integer         Degree,
@@ -1536,7 +1541,7 @@ void BSplCLib::BuildKnots(const Standard_Integer         Degree,
 	Standard_Integer i,j;
 	Standard_Integer Deg2 = Degree << 1;
 	j = Index - Degree;
-	
+
 	for (i = 0; i < Deg2; i++) {
 	  j++;
 	  knot[i] = pkn[j];
@@ -1598,12 +1603,12 @@ void BSplCLib::BuildKnots(const Standard_Integer         Degree,
 	  knot[Degree + i] = pkn[iupp] + uoffset;
       }
     }
-  } 
+  }
 }
 
 //=======================================================================
 //function : PoleIndex
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer BSplCLib::PoleIndex(const Standard_Integer         Degree,
@@ -1636,7 +1641,7 @@ void  BSplCLib::BuildBoor(const Standard_Integer         Index,
 {
   Standard_Real *poles = &LP;
   Standard_Integer i,k, ip = Poles.Lower() + Index * Dimension;
-  
+
   for (i = 0; i < Length+1; i++) {
 
     for (k = 0; k < Dimension; k++) {
@@ -1650,7 +1655,7 @@ void  BSplCLib::BuildBoor(const Standard_Integer         Index,
 
 //=======================================================================
 //function : BoorIndex
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer  BSplCLib::BoorIndex(const Standard_Integer Index,
@@ -1664,7 +1669,7 @@ Standard_Integer  BSplCLib::BoorIndex(const Standard_Integer Index,
 
 //=======================================================================
 //function : GetPole
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void  BSplCLib::GetPole(const Standard_Integer         Index,
@@ -1687,23 +1692,23 @@ void  BSplCLib::GetPole(const Standard_Integer         Index,
 
 //=======================================================================
 //function : PrepareInsertKnots
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean  BSplCLib::PrepareInsertKnots
 (const Standard_Integer         Degree,
- const Standard_Boolean         Periodic, 
+ const Standard_Boolean         Periodic,
  const TColStd_Array1OfReal&    Knots,
  const TColStd_Array1OfInteger& Mults,
  const TColStd_Array1OfReal&    AddKnots,
  const TColStd_Array1OfInteger* AddMults,
  Standard_Integer&              NbPoles,
- Standard_Integer&              NbKnots, 
+ Standard_Integer&              NbKnots,
  const Standard_Real            Tolerance,
  const Standard_Boolean         Add)
 {
   Standard_Boolean addflat = AddMults == NULL;
-  
+
   Standard_Integer first,last;
   if (Periodic) {
     first = Knots.Lower();
@@ -1717,7 +1722,7 @@ Standard_Boolean  BSplCLib::PrepareInsertKnots
    Standard_Real adeltaK2 = AddKnots(AddKnots.Upper())-Knots(last);
   if (adeltaK1 > Tolerance) return Standard_False;
   if (adeltaK2  > Tolerance) return Standard_False;
-  
+
   Standard_Integer sigma = 0, mult, amult;
   NbKnots = 0;
   Standard_Integer  k  = Knots.Lower() - 1;
@@ -1727,21 +1732,21 @@ Standard_Boolean  BSplCLib::PrepareInsertKnots
   {
     //gka for case when segments was produced on full period only one knot
     //was added in the end of curve
-    if(fabs(adeltaK1) <= gp::Resolution() && 
+    if(fabs(adeltaK1) <= gp::Resolution() &&
        fabs(adeltaK2) <= gp::Resolution())
       ak++;
   }
-  
+
   Standard_Integer aLastKnotMult = Mults (Knots.Upper());
   Standard_Real au,oldau = AddKnots(ak),Eps;
-  
+
   while (ak <= AddKnots.Upper()) {
     au = AddKnots(ak);
     if (au < oldau) return Standard_False;
     oldau = au;
 
     Eps = Max(Tolerance,Epsilon(au));
-    
+
     while ((k < Knots.Upper()) && (Knots(k+1)  - au <= Eps)) {
       k++;
       NbKnots++;
@@ -1750,7 +1755,7 @@ Standard_Boolean  BSplCLib::PrepareInsertKnots
 
     if (addflat) amult = 1;
     else         amult = Max(0,(*AddMults)(ak));
-    
+
     while ((ak < AddKnots.Upper()) &&
 	   (Abs(au - AddKnots(ak+1)) <= Eps)) {
       ak++;
@@ -1759,8 +1764,8 @@ Standard_Boolean  BSplCLib::PrepareInsertKnots
 	else         amult += Max(0,(*AddMults)(ak));
       }
     }
-    
-    
+
+
     if (Abs(au - Knots(k)) <= Eps) {
       // identic to existing knot
       mult = Mults(k);
@@ -1768,7 +1773,7 @@ Standard_Boolean  BSplCLib::PrepareInsertKnots
 	if (mult + amult > Degree)
 	  amult = Max(0,Degree - mult);
 	sigma += amult;
-	
+
       }
       else if (amult > mult) {
 	if (amult > Degree) amult = Degree;
@@ -1801,10 +1806,10 @@ Standard_Boolean  BSplCLib::PrepareInsertKnots
 	sigma += amult;
       }
     }
-    
+
     ak++;
   }
-  
+
   // count the last knots
   while (k < Knots.Upper()) {
     k++;
@@ -1823,19 +1828,19 @@ Standard_Boolean  BSplCLib::PrepareInsertKnots
   else {
     NbPoles = sigma - Degree - 1;
   }
- 
+
   return Standard_True;
 }
 
 //=======================================================================
 //function : Copy
 //purpose  : copy reals from an array to an other
-//        
+//
 //   NbValues are copied from OldPoles(OldFirst)
 //                 to    NewPoles(NewFirst)
 //
 //   Periodicity is handled.
-//   OldFirst and NewFirst are updated 
+//   OldFirst and NewFirst are updated
 //   to the position after the last copied pole.
 //
 //=======================================================================
@@ -1848,10 +1853,10 @@ static void Copy(const Standard_Integer      NbPoles,
 {
   // reset the index in the range for periodicity
 
-  OldFirst = OldPoles.Lower() + 
+  OldFirst = OldPoles.Lower() +
     (OldFirst - OldPoles.Lower()) % (OldPoles.Upper() - OldPoles.Lower() + 1);
 
-  NewFirst = NewPoles.Lower() + 
+  NewFirst = NewPoles.Lower() +
     (NewFirst - NewPoles.Lower()) % (NewPoles.Upper() - NewPoles.Lower() + 1);
 
   // copy
@@ -1865,29 +1870,29 @@ static void Copy(const Standard_Integer      NbPoles,
     if (NewFirst > NewPoles.Upper()) NewFirst = NewPoles.Lower();
   }
 }
-		      
+
 //=======================================================================
 //function : InsertKnots
 //purpose  : insert an array of knots and multiplicities
 //=======================================================================
 
 void BSplCLib::InsertKnots
-(const Standard_Integer         Degree, 
+(const Standard_Integer         Degree,
  const Standard_Boolean         Periodic,
- const Standard_Integer         Dimension, 
- const TColStd_Array1OfReal&    Poles,  
- const TColStd_Array1OfReal&    Knots,    
- const TColStd_Array1OfInteger& Mults, 
- const TColStd_Array1OfReal&    AddKnots,    
- const TColStd_Array1OfInteger* AddMults, 
+ const Standard_Integer         Dimension,
+ const TColStd_Array1OfReal&    Poles,
+ const TColStd_Array1OfReal&    Knots,
+ const TColStd_Array1OfInteger& Mults,
+ const TColStd_Array1OfReal&    AddKnots,
+ const TColStd_Array1OfInteger* AddMults,
  TColStd_Array1OfReal&          NewPoles,
- TColStd_Array1OfReal&          NewKnots,    
- TColStd_Array1OfInteger&       NewMults, 
+ TColStd_Array1OfReal&          NewKnots,
+ TColStd_Array1OfInteger&       NewMults,
  const Standard_Real            Tolerance,
  const Standard_Boolean         Add)
 {
   Standard_Boolean addflat  = AddMults == NULL;
-  
+
   Standard_Integer i,k,mult,firstmult;
   Standard_Integer index,kn,curnk,curk;
   Standard_Integer p,np, curp, curnp, length, depth;
@@ -1901,11 +1906,11 @@ void BSplCLib::InsertKnots
 
   Standard_Real *knots = new Standard_Real[2*Degree];
   Standard_Real *poles = new Standard_Real[(2*Degree+1)*Dimension];
-  
+
   //----------------------------
   // loop on the knots to insert
   //----------------------------
-  
+
   curk   = Knots.Lower()-1;          // current position in Knots
   curnk  = NewKnots.Lower()-1;       // current position in NewKnots
   curp   = Poles.Lower();            // current position in Poles
@@ -1921,26 +1926,26 @@ void BSplCLib::InsertKnots
   // on Periodic curves the first knot and the last knot are inserted later
   // (they are the same knot)
   firstmult = 0;  // multiplicity of the first-last knot for periodic
-  
+
 
   // kn current knot to insert in AddKnots
 
   for (kn = AddKnots.Lower(); kn <= AddKnots.Upper(); kn++) {
-    
+
     u = AddKnots(kn);
     Eps = Max(Tolerance,Epsilon(u));
-    
+
     //-----------------------------------
     // find the position in the old knots
     // and copy to the new knots
     //-----------------------------------
-    
+
     while (curk < Knots.Upper() && Knots(curk+1) - u <= Eps) {
       curk++; curnk++;
       NewKnots(curnk) = Knots(curk);
       index += NewMults(curnk) = Mults(curk);
     }
-    
+
     //-----------------------------------
     // Slice the knots and the mults
     // to the current size of the new curve
@@ -1951,7 +1956,7 @@ void BSplCLib::InsertKnots
     TColStd_Array1OfInteger nmults(NewMults(NewMults.Lower()),NewMults.Lower(),i);
 
     //-----------------------------------
-    // copy enough knots 
+    // copy enough knots
     // to compute the insertion schema
     //-----------------------------------
 
@@ -1980,18 +1985,18 @@ void BSplCLib::InsertKnots
       nmults(nmults.Upper()) = nmults(nmults.Lower());
     }
 
-  
+
 
     //------------------------------------
     // do the boor scheme on the new curve
     // to insert the new knot
     //------------------------------------
-    
+
     Standard_Boolean sameknot = (Abs(u-NewKnots(curnk)) <= Eps);
-    
+
     if (sameknot) length = Max(0,Degree - NewMults(curnk));
     else          length = Degree;
-    
+
     if (addflat) depth = 1;
     else         depth = Min(Degree,(*AddMults)(kn));
 
@@ -2014,7 +2019,7 @@ void BSplCLib::InsertKnots
       }
     }
     if (depth <= 0) continue;
-    
+
     BuildKnots(Degree,curnk,Periodic,nknots,&nmults,*knots);
 
     // copy the poles
@@ -2033,7 +2038,7 @@ void BSplCLib::InsertKnots
 
     BuildBoor(index,length,Dimension,npoles,*poles);
     BoorScheme(u,Degree,*knots,Dimension,*poles,depth,length);
-    
+
     //-------------------
     // copy the new poles
     //-------------------
@@ -2044,7 +2049,7 @@ void BSplCLib::InsertKnots
 
     for (i = 1; i <= length + depth; i++)
       GetPole(i,length,depth,Dimension,*poles,np,ThePoles);
-    
+
     //-------------------
     // insert the knot
     //-------------------
@@ -2059,21 +2064,21 @@ void BSplCLib::InsertKnots
       NewMults(curnk) = depth;
     }
   }
-  
+
   //------------------------------
   // copy the last poles and knots
   //------------------------------
-  
+
   Copy(Poles.Upper() - curp + 1,curp,Poles,curnp,NewPoles);
-  
+
   while (curk < Knots.Upper()) {
     curk++;  curnk++;
     NewKnots(curnk) = Knots(curk);
     NewMults(curnk) = Mults(curk);
   }
-  
+
   //------------------------------
-  // process the first-last knot 
+  // process the first-last knot
   // on periodic curves
   //------------------------------
 
@@ -2093,12 +2098,12 @@ void BSplCLib::InsertKnots
 				  NewPoles.Upper()-depth*Dimension);
       BuildBoor(0,length,Dimension,npoles,*poles);
       BoorScheme(NewKnots(curnk),Degree,*knots,Dimension,*poles,depth,length);
-      
+
       //---------------------------
       // copy the new poles
       // but rotate them with depth
       //---------------------------
-      
+
       np = NewPoles.Lower();
 
       for (i = depth; i < length + depth; i++)
@@ -2108,7 +2113,7 @@ void BSplCLib::InsertKnots
 
       for (i = 0; i < depth; i++)
 	GetPole(i,length,depth,Dimension,*poles,np,NewPoles);
-      
+
       NewMults(NewMults.Lower()) += depth;
       NewMults(NewMults.Upper()) += depth;
     }
@@ -2120,20 +2125,20 @@ void BSplCLib::InsertKnots
 
 //=======================================================================
 //function : RemoveKnot
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-Standard_Boolean BSplCLib::RemoveKnot 
-(const Standard_Integer         Index,       
- const Standard_Integer         Mult,        
- const Standard_Integer         Degree,  
+Standard_Boolean BSplCLib::RemoveKnot
+(const Standard_Integer         Index,
+ const Standard_Integer         Mult,
+ const Standard_Integer         Degree,
  const Standard_Boolean         Periodic,
- const Standard_Integer         Dimension,  
+ const Standard_Integer         Dimension,
  const TColStd_Array1OfReal&    Poles,
- const TColStd_Array1OfReal&    Knots,  
+ const TColStd_Array1OfReal&    Knots,
  const TColStd_Array1OfInteger& Mults,
  TColStd_Array1OfReal&          NewPoles,
- TColStd_Array1OfReal&          NewKnots,  
+ TColStd_Array1OfReal&          NewKnots,
  TColStd_Array1OfInteger&       NewMults,
  const Standard_Real            Tolerance)
 {
@@ -2165,7 +2170,7 @@ Standard_Boolean BSplCLib::RemoveKnot
 
   Standard_Real *knots = new Standard_Real[4*Degree];
   Standard_Real *poles = new Standard_Real[(2*Degree+1)*Dimension];
-  
+
 
   // ------------------------------------
   // build the knots for anti Boor Scheme
@@ -2173,7 +2178,7 @@ Standard_Boolean BSplCLib::RemoveKnot
 
   // the new sequence of knots
   // is obtained from the knots at Index-1 and Index
-  
+
   BSplCLib::BuildKnots(Degree,TheIndex-1,Periodic,Knots,&Mults,*knots);
   index = PoleIndex(Degree,TheIndex-1,Periodic,Mults);
   BSplCLib::BuildKnots(Degree,TheIndex,Periodic,Knots,&Mults,knots[2*Degree]);
@@ -2211,7 +2216,7 @@ Standard_Boolean BSplCLib::RemoveKnot
   Standard_Boolean result = AntiBoorScheme(Knots(TheIndex),Degree,*knots,
 					   Dimension,*poles,
 					   depth,length,Tolerance);
-  
+
   // ----------------
   // copy the results
   // ----------------
@@ -2222,17 +2227,17 @@ Standard_Boolean BSplCLib::RemoveKnot
 
     p = Poles.Lower();
     np = NewPoles.Lower();
-    
+
     // unmodified poles before
     Copy((index+1)*Dimension,p,Poles,np,NewPoles);
-    
-    
+
+
     // modified
 
     for (i = 1; i <= length; i++)
       BSplCLib::GetPole(i,length,0,Dimension,*poles,np,NewPoles);
     p += (length + depth) * Dimension ;
-    
+
     // unmodified poles after
     if (p != Poles.Lower()) {
       i = Poles.Upper() - p + 1;
@@ -2264,9 +2269,9 @@ Standard_Boolean BSplCLib::RemoveKnot
 	}
       }
       else {
-	// The interesting case of a Periodic curve 
+	// The interesting case of a Periodic curve
 	// where the first and last knot is removed.
-	
+
 	for (i = first; i < last-1; i++) {
 	  NewKnots(i) = Knots(i+1);
 	  NewMults(i) = Mults(i+1);
@@ -2281,26 +2286,26 @@ Standard_Boolean BSplCLib::RemoveKnot
   // free local arrays
   delete [] knots;
   delete [] poles;
-  
+
   return result;
 }
 
 //=======================================================================
 //function : IncreaseDegreeCountKnots
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer  BSplCLib::IncreaseDegreeCountKnots
 (const Standard_Integer Degree,
- const Standard_Integer NewDegree, 
- const Standard_Boolean Periodic, 
+ const Standard_Integer NewDegree,
+ const Standard_Boolean Periodic,
  const TColStd_Array1OfInteger& Mults)
 {
   if (Periodic) return Mults.Length();
   Standard_Integer f = FirstUKnotIndex(Degree,Mults);
   Standard_Integer l = LastUKnotIndex(Degree,Mults);
   Standard_Integer m,i,removed = 0, step = NewDegree - Degree;
-  
+
   i = Mults.Lower();
   m = Degree + (f - i + 1) * step + 1;
 
@@ -2326,10 +2331,10 @@ Standard_Integer  BSplCLib::IncreaseDegreeCountKnots
 
 //=======================================================================
 //function : IncreaseDegree
-//purpose  : 
+//purpose  :
 //=======================================================================
 
-void BSplCLib::IncreaseDegree 
+void BSplCLib::IncreaseDegree
 (const Standard_Integer         Degree,
  const Standard_Integer         NewDegree,
  const Standard_Boolean         Periodic,
@@ -2340,7 +2345,7 @@ void BSplCLib::IncreaseDegree
  TColStd_Array1OfReal&          NewPoles,
  TColStd_Array1OfReal&          NewKnots,
  TColStd_Array1OfInteger&       NewMults)
-{ 
+{
   // Degree elevation of a BSpline Curve
 
   // This algorithms loops on degree incrementation from Degree to NewDegree.
@@ -2350,7 +2355,7 @@ void BSplCLib::IncreaseDegree
   // It has the same knot, poles and multiplicities.
 
   // If the curve is periodic knots are added on the working curve before
-  // and after the existing knots to make it a non-periodic curves. 
+  // and after the existing knots to make it a non-periodic curves.
   // The poles are also copied.
 
   // The first and last multiplicity of the working curve are set to Degree+1,
@@ -2397,7 +2402,7 @@ void BSplCLib::IncreaseDegree
       pl += Mults(i);
   }
 
-  // copy the knots and multiplicities 
+  // copy the knots and multiplicities
   TColStd_Array1OfReal    wknots(1,nbwknots);
   TColStd_Array1OfInteger wmults(1,nbwknots);
   if (!Periodic) {
@@ -2410,19 +2415,19 @@ void BSplCLib::IncreaseDegree
     i = 0;
 
     for (k = l; k < Knots.Upper(); k++) {
-      i++; 
+      i++;
       wknots(i) = Knots(k) - period;
       wmults(i) = Mults(k);
     }
 
     for (k = Knots.Lower(); k <= Knots.Upper(); k++) {
-      i++; 
+      i++;
       wknots(i) = Knots(k);
       wmults(i) = Mults(k);
     }
 
     for (k = Knots.Lower()+1; k <= f; k++) {
-      i++; 
+      i++;
       wknots(i) = Knots(k) + period;
       wmults(i) = Mults(k);
     }
@@ -2446,10 +2451,10 @@ void BSplCLib::IncreaseDegree
   nbwpoles -= Degree + 1;
 
   // we provide space for degree elevation
-  TColStd_Array1OfReal 
+  TColStd_Array1OfReal
     wpoles(1,(nbwpoles + (nbwknots-1) * (NewDegree - Degree)) * Dimension);
 
-  for (i = 1; i <= pf * Dimension; i++) 
+  for (i = 1; i <= pf * Dimension; i++)
     wpoles(i) = 0;
 
   k = Poles.Lower();
@@ -2462,8 +2467,8 @@ void BSplCLib::IncreaseDegree
 
   for (i = (nbwpoles-pl)*Dimension+1; i <= nbwpoles*Dimension; i++)
     wpoles(i) = 0;
-  
-  
+
+
   //-----------------------------------------------------------
   // Declare the temporary arrays used in degree incrementation
   //-----------------------------------------------------------
@@ -2480,7 +2485,7 @@ void BSplCLib::IncreaseDegree
   TColStd_Array1OfReal    nknots(1,nbwknots);
 
 
-  
+
   //------------------------------
   // Loop on degree incrementation
   //------------------------------
@@ -2490,17 +2495,17 @@ void BSplCLib::IncreaseDegree
   nbwp = nbp;
 
   for (curDeg = Degree; curDeg < NewDegree; curDeg++) {
-    
+
     nbp  = nbwp;               // current number of poles
     nbwp = nbp + nbwknots - 1; // new number of poles
 
     // For the averaging
     TColStd_Array1OfReal nwpoles(1,nbwp * Dimension);
     nwpoles.Init(0.0e0) ;
-  
-    
+
+
     for (step = 0; step <= curDeg; step++) {
-    
+
       // Compute the bspline of rank step.
 
       // if not the first time, decrement the multiplicities back
@@ -2508,32 +2513,32 @@ void BSplCLib::IncreaseDegree
 	for (i = 1; i <= nbwknots; i++)
 	  wmults(i)--;
       }
-    
-      // Poles are the current poles 
+
+      // Poles are the current poles
       // but the poles congruent to step are duplicated.
-      
+
       Standard_Integer offset = 0;
 
       for (i = 0; i < nbp; i++) {
 	offset++;
 
 	for (k = 0; k < Dimension; k++) {
-	  tempc1((offset-1)*Dimension+k+1) = 
+	  tempc1((offset-1)*Dimension+k+1) =
 	    wpoles(NewPoles.Lower()+i*Dimension+k);
 	}
 	if (i % (curDeg+1) == step) {
 	  offset++;
 
 	  for (k = 0; k < Dimension; k++) {
-	    tempc1((offset-1)*Dimension+k+1) = 
+	    tempc1((offset-1)*Dimension+k+1) =
 	      wpoles(NewPoles.Lower()+i*Dimension+k);
 	  }
 	}
       }
-	
+
       // Knots multiplicities are increased
       // For each knot where the sum of multiplicities is congruent to step
-      
+
       Standard_Integer stepmult = step+1;
       Standard_Integer nbknots = 0;
       Standard_Integer smult = 0;
@@ -2551,7 +2556,7 @@ void BSplCLib::IncreaseDegree
 	  iknots(nbknots) = wknots(k);
 	}
       }
-      
+
       // the curve is obtained by inserting the knots
       // to raise the multiplicities
 
@@ -2565,7 +2570,7 @@ void BSplCLib::IncreaseDegree
 
 	InsertKnots(curDeg+1,Standard_False,Dimension,curve,wknots,wmults,
 		    aknots,NoMults(),ncurve,nknots,wmults,0.0);
-	
+
 	// add to the average
 
 	for (i = 1; i <= nbwp * Dimension; i++)
@@ -2578,14 +2583,14 @@ void BSplCLib::IncreaseDegree
 	  nwpoles(i) += tempc1(i);
       }
     }
-    
+
     // The result is the average
 
     for (i = 1; i <= nbwp * Dimension; i++) {
       wpoles(i) = nwpoles(i) / (curDeg+1);
     }
   }
-  
+
   //-----------------
   // Copy the results
   //-----------------
@@ -2593,9 +2598,9 @@ void BSplCLib::IncreaseDegree
   // index in new knots of the first knot of the curve
   if (Periodic)
     firstknot = Mults.Upper() - l + 1;
-  else 
+  else
     firstknot = f;
-  
+
   // the new curve starts at index firstknot
   // so we must remove knots until the sum of multiplicities
   // from the first to the start is NewDegree+1
@@ -2644,13 +2649,13 @@ void BSplCLib::IncreaseDegree
 
 //=======================================================================
 //function : PrepareUnperiodize
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void  BSplCLib::PrepareUnperiodize
-(const Standard_Integer         Degree, 
- const TColStd_Array1OfInteger& Mults, 
- Standard_Integer&        NbKnots, 
+(const Standard_Integer         Degree,
+ const TColStd_Array1OfInteger& Mults,
+ Standard_Integer&        NbKnots,
  Standard_Integer&        NbPoles)
 {
   Standard_Integer i;
@@ -2658,11 +2663,11 @@ void  BSplCLib::PrepareUnperiodize
   NbKnots = Mults.Length();
   NbPoles = - Degree - 1;
 
-  for (i = Mults.Lower(); i <= Mults.Upper(); i++) 
+  for (i = Mults.Lower(); i <= Mults.Upper(); i++)
     NbPoles += Mults(i);
 
   Standard_Integer sigma, k;
-  // Add knots at the beginning of the curve to raise Multiplicities 
+  // Add knots at the beginning of the curve to raise Multiplicities
   // to Degre + 1;
   sigma = Mults(Mults.Lower());
   k = Mults.Upper() - 1;
@@ -2673,12 +2678,12 @@ void  BSplCLib::PrepareUnperiodize
     k--;
     NbKnots++;
   }
-  // We must add exactly until Degree + 1 -> 
+  // We must add exactly until Degree + 1 ->
   //    Suppress the excedent.
   if ( sigma > Degree + 1)
     NbPoles -= sigma - Degree - 1;
 
-  // Add knots at the end of the curve to raise Multiplicities 
+  // Add knots at the end of the curve to raise Multiplicities
   // to Degre + 1;
   sigma = Mults(Mults.Upper());
   k = Mults.Lower() + 1;
@@ -2689,7 +2694,7 @@ void  BSplCLib::PrepareUnperiodize
     k++;
     NbKnots++;
   }
-  // We must add exactly until Degree + 1 -> 
+  // We must add exactly until Degree + 1 ->
   //    Suppress the excedent.
   if ( sigma > Degree + 1)
     NbPoles -= sigma - Degree - 1;
@@ -2697,7 +2702,7 @@ void  BSplCLib::PrepareUnperiodize
 
 //=======================================================================
 //function : Unperiodize
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void  BSplCLib::Unperiodize
@@ -2730,7 +2735,7 @@ void  BSplCLib::Unperiodize
     NewKnots ( k + index ) = Knots( k);
     NewMults ( k + index ) = Mults( k);
   }
-  
+
   // set the 'starting' knots;
 
   for ( k = 1; k <= index; k++) {
@@ -2738,7 +2743,7 @@ void  BSplCLib::Unperiodize
     NewMults( k) = NewMults( k + Knots.Length() - 1);
   }
   NewMults( 1) -= sigma - Degree -1;
-  
+
   // set the 'ending' knots;
   sigma = NewMults( index + Knots.Length() );
 
@@ -2756,7 +2761,7 @@ void  BSplCLib::Unperiodize
 
 //=======================================================================
 //function : PrepareTrimming
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void BSplCLib::PrepareTrimming(const Standard_Integer         Degree,
@@ -2789,13 +2794,13 @@ void BSplCLib::PrepareTrimming(const Standard_Integer         Degree,
   // eval NbPoles:
   NbPoles = Degree + 1;
 
-  for ( i = index1; i <= index2; i++) 
+  for ( i = index1; i <= index2; i++)
     NbPoles += Mults(i);
 }
 
 //=======================================================================
 //function : Trimming
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void BSplCLib::Trimming(const Standard_Integer         Degree,
@@ -2815,7 +2820,7 @@ void BSplCLib::Trimming(const Standard_Integer         Degree,
   Standard_Integer mm[2] = { Degree, Degree };
   TColStd_Array1OfReal    K( kk[0], 1, 2 );
   TColStd_Array1OfInteger M( mm[0], 1, 2 );
-  if (!PrepareInsertKnots( Degree, Periodic, Knots, Mults, K, &M, 
+  if (!PrepareInsertKnots( Degree, Periodic, Knots, Mults, K, &M,
 			  nbpoles, nbknots, Epsilon( U1), 0))
   {
     throw Standard_OutOfRange();
@@ -2851,16 +2856,16 @@ void BSplCLib::Trimming(const Standard_Integer         Degree,
 }
 
 //=======================================================================
-//function : Solves a LU factored Matrix 
-//purpose  : 
+//function : Solves a LU factored Matrix
+//purpose  :
 //=======================================================================
 
-Standard_Integer 
+Standard_Integer
 BSplCLib::SolveBandedSystem(const math_Matrix&  Matrix,
 			    const Standard_Integer UpperBandWidth,
 			    const Standard_Integer LowerBandWidth,
 			    const Standard_Integer ArrayDimension,
-			    Standard_Real&   Array) 
+			    Standard_Real&   Array)
 {
   Standard_Integer ii,
   jj,
@@ -2868,45 +2873,45 @@ BSplCLib::SolveBandedSystem(const math_Matrix&  Matrix,
   MinIndex,
   MaxIndex,
   ReturnCode = 0 ;
-  
+
   Standard_Real   *PolesArray = &Array ;
   Standard_Real   Inverse ;
-  
-  
-  if (Matrix.LowerCol() != 1 || 
+
+
+  if (Matrix.LowerCol() != 1 ||
       Matrix.UpperCol() != UpperBandWidth + LowerBandWidth + 1) {
     ReturnCode = 1 ;
     goto FINISH ;
   }
-  
+
   for (ii = Matrix.LowerRow() + 1; ii <=  Matrix.UpperRow() ; ii++) {
     MinIndex = (ii - LowerBandWidth >= Matrix.LowerRow() ?
                 ii - LowerBandWidth : Matrix.LowerRow()) ;
-    
+
     for ( jj = MinIndex  ; jj < ii  ; jj++) {
-      
+
       for (kk = 0 ; kk < ArrayDimension ; kk++) {
-	PolesArray[(ii-1) * ArrayDimension + kk] += 
+	PolesArray[(ii-1) * ArrayDimension + kk] +=
 	  PolesArray[(jj-1) * ArrayDimension + kk] * Matrix(ii, jj - ii + LowerBandWidth + 1) ;
       }
     }
   }
-  
+
   for (ii = Matrix.UpperRow() ; ii >=  Matrix.LowerRow() ; ii--) {
-    MaxIndex = (ii + UpperBandWidth <= Matrix.UpperRow() ? 
+    MaxIndex = (ii + UpperBandWidth <= Matrix.UpperRow() ?
 		ii + UpperBandWidth : Matrix.UpperRow()) ;
-    
+
     for (jj = MaxIndex  ; jj > ii ; jj--) {
-      
+
       for (kk = 0 ; kk < ArrayDimension ; kk++) {
 	PolesArray[(ii-1)  * ArrayDimension + kk] -=
-	  PolesArray[(jj - 1) * ArrayDimension + kk] * 
+	  PolesArray[(jj - 1) * ArrayDimension + kk] *
 	    Matrix(ii, jj - ii + LowerBandWidth + 1) ;
       }
     }
-    
+
     //fixing a bug PRO18577 to avoid divizion by zero
-    
+
     Standard_Real divizor = Matrix(ii,LowerBandWidth + 1) ;
     Standard_Real Toler = 1.0e-16;
     if ( Abs(divizor) > Toler )
@@ -2917,9 +2922,9 @@ BSplCLib::SolveBandedSystem(const math_Matrix&  Matrix,
       ReturnCode = 1;
       goto FINISH;
     }
-	
+
     for (kk = 0 ; kk < ArrayDimension ; kk++) {
-      PolesArray[(ii-1)  * ArrayDimension + kk] *=  Inverse ; 
+      PolesArray[(ii-1)  * ArrayDimension + kk] *=  Inverse ;
     }
   }
   FINISH :
@@ -2927,44 +2932,44 @@ BSplCLib::SolveBandedSystem(const math_Matrix&  Matrix,
 }
 
 //=======================================================================
-//function : Solves a LU factored Matrix 
-//purpose  : 
+//function : Solves a LU factored Matrix
+//purpose  :
 //=======================================================================
 
-Standard_Integer 
+Standard_Integer
 BSplCLib::SolveBandedSystem(const math_Matrix&  Matrix,
 			    const Standard_Integer UpperBandWidth,
 			    const Standard_Integer LowerBandWidth,
                             const Standard_Boolean HomogeneousFlag,
 			    const Standard_Integer ArrayDimension,
 			    Standard_Real&   Poles,
-			    Standard_Real&   Weights) 
+			    Standard_Real&   Weights)
 {
   Standard_Integer ii,
   kk,
   ErrorCode = 0,
   ReturnCode = 0 ;
-  
+
   Standard_Real   Inverse,
   *PolesArray   = &Poles,
   *WeightsArray = &Weights ;
-  
-  if (Matrix.LowerCol() != 1 || 
+
+  if (Matrix.LowerCol() != 1 ||
       Matrix.UpperCol() != UpperBandWidth + LowerBandWidth + 1) {
     ReturnCode = 1 ;
     goto FINISH ;
   }
   if (HomogeneousFlag == Standard_False) {
-    
+
     for (ii = 0 ; ii <  Matrix.UpperRow() - Matrix.LowerRow() + 1; ii++) {
-      
+
       for (kk = 0 ; kk < ArrayDimension ; kk++) {
 	PolesArray[ii * ArrayDimension + kk] *=
 	  WeightsArray[ii] ;
       }
     }
   }
-  ErrorCode = 
+  ErrorCode =
     BSplCLib::SolveBandedSystem(Matrix,
 				UpperBandWidth,
 				LowerBandWidth,
@@ -2974,7 +2979,7 @@ BSplCLib::SolveBandedSystem(const math_Matrix&  Matrix,
     ReturnCode = 2 ;
     goto FINISH ;
   }
-  ErrorCode = 
+  ErrorCode =
     BSplCLib::SolveBandedSystem(Matrix,
 				UpperBandWidth,
 				LowerBandWidth,
@@ -2988,7 +2993,7 @@ BSplCLib::SolveBandedSystem(const math_Matrix&  Matrix,
 
     for (ii = 0  ; ii < Matrix.UpperRow() - Matrix.LowerRow() + 1 ; ii++) {
       Inverse = 1.0e0 / WeightsArray[ii] ;
-      
+
       for (kk = 0  ; kk < ArrayDimension ; kk++) {
 	PolesArray[ii * ArrayDimension + kk] *= Inverse ;
       }
@@ -2999,31 +3004,31 @@ BSplCLib::SolveBandedSystem(const math_Matrix&  Matrix,
 
 //=======================================================================
 //function : BuildSchoenbergPoints
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void  BSplCLib::BuildSchoenbergPoints(const Standard_Integer         Degree,
 				      const TColStd_Array1OfReal&    FlatKnots,
-				      TColStd_Array1OfReal&          Parameters) 
+				      TColStd_Array1OfReal&          Parameters)
 {
   Standard_Integer ii,
   jj ;
   Standard_Real Inverse ;
   Inverse = 1.0e0 / (Standard_Real)Degree ;
-  
+
   for (ii = Parameters.Lower() ;   ii <= Parameters.Upper() ; ii++) {
     Parameters(ii) = 0.0e0 ;
-    
+
     for (jj = 1 ; jj <= Degree ; jj++) {
       Parameters(ii) += FlatKnots(jj + ii) ;
-    } 
-    Parameters(ii) *= Inverse ; 
+    }
+    Parameters(ii) *= Inverse ;
   }
 }
 
 //=======================================================================
 //function : Interpolate
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void  BSplCLib::Interpolate(const Standard_Integer         Degree,
@@ -3032,7 +3037,7 @@ void  BSplCLib::Interpolate(const Standard_Integer         Degree,
 			    const TColStd_Array1OfInteger& ContactOrderArray,
 			    const Standard_Integer         ArrayDimension,
 			    Standard_Real&                 Poles,
-			    Standard_Integer&              InversionProblem) 
+			    Standard_Integer&              InversionProblem)
 {
   Standard_Integer ErrorCode,
   UpperBandWidth,
@@ -3071,7 +3076,7 @@ void  BSplCLib::Interpolate(const Standard_Integer         Degree,
 
 //=======================================================================
 //function : Interpolate
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void  BSplCLib::Interpolate(const Standard_Integer         Degree,
@@ -3081,7 +3086,7 @@ void  BSplCLib::Interpolate(const Standard_Integer         Degree,
 			    const Standard_Integer         ArrayDimension,
 			    Standard_Real&                 Poles,
 			    Standard_Real&                 Weights,
-			    Standard_Integer&              InversionProblem) 
+			    Standard_Integer&              InversionProblem)
 {
   Standard_Integer ErrorCode,
   UpperBandWidth,
@@ -3121,12 +3126,12 @@ void  BSplCLib::Interpolate(const Standard_Integer         Degree,
 }
 
 //=======================================================================
-//function : Evaluates a Bspline function : uses the ExtrapMode 
+//function : Evaluates a Bspline function : uses the ExtrapMode
 //purpose  : the function is extrapolated using the Taylor expansion
 //           of degree ExtrapMode[0] to the left and the Taylor
-//           expansion of degree ExtrapMode[1] to the right 
+//           expansion of degree ExtrapMode[1] to the right
 //  this evaluates the numerator by multiplying by the weights
-//  and evaluating it but does not call RationalDerivatives after 
+//  and evaluating it but does not call RationalDerivatives after
 //=======================================================================
 
 void  BSplCLib::Eval
@@ -3135,7 +3140,7 @@ void  BSplCLib::Eval
  const Standard_Integer                DerivativeRequest,
  Standard_Integer&                     ExtrapMode,
  const Standard_Integer                Degree,
- const  TColStd_Array1OfReal&          FlatKnots, 
+ const  TColStd_Array1OfReal&          FlatKnots,
  const Standard_Integer                ArrayDimension,
  Standard_Real&                        Poles,
  Standard_Real&                        Weights,
@@ -3170,7 +3175,7 @@ void  BSplCLib::Eval
   PResultArray = &PolesResults ;
   WResultArray = &WeightsResults ;
   LocalParameter = Parameter ;
-  ExtrapolatingFlag[0] = 
+  ExtrapolatingFlag[0] =
     ExtrapolatingFlag[1] = 0 ;
   //
   // check if we are extrapolating to a degree which is smaller than
@@ -3182,12 +3187,12 @@ void  BSplCLib::Eval
     while (LocalParameter > FlatKnots(FlatKnots.Upper() - 1)) {
       LocalParameter -= Period ;
     }
-    
+
     while (LocalParameter < FlatKnots(2)) {
       LocalParameter +=  Period ;
     }
   }
-  if (Parameter < FlatKnots(2) && 
+  if (Parameter < FlatKnots(2) &&
       LocalRequest < ExtrapModeArray[0] &&
       ExtrapModeArray[0] < Degree) {
     LocalRequest = ExtrapModeArray[0] ;
@@ -3236,14 +3241,14 @@ void  BSplCLib::Eval
       WResultArray[Index] = 0.0e0 ;
 
       for (jj = 1  ; jj <= Order ; jj++) {
-	
+
 	for (kk = 0 ; kk < ArrayDimension ; kk++) {
-	  PResultArray[Index + kk] += 
-	    PolesArray[(Index1-1) * ArrayDimension + kk] 
+	  PResultArray[Index + kk] +=
+	    PolesArray[(Index1-1) * ArrayDimension + kk]
 	      * WeightsArray[Index1-1] * BsplineBasis(ii,jj) ;
 	}
 	WResultArray[Index2]  += WeightsArray[Index1-1] * BsplineBasis(ii,jj) ;
-	
+
 	Index1 = Index1 % Modulus ;
 	Index1 += 1 ;
       }
@@ -3252,7 +3257,7 @@ void  BSplCLib::Eval
     }
   }
   else {
-    // 
+    //
     //  store Taylor expansion in LocalRealArray
     //
     NewRequest = DerivativeRequest ;
@@ -3265,7 +3270,7 @@ void  BSplCLib::Eval
 
     for (ii = 1 ; ii <= LocalRequest + 1 ; ii++) {
       Index1 = FirstNonZeroBsplineIndex ;
-      
+
       for (kk = 0 ; kk < ArrayDimension ; kk++) {
 	LocalRealArray[Index + kk] = 0.0e0 ;
       }
@@ -3273,8 +3278,8 @@ void  BSplCLib::Eval
       for (jj = 1  ; jj <= Order ; jj++) {
 
 	for (kk = 0 ; kk < ArrayDimension ; kk++) {
-	  LocalRealArray[Index + kk] += 
-	    PolesArray[(Index1-1)*ArrayDimension + kk] * 
+	  LocalRealArray[Index + kk] +=
+	    PolesArray[(Index1-1)*ArrayDimension + kk] *
 	      WeightsArray[Index1-1] * BsplineBasis(ii,jj) ;
 	}
 	Index1 = Index1 % Modulus ;
@@ -3301,7 +3306,7 @@ void  BSplCLib::Eval
       LocalRealArray[Index] = 0.0e0 ;
 
       for (jj = 1  ; jj <= Order ; jj++) {
-	LocalRealArray[Index] += 
+	LocalRealArray[Index] +=
 	  WeightsArray[Index1-1] * BsplineBasis(ii,jj) ;
 	Index1 = Index1 % Modulus ;
 	Index1 += 1 ;
@@ -3321,13 +3326,13 @@ void  BSplCLib::Eval
 }
 
 //=======================================================================
-//function : Evaluates a Bspline function : uses the ExtrapMode 
+//function : Evaluates a Bspline function : uses the ExtrapMode
 //purpose  : the function is extrapolated using the Taylor expansion
 //           of degree ExtrapMode[0] to the left and the Taylor
-//           expansion of degree ExtrapMode[1] to the right 
-// WARNING : the array Results is supposed to have at least 
-// (DerivativeRequest + 1) * ArrayDimension slots and the 
-// 
+//           expansion of degree ExtrapMode[1] to the right
+// WARNING : the array Results is supposed to have at least
+// (DerivativeRequest + 1) * ArrayDimension slots and the
+//
 //=======================================================================
 
 void  BSplCLib::Eval
@@ -3336,10 +3341,10 @@ void  BSplCLib::Eval
  const Standard_Integer                DerivativeRequest,
  Standard_Integer&                     ExtrapMode,
  const Standard_Integer                Degree,
- const  TColStd_Array1OfReal&          FlatKnots, 
+ const  TColStd_Array1OfReal&          FlatKnots,
  const Standard_Integer                ArrayDimension,
  Standard_Real&                        Poles,
- Standard_Real&                        Results) 
+ Standard_Real&                        Results)
 {
   Standard_Integer ii,
   jj,
@@ -3361,12 +3366,12 @@ void  BSplCLib::Eval
   Period,
   Inverse,
   Delta ;
-         
+
   PolesArray = &Poles ;
   ExtrapModeArray = &ExtrapMode ;
-  ResultArray = &Results ;  
+  ResultArray = &Results ;
   LocalParameter = Parameter ;
-  ExtrapolatingFlag[0] = 
+  ExtrapolatingFlag[0] =
     ExtrapolatingFlag[1] = 0 ;
   //
   // check if we are extrapolating to a degree which is smaller than
@@ -3383,7 +3388,7 @@ void  BSplCLib::Eval
       LocalParameter +=  Period ;
     }
   }
-  if (Parameter < FlatKnots(2) && 
+  if (Parameter < FlatKnots(2) &&
       LocalRequest < ExtrapModeArray[0] &&
       ExtrapModeArray[0] < Degree) {
     LocalRequest = ExtrapModeArray[0] ;
@@ -3401,16 +3406,16 @@ void  BSplCLib::Eval
   if (LocalRequest >= Order) {
     LocalRequest = Degree ;
   }
-  
+
   if (PeriodicFlag) {
     Modulus = FlatKnots.Length() - Degree -1 ;
   }
   else {
     Modulus = FlatKnots.Length() - Degree ;
   }
-  
+
   BSplCLib_LocalMatrix BsplineBasis (LocalRequest, Order);
-  
+
   ErrorCode =
     BSplCLib::EvalBsplineBasis(LocalRequest,
 			       Order,
@@ -3423,18 +3428,18 @@ void  BSplCLib::Eval
   }
   if (ExtrapolatingFlag[0] == 0 && ExtrapolatingFlag[1] == 0) {
     Index = 0 ;
-    
+
     for (ii = 1 ; ii <= LocalRequest + 1 ; ii++) {
       Index1 = FirstNonZeroBsplineIndex ;
-      
+
       for (kk = 0 ; kk < ArrayDimension ; kk++) {
 	ResultArray[Index + kk] = 0.0e0 ;
       }
 
       for (jj = 1  ; jj <= Order ; jj++) {
-	
+
 	for (kk = 0 ; kk < ArrayDimension ; kk++) {
-	  ResultArray[Index + kk] += 
+	  ResultArray[Index + kk] +=
 	    PolesArray[(Index1-1) * ArrayDimension + kk] * BsplineBasis(ii,jj) ;
 	}
 	Index1 = Index1 % Modulus ;
@@ -3444,7 +3449,7 @@ void  BSplCLib::Eval
     }
   }
   else {
-    // 
+    //
     //  store Taylor expansion in LocalRealArray
     //
     NewRequest = DerivativeRequest ;
@@ -3458,7 +3463,7 @@ void  BSplCLib::Eval
 
     for (ii = 1 ; ii <= LocalRequest + 1 ; ii++) {
       Index1 = FirstNonZeroBsplineIndex ;
-      
+
       for (kk = 0 ; kk < ArrayDimension ; kk++) {
 	LocalRealArray[Index + kk] = 0.0e0 ;
       }
@@ -3466,7 +3471,7 @@ void  BSplCLib::Eval
       for (jj = 1  ; jj <= Order ; jj++) {
 
 	for (kk = 0 ; kk < ArrayDimension ; kk++) {
-	  LocalRealArray[Index + kk] += 
+	  LocalRealArray[Index + kk] +=
 	    PolesArray[(Index1-1)*ArrayDimension + kk] * BsplineBasis(ii,jj) ;
 	}
 	Index1 = Index1 % Modulus ;
@@ -3490,27 +3495,27 @@ void  BSplCLib::Eval
 }
 
 //=======================================================================
-//function : TangExtendToConstraint 
+//function : TangExtendToConstraint
 //purpose  : Extends a Bspline function using the tangency map
-// WARNING :  
-//  
-// 
+// WARNING :
+//
+//
 //=======================================================================
 
 void  BSplCLib::TangExtendToConstraint
-(const  TColStd_Array1OfReal&          FlatKnots, 
+(const  TColStd_Array1OfReal&          FlatKnots,
  const Standard_Real                   C1Coefficient,
  const Standard_Integer                NumPoles,
  Standard_Real&                        Poles,
  const Standard_Integer                CDimension,
  const Standard_Integer                CDegree,
- const  TColStd_Array1OfReal&          ConstraintPoint, 
+ const  TColStd_Array1OfReal&          ConstraintPoint,
  const Standard_Integer                Continuity,
  const Standard_Boolean                After,
  Standard_Integer&                     NbPolesResult,
  Standard_Integer&                     NbKnotsResult,
- Standard_Real&                        KnotsResult, 
- Standard_Real&                        PolesResult) 
+ Standard_Real&                        KnotsResult,
+ Standard_Real&                        PolesResult)
 {
 #ifdef OCCT_DEBUG
   if (CDegree<Continuity+1) {
@@ -3531,14 +3536,14 @@ void  BSplCLib::TangExtendToConstraint
   Standard_Integer Csize = Continuity + 2;
   math_Matrix  MatCoefs(1,Csize, 1,Csize);
   if (After) {
-    PLib::HermiteCoefficients(0, 1,           // Limits 
+    PLib::HermiteCoefficients(0, 1,           // Limits
 			      Continuity, 0,  // Orders of constraints
 			      MatCoefs);
   }
   else {
-    PLib::HermiteCoefficients(0, 1,           // Limits 
+    PLib::HermiteCoefficients(0, 1,           // Limits
 			      0, Continuity,  // Orders of constraints
-			      MatCoefs);    
+			      MatCoefs);
   }
 
 
@@ -3553,7 +3558,7 @@ void  BSplCLib::TangExtendToConstraint
   Standard_Boolean periodic_flag = Standard_False ;
   Standard_Integer ipos, extrap_mode[2], derivative_request = Max(Continuity,1);
   extrap_mode[0] = extrap_mode[1] = CDegree;
-  TColStd_Array1OfReal  EvalBS(1, CDimension * (derivative_request+1)) ; 
+  TColStd_Array1OfReal  EvalBS(1, CDimension * (derivative_request+1)) ;
   Standard_Real * Eadr = (Standard_Real *) &EvalBS(1) ;
   BSplCLib::Eval(Tbord,periodic_flag,derivative_request,extrap_mode[0],
                   CDegree,FlatKnots,CDimension,Poles,*Eadr);
@@ -3624,7 +3629,7 @@ void  BSplCLib::TangExtendToConstraint
   TColStd_Array1OfReal FK2(1, Csize*2);
   BSplCLib::KnotSequence(ExtrapNoeuds,ExtrapMults,FK2);
 
-//  norm of the tangent at the connection point 
+//  norm of the tangent at the connection point
   if (After) {
     BSplCLib::Eval(0.,periodic_flag,1,extrap_mode[0],
                   Csize-1,FK2,CDimension,*EPadr,*Eadr);
@@ -3716,7 +3721,7 @@ void  BSplCLib::TangExtendToConstraint
     }
   }
 
-//  flat nodes 
+//  flat nodes
   if (After) {
 //    start with the nodes of the initial surface
 
@@ -3796,7 +3801,7 @@ void  BSplCLib::TangExtendToConstraint
     for (jj=1; jj<=PLength; jj++) {
       PRadr[jj-1] = NewPoles(jj);
     }
-  
+
 //    flat nodes of the concatenation
     Standard_Integer ideb = 0;
 
@@ -3818,7 +3823,7 @@ void  BSplCLib::TangExtendToConstraint
     for (jj=0; jj<PLength; jj++) {
       PRadr[jj] = ResultPoles(jj+1);
     }
-  
+
 //    flat nodes of the result
     Standard_Integer ideb = 0;
 
@@ -3834,15 +3839,15 @@ void  BSplCLib::TangExtendToConstraint
 
 //=======================================================================
 //function : Resolution
-//purpose  : 
+//purpose  :
 //                           d
-//  Let C(t) = SUM      Ci Bi(t)  a Bspline curve of degree d  
-//	      i = 1,n      
-//  with nodes tj for j = 1,n+d+1 
+//  Let C(t) = SUM      Ci Bi(t)  a Bspline curve of degree d
+//	      i = 1,n
+//  with nodes tj for j = 1,n+d+1
 //
 //
 //         '                    C1 - Ci-1   d-1
-//  Then C (t) = SUM     d *  ---------  Bi (t) 
+//  Then C (t) = SUM     d *  ---------  Bi (t)
 //   	          i = 2,n      ti+d - ti
 //
 //		            d-1
@@ -3854,58 +3859,58 @@ void  BSplCLib::TangExtendToConstraint
 //                        |  Ci - Ci-1  |
 //          d *   Max     |  ---------  |
 //	        i = 2,n |  ti+d - ti  |
-//     
-//					N(t) 
-//  In the rational case set    C(t) = -----
-//					D(t) 
 //
-//  
-//  D(t) =  SUM    Di Bi(t) 
+//					N(t)
+//  In the rational case set    C(t) = -----
+//					D(t)
+//
+//
+//  D(t) =  SUM    Di Bi(t)
 //	  i=1,n
 //
-//  N(t) =  SUM   Di * Ci Bi(t) 
+//  N(t) =  SUM   Di * Ci Bi(t)
 //          i =1,n
 //
-//	    N'(t)  -    D'(t) C(t) 
+//	    N'(t)  -    D'(t) C(t)
 //   C'(t) = -----------------------
 //	             D(t)
 //
-//                                   
-//   N'(t) - D'(t) C(t) = 
-//	
+//
+//   N'(t) - D'(t) C(t) =
+//
 //                     Di * (Ci - C(t)) - Di-1 * (Ci-1 - C(t))    d-1
 //	SUM   d *   ---------------------------------------- * Bi  (t)  =
 //        i=2,n                   ti+d   - ti
 //
-//    
+//
 //                   Di * (Ci - Cj) - Di-1 * (Ci-1 - Cj)                d-1
-// SUM   SUM     d * -----------------------------------  * Betaj(t) * Bi  (t) 
-//i=2,n j=1,n               ti+d  - ti  
-//  
+// SUM   SUM     d * -----------------------------------  * Betaj(t) * Bi  (t)
+//i=2,n j=1,n               ti+d  - ti
 //
 //
-//                 Dj Bj(t) 
+//
+//                 Dj Bj(t)
 //    Betaj(t) =   --------
-//	           D(t) 
+//	           D(t)
 //
 //  Betaj(t) form a partition >= 0 of the entity with support
-//  tj, tj+d+1. Consequently if Rj = {j-d, ....,  j+d+d+1} 
+//  tj, tj+d+1. Consequently if Rj = {j-d, ....,  j+d+d+1}
 //  obtain an upper bound of the derivative of C by taking :
 //
 //
 //
 //
 //
-//    
-//                         Di * (Ci - Cj) - Di-1 * (Ci-1 - Cj) 
-//   Max   Max       d  *  -----------------------------------  
-// j=1,n  i dans Rj                   ti+d  - ti  
+//
+//                         Di * (Ci - Cj) - Di-1 * (Ci-1 - Cj)
+//   Max   Max       d  *  -----------------------------------
+// j=1,n  i dans Rj                   ti+d  - ti
 //
 //  --------------------------------------------------------
 //
 //               Min    Di
 //              i =1,n
-//  
+//
 //
 //=======================================================================
 
@@ -3916,7 +3921,7 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
 			  const TColStd_Array1OfReal& FlatKnots,
 			  const Standard_Integer      Degree,
 			  const Standard_Real         Tolerance3D,
-			  Standard_Real&              UTolerance) 
+			  Standard_Real&              UTolerance)
 {
   Standard_Integer ii,num_poles,ii_index,jj_index,ii_inDim;
   Standard_Integer lower,upper,ii_minus,jj,ii_miDim;
@@ -3936,12 +3941,12 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
     if (Weights != NULL) {
       const Standard_Real * WG = &(*Weights)(Weights->Lower());
       min_weights = WG[0];
-      
+
       for (ii = 1 ; ii < NumPoles ; ii++) {
 	W = WG[ii];
 	if (W < min_weights) min_weights = W;
       }
-      
+
       for (ii = 1 ; ii < num_poles ; ii++) {
 	ii_index = ii % NumPoles;
 	ii_inDim = ii_index << 1;
@@ -3959,7 +3964,7 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
 	if (lower < 0) lower = 0;
 	upper = Deg2 + ii;
 	if (upper > num_poles) upper = num_poles;
-	
+
 	for (jj = lower ; jj < upper ; jj++) {
 	  jj_index = jj % NumPoles;
 	  jj_index = jj_index << 1;
@@ -3979,7 +3984,7 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
       max_derivative /= min_weights;
     }
     else {
-      
+
       for (ii = 1 ; ii < num_poles ; ii++) {
 	ii_index = ii % NumPoles;
 	ii_index = ii_index << 1;
@@ -4004,12 +4009,12 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
     if (Weights != NULL) {
       const Standard_Real * WG = &(*Weights)(Weights->Lower());
       min_weights = WG[0];
-      
+
       for (ii = 1 ; ii < NumPoles ; ii++) {
 	W = WG[ii];
 	if (W < min_weights) min_weights = W;
       }
-      
+
       for (ii = 1 ; ii < num_poles ; ii++) {
 	ii_index = ii % NumPoles;
 	ii_inDim = (ii_index << 1) + ii_index;
@@ -4029,7 +4034,7 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
 	if (lower < 0) lower = 0;
 	upper = Deg2 + ii;
 	if (upper > num_poles) upper = num_poles;
-	
+
 	for (jj = lower ; jj < upper ; jj++) {
 	  jj_index = jj % NumPoles;
 	  jj_index = (jj_index << 1) + jj_index;
@@ -4053,7 +4058,7 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
       max_derivative /= min_weights;
     }
     else {
-      
+
       for (ii = 1 ; ii < num_poles ; ii++) {
 	ii_index = ii % NumPoles;
 	ii_index = (ii_index << 1) + ii_index;
@@ -4081,12 +4086,12 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
     if (Weights != NULL) {
       const Standard_Real * WG = &(*Weights)(Weights->Lower());
       min_weights = WG[0];
-      
+
       for (ii = 1 ; ii < NumPoles ; ii++) {
 	W = WG[ii];
 	if (W < min_weights) min_weights = W;
       }
-      
+
       for (ii = 1 ; ii < num_poles ; ii++) {
 	ii_index = ii % NumPoles;
 	ii_inDim = ii_index << 2;
@@ -4108,7 +4113,7 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
 	if (lower < 0) lower = 0;
 	upper = Deg2 + ii;
 	if (upper > num_poles) upper = num_poles;
-	
+
 	for (jj = lower ; jj < upper ; jj++) {
 	  jj_index = jj % NumPoles;
 	  jj_index = jj_index << 2;
@@ -4136,7 +4141,7 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
       max_derivative /= min_weights;
     }
     else {
-      
+
       for (ii = 1 ; ii < num_poles ; ii++) {
 	ii_index = ii % NumPoles;
 	ii_index = ii_index << 2;
@@ -4168,12 +4173,12 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
       if (Weights != NULL) {
         const Standard_Real * WG = &(*Weights)(Weights->Lower());
 	min_weights = WG[0];
-	
+
 	for (ii = 1 ; ii < NumPoles ; ii++) {
 	  W = WG[ii];
 	  if (W < min_weights) min_weights = W;
 	}
-	
+
 	for (ii = 1 ; ii < num_poles ; ii++) {
 	  ii_index  = ii % NumPoles;
 	  ii_inDim  = ii_index * ArrayDimension;
@@ -4187,12 +4192,12 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
 	  if (lower < 0) lower = 0;
 	  upper = Deg2 + ii;
 	  if (upper > num_poles) upper = num_poles;
-	  
+
 	  for (jj = lower ; jj < upper ; jj++) {
 	    jj_index = jj % NumPoles;
 	    jj_index *= ArrayDimension;
 	    value = 0.0e0;
-	    
+
 	    for (kk = 0 ; kk < ArrayDimension ; kk++) {
 	      factor  = (((PA[jj_index + kk] - PA[ii_inDim + kk]) * wg_ii_index) -
 			 ((PA[jj_index + kk] - PA[ii_miDim + kk]) * wg_ii_minus));
@@ -4206,7 +4211,7 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
 	max_derivative /= min_weights;
       }
       else {
-	
+
 	for (ii = 1 ; ii < num_poles ; ii++) {
 	  ii_index  = ii % NumPoles;
 	  ii_index *= ArrayDimension;
@@ -4215,7 +4220,7 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
 	  inverse = FK[ii + Degree] - FK[ii];
 	  inverse = 1.0e0 / inverse;
 	  value = 0.0e0;
-	  
+
 	  for (kk = 0 ; kk < ArrayDimension ; kk++) {
 	    factor = PA[ii_index + kk] - PA[ii_minus + kk];
 	    if (factor < 0) factor = - factor;
@@ -4229,14 +4234,14 @@ void BSplCLib::Resolution(      Standard_Real&        Poles,
   }
   max_derivative *= Degree;
   if (max_derivative > RealSmall())
-    UTolerance = Tolerance3D / max_derivative; 
+    UTolerance = Tolerance3D / max_derivative;
   else
     UTolerance = Tolerance3D / RealSmall();
 }
 
 //=======================================================================
-// function : Intervals 
-// purpose  : 
+// function : Intervals
+// purpose  :
 //=======================================================================
 Standard_Integer BSplCLib::Intervals (const TColStd_Array1OfReal& theKnots,
                                       const TColStd_Array1OfInteger& theMults,
@@ -4246,7 +4251,7 @@ Standard_Integer BSplCLib::Intervals (const TColStd_Array1OfReal& theKnots,
                                       Standard_Real theFirst,
                                       Standard_Real theLast,
                                       Standard_Real theTolerance,
-                                      TColStd_Array1OfReal* theIntervals) 
+                                      TColStd_Array1OfReal* theIntervals)
 {
   // remove all knots with multiplicity less or equal than (degree - continuity) except first and last
   Standard_Integer aFirstIndex = isPeriodic ? 1 : FirstUKnotIndex (theDegree, theMults);
@@ -4265,7 +4270,7 @@ Standard_Integer BSplCLib::Intervals (const TColStd_Array1OfReal& theKnots,
   }
   aNewKnots.Resize (1, aNbNewKnots, Standard_True);
 
-  // the range boundaries 
+  // the range boundaries
   Standard_Real aCurFirst = theFirst;
   Standard_Real aCurLast = theLast;
   Standard_Real aPeriod = 0.0;
@@ -4277,7 +4282,7 @@ Standard_Integer BSplCLib::Intervals (const TColStd_Array1OfReal& theKnots,
     Standard_Real aLower = theKnots.First();
     Standard_Real anUpper = theKnots.Last();
     aPeriod = anUpper - aLower;
-    
+
     while (aCurFirst < aLower)
     {
       aCurFirst += aPeriod;
@@ -4317,7 +4322,7 @@ Standard_Integer BSplCLib::Intervals (const TColStd_Array1OfReal& theKnots,
     anIndex2 -= 1;
   }
   Standard_Integer aNbIntervals = anIndex2 - anIndex1 + 1 + (aLastPeriod - aFirstPeriod) * (aNbNewKnots - 1);
-  
+
   // fill the interval array
   if (theIntervals)
   {
@@ -4357,7 +4362,7 @@ Standard_Integer BSplCLib::Intervals (const TColStd_Array1OfReal& theKnots,
     // write the ending of the range (we didn't write it at all)
     theIntervals->ChangeValue(aNbIntervals + 1) = theLast;
   }
-  
+
   return aNbIntervals;
 }
 
@@ -4367,7 +4372,7 @@ Standard_Integer BSplCLib::Intervals (const TColStd_Array1OfReal& theKnots,
 //=======================================================================
 
 // array of flat knots for bezier curve of maximum 25 degree
-static const Standard_Real knots[52] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+static const Standard_Real knots[52] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 const Standard_Real& BSplCLib::FlatBezierKnots (const Standard_Integer Degree)
 {
@@ -4376,3 +4381,7 @@ const Standard_Real& BSplCLib::FlatBezierKnots (const Standard_Integer Degree)
 
   return knots[25-Degree];
 }
+
+#if (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
+#pragma GCC diagnostic pop
+#endif
