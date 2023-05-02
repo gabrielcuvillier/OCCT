@@ -21,12 +21,14 @@
 #include <Standard_ArrayStreamBuffer.hxx>
 #include <Standard_ReadBuffer.hxx>
 
+
 #ifdef HAVE_DRACO
-  #include <Standard_WarningsDisable.hxx>
-  #pragma GCC diagnostic ignored "-Wdeprecated-copy"
-  #pragma GCC diagnostic ignored "-Wignored-qualifiers"
-  #include <draco/compression/decode.h>
-  #include <Standard_WarningsRestore.hxx>
+    #include <Standard_WarningsDisable.hxx>
+#if defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))
+    #pragma GCC diagnostic ignored "-Wdeprecated-copy"
+    #pragma GCC diagnostic ignored "-Wignored-qualifiers"
+#endif
+#include <draco/compression/decode.h>
 #endif
 
 namespace
@@ -921,3 +923,7 @@ bool RWGltf_TriangulationReader::readBuffer (const Handle(RWGltf_GltfLatePrimiti
   }
   return true;
 }
+
+#ifdef HAVE_DRACO
+#include <Standard_WarningsRestore.hxx>
+#endif

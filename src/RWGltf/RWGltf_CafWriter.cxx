@@ -46,11 +46,12 @@
 #endif
 
 #ifdef HAVE_DRACO
-  #include <Standard_WarningsDisable.hxx>
+    #include <Standard_WarningsDisable.hxx>
+#if defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))
   #pragma GCC diagnostic ignored "-Wdeprecated-copy"
   #pragma GCC diagnostic ignored "-Wignored-qualifiers"
+#endif
   #include <draco/compression/encode.h>
-  #include <Standard_WarningsRestore.hxx>
 #endif
 
 IMPLEMENT_STANDARD_RTTIEXT(RWGltf_CafWriter, Standard_Transient)
@@ -2256,3 +2257,7 @@ void RWGltf_CafWriter::writeTextures (const RWGltf_GltfSceneNodeMap& theSceneNod
  (void )theSceneNodeMap;
 #endif
 }
+
+#ifdef HAVE_DRACO
+#include <Standard_WarningsRestore.hxx>
+#endif
