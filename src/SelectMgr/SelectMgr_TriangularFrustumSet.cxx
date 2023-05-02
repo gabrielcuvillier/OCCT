@@ -26,10 +26,12 @@
 #include <NCollection_IncAllocator.hxx>
 #include <SelectMgr_FrustumBuilder.hxx>
 
+#if !defined(OCCT_DISABLE_MESHING_IN_VISUALIZATION)
 namespace
 {
   static const size_t MEMORY_BLOCK_SIZE = 512 * 7;
 }
+#endif
 
 // =======================================================================
 // function : SelectMgr_TriangularFrustumSet
