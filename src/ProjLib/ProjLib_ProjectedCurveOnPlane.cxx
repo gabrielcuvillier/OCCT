@@ -287,7 +287,7 @@ void ProjLib_ProjectedCurveOnPlane::Perform(const Handle(Adaptor3d_Curve)& C)
   GeomAbs_CurveType   CType = myCurve->GetType();
   Standard_Boolean isAnalyticalSurf = Standard_True;
   Standard_Boolean IsTrimmed[2] = { Standard_False, Standard_False };
-  Standard_Integer SingularCase[2];
+  Standard_Integer SingularCase[2] = { 0, 0 };
   const Standard_Real eps = 0.01;
   Standard_Real dt = (LastPar - FirstPar) * eps;
   Standard_Real U1 = 0.0, U2 = 0.0, V1 = 0.0, V2 = 0.0;
