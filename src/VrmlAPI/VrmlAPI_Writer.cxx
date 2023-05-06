@@ -361,6 +361,13 @@ Standard_Boolean VrmlAPI_Writer::write_v1(const TopoDS_Shape& aShape,const Stand
   anOutFile->flush();
   return anOutFile->good();
 }
+#else
+
+Standard_Boolean VrmlAPI_Writer::write_v1(const TopoDS_Shape&, const Standard_CString) const {
+    return Standard_False;
+}
+
+#endif
 
 Standard_Boolean VrmlAPI_Writer::write_v2(const TopoDS_Shape& aShape,const Standard_CString aFile) const
 {
@@ -388,14 +395,6 @@ Standard_Boolean VrmlAPI_Writer::write_v2(const TopoDS_Shape& aShape,const Stand
   anOutStream.reset();
   return Standard_False;
 }
-#else
-
-Standard_Boolean VrmlAPI_Writer::write_v1(const TopoDS_Shape&, const Standard_CString) const {
-    return Standard_False;
-}
-
-#endif
-
 
 Standard_Boolean VrmlAPI_Writer::write_v3(const TopoDS_Shape& aShape, const Standard_CString aFile) const {
     Standard_Boolean anExtFace = Standard_False;
