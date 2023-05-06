@@ -599,6 +599,7 @@ void Resource_Unicode::ConvertFormatToUnicode (const Resource_FormatType theForm
 {
   switch (theFormat)
   {
+#if !defined(OCCT_DISABLE_UNICODE_CONVERSIONS)
     case Resource_FormatType_SJIS:
     {
       ConvertSJISToUnicode (theFromStr, theToStr);
@@ -614,11 +615,14 @@ void Resource_Unicode::ConvertFormatToUnicode (const Resource_FormatType theForm
       ConvertGBToUnicode(theFromStr, theToStr);
       break;
     }
+#endif
     case Resource_FormatType_ANSI:
     {
       theToStr = TCollection_ExtendedString(theFromStr, Standard_False);
       break;
     }
+
+#if !defined(OCCT_DISABLE_UNICODE_CONVERSIONS)
     case Resource_FormatType_CP1250:
     case Resource_FormatType_CP1251:
     case Resource_FormatType_CP1252:
@@ -666,6 +670,7 @@ void Resource_Unicode::ConvertFormatToUnicode (const Resource_FormatType theForm
       ConvertGBKToUnicode(theFromStr, theToStr);
       break;
     }
+#endif
     case Resource_FormatType_UTF8:
     {
       theToStr = TCollection_ExtendedString (theFromStr, Standard_True);
@@ -678,6 +683,10 @@ void Resource_Unicode::ConvertFormatToUnicode (const Resource_FormatType theForm
       theToStr = TCollection_ExtendedString (aString.ToCString());
       break;
     }
+    default:
+    {
+        throw Standard_NotImplemented("Resource_Unicode::ConvertFormatToUnicode - convert to Unicode is not implemented");
+    }
   }
 }
 
@@ -688,6 +697,7 @@ Standard_Boolean Resource_Unicode::ConvertUnicodeToFormat(const Resource_FormatT
 {
   switch (theFormat)
   {
+#if !defined(OCCT_DISABLE_UNICODE_CONVERSIONS)
     case Resource_FormatType_SJIS:
     {
       return ConvertUnicodeToSJIS (theFromStr, theToStr, theMaxSize);
@@ -700,10 +710,12 @@ Standard_Boolean Resource_Unicode::ConvertUnicodeToFormat(const Resource_FormatT
     {
       return ConvertUnicodeToGB (theFromStr, theToStr, theMaxSize);
     }
+#endif
     case Resource_FormatType_ANSI:
     {
       return ConvertUnicodeToANSI(theFromStr, theToStr, theMaxSize);
     }
+#if !defined(OCCT_DISABLE_UNICODE_CONVERSIONS)
     case Resource_FormatType_CP1250:
     case Resource_FormatType_CP1251:
     case Resource_FormatType_CP1252:
@@ -761,6 +773,7 @@ Standard_Boolean Resource_Unicode::ConvertUnicodeToFormat(const Resource_FormatT
       theToStr[theMaxSize - 1] = '\0';
       return Standard_True;
     }
+#endif
     case Resource_FormatType_UTF8:
     {
       if (theMaxSize < theFromStr.LengthOfCString())
@@ -775,10 +788,9 @@ Standard_Boolean Resource_Unicode::ConvertUnicodeToFormat(const Resource_FormatT
       const NCollection_Utf16String aString (theFromStr.ToExtString());
       return aString.ToLocale (theToStr, theMaxSize);
     }
-    case Resource_FormatType_GBK:
-    case Resource_FormatType_Big5:
+    default:
     {
-      throw Standard_NotImplemented("Resource_Unicode::ConvertUnicodeToFormat - convert from GBK and Big5 to Unocode is not implemented");
+      throw Standard_NotImplemented("Resource_Unicode::ConvertUnicodeToFormat - convert from Unicode is not implemented");
     }
   }
   return Standard_False;
