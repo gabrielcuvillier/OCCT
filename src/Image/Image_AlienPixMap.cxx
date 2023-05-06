@@ -348,7 +348,7 @@ namespace
 Image_AlienPixMap::Image_AlienPixMap()
 : myLibImage (NULL)
 {
-#ifdef HAVE_FREEIMAGE
+#if defined(HAVE_FREEIMAGE) && defined(OCCT_MINIMAL_FREEIMAGE_BUILD)
   static const int _initFreeImage = ([]() {
     FreeImage_Initialise(TRUE);
     return 1;
