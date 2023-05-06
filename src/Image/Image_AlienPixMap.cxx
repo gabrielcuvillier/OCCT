@@ -18,11 +18,14 @@
 #endif
 
 #ifdef HAVE_FREEIMAGE
-  #include <FreeImage.h>
-
-  #ifdef _MSC_VER
-    #pragma comment( lib, "FreeImage.lib" )
+  #if defined(OCCT_MINIMAL_FREEIMAGE_BUILD)
+    #define FREEIMAGE_LIB
+  #else
+      #ifdef _MSC_VER
+        #pragma comment( lib, "FreeImage.lib" )
+      #endif
   #endif
+  #include <FreeImage.h>
 #elif defined(HAVE_WINCODEC)
   #include <wincodec.h>
   // prevent warnings on MSVC10
