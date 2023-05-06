@@ -19,3 +19,6 @@
 [submodule "deps/draco-minimal"]
 	path = deps/draco-minimal
 	url = https://github.com/gabrielcuvillier/draco-minimal.git
+[submodule "deps/tinyply-minimal"]
+	path = deps/tinyply-minimal
+	url = https://github.com/gabrielcuvillier/tinyply-minimal.git
