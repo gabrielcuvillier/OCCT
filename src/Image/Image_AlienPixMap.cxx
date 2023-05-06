@@ -18,14 +18,27 @@
 #endif
 
 #ifdef HAVE_FREEIMAGE
-  #if defined(OCCT_MINIMAL_FREEIMAGE_BUILD)
-    #define FREEIMAGE_LIB
-  #else
+    #if defined(OCCT_MINIMAL_FREEIMAGE_BUILD)
+        #define FREEIMAGE_LIB
+    #else
       #ifdef _MSC_VER
         #pragma comment( lib, "FreeImage.lib" )
       #endif
-  #endif
+    #endif
+
   #include <FreeImage.h>
+
+    #if defined(OCCT_MINIMAL_FREEIMAGE_BUILD)
+    class DummyFreeImageInitializer {
+    public:
+        DummyFreeImageInitializer() {
+            FreeImage_Initialise(TRUE);
+        }
+        ~DummyFreeImageInitializer() {
+            FreeImage_DeInitialise();
+        }
+    };
+    #endif
 #elif defined(HAVE_WINCODEC)
   #include <wincodec.h>
   // prevent warnings on MSVC10
@@ -344,6 +357,8 @@ namespace
 #endif
 }
 
+
+
 // =======================================================================
 // function : Image_AlienPixMap
 // purpose  :
@@ -352,10 +367,7 @@ Image_AlienPixMap::Image_AlienPixMap()
 : myLibImage (NULL)
 {
 #if defined(HAVE_FREEIMAGE) && defined(OCCT_MINIMAL_FREEIMAGE_BUILD)
-  static const int _initFreeImage = ([]() {
-    FreeImage_Initialise(TRUE);
-    return 1;
-  })();
+  static const DummyFreeImageInitializer _initFreeImage;
   (void)_initFreeImage;
 #endif
   SetTopDown (false);
