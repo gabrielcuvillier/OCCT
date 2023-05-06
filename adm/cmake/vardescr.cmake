@@ -104,6 +104,7 @@ INSTALL_MESSAGE (INSTALL_RAPIDJSON        "RapidJSON header files")
 INSTALL_MESSAGE (INSTALL_TCL              "TCL binaries")
 INSTALL_MESSAGE (INSTALL_TK               "TK binaries")
 INSTALL_MESSAGE (INSTALL_VTK              "VTK binaries ")
+INSTALL_MESSAGE (INSTALL_TINYPLY          "TinyPLY binaries ")
 
 # build variables
 macro (BUILD_MODULE_MESSAGE BUILD_MODULE_TARGET_VARIABLE BUILD_MODULE_TARGET_STRING)
@@ -183,6 +184,9 @@ module for support of JSON-based formats like glTF")
 
 set (USE_DRACO_DESCR
 "Indicates whether Draco mesh decoding library should be used by glTF reader")
+
+set (USE_TINYPLY_DESCR
+"Indicates whether TinyPly product should be used in OCCT DataExchange module for support of PLY format")
 
 set (USE_EGL_DESCR
 "Indicates whether EGL should be used in OCCT visualization

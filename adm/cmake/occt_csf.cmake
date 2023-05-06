@@ -63,6 +63,13 @@ else()
   set(CSF_JPEG "")
 endif()
 
+# TinyPLY
+if (USE_TINYPLY)
+  set(CSF_TINYPLY "tinyply")
+else()
+  set(CSF_TINYPLY "")
+endif()
+
 # OpenVR
 if (USE_OPENVR)
   set (CSF_OpenVR "openvr_api")
