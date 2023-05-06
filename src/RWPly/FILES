@@ -1,3 +1,5 @@
+RWPly.hxx
+RWPly.cxx
 RWPly_CafWriter.cxx
 RWPly_CafWriter.hxx
 RWPly_ConfigurationNode.cxx
