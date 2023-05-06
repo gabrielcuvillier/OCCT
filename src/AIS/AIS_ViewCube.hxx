@@ -22,6 +22,7 @@
 #include <Prs3d_DatumParts.hxx>
 #include <Prs3d_ShadingAspect.hxx>
 #include <Prs3d_TextAspect.hxx>
+#include <Prs3d_DatumAspect.hxx>
 #include <SelectMgr_EntityOwner.hxx>
 #include <V3d_TypeOfOrientation.hxx>
 #include <Select3D_SensitivePrimitiveArray.hxx>
@@ -364,6 +365,22 @@ public: //! @name Style management API
     SynchronizeAspects();
   }
 
+  void SetDatumTextColor (const Quantity_Color& theColor)
+  {
+    myDrawer->DatumAspect()->TextAspect(Prs3d_DatumParts_XAxis)->SetColor (theColor);
+    myDrawer->DatumAspect()->TextAspect(Prs3d_DatumParts_YAxis)->SetColor (theColor);
+    myDrawer->DatumAspect()->TextAspect(Prs3d_DatumParts_ZAxis)->SetColor (theColor);
+    SynchronizeAspects();
+  }
+
+  void SetDatumFontHeight (Standard_Real theHeight)
+  {
+    myDrawer->DatumAspect()->TextAspect(Prs3d_DatumParts_XAxis)->SetHeight(theHeight);
+    myDrawer->DatumAspect()->TextAspect(Prs3d_DatumParts_YAxis)->SetHeight(theHeight);
+    myDrawer->DatumAspect()->TextAspect(Prs3d_DatumParts_ZAxis)->SetHeight(theHeight);
+    SynchronizeAspects();
+  }
+
   //! Return font name that is used for displaying of sides and axes text. Alias for:
   //! @code Attributes()->TextAspect()->Aspect()->SetFont() @endcode
   const TCollection_AsciiString& Font() const { return myDrawer->TextAspect()->Aspect()->Font(); }
@@ -373,6 +390,14 @@ public: //! @name Style management API
   void SetFont (const TCollection_AsciiString& theFont)
   {
     myDrawer->TextAspect()->Aspect()->SetFont (theFont);
+    SynchronizeAspects();
+  }
+
+  void SetDatumFont (Standard_CString theFont)
+  {
+    myDrawer->DatumAspect()->TextAspect(Prs3d_DatumParts_XAxis)->SetFont (theFont);
+    myDrawer->DatumAspect()->TextAspect(Prs3d_DatumParts_YAxis)->SetFont (theFont);
+    myDrawer->DatumAspect()->TextAspect(Prs3d_DatumParts_ZAxis)->SetFont (theFont);
     SynchronizeAspects();
   }
 
