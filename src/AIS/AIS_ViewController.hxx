@@ -31,6 +31,7 @@
 #include <Precision.hxx>
 #include <Quantity_ColorRGBA.hxx>
 #include <Standard_Mutex.hxx>
+#include <Standard_Type.hxx>
 
 class AIS_Animation;
 class AIS_AnimationCamera;
@@ -53,6 +54,8 @@ class WNT_HIDSpaceMouse;
 class AIS_ViewController : public Aspect_WindowInputListener
 {
 public:
+
+  DEFINE_STANDARD_RTTIEXT(AIS_ViewController, Aspect_WindowInputListener)
 
   //! Empty constructor.
   Standard_EXPORT AIS_ViewController();

@@ -17,15 +17,19 @@
 #include <Aspect_VKeySet.hxx>
 #include <Aspect_TouchMap.hxx>
 #include <Graphic3d_Vec.hxx>
+#include <Standard_Type.hxx>
+#include <Standard_Transient.hxx>
 
 struct Aspect_ScrollDelta;
 class WNT_HIDSpaceMouse;
 
 //! Defines a listener for window input events.
-class Aspect_WindowInputListener
+class Aspect_WindowInputListener : public Standard_Transient
 {
 public:
   ///DEFINE_STANDARD_ALLOC
+
+    DEFINE_STANDARD_RTTIEXT(Aspect_WindowInputListener, Standard_Transient)
 public:
 
   //! Destructor.
@@ -268,5 +272,7 @@ protected: //! @name 3d mouse input variables
   bool                   my3dMouseIsQuadric;      //!< quadric acceleration
 
 };
+
+DEFINE_STANDARD_HANDLE(Aspect_WindowInputListener, Standard_Transient)
 
 #endif // _Aspect_WindowInputListener_HeaderFile
