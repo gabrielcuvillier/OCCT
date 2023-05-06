@@ -72,6 +72,9 @@ public:
   //! Set view animation to be handled within handleViewRedraw().
   void SetViewAnimation (const Handle(AIS_AnimationCamera)& theAnimation) { myViewAnimation = theAnimation; }
 
+  //! Return Rubberband
+  const Handle(AIS_RubberBand)& RubberBand() const { return myRubberBand; }
+
   //! Interrupt active view animation.
   Standard_EXPORT void AbortViewAnimation();
 
@@ -389,7 +392,11 @@ public: //! @name multi-touch input
   //! Set scale factor for adjusting tolerances for starting multi-touch gestures.
   void SetTouchToleranceScale (float theTolerance) { myTouchToleranceScale = theTolerance; }
 
-  //! Add touch point with the given ID.
+  float TouchZoomRatio() const { return myTouchZoomRatio; }
+
+  void SetTouchZoomRatio (float theTolerance) { myTouchZoomRatio = theTolerance; }
+
+    //! Add touch point with the given ID.
   //! This method is expected to be called from UI thread.
   //! @param theId touch unique identifier
   //! @param thePnt touch coordinates
@@ -811,5 +818,7 @@ protected: //! @name rotation/panning transient state variables
   Graphic3d_Vec3d     myRotateStartYawPitchRoll;  //!< camera yaw pitch roll at the beginning of rotation
 
 };
+
+DEFINE_STANDARD_HANDLE(AIS_ViewController, Aspect_WindowInputListener)
 
 #endif // _AIS_ViewController_HeaderFile
