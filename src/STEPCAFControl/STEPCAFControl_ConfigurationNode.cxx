@@ -514,7 +514,11 @@ bool STEPCAFControl_ConfigurationNode::IsImportSupported() const
 //=======================================================================
 bool STEPCAFControl_ConfigurationNode::IsExportSupported() const
 {
+#if !defined(OCCT_DISABLE_XDE_STEP_WRITER)
   return true;
+#else
+  return false;
+#endif
 }
 
 //=======================================================================

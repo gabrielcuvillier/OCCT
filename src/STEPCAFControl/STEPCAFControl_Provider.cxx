@@ -20,7 +20,9 @@
 #include <STEPCAFControl_ConfigurationNode.hxx>
 #include <STEPCAFControl_Controller.hxx>
 #include <STEPCAFControl_Reader.hxx>
+#if !defined(OCCT_DISABLE_XDE_STEP_WRITER)
 #include <STEPCAFControl_Writer.hxx>
+#endif
 #include <XCAFDoc_DocumentTool.hxx>
 #include <UnitsMethods.hxx>
 
@@ -186,9 +188,7 @@ bool STEPCAFControl_Provider::Read(const TCollection_AsciiString& thePath,
   aReader.SetLayerMode(aNode->InternalParameters.ReadLayer);
   aReader.SetPropsMode(aNode->InternalParameters.ReadProps);
 
-  IFSelect_ReturnStatus aReadStat = IFSelect_RetVoid;
-  aReadStat = aReader.ReadFile(thePath.ToCString());
-  if (aReadStat != IFSelect_RetDone)
+  if (aReader.ReadFile(thePath.ToCString()) != IFSelect_RetDone)
   {
     Message::SendFail() << "Error in the STEPCAFControl_Provider during reading the file " <<
       thePath << "\t: abandon";
@@ -216,6 +216,7 @@ bool STEPCAFControl_Provider::Write(const TCollection_AsciiString& thePath,
                                     Handle(XSControl_WorkSession)& theWS,
                                     const Message_ProgressRange& theProgress)
 {
+#if !defined(OCCT_DISABLE_XDE_STEP_WRITER)
   if (GetNode().IsNull() || !GetNode()->IsKind(STANDARD_TYPE(STEPCAFControl_ConfigurationNode)))
   {
     Message::SendFail() << "Error in the STEPCAFControl_Provider during writing the file " <<
@@ -225,7 +226,7 @@ bool STEPCAFControl_Provider::Write(const TCollection_AsciiString& thePath,
   Handle(STEPCAFControl_ConfigurationNode) aNode = Handle(STEPCAFControl_ConfigurationNode)::DownCast(GetNode());
   initStatic(aNode);
 
-  XCAFDoc_DocumentTool::SetLengthUnit(theDocument, 
+  XCAFDoc_DocumentTool::SetLengthUnit(theDocument,
                                       UnitsMethods::GetLengthUnitScale(aNode->InternalParameters.WriteUnit, UnitsMethods_LengthUnit_Millimeter),
                                       UnitsMethods_LengthUnit_Millimeter);
   STEPCAFControl_Writer aWriter;
@@ -272,6 +273,13 @@ bool STEPCAFControl_Provider::Write(const TCollection_AsciiString& thePath,
   }
   resetStatic();
   return true;
+#else
+  (void)thePath;
+  (void)theDocument;
+  (void)theWS;
+  (void)theProgress;
+  return false;
+#endif
 }
 
 //=======================================================================
@@ -321,9 +329,7 @@ bool STEPCAFControl_Provider::Read(const TCollection_AsciiString& thePath,
   {
     aReader.SetWS(theWS);
   }
-  IFSelect_ReturnStatus aReadstat = IFSelect_RetVoid;
-  aReadstat = aReader.ReadFile(thePath.ToCString());
-  if (aReadstat != IFSelect_RetDone)
+  if (aReader.ReadFile(thePath.ToCString()) != IFSelect_RetDone)
   {
     Message::SendFail() << "Error in the STEPCAFControl_Provider during reading the file " <<
       thePath << "\t: abandon, no model loaded";
@@ -353,6 +359,7 @@ bool STEPCAFControl_Provider::Write(const TCollection_AsciiString& thePath,
                                     Handle(XSControl_WorkSession)& theWS,
                                     const Message_ProgressRange& theProgress)
 {
+#if !defined(OCCT_DISABLE_XDE_STEP_WRITER)
   if (GetNode().IsNull() || !GetNode()->IsKind(STANDARD_TYPE(STEPCAFControl_ConfigurationNode)))
   {
     Message::SendFail() << "Error in the STEPCAFControl_Provider during reading the file " <<
@@ -386,6 +393,13 @@ bool STEPCAFControl_Provider::Write(const TCollection_AsciiString& thePath,
   }
   resetStatic();
   return true;
+#else
+  (void)thePath;
+  (void)theShape;
+  (void)theWS;
+  (void)theProgress;
+  return false;
+#endif
 }
 
 //=======================================================================

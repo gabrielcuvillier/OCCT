@@ -16,7 +16,9 @@
 #include <BinXCAFDrivers.hxx>
 #include <IGESCAFControl_ConfigurationNode.hxx>
 #include <IGESCAFControl_Reader.hxx>
+#if !defined(OCCT_DISABLE_XDE_IGES_WRITER)
 #include <IGESCAFControl_Writer.hxx>
+#endif
 #include <IGESData.hxx>
 #include <IGESData_IGESModel.hxx>
 #include <Interface_Static.hxx>
@@ -174,9 +176,7 @@ bool IGESCAFControl_Provider::Read(const TCollection_AsciiString& thePath,
   aReader.SetNameMode(aNode->InternalParameters.ReadName);
   aReader.SetLayerMode(aNode->InternalParameters.ReadLayer);
 
-  IFSelect_ReturnStatus aReadStat = IFSelect_RetVoid;
-  aReadStat = aReader.ReadFile(thePath.ToCString());
-  if (aReadStat != IFSelect_RetDone)
+  if (aReader.ReadFile(thePath.ToCString()) != IFSelect_RetDone)
   {
     Message::SendFail() << "Error in the IGESCAFControl_Provider during reading the file " <<
       thePath << "\t: abandon, no model loaded";
@@ -204,6 +204,7 @@ bool IGESCAFControl_Provider::Write(const TCollection_AsciiString& thePath,
                                     Handle(XSControl_WorkSession)& theWS,
                                     const Message_ProgressRange& theProgress)
 {
+#if !defined(OCCT_DISABLE_XDE_IGES_WRITER)
   if (!GetNode()->IsKind(STANDARD_TYPE(IGESCAFControl_ConfigurationNode)))
   {
     Message::SendFail() << "Error in the IGESCAFControl_Provider during reading the file " <<
@@ -239,6 +240,13 @@ bool IGESCAFControl_Provider::Write(const TCollection_AsciiString& thePath,
   }
   resetStatic();
   return true;
+#else
+  (void)thePath;
+  (void)theDocument;
+  (void)theWS;
+  (void)theProgress;
+  return false;
+#endif
 }
 
 //=======================================================================
@@ -289,9 +297,7 @@ bool IGESCAFControl_Provider::Read(const TCollection_AsciiString& thePath,
     aReader.SetWS(theWS);
   }
   aReader.SetReadVisible(aNode->InternalParameters.ReadOnlyVisible);
-  IFSelect_ReturnStatus aReadStat = IFSelect_RetVoid;
-  aReadStat = aReader.ReadFile(thePath.ToCString());
-  if (aReadStat != IFSelect_RetDone)
+  if (aReader.ReadFile(thePath.ToCString()) != IFSelect_RetDone)
   {
     Message::SendFail() << "Error in the IGESCAFControl_Provider during reading the file " <<
       thePath << "\t: Could not read file, no model loaded";
@@ -319,6 +325,7 @@ bool IGESCAFControl_Provider::Write(const TCollection_AsciiString& thePath,
                                     Handle(XSControl_WorkSession)& theWS,
                                     const Message_ProgressRange& theProgress)
 {
+#if !defined(OCCT_DISABLE_XDE_IGES_WRITER)
   (void)theWS;
   (void)theProgress;
   if (!GetNode()->IsKind(STANDARD_TYPE(IGESCAFControl_ConfigurationNode)))
@@ -349,6 +356,13 @@ bool IGESCAFControl_Provider::Write(const TCollection_AsciiString& thePath,
   }
   resetStatic();
   return true;
+#else
+  (void)thePath;
+  (void)theShape;
+  (void)theWS;
+  (void)theProgress;
+  return false;
+#endif
 }
 
 //=======================================================================

@@ -1,3 +1,8 @@
 project(TKXDESTEP)
 
 OCCT_INCLUDE_CMAKE_FILE (adm/cmake/occt_toolkit)
+
+if (LIGHT_BUILD)
+  message (STATUS "Info: [TKXDESTEP] OCCT_DISABLE_XDE_STEP_WRITER is defined")
+  target_compile_definitions(TKXDESTEP PRIVATE -DOCCT_DISABLE_XDE_STEP_WRITER)
+endif()

@@ -30,7 +30,7 @@ namespace
 
 //=======================================================================
 // function : IGESCAFControl_ConfigurationNode
-// purpose  : 
+// purpose  :
 //=======================================================================
 IGESCAFControl_ConfigurationNode::IGESCAFControl_ConfigurationNode() :
   DE_ConfigurationNode()
@@ -38,7 +38,7 @@ IGESCAFControl_ConfigurationNode::IGESCAFControl_ConfigurationNode() :
 
 //=======================================================================
 // function : IGESCAFControl_ConfigurationNode
-// purpose  : 
+// purpose  :
 //=======================================================================
 IGESCAFControl_ConfigurationNode::IGESCAFControl_ConfigurationNode(const Handle(IGESCAFControl_ConfigurationNode)& theNode)
   :DE_ConfigurationNode(theNode)
@@ -48,7 +48,7 @@ IGESCAFControl_ConfigurationNode::IGESCAFControl_ConfigurationNode(const Handle(
 
 //=======================================================================
 // function : Load
-// purpose  : 
+// purpose  :
 //=======================================================================
 bool IGESCAFControl_ConfigurationNode::Load(const Handle(DE_ConfigurationContext)& theResource)
 {
@@ -64,28 +64,28 @@ bool IGESCAFControl_ConfigurationNode::Load(const Handle(DE_ConfigurationContext
     theResource->IntegerVal("read.maxprecision.mode", InternalParameters.ReadMaxPrecisionMode, aScope);
   InternalParameters.ReadMaxPrecisionVal =
     theResource->RealVal("read.maxprecision.val", InternalParameters.ReadMaxPrecisionVal, aScope);
-  InternalParameters.ReadSameParamMode = 
+  InternalParameters.ReadSameParamMode =
     theResource->BooleanVal("read.stdsameparameter.mode", InternalParameters.ReadSameParamMode, aScope);
   InternalParameters.ReadSurfaceCurveMode = (ReadMode_SurfaceCurve)
     theResource->IntegerVal("read.surfacecurve.mode", InternalParameters.ReadSurfaceCurveMode, aScope);
   InternalParameters.EncodeRegAngle =
     theResource->RealVal("read.encoderegularity.angle", InternalParameters.EncodeRegAngle, aScope);
 
-  InternalParameters.ReadApproxd1 = 
+  InternalParameters.ReadApproxd1 =
     theResource->BooleanVal("read.bspline.approxd1.mode", InternalParameters.ReadApproxd1, aScope);
   InternalParameters.ReadResourceName =
     theResource->StringVal("read.resource.name", InternalParameters.ReadResourceName, aScope);
   InternalParameters.ReadSequence =
     theResource->StringVal("read.sequence", InternalParameters.ReadSequence, aScope);
-  InternalParameters.ReadFaultyEntities = 
+  InternalParameters.ReadFaultyEntities =
     theResource->BooleanVal("read.fau_lty.entities", InternalParameters.ReadFaultyEntities, aScope);
-  InternalParameters.ReadOnlyVisible = 
+  InternalParameters.ReadOnlyVisible =
     theResource->BooleanVal("read.onlyvisible", InternalParameters.ReadOnlyVisible, aScope);
-  InternalParameters.ReadColor = 
+  InternalParameters.ReadColor =
     theResource->BooleanVal("read.color", InternalParameters.ReadColor, aScope);
-  InternalParameters.ReadName = 
+  InternalParameters.ReadName =
     theResource->BooleanVal("read.name", InternalParameters.ReadName, aScope);
-  InternalParameters.ReadLayer = 
+  InternalParameters.ReadLayer =
     theResource->BooleanVal("read.layer", InternalParameters.ReadLayer, aScope);
 
   InternalParameters.WriteBRepMode = (WriteMode_BRep)
@@ -112,13 +112,13 @@ bool IGESCAFControl_ConfigurationNode::Load(const Handle(DE_ConfigurationContext
     theResource->RealVal("write.precision.val", InternalParameters.WritePrecisionVal, aScope);
   InternalParameters.WritePlaneMode = (WriteMode_PlaneMode)
     theResource->IntegerVal("write.plane.mode", InternalParameters.WritePlaneMode, aScope);
-  InternalParameters.WriteOffsetMode = 
+  InternalParameters.WriteOffsetMode =
     theResource->BooleanVal("write.offset", InternalParameters.WriteOffsetMode, aScope);
-  InternalParameters.WriteColor = 
+  InternalParameters.WriteColor =
     theResource->BooleanVal("write.color", InternalParameters.WriteColor, aScope);
-  InternalParameters.WriteName = 
+  InternalParameters.WriteName =
     theResource->BooleanVal("write.name", InternalParameters.WriteName, aScope);
-  InternalParameters.WriteLayer = 
+  InternalParameters.WriteLayer =
     theResource->BooleanVal("write.layer", InternalParameters.WriteLayer, aScope);
 
   return true;
@@ -394,7 +394,11 @@ bool IGESCAFControl_ConfigurationNode::IsImportSupported() const
 //=======================================================================
 bool IGESCAFControl_ConfigurationNode::IsExportSupported() const
 {
-  return true;
+#if !defined(OCCT_DISABLE_XDE_IGES_WRITER)
+    return true;
+#else
+    return false;
+#endif
 }
 
 //=======================================================================
