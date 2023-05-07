@@ -47,11 +47,7 @@
 #include <Poly_PolygonOnTriangulation.hxx>
 #include <Poly_Triangulation.hxx>
 #include <Precision.hxx>
-#if !defined(OCCT_BREPTOOL_CURVE_ON_PLANE_SIMPLIFICATION)
 #include <ProjLib_ProjectedCurve.hxx>
-#else
-#include <ProjLib_ProjectedCurveOnPlane.hxx>
-#endif
 #include <Standard_NoSuchObject.hxx>
 #include <Standard_NullObject.hxx>
 #include <TopExp.hxx>
@@ -402,11 +398,7 @@ Handle(Geom2d_Curve) BRep_Tool::CurveOnPlane(const TopoDS_Edge& E,
   Handle(GeomAdaptor_Surface) HS = new GeomAdaptor_Surface(GP);
   Handle(GeomAdaptor_Curve)   HC = new GeomAdaptor_Curve(ProjOnPlane);
 
-#if !defined(OCCT_BREPTOOL_CURVE_ON_PLANE_SIMPLIFICATION)
   ProjLib_ProjectedCurve Proj(HS, HC);
-#else
-  ProjLib_ProjectedCurveOnPlane Proj(HS, HC);
-#endif
   Handle(Geom2d_Curve) pc = Geom2dAdaptor::MakeCurve(Proj);
 
   if (pc->DynamicType() == STANDARD_TYPE(Geom2d_TrimmedCurve)) {
