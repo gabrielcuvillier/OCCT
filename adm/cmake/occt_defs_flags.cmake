@@ -40,6 +40,7 @@ else()
   if (EMSCRIPTEN)
     # enable WebAssembly Exceptions support
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fwasm-exceptions")
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fwasm-exceptions")
     # enforce STRICT mode
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -sSTRICT=1")
     set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -sSTRICT=1")
