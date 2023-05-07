@@ -53,7 +53,7 @@ bool Vrml_ConfigurationNode::Load(const Handle(DE_ConfigurationContext)& theReso
 {
   TCollection_AsciiString aScope = THE_CONFIGURATION_SCOPE() + "." + GetFormat() + "." + GetVendor();
 
-  InternalParameters.ReadFileUnit = 
+  InternalParameters.ReadFileUnit =
     theResource->RealVal("read.file.unit", InternalParameters.ReadFileUnit, aScope);
   InternalParameters.ReadFileCoordinateSys = (RWMesh_CoordinateSystem)
     theResource->IntegerVal("read.file.coordinate.system", InternalParameters.ReadFileCoordinateSys, aScope);
@@ -115,7 +115,7 @@ TCollection_AsciiString Vrml_ConfigurationNode::Save() const
 
   aResult += "!\n";
   aResult += "!Setting up writer version.\n";
-  aResult += "!Default value: 2. Available values: 1, 2\n";
+  aResult += "!Default value: 3. Available values: 1, 2, 3\n";
   aResult += aScope + "writer.version :\t " + InternalParameters.WriterVersion + "\n";
   aResult += "!\n";
 

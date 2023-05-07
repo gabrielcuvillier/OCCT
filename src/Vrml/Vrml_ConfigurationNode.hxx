@@ -83,7 +83,8 @@ public:
   enum WriteMode_WriterVersion
   {
     WriteMode_WriterVersion_1 = 1,
-    WriteMode_WriterVersion_2
+    WriteMode_WriterVersion_2 = 2,
+    WriteMode_WriterVersion_3
   };
   enum WriteMode_RepresentationType
   {
@@ -97,12 +98,12 @@ public:
     // Read
     double ReadFileUnit = 1.; //<! file length units to convert from while reading the file, defined as scale factor for meters
     RWMesh_CoordinateSystem ReadFileCoordinateSys = RWMesh_CoordinateSystem_Yup; //<! coordinate system defined by Vrml file
-    RWMesh_CoordinateSystem ReadSystemCoordinateSys = RWMesh_CoordinateSystem_Zup; //<! result coordinate system 
+    RWMesh_CoordinateSystem ReadSystemCoordinateSys = RWMesh_CoordinateSystem_Zup; //<! result coordinate system
     bool ReadFillIncomplete = true; //<! fill the document with partially retrieved data even if reader has failed with error
 
     // Write
-    WriteMode_WriterVersion WriterVersion = WriteMode_WriterVersion_2; //!< Setting up writer version (1/2)
-    WriteMode_RepresentationType WriteRepresentationType = WriteMode_RepresentationType_Wireframe; //!< Setting up representation (shaded/wireframe/both) 
+    WriteMode_WriterVersion WriterVersion = WriteMode_WriterVersion_3; //!< Setting up writer version (1/2)
+    WriteMode_RepresentationType WriteRepresentationType = WriteMode_RepresentationType_Wireframe; //!< Setting up representation (shaded/wireframe/both)
 
   } InternalParameters;
 };

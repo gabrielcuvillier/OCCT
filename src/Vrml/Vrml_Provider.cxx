@@ -132,7 +132,7 @@ bool Vrml_Provider::Write(const TCollection_AsciiString& thePath,
   VrmlAPI_Writer aWriter;
   aWriter.SetRepresentation(static_cast<VrmlAPI_RepresentationOfShape>(aNode->InternalParameters.WriteRepresentationType));
   Standard_Real aScaleFactorM = aNode->GlobalParameters.LengthUnit;
-  if (!aWriter.WriteDoc(theDocument, thePath.ToCString(), aScaleFactorM))
+  if (!aWriter.WriteDoc(theDocument, thePath.ToCString(), aScaleFactorM, aNode->InternalParameters.WriterVersion))
   {
     Message::SendFail() << "Error in the Vrml_Provider during wtiting the file " <<
       thePath << "\t: File was not written";
