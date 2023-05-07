@@ -102,7 +102,7 @@ public:
     bool ReadFillIncomplete = true; //<! fill the document with partially retrieved data even if reader has failed with error
 
     // Write
-    WriteMode_WriterVersion WriterVersion = WriteMode_WriterVersion_2; //!< Setting up writer version (1/2/3)
+    WriteMode_WriterVersion WriterVersion = WriteMode_WriterVersion_3; //!< Setting up writer version (1/2/3)
     WriteMode_RepresentationType WriteRepresentationType = WriteMode_RepresentationType_Wireframe; //!< Setting up representation (shaded/wireframe/both)
 
   } InternalParameters;

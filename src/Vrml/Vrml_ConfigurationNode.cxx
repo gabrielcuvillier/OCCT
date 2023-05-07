@@ -153,7 +153,11 @@ Handle(DE_Provider) Vrml_ConfigurationNode::BuildProvider()
 //=======================================================================
 bool Vrml_ConfigurationNode::IsImportSupported() const
 {
+#if !defined(OCCT_DISABLE_VRML_IMPORT)
   return true;
+#else
+  return false;
+#endif
 }
 
 //=======================================================================
@@ -190,7 +194,10 @@ TCollection_AsciiString Vrml_ConfigurationNode::GetVendor() const
 TColStd_ListOfAsciiString Vrml_ConfigurationNode::GetExtensions() const
 {
   TColStd_ListOfAsciiString anExt;
+#if !defined(OCCT_DISABLE_VRML_IMPORT)
   anExt.Append("vrml");
   anExt.Append("wrl");
+#endif
+  anExt.Append("x3d");
   return anExt;
 }

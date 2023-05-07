@@ -17,7 +17,9 @@
 #include <Message.hxx>
 #include <OSD_Path.hxx>
 #include <TDocStd_Document.hxx>
+#if !defined(OCCT_DISABLE_VRML_IMPORT)
 #include <VrmlAPI_CafReader.hxx>
+#endif
 #include <VrmlAPI_Writer.hxx>
 #include <VrmlData_Scene.hxx>
 #include <Vrml_ConfigurationNode.hxx>
@@ -75,6 +77,7 @@ bool Vrml_Provider::Read(const TCollection_AsciiString& thePath,
                          const Handle(TDocStd_Document)& theDocument,
                          const Message_ProgressRange& theProgress)
 {
+#if !defined(OCCT_DISABLE_VRML_IMPORT)
   if (theDocument.IsNull())
   {
     Message::SendFail() << "Error in the Vrml_Provider during reading the file " <<
@@ -110,6 +113,12 @@ bool Vrml_Provider::Read(const TCollection_AsciiString& thePath,
       "(due to unexpected EOF, syntax error, memory limit) '" << thePath << "'";
   }
   return true;
+#else
+  (void)thePath;
+  (void)theDocument;
+  (void)theProgress;
+  return false;
+#endif
 }
 
 //=======================================================================
@@ -176,6 +185,7 @@ bool Vrml_Provider::Read(const TCollection_AsciiString& thePath,
                          TopoDS_Shape& theShape,
                          const Message_ProgressRange& theProgress)
 {
+#if !defined(OCCT_DISABLE_VRML_IMPORT)
   (void)theProgress;
   if (GetNode().IsNull() || !GetNode()->IsKind(STANDARD_TYPE(Vrml_ConfigurationNode)))
   {
@@ -263,6 +273,12 @@ bool Vrml_Provider::Read(const TCollection_AsciiString& thePath,
     return false;
   }
   return true;
+#else
+  (void)thePath;
+  (void)theShape;
+  (void)theProgress;
+  return false;
+#endif
 }
 
 //=======================================================================
