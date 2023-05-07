@@ -273,13 +273,13 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
                        DESTINATION "${INSTALL_DIR_LIB}")
               install (FILES "${ABS_PATH}"
                        CONFIGURATIONS RelWithDebInfo
-                       DESTINATION "${INSTALL_DIR_LIB}i")
+                       DESTINATION "${INSTALL_DIR_LIB}")
               install (FILES "${ABS_PATH}"
                        CONFIGURATIONS Debug
-                       DESTINATION "${INSTALL_DIR_LIB}d")
+                       DESTINATION "${INSTALL_DIR_LIB}")
               install (FILES "${ABS_PATH}"
                        CONFIGURATIONS MinSizeRel
-                       DESTINATION "${INSTALL_DIR_LIB}z")
+                       DESTINATION "${INSTALL_DIR_LIB}")
             endif()
           else()
             if ("${PRODUCT_NAME}" STREQUAL "FREEIMAGE")
@@ -299,6 +299,10 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
                 install (FILES "${ABS_PATH}"
                     CONFIGURATIONS Debug
                     DESTINATION "${INSTALL_DIR_LIB}d"
+                    RENAME ${FREEIMLIB}.3)
+                install (FILES "${ABS_PATH}"
+                    CONFIGURATIONS MinSizeRel
+                    DESTINATION "${INSTALL_DIR_LIB}z"
                     RENAME ${FREEIMLIB}.3)
               endif()
             endif()

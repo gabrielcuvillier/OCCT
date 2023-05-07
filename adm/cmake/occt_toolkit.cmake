@@ -235,7 +235,7 @@ foreach (OCCT_MODULE ${OCC_MODULES_LIST})
   endif()
 endforeach()
 
-if (MSVC)
+if (MSVC AND NOT LIGHT_BUILD)
   OCCT_INSERT_CODE_FOR_TARGET ()
 endif()
 
