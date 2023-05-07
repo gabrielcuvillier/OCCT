@@ -41,7 +41,7 @@
 #include <Standard_Failure.hxx>
 #include <Standard_Type.hxx>
 #include <StdPrs_HLRPolyShape.hxx>
-#if !defined(OCCT_DISABLE_HLR_IN_VISUALIZATION)
+#if !defined(OCCT_DISABLE_EXACT_HLR_IN_VISUALIZATION)
 #include <StdPrs_HLRShape.hxx>
 #endif
 #include <StdPrs_ShadedShape.hxx>
@@ -269,7 +269,7 @@ void AIS_Shape::computeHlrPresentation (const Handle(Graphic3d_Camera)& theProje
 
         case Prs3d_TOH_Algo:
         {
-#if !defined(OCCT_DISABLE_HLR_IN_VISUALIZATION)
+#if !defined(OCCT_DISABLE_EXACT_HLR_IN_VISUALIZATION)
           StdPrs_HLRShape aBuilder;
           aBuilder.ComputeHLR (thePrs, theShape, theDrawer, theProjector);
 #endif
