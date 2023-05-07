@@ -117,7 +117,7 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
 
   foreach (LIBRARY_NAME ${${LIBRARY_CSF_NAME}})
     string (REPLACE "." "" LIBRARY_NAME_SUFFIX "${LIBRARY_NAME}")
-    #if (BUILD_SHARED_LIBS)
+#    if (BUILD_SHARED_LIBS)
       # library
       if (NOT 3RDPARTY_${PRODUCT_NAME}_LIBRARY_${LIBRARY_NAME_SUFFIX} OR NOT EXISTS "${3RDPARTY_${PRODUCT_NAME}_LIBRARY_${LIBRARY_NAME_SUFFIX}}")
         set (CMAKE_FIND_LIBRARY_SUFFIXES .lib .so .dylib .a)
@@ -303,6 +303,7 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
               endif()
             endif()
           endif()
+
         endif()
       else()
         # the library directory for using by the executable
@@ -320,7 +321,7 @@ macro (THIRDPARTY_PRODUCT PRODUCT_NAME HEADER_NAME LIBRARY_CSF_NAME LIBRARY_NAME
       endif()
 
       mark_as_advanced (3RDPARTY_${PRODUCT_NAME}_LIBRARY_${LIBRARY_NAME_SUFFIX} 3RDPARTY_${PRODUCT_NAME}_DLL_${LIBRARY_NAME_SUFFIX})
-    #endif()
+#    endif()
   endforeach()
 endmacro()
 
