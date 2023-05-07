@@ -13,8 +13,9 @@
 
 #include <RWPly_Provider.hxx>
 
+#include <RWPly.hxx>
+
 #include <BRep_Builder.hxx>
-#include <DE_Wrapper.hxx>
 #include <Message.hxx>
 #include <RWPly_ConfigurationNode.hxx>
 #include <RWPly_CafWriter.hxx>
@@ -102,7 +103,7 @@ bool RWPly_Provider::Write(const TCollection_AsciiString& thePath,
   aPlyCtx.SetFaceId(aNode->InternalParameters.WriteFaceId);
   if (!aPlyCtx.Perform(theDocument, aFileInfo, theProgress))
   {
-    Message::SendFail() << "Error in the RWPly_Provider during writing the file " 
+    Message::SendFail() << "Error in the RWPly_Provider during writing the file "
       << thePath << "\t: Cannot perform the document";
     return false;
   }
@@ -135,6 +136,76 @@ bool RWPly_Provider::Write(const TCollection_AsciiString& thePath,
   Handle(XCAFDoc_ShapeTool) aShTool = XCAFDoc_DocumentTool::ShapeTool(aDoc->Main());
   aShTool->AddShape(theShape);
   return Write(thePath, aDoc, theProgress);
+}
+
+
+//=======================================================================
+// function : Read
+// purpose  :
+//=======================================================================
+bool RWPly_Provider::Read(const TCollection_AsciiString& thePath,
+                          const Handle(TDocStd_Document)& theDocument,
+                          const Message_ProgressRange& theProgress)
+{
+    if (theDocument.IsNull())
+    {
+        Message::SendFail() << "Error in the RWPly_Provider during reading the file " <<
+                            thePath << "\t: theDocument shouldn't be null";
+        return false;
+    }
+
+    TopoDS_Shape aBody;
+    if (Read(thePath, aBody, theProgress)) {
+        Handle(XCAFDoc_ShapeTool) aShapeTool = XCAFDoc_DocumentTool::ShapeTool( theDocument->Main() );
+        aShapeTool->AddShape( aBody, Standard_True /* attempt to create assembly */ );
+
+        return true;
+    }
+
+    return false;
+}
+
+//=======================================================================
+// function : Read
+// purpose  :
+//=======================================================================
+bool RWPly_Provider::Read(const TCollection_AsciiString& thePath,
+                         TopoDS_Shape& theShape,
+                         Handle(XSControl_WorkSession)& theWS,
+                         const Message_ProgressRange& theProgress)
+{
+    (void)theWS;
+    return Read(thePath, theShape, theProgress);
+}
+
+//=======================================================================
+// function : Read
+// purpose  :
+//=======================================================================
+bool RWPly_Provider::Read(const TCollection_AsciiString& thePath,
+                         TopoDS_Shape& theShape,
+                         const Message_ProgressRange& theProgress) {
+
+    Handle(Poly_Triangulation) aPoly = RWPly::ReadFile( thePath.ToCString(), theProgress );
+
+    if (aPoly.IsNull()) {
+        Message::SendFail() << "Error in the RWPly_Provider during reading the file " <<
+                            thePath << "\t: no triangulation found";
+        return false;
+    }
+
+    TopoDS_Face aFace;
+    const BRep_Builder aBuiler;
+    aBuiler.MakeFace( aFace, aPoly );
+    theShape = aFace;
+
+    if (theShape.IsNull()) {
+        Message::SendFail() << "Error in the RWPly_Provider during reading the file " <<
+                            thePath << "\t: unable to create shape with triangulation";
+        return false;
+    }
+
+    return true;
 }
 
 //=======================================================================

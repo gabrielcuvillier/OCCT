@@ -46,11 +46,11 @@ RWPly_ConfigurationNode::RWPly_ConfigurationNode(const Handle(RWPly_Configuratio
 bool RWPly_ConfigurationNode::Load(const Handle(DE_ConfigurationContext)& theResource)
 {
   TCollection_AsciiString aScope = THE_CONFIGURATION_SCOPE + "." + GetFormat() + "." + GetVendor();
-  InternalParameters.FileLengthUnit = 
+  InternalParameters.FileLengthUnit =
     theResource->RealVal("file.length.unit", InternalParameters.FileLengthUnit, aScope);
-  InternalParameters.SystemCS = 
+  InternalParameters.SystemCS =
     (RWMesh_CoordinateSystem)(theResource->IntegerVal("system.cs", (int)InternalParameters.SystemCS, aScope) % 2);
-  InternalParameters.FileCS = 
+  InternalParameters.FileCS =
     (RWMesh_CoordinateSystem)(theResource->IntegerVal("file.cs", (int)InternalParameters.SystemCS, aScope) % 2);
 
   InternalParameters.WriteNormals =
@@ -177,7 +177,7 @@ Handle(DE_Provider) RWPly_ConfigurationNode::BuildProvider()
 //=======================================================================
 bool RWPly_ConfigurationNode::IsImportSupported() const
 {
-  return Standard_False;
+  return Standard_True;
 }
 
 //=======================================================================
