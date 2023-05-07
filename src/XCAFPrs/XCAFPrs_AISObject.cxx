@@ -16,17 +16,12 @@
 #include <XCAFPrs_AISObject.hxx>
 
 #include <BRep_Builder.hxx>
-#if !defined(OCCT_DISABLE_MESHING_IN_XDE)
 #include <BRepBndLib.hxx>
-#else
-#include <BRepBndLibApprox.hxx>
-#endif
 #include <gp_Pnt.hxx>
 #include <Graphic3d_AspectFillArea3d.hxx>
 #include <Prs3d_Drawer.hxx>
 #include <Prs3d_DimensionAspect.hxx>
 #include <Prs3d_IsoAspect.hxx>
-#include <Prs3d_LineAspect.hxx>
 #include <Prs3d_ShadingAspect.hxx>
 #include <Prs3d_Text.hxx>
 #include <TDataStd_Name.hxx>
@@ -34,7 +29,6 @@
 #include <TopoDS_Iterator.hxx>
 #include <XCAFDoc_ShapeTool.hxx>
 #include <XCAFPrs.hxx>
-#include <XCAFPrs_IndexedDataMapOfShapeStyle.hxx>
 #include <XCAFPrs_Style.hxx>
 
 IMPLEMENT_STANDARD_RTTIEXT(XCAFPrs_AISObject,AIS_ColoredShape)
@@ -73,11 +67,7 @@ static void DisplayText (const TDF_Label& aLabel,
       // find the position to display as middle of the bounding box
       aShape.Move (aLocation);
       Bnd_Box aBox;
-#if !defined(OCCT_DISABLE_MESHING_IN_XDE)
       BRepBndLib::Add (aShape, aBox);
-#else
-      BRepBndLibApprox::Add (aShape, aBox);
-#endif
       if ( ! aBox.IsVoid() )
       {
 	Standard_Real aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
