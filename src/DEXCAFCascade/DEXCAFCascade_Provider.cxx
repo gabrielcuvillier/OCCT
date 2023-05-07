@@ -13,16 +13,20 @@
 
 #include <DEXCAFCascade_Provider.hxx>
 
+#if !defined(OCCT_ONLY_BINXCAF_DRIVER_IN_XDE)
 #include <BinDrivers.hxx>
 #include <BinLDrivers.hxx>
 #include <BinTObjDrivers.hxx>
+#endif
 #include <BinXCAFDrivers.hxx>
+#if !defined(OCCT_ONLY_BINXCAF_DRIVER_IN_XDE)
 #include <StdDrivers.hxx>
 #include <StdLDrivers.hxx>
 #include <XmlDrivers.hxx>
 #include <XmlLDrivers.hxx>
 #include <XmlTObjDrivers.hxx>
 #include <XmlXCAFDrivers.hxx>
+#endif
 
 #include <BRep_Builder.hxx>
 #include <DEXCAFCascade_ConfigurationNode.hxx>
@@ -98,16 +102,20 @@ bool DEXCAFCascade_Provider::Read(const TCollection_AsciiString& thePath,
   Handle(DEXCAFCascade_ConfigurationNode) aNode = Handle(DEXCAFCascade_ConfigurationNode)::DownCast(GetNode());
   Handle(TDocStd_Document) aDocument;
   Handle(TDocStd_Application) anApp = new TDocStd_Application();
+#if !defined(OCCT_ONLY_BINXCAF_DRIVER_IN_XDE)
   BinDrivers::DefineFormat(anApp);
   BinLDrivers::DefineFormat(anApp);
   BinTObjDrivers::DefineFormat(anApp);
+#endif
   BinXCAFDrivers::DefineFormat(anApp);
+#if !defined(OCCT_ONLY_BINXCAF_DRIVER_IN_XDE)
   StdDrivers::DefineFormat(anApp);
   StdLDrivers::DefineFormat(anApp);
   XmlDrivers::DefineFormat(anApp);
   XmlLDrivers::DefineFormat(anApp);
   XmlTObjDrivers::DefineFormat(anApp);
   XmlXCAFDrivers::DefineFormat(anApp);
+#endif
   Handle(PCDM_ReaderFilter) aFilter = new PCDM_ReaderFilter(aNode->InternalParameters.ReadAppendMode);
   for (TColStd_ListOfAsciiString::Iterator anIt(aNode->InternalParameters.ReadSkipValues); anIt.More(); anIt.Next())
   {
