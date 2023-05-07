@@ -25,7 +25,9 @@ const OSD_WhoAmI Iam = OSD_WHost;
 
 #include <errno.h>
 
+#if !defined(__EMSCRIPTEN__) // uname syscall is a stub on Emscripten (don't work with STRICT=1)
 #include <sys/utsname.h> // For 'uname'
+#endif
 #include <netdb.h>       // This is for 'gethostbyname'
 #include <unistd.h>
 #include <stdio.h>
@@ -50,29 +52,35 @@ OSD_Host::OSD_Host(){}
 
 // =========================================================================
 
-TCollection_AsciiString OSD_Host::SystemVersion(){
-struct utsname info;
-TCollection_AsciiString result;
 
- uname (&info);
- result  = info.sysname;
- result += " ";
- result += info.release;
- return(result);
+TCollection_AsciiString OSD_Host::SystemVersion(){
+#if !defined(__EMSCRIPTEN__) // uname is a stub on Emscripten (don't work with STRICT=1)
+  struct utsname info;
+  TCollection_AsciiString result;
+
+  uname (&info);
+  result  = info.sysname;
+  result += " ";
+  result += info.release;
+  return(result);
+#else
+  #define STRINGIFY(s) #s
+  #define STR(s) STRINGIFY(s)
+  return "Emscripten " STR(__EMSCRIPTEN_major__) "." STR(__EMSCRIPTEN_minor__) "." STR(__EMSCRIPTEN_tiny__);
+#endif
 }
 
 // =========================================================================
 
 OSD_SysType OSD_Host::SystemId()const{
-struct utsname info;
+#if !defined(__EMSCRIPTEN__) // uname is a stub on Emscripten (don't work with STRICT=1)
+ struct utsname info;
 
  uname (&info);
-
  if (!strcmp(info.sysname,"SunOS"))          return (OSD_UnixBSD);
  if (!strcmp(info.sysname,"ULTRIX"))         return (OSD_UnixBSD);
  if (!strcmp(info.sysname,"FreeBSD"))        return (OSD_UnixBSD);
  if (!strncmp(info.sysname,"Linux",5))       return (OSD_LinuxREDHAT);
- if (!strcmp(info.sysname,"Emscripten"))    return (OSD_Emscripten);   // According to Emscripten file emscripten_syscall_stubs.c:63
  if (!strncmp(info.sysname,"IRIX", 4))       return (OSD_UnixSystemV);
  if (!strncmp(info.sysname,"OSF", 3))        return (OSD_OSF);
  if (!strcmp(info.sysname,"AIX"))            return (OSD_Aix);
@@ -80,20 +88,26 @@ struct utsname info;
  if (!strcmp(info.sysname,"VMS_POSIX"))      return (OSD_VMS);
  if (!strcmp(info.sysname,"Darwin"))         return (OSD_MacOs);
  return (OSD_Unknown);
+#else
+ return OSD_Emscripten;
+#endif
 }
 
 // =========================================================================
 
-TCollection_AsciiString OSD_Host::HostName(){
-TCollection_AsciiString result;
-char value[65];
-int status;
-
-status = gethostname(value, 64);
-if (status == -1) myError.SetValue(errno, Iam, "Host Name");
+TCollection_AsciiString OSD_Host::HostName() {
+#if !defined(__EMSCRIPTEN__) // gethostname calls uname which is a stub on Emscripten (does not work with STRICT=1)
+ TCollection_AsciiString result;
+ char value[65];
+ int status;
+ status = gethostname(value, 64);
+ if (status == -1) myError.SetValue(errno, Iam, "Host Name");
 
  result = value;
  return(result);
+#else
+ return "emscripten";
+#endif
 }
 
 
@@ -140,8 +154,8 @@ TCollection_AsciiString OSD_Host::InternetAddress(){
 
 // =========================================================================
 OSD_OEMType OSD_Host::MachineType(){
-struct utsname info;
-
+#if !defined(__EMSCRIPTEN__) // uname is a stub on Emscripten (don't work with STRICT=1)
+ struct utsname info;
  uname (&info);
 
  if (!strcmp(info.sysname,"SunOS"))         return (OSD_SUN);
@@ -156,7 +170,9 @@ struct utsname info;
  if (!strncmp(info.sysname,"AIX",3))        return (OSD_AIX);
  if (!strcmp(info.sysname,"Darwin"))        return (OSD_MAC);
  return (OSD_Unavailable);
-
+#else
+ return (OSD_WEB);
+#endif
 }
 
 void OSD_Host::Reset(){

@@ -52,7 +52,8 @@
 void OSD_Chronometer::GetProcessCPU (Standard_Real& theUserSeconds,
                                      Standard_Real& theSystemSeconds)
 {
-#if defined(__linux__) || defined(__FreeBSD__) || defined(__ANDROID__) || defined(__QNX__) || defined(__EMSCRIPTEN__)
+#if !defined(__EMSCRIPTEN__) // times() is a stub in Emscripten (don't work with STRICT=1)
+#if defined(__linux__) || defined(__FreeBSD__) || defined(__ANDROID__) || defined(__QNX__)
   static const long aCLK_TCK = sysconf(_SC_CLK_TCK);
 #else
   static const long aCLK_TCK = CLK_TCK;
@@ -63,6 +64,10 @@ void OSD_Chronometer::GetProcessCPU (Standard_Real& theUserSeconds,
 
   theUserSeconds   = (Standard_Real)aCurrentTMS.tms_utime / aCLK_TCK;
   theSystemSeconds = (Standard_Real)aCurrentTMS.tms_stime / aCLK_TCK;
+#else
+  theUserSeconds = 0.0;
+  theSystemSeconds = 0.0;
+#endif
 }
 
 //=======================================================================

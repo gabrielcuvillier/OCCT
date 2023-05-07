@@ -117,7 +117,9 @@ void OSD_Directory::Build (const OSD_Protection& theProtect)
   TCollection_AsciiString aBuffer;
   mode_t anInternalProt = (mode_t )theProtect.Internal();
   myPath.SystemName (aBuffer);
+#if !defined(__EMSCRIPTEN__) // umask is a stub on emscripten (don't work with STRICT=1)
   umask (0);
+#endif
   int aStatus = mkdir (aBuffer.ToCString(), anInternalProt);
   if (aStatus == -1 && errno == ENOENT)
   {
