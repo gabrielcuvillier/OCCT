@@ -22,9 +22,9 @@
 #include <TCollection_ExtendedString.hxx>
 #include <NCollection_UtfString.hxx>
 #include <Standard_NotImplemented.hxx>
-#include "Resource_CodePages.pxx"
 
 #if !defined(OCCT_DISABLE_UNICODE_CONVERSIONS)
+#include "Resource_CodePages.pxx"
 #include "Resource_GBK.pxx"
 #include "Resource_Big5.pxx"
 

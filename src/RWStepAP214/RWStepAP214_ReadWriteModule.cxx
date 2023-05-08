@@ -14,7 +14,7 @@
 // pdn 24.12.98 t3d_opt.stp: treatment of unsorted uncertainties
 //:n5 abv 15 Feb 99: S4132 complex type bounded_curve + surface_curve -> surface_curve
 // :j4 gka 15.03.99 S4134
-// sln 03.10.2001. BUC61003. Correction of alphabetic order of complex entity's items 
+// sln 03.10.2001. BUC61003. Correction of alphabetic order of complex entity's items
 
 #include <Interface_Check.hxx>
 #include <Interface_ParamType.hxx>
@@ -854,7 +854,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule,StepData_ReadWriteModule)
 #include <RWStepShape_RWContextDependentShapeRepresentation.hxx>
 
 // Added from CD to DIS (S4134)
-#include <StepAP214_AppliedDateAndTimeAssignment.hxx> 
+#include <StepAP214_AppliedDateAndTimeAssignment.hxx>
 #include <StepAP214_AppliedDateAssignment.hxx>
 #include <StepAP214_AppliedApprovalAssignment.hxx>
 #include <StepAP214_AppliedDocumentReference.hxx>
@@ -862,12 +862,12 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule,StepData_ReadWriteModule)
 #include <StepAP214_AppliedOrganizationAssignment.hxx>
 #include <StepAP214_AppliedPersonAndOrganizationAssignment.hxx>
 #include <StepAP214_AppliedPresentedItem.hxx>
-#include <StepAP214_AppliedSecurityClassificationAssignment.hxx>  
+#include <StepAP214_AppliedSecurityClassificationAssignment.hxx>
 #include <StepBasic_DocumentFile.hxx>
-#include <StepBasic_CharacterizedObject.hxx>  
+#include <StepBasic_CharacterizedObject.hxx>
 #include <StepShape_ExtrudedFaceSolid.hxx>
-#include <StepShape_RevolvedFaceSolid.hxx>  
-#include <StepShape_SweptFaceSolid.hxx>  
+#include <StepShape_RevolvedFaceSolid.hxx>
+#include <StepShape_SweptFaceSolid.hxx>
 
 #include <RWStepAP214_RWAppliedDateAndTimeAssignment.hxx>
 #include <RWStepAP214_RWAppliedDateAssignment.hxx>
@@ -877,12 +877,12 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule,StepData_ReadWriteModule)
 #include <RWStepAP214_RWAppliedOrganizationAssignment.hxx>
 #include <RWStepAP214_RWAppliedPersonAndOrganizationAssignment.hxx>
 #include <RWStepAP214_RWAppliedPresentedItem.hxx>
-#include <RWStepAP214_RWAppliedSecurityClassificationAssignment.hxx>  
+#include <RWStepAP214_RWAppliedSecurityClassificationAssignment.hxx>
 #include <RWStepBasic_RWDocumentFile.hxx>
-#include <RWStepBasic_RWCharacterizedObject.hxx>  
+#include <RWStepBasic_RWCharacterizedObject.hxx>
 #include <RWStepShape_RWExtrudedFaceSolid.hxx>
-#include <RWStepShape_RWRevolvedFaceSolid.hxx>  
-#include <RWStepShape_RWSweptFaceSolid.hxx> 
+#include <RWStepShape_RWRevolvedFaceSolid.hxx>
+#include <RWStepShape_RWSweptFaceSolid.hxx>
 
 // Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
 #include <StepRepr_MeasureRepresentationItem.hxx>
@@ -890,7 +890,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule,StepData_ReadWriteModule)
 #include <StepBasic_SiUnitAndAreaUnit.hxx>
 #include <StepBasic_SiUnitAndVolumeUnit.hxx>
 #include <StepBasic_ConversionBasedUnitAndAreaUnit.hxx>
-#include <StepBasic_ConversionBasedUnitAndVolumeUnit.hxx> 
+#include <StepBasic_ConversionBasedUnitAndVolumeUnit.hxx>
 #include <RWStepBasic_RWSiUnitAndAreaUnit.hxx>
 #include <RWStepBasic_RWSiUnitAndVolumeUnit.hxx>
 #include <RWStepBasic_RWConversionBasedUnitAndAreaUnit.hxx>
@@ -1240,7 +1240,7 @@ IMPLEMENT_STANDARD_RTTIEXT(RWStepAP214_ReadWriteModule,StepData_ReadWriteModule)
 #include <RWStepBasic_RWDocumentProductAssociation.hxx>
 #include <RWStepBasic_RWDocumentProductEquivalence.hxx>
 
-//  TR12J 04.06.2003 G&DT entities GKA 
+//  TR12J 04.06.2003 G&DT entities GKA
 #include <StepShape_ShapeRepresentationWithParameters.hxx>
 #include <StepDimTol_AngularityTolerance.hxx>
 #include <StepDimTol_ConcentricityTolerance.hxx>
@@ -1978,7 +1978,7 @@ static TCollection_AsciiString Reco_MaterialDesignation("MATERIAL_DESIGNATION");
 static TCollection_AsciiString Reco_ContextDependentShapeRepresentation ("CONTEXT_DEPENDENT_SHAPE_REPRESENTATION");
 
 // Added from CD To DIS (S4134)
-static TCollection_AsciiString Reco_AppliedDateAndTimeAssignment ("APPLIED_DATE_AND_TIME_ASSIGNMENT"); 
+static TCollection_AsciiString Reco_AppliedDateAndTimeAssignment ("APPLIED_DATE_AND_TIME_ASSIGNMENT");
 static TCollection_AsciiString Reco_AppliedDateAssignment ("APPLIED_DATE_ASSIGNMENT");
 static TCollection_AsciiString Reco_AppliedApprovalAssignment ("APPLIED_APPROVAL_ASSIGNMENT");
 static TCollection_AsciiString Reco_AppliedDocumentReference ("APPLIED_DOCUMENT_REFERENCE");
@@ -2380,7 +2380,7 @@ RWStepAP214_ReadWriteModule::RWStepAP214_ReadWriteModule ()
   typenums.Bind (Reco_RationalBSplineCurve, 239);
   typenums.Bind (Reco_TrimmedCurve, 308);
   typenums.Bind (Reco_UniformCurve, 311);
-  
+
   typenums.Bind (Reco_BSplineSurface, 40);
   typenums.Bind (Reco_BSplineSurfaceWithKnots, 41);
   typenums.Bind (Reco_QuasiUniformSurface, 237);
@@ -2393,7 +2393,7 @@ RWStepAP214_ReadWriteModule::RWStepAP214_ReadWriteModule ()
   typenums.Bind (Reco_ToroidalSurface, 305);
   typenums.Bind (Reco_SurfaceOfLinearExtrusion, 273);
   typenums.Bind (Reco_SurfaceOfRevolution, 274);
-  
+
   typenums.Bind (Reco_Address, 1);
   typenums.Bind (Reco_AdvancedBrepShapeRepresentation, 2);
   typenums.Bind (Reco_AnnotationCurveOccurrence, 4);
@@ -2743,7 +2743,7 @@ RWStepAP214_ReadWriteModule::RWStepAP214_ReadWriteModule ()
   typenums.Bind (Reco_ExtrudedFaceSolid, 403);
   typenums.Bind (Reco_RevolvedFaceSolid, 404);
   typenums.Bind (Reco_SweptFaceSolid, 405);
-  
+
   // Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
   typenums.Bind (Reco_MeasureRepresentationItem, 406);
   typenums.Bind (Reco_AreaUnit,407);
@@ -2829,8 +2829,8 @@ RWStepAP214_ReadWriteModule::RWStepAP214_ReadWriteModule ()
   typenums.Bind (Reco_EdgeBasedWireframeShapeRepresentation,489);
   typenums.Bind (Reco_FaceBasedSurfaceModel,490);
   typenums.Bind (Reco_NonManifoldSurfaceShapeRepresentation,491);
-	
-  
+
+
   // gka 08.01.02
   typenums.Bind (Reco_OrientedSurface,492);
   typenums.Bind (Reco_Subface,493);
@@ -2922,11 +2922,11 @@ RWStepAP214_ReadWriteModule::RWStepAP214_ReadWriteModule ()
   typenums.Bind (Reco_CurveElementIntervalLinearlyVarying,581);
   typenums.Bind (Reco_FeaCurveSectionGeometricRelationship,582);
   typenums.Bind (Reco_FeaSurfaceSectionGeometricRelationship,583);
-  
+
   // ptv 28.01.2003
   typenums.Bind (Reco_DocumentProductAssociation,600);
   typenums.Bind (Reco_DocumentProductEquivalence,601);
-  
+
   // Added by SKL 18.06.2003 for Dimensional Tolerances (CAX-IF TRJ11)
   typenums.Bind (Reco_CylindricityTolerance,609);
   typenums.Bind (Reco_ShapeRepresentationWithParameters,610);
@@ -3106,7 +3106,7 @@ RWStepAP214_ReadWriteModule::RWStepAP214_ReadWriteModule ()
   typenums.Bind(Reco_CubicBezierTessellatedEdge, 817);
   typenums.Bind(Reco_CubicBezierTriangulatedFace, 818);
 
-  
+
 //    SHORT NAMES
 //    NB : la liste est celle de AP203
 //    Directement exploite pour les types simples
@@ -3646,7 +3646,7 @@ RWStepAP214_ReadWriteModule::RWStepAP214_ReadWriteModule ()
   typeshor.Bind ("ANNPLN", 704);
   typeshor.Bind ("CNGMRP", 712);
   typeshor.Bind ("CGRR", 713);
-    
+
 }
 
 // --- Case Recognition ---
@@ -3668,16 +3668,16 @@ Standard_Integer RWStepAP214_ReadWriteModule::CaseStep
 
 //=======================================================================
 //function : CaseStep
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Integer RWStepAP214_ReadWriteModule::CaseStep
 (const TColStd_SequenceOfAsciiString& theTypes) const
 {
-  
+
   // Optimized by FMA : le test sur le nombre de composant est repete meme
   //                    si la valeur testee est la meme.
-  
+
   Standard_Integer NbComp = theTypes.Length();
   if (NbComp < 2) {
 #ifdef OCCT_DEBUG
@@ -3721,7 +3721,7 @@ Standard_Integer RWStepAP214_ReadWriteModule::CaseStep
           isOK = Standard_False;
         }
     }
-    
+
     if (NbComp == 8)
     {
       if ((types(1).IsEqual(StepType(729))) &&
@@ -4342,7 +4342,7 @@ Standard_Boolean RWStepAP214_ReadWriteModule::IsComplex
 
 //=======================================================================
 //function : StepType
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 const TCollection_AsciiString& RWStepAP214_ReadWriteModule::StepType
@@ -4715,26 +4715,26 @@ const TCollection_AsciiString& RWStepAP214_ReadWriteModule::StepType
   case 390: return Reco_MaterialDesignation;
   case 391: return Reco_ContextDependentShapeRepresentation;
   //:S4134: Added from CD to DIS
-  case 392: return Reco_AppliedDateAndTimeAssignment; 
-  case 393: return Reco_AppliedDateAssignment;  
-  case 394: return Reco_AppliedApprovalAssignment;  
-  case 395: return Reco_AppliedGroupAssignment;  
-  case 396: return Reco_AppliedOrganizationAssignment;  
-  case 397: return Reco_AppliedPersonAndOrganizationAssignment;  
-  case 398: return Reco_AppliedPresentedItem;  
-  case 399: return Reco_AppliedSecurityClassificationAssignment;  
+  case 392: return Reco_AppliedDateAndTimeAssignment;
+  case 393: return Reco_AppliedDateAssignment;
+  case 394: return Reco_AppliedApprovalAssignment;
+  case 395: return Reco_AppliedGroupAssignment;
+  case 396: return Reco_AppliedOrganizationAssignment;
+  case 397: return Reco_AppliedPersonAndOrganizationAssignment;
+  case 398: return Reco_AppliedPresentedItem;
+  case 399: return Reco_AppliedSecurityClassificationAssignment;
   case 400: return Reco_AppliedDocumentReference;
-  case 401: return Reco_DocumentFile;  
-  case 402: return Reco_CharacterizedObject;  
-  case 403: return Reco_ExtrudedFaceSolid;   
-  case 404: return Reco_RevolvedFaceSolid;  
-  case 405: return Reco_SweptFaceSolid;  
+  case 401: return Reco_DocumentFile;
+  case 402: return Reco_CharacterizedObject;
+  case 403: return Reco_ExtrudedFaceSolid;
+  case 404: return Reco_RevolvedFaceSolid;
+  case 405: return Reco_SweptFaceSolid;
 
   // Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
-  case 406: return Reco_MeasureRepresentationItem;  
+  case 406: return Reco_MeasureRepresentationItem;
   case 407: return Reco_AreaUnit;
   case 408: return Reco_VolumeUnit;
-    
+
   // Added by ABV 10.11.99 for AP203
   case 413: return Reco_Action;
   case 414: return Reco_ActionAssignment;
@@ -4815,15 +4815,15 @@ const TCollection_AsciiString& RWStepAP214_ReadWriteModule::StepType
   case 489: return Reco_EdgeBasedWireframeShapeRepresentation;
   case 490: return Reco_FaceBasedSurfaceModel;
   case 491: return Reco_NonManifoldSurfaceShapeRepresentation;
-  
-    
+
+
   //gka 08.01.02
   case 492: return Reco_OrientedSurface;
   case 493: return Reco_Subface;
   case 494: return Reco_Subedge;
   case 495: return Reco_SeamEdge;
   case 496: return Reco_ConnectedFaceSubSet;
-  
+
   //AP209
   case 500: return Reco_EulerAngles;
   case 501: return Reco_MassUnit;
@@ -4897,7 +4897,7 @@ const TCollection_AsciiString& RWStepAP214_ReadWriteModule::StepType
   case 569: return Reco_MaterialProperty;
   case 570: return Reco_FeaModelDefinition;
   case 571: return Reco_FreedomAndCoefficient;
-  case 572: return Reco_FreedomsList;  
+  case 572: return Reco_FreedomsList;
   case 573: return Reco_ProductDefinitionFormationRelationship;
 //  case 574: return Reco_FeaModelDefinition;
   case 575: return Reco_NodeDefinition;
@@ -4908,7 +4908,7 @@ const TCollection_AsciiString& RWStepAP214_ReadWriteModule::StepType
   case 581: return Reco_CurveElementIntervalLinearlyVarying;
   case 582: return Reco_FeaCurveSectionGeometricRelationship;
   case 583: return Reco_FeaSurfaceSectionGeometricRelationship;
-  
+
   // ptv 28.01.2003
   case 600: return Reco_DocumentProductAssociation;
   case 601: return Reco_DocumentProductEquivalence;
@@ -5453,21 +5453,21 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
     return;
   }
   switch (CN) {
-  case 1 : 
+  case 1 :
     {
       DeclareAndCast(StepBasic_Address, anent, ent);
       RWStepBasic_RWAddress tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 2 : 
+  case 2 :
     {
       DeclareAndCast(StepShape_AdvancedBrepShapeRepresentation, anent, ent);
       RWStepShape_RWAdvancedBrepShapeRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 3 : 
+  case 3 :
     {
       DeclareAndCast(StepShape_AdvancedFace, anent, ent);
       RWStepShape_RWAdvancedFace tool;
@@ -5495,182 +5495,182 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
     tool.ReadStep(data, num, ach, anent);
   }
     break;
-  case 7 : 
+  case 7 :
     {
       DeclareAndCast(StepVisual_AnnotationOccurrence, anent, ent);
       RWStepVisual_RWAnnotationOccurrence tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 11 : 
+  case 11 :
     {
       DeclareAndCast(StepRepr_MappedItem, anent, ent);
       RWStepRepr_RWMappedItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 12 : 
+  case 12 :
     {
       DeclareAndCast(StepVisual_StyledItem, anent, ent);
       RWStepVisual_RWStyledItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 13 : 
+  case 13 :
     {
       DeclareAndCast(StepBasic_ApplicationContext, anent, ent);
       RWStepBasic_RWApplicationContext tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 14 : 
+  case 14 :
     {
       DeclareAndCast(StepBasic_ApplicationContextElement, anent, ent);
       RWStepBasic_RWApplicationContextElement tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 15 : 
+  case 15 :
     {
       DeclareAndCast(StepBasic_ApplicationProtocolDefinition, anent, ent);
       RWStepBasic_RWApplicationProtocolDefinition tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 16 : 
+  case 16 :
     {
       DeclareAndCast(StepBasic_Approval, anent, ent);
       RWStepBasic_RWApproval tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 18 : 
+  case 18 :
     {
       DeclareAndCast(StepBasic_ApprovalPersonOrganization, anent, ent);
       RWStepBasic_RWApprovalPersonOrganization tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 19 : 
+  case 19 :
     {
       DeclareAndCast(StepBasic_ApprovalRelationship, anent, ent);
       RWStepBasic_RWApprovalRelationship tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 20 : 
+  case 20 :
     {
       DeclareAndCast(StepBasic_ApprovalRole, anent, ent);
       RWStepBasic_RWApprovalRole tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 21 : 
+  case 21 :
     {
       DeclareAndCast(StepBasic_ApprovalStatus, anent, ent);
       RWStepBasic_RWApprovalStatus tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 22 : 
+  case 22 :
     {
       DeclareAndCast(StepVisual_AreaInSet, anent, ent);
       RWStepVisual_RWAreaInSet tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 23 : 
+  case 23 :
     {
       DeclareAndCast(StepAP214_AutoDesignActualDateAndTimeAssignment, anent, ent);
       RWStepAP214_RWAutoDesignActualDateAndTimeAssignment tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 24 : 
+  case 24 :
     {
       DeclareAndCast(StepAP214_AutoDesignActualDateAssignment, anent, ent);
       RWStepAP214_RWAutoDesignActualDateAssignment tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 25 : 
+  case 25 :
     {
       DeclareAndCast(StepAP214_AutoDesignApprovalAssignment, anent, ent);
       RWStepAP214_RWAutoDesignApprovalAssignment tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 26 : 
+  case 26 :
     {
       DeclareAndCast(StepAP214_AutoDesignDateAndPersonAssignment, anent, ent);
       RWStepAP214_RWAutoDesignDateAndPersonAssignment tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 27 : 
+  case 27 :
     {
       DeclareAndCast(StepAP214_AutoDesignGroupAssignment, anent, ent);
       RWStepAP214_RWAutoDesignGroupAssignment tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 28 : 
+  case 28 :
     {
       DeclareAndCast(StepAP214_AutoDesignNominalDateAndTimeAssignment, anent, ent);
       RWStepAP214_RWAutoDesignNominalDateAndTimeAssignment tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 29 : 
+  case 29 :
     {
       DeclareAndCast(StepAP214_AutoDesignNominalDateAssignment, anent, ent);
       RWStepAP214_RWAutoDesignNominalDateAssignment tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 30 : 
+  case 30 :
     {
       DeclareAndCast(StepAP214_AutoDesignOrganizationAssignment, anent, ent);
       RWStepAP214_RWAutoDesignOrganizationAssignment tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 31 : 
+  case 31 :
     {
       DeclareAndCast(StepAP214_AutoDesignPersonAndOrganizationAssignment, anent, ent);
       RWStepAP214_RWAutoDesignPersonAndOrganizationAssignment tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 32 : 
+  case 32 :
     {
       DeclareAndCast(StepAP214_AutoDesignPresentedItem, anent, ent);
       RWStepAP214_RWAutoDesignPresentedItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 33 : 
+  case 33 :
     {
       DeclareAndCast(StepAP214_AutoDesignSecurityClassificationAssignment, anent, ent);
       RWStepAP214_RWAutoDesignSecurityClassificationAssignment tool;
@@ -5678,517 +5678,517 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
     }
 
     break;
-  case 35 : 
+  case 35 :
     {
       DeclareAndCast(StepGeom_Axis1Placement, anent, ent);
       RWStepGeom_RWAxis1Placement tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 36 : 
+  case 36 :
     {
       DeclareAndCast(StepGeom_Axis2Placement2d, anent, ent);
       RWStepGeom_RWAxis2Placement2d tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 37 : 
+  case 37 :
     {
       DeclareAndCast(StepGeom_Axis2Placement3d, anent, ent);
       RWStepGeom_RWAxis2Placement3d tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 38 : 
+  case 38 :
     {
       DeclareAndCast(StepGeom_BSplineCurve, anent, ent);
       RWStepGeom_RWBSplineCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 39 : 
+  case 39 :
     {
       DeclareAndCast(StepGeom_BSplineCurveWithKnots, anent, ent);
       RWStepGeom_RWBSplineCurveWithKnots tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 40 : 
+  case 40 :
     {
       DeclareAndCast(StepGeom_BSplineSurface, anent, ent);
       RWStepGeom_RWBSplineSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 41 : 
+  case 41 :
     {
       DeclareAndCast(StepGeom_BSplineSurfaceWithKnots, anent, ent);
       RWStepGeom_RWBSplineSurfaceWithKnots tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 42 : 
+  case 42 :
     {
       DeclareAndCast(StepVisual_BackgroundColour, anent, ent);
       RWStepVisual_RWBackgroundColour tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 43 : 
+  case 43 :
     {
       DeclareAndCast(StepGeom_BezierCurve, anent, ent);
       RWStepGeom_RWBezierCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 44 : 
+  case 44 :
     {
       DeclareAndCast(StepGeom_BezierSurface, anent, ent);
       RWStepGeom_RWBezierSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 45 : 
+  case 45 :
     {
       DeclareAndCast(StepShape_Block, anent, ent);
       RWStepShape_RWBlock tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 46 : 
+  case 46 :
     {
       DeclareAndCast(StepShape_BooleanResult, anent, ent);
       RWStepShape_RWBooleanResult tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 47 : 
+  case 47 :
     {
       DeclareAndCast(StepGeom_BoundaryCurve, anent, ent);
       RWStepGeom_RWBoundaryCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 48 : 
+  case 48 :
     {
       DeclareAndCast(StepGeom_BoundedCurve, anent, ent);
       RWStepGeom_RWBoundedCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 49 : 
+  case 49 :
     {
       DeclareAndCast(StepGeom_BoundedSurface, anent, ent);
       RWStepGeom_RWBoundedSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 50 : 
+  case 50 :
     {
       DeclareAndCast(StepShape_BoxDomain, anent, ent);
       RWStepShape_RWBoxDomain tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 51 : 
+  case 51 :
     {
       DeclareAndCast(StepShape_BoxedHalfSpace, anent, ent);
       RWStepShape_RWBoxedHalfSpace tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 52 : 
+  case 52 :
     {
       DeclareAndCast(StepShape_BrepWithVoids, anent, ent);
       RWStepShape_RWBrepWithVoids tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 53 : 
+  case 53 :
     {
       DeclareAndCast(StepBasic_CalendarDate, anent, ent);
       RWStepBasic_RWCalendarDate tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 54 : 
+  case 54 :
     {
       DeclareAndCast(StepVisual_CameraImage, anent, ent);
       RWStepVisual_RWCameraImage tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 55 : 
+  case 55 :
     {
       DeclareAndCast(StepVisual_CameraModel, anent, ent);
       RWStepVisual_RWCameraModel tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 56 : 
+  case 56 :
     {
       DeclareAndCast(StepVisual_CameraModelD2, anent, ent);
       RWStepVisual_RWCameraModelD2 tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 57 : 
+  case 57 :
     {
       DeclareAndCast(StepVisual_CameraModelD3, anent, ent);
       RWStepVisual_RWCameraModelD3 tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 58 : 
+  case 58 :
     {
       DeclareAndCast(StepVisual_CameraUsage, anent, ent);
       RWStepVisual_RWCameraUsage tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 59 : 
+  case 59 :
     {
       DeclareAndCast(StepGeom_CartesianPoint, anent, ent);
       RWStepGeom_RWCartesianPoint tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 60 : 
+  case 60 :
     {
       DeclareAndCast(StepGeom_CartesianTransformationOperator, anent, ent);
       RWStepGeom_RWCartesianTransformationOperator tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 61 : 
+  case 61 :
     {
       DeclareAndCast(StepGeom_CartesianTransformationOperator3d, anent, ent);
       RWStepGeom_RWCartesianTransformationOperator3d tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 62 : 
+  case 62 :
     {
       DeclareAndCast(StepGeom_Circle, anent, ent);
       RWStepGeom_RWCircle tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 63 : 
+  case 63 :
     {
       DeclareAndCast(StepShape_ClosedShell, anent, ent);
       RWStepShape_RWClosedShell tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 64 : 
+  case 64 :
     {
       DeclareAndCast(StepVisual_Colour, anent, ent);
       RWStepVisual_RWColour tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 65 : 
+  case 65 :
     {
       DeclareAndCast(StepVisual_ColourRgb, anent, ent);
       RWStepVisual_RWColourRgb tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 66 : 
+  case 66 :
     {
       DeclareAndCast(StepVisual_ColourSpecification, anent, ent);
       RWStepVisual_RWColourSpecification tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 67 : 
+  case 67 :
     {
       DeclareAndCast(StepGeom_CompositeCurve, anent, ent);
       RWStepGeom_RWCompositeCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 68 : 
+  case 68 :
     {
       DeclareAndCast(StepGeom_CompositeCurveOnSurface, anent, ent);
       RWStepGeom_RWCompositeCurveOnSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 69 : 
+  case 69 :
     {
       DeclareAndCast(StepGeom_CompositeCurveSegment, anent, ent);
       RWStepGeom_RWCompositeCurveSegment tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 70 : 
+  case 70 :
     {
       DeclareAndCast(StepVisual_CompositeText, anent, ent);
       RWStepVisual_RWCompositeText tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 73 : 
+  case 73 :
     {
       DeclareAndCast(StepVisual_CompositeTextWithExtent, anent, ent);
       RWStepVisual_RWCompositeTextWithExtent tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 74 : 
+  case 74 :
     {
       DeclareAndCast(StepGeom_Conic, anent, ent);
       RWStepGeom_RWConic tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 75 : 
+  case 75 :
     {
       DeclareAndCast(StepGeom_ConicalSurface, anent, ent);
       RWStepGeom_RWConicalSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 76 : 
+  case 76 :
     {
       DeclareAndCast(StepShape_ConnectedFaceSet, anent, ent);
       RWStepShape_RWConnectedFaceSet tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 77 : 
+  case 77 :
     {
       DeclareAndCast(StepVisual_ContextDependentInvisibility, anent, ent);
       RWStepVisual_RWContextDependentInvisibility tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 78 : 
+  case 78 :
     {
       DeclareAndCast(StepVisual_ContextDependentOverRidingStyledItem, anent, ent);
       RWStepVisual_RWContextDependentOverRidingStyledItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 79 : 
+  case 79 :
     {
       DeclareAndCast(StepBasic_ConversionBasedUnit, anent, ent);
       RWStepBasic_RWConversionBasedUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 80 : 
+  case 80 :
     {
       DeclareAndCast(StepBasic_CoordinatedUniversalTimeOffset, anent, ent);
       RWStepBasic_RWCoordinatedUniversalTimeOffset tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 82 : 
+  case 82 :
     {
       DeclareAndCast(StepShape_CsgShapeRepresentation, anent, ent);
       RWStepShape_RWCsgShapeRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 83 : 
+  case 83 :
     {
       DeclareAndCast(StepShape_CsgSolid, anent, ent);
       RWStepShape_RWCsgSolid tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 84 : 
+  case 84 :
     {
       DeclareAndCast(StepGeom_Curve, anent, ent);
       RWStepGeom_RWCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 85 : 
+  case 85 :
     {
       DeclareAndCast(StepGeom_CurveBoundedSurface, anent, ent);
       RWStepGeom_RWCurveBoundedSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 86 : 
+  case 86 :
     {
       DeclareAndCast(StepGeom_CurveReplica, anent, ent);
       RWStepGeom_RWCurveReplica tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 87 : 
+  case 87 :
     {
       DeclareAndCast(StepVisual_CurveStyle, anent, ent);
       RWStepVisual_RWCurveStyle tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 88 : 
+  case 88 :
     {
       DeclareAndCast(StepVisual_CurveStyleFont, anent, ent);
       RWStepVisual_RWCurveStyleFont tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 89 : 
+  case 89 :
     {
       DeclareAndCast(StepVisual_CurveStyleFontPattern, anent, ent);
       RWStepVisual_RWCurveStyleFontPattern tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 90 : 
+  case 90 :
     {
       DeclareAndCast(StepGeom_CylindricalSurface, anent, ent);
       RWStepGeom_RWCylindricalSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 91 : 
+  case 91 :
     {
       DeclareAndCast(StepBasic_Date, anent, ent);
       RWStepBasic_RWDate tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 92 : 
+  case 92 :
     {
       DeclareAndCast(StepBasic_DateAndTime, anent, ent);
       RWStepBasic_RWDateAndTime tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 95 : 
+  case 95 :
     {
       DeclareAndCast(StepBasic_DateRole, anent, ent);
       RWStepBasic_RWDateRole tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 96 : 
+  case 96 :
     {
       DeclareAndCast(StepBasic_DateTimeRole, anent, ent);
       RWStepBasic_RWDateTimeRole tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 98 : 
+  case 98 :
     {
       DeclareAndCast(StepRepr_DefinitionalRepresentation, anent, ent);
       RWStepRepr_RWDefinitionalRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 99 : 
+  case 99 :
     {
       DeclareAndCast(StepGeom_DegeneratePcurve, anent, ent);
       RWStepGeom_RWDegeneratePcurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 100 : 
+  case 100 :
     {
       DeclareAndCast(StepGeom_DegenerateToroidalSurface, anent, ent);
       RWStepGeom_RWDegenerateToroidalSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 101 : 
+  case 101 :
     {
       DeclareAndCast(StepRepr_DescriptiveRepresentationItem, anent, ent);
       RWStepRepr_RWDescriptiveRepresentationItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 104 : 
+  case 104 :
     {
       DeclareAndCast(StepBasic_DimensionalExponents, anent, ent);
       RWStepBasic_RWDimensionalExponents tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 105 : 
+  case 105 :
     {
       DeclareAndCast(StepGeom_Direction, anent, ent);
       RWStepGeom_RWDirection tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 106 : 
+  case 106 :
     {
       DeclareAndCast(StepVisual_StyledItem, anent, ent);
       RWStepVisual_RWStyledItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
   case 107 :
     {
@@ -6197,1512 +6197,1512 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 108 : 
+  case 108 :
     {
       DeclareAndCast(StepVisual_DraughtingPreDefinedColour, anent, ent);
       RWStepVisual_RWDraughtingPreDefinedColour tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 109 : 
+  case 109 :
     {
       DeclareAndCast(StepVisual_DraughtingPreDefinedCurveFont, anent, ent);
       RWStepVisual_RWDraughtingPreDefinedCurveFont tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 115 : 
+  case 115 :
     {
       DeclareAndCast(StepShape_Edge, anent, ent);
       RWStepShape_RWEdge tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 116 : 
+  case 116 :
     {
       DeclareAndCast(StepShape_EdgeCurve, anent, ent);
       RWStepShape_RWEdgeCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 117 : 
+  case 117 :
     {
       DeclareAndCast(StepShape_EdgeLoop, anent, ent);
       RWStepShape_RWEdgeLoop tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 118 : 
+  case 118 :
     {
       DeclareAndCast(StepGeom_ElementarySurface, anent, ent);
       RWStepGeom_RWElementarySurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 119 : 
+  case 119 :
     {
       DeclareAndCast(StepGeom_Ellipse, anent, ent);
       RWStepGeom_RWEllipse tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 120 : 
+  case 120 :
     {
       DeclareAndCast(StepGeom_EvaluatedDegeneratePcurve, anent, ent);
       RWStepGeom_RWEvaluatedDegeneratePcurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 121 : 
+  case 121 :
     {
       DeclareAndCast(StepBasic_ExternalSource, anent, ent);
       RWStepBasic_RWExternalSource tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 122 : 
+  case 122 :
     {
       DeclareAndCast(StepVisual_ExternallyDefinedCurveFont, anent, ent);
       RWStepVisual_RWExternallyDefinedCurveFont tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 124 : 
-  case 126 : 
+  case 124 :
+  case 126 :
     {
       DeclareAndCast(StepBasic_ExternallyDefinedItem, anent, ent);
       RWStepBasic_RWExternallyDefinedItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 128 : 
+  case 128 :
     {
       DeclareAndCast(StepShape_ExtrudedAreaSolid, anent, ent);
       RWStepShape_RWExtrudedAreaSolid tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 129 : 
+  case 129 :
     {
       DeclareAndCast(StepShape_Face, anent, ent);
       RWStepShape_RWFace tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 131 : 
+  case 131 :
     {
       DeclareAndCast(StepShape_FaceBound, anent, ent);
       RWStepShape_RWFaceBound tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 132 : 
+  case 132 :
     {
       DeclareAndCast(StepShape_FaceOuterBound, anent, ent);
       RWStepShape_RWFaceOuterBound tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 133 : 
+  case 133 :
     {
       DeclareAndCast(StepShape_FaceSurface, anent, ent);
       RWStepShape_RWFaceSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 134 : 
+  case 134 :
     {
       DeclareAndCast(StepShape_FacetedBrep, anent, ent);
       RWStepShape_RWFacetedBrep tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 135 : 
+  case 135 :
     {
       DeclareAndCast(StepShape_FacetedBrepShapeRepresentation, anent, ent);
       RWStepShape_RWFacetedBrepShapeRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 136 : 
+  case 136 :
     {
       DeclareAndCast(StepVisual_FillAreaStyle, anent, ent);
       RWStepVisual_RWFillAreaStyle tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 137 : 
+  case 137 :
     {
       DeclareAndCast(StepVisual_FillAreaStyleColour, anent, ent);
       RWStepVisual_RWFillAreaStyleColour tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 141 : 
+  case 141 :
     {
       DeclareAndCast(StepRepr_FunctionallyDefinedTransformation, anent, ent);
       RWStepRepr_RWFunctionallyDefinedTransformation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 142 : 
+  case 142 :
     {
       DeclareAndCast(StepShape_GeometricCurveSet, anent, ent);
       RWStepShape_RWGeometricCurveSet tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 143 : 
+  case 143 :
     {
       DeclareAndCast(StepGeom_GeometricRepresentationContext, anent, ent);
       RWStepGeom_RWGeometricRepresentationContext tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 144 : 
+  case 144 :
     {
       DeclareAndCast(StepGeom_GeometricRepresentationItem, anent, ent);
       RWStepGeom_RWGeometricRepresentationItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 145 : 
+  case 145 :
     {
       DeclareAndCast(StepShape_GeometricSet, anent, ent);
       RWStepShape_RWGeometricSet tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 146 : 
+  case 146 :
     {
       DeclareAndCast(StepShape_GeometricallyBoundedSurfaceShapeRepresentation, anent, ent);
       RWStepShape_RWGeometricallyBoundedSurfaceShapeRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 147 : 
+  case 147 :
     {
       DeclareAndCast(StepShape_GeometricallyBoundedWireframeShapeRepresentation, anent, ent);
       RWStepShape_RWGeometricallyBoundedWireframeShapeRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 148 : 
+  case 148 :
     {
       DeclareAndCast(StepRepr_GlobalUncertaintyAssignedContext, anent, ent);
       RWStepRepr_RWGlobalUncertaintyAssignedContext tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 149 : 
+  case 149 :
     {
       DeclareAndCast(StepRepr_GlobalUnitAssignedContext, anent, ent);
       RWStepRepr_RWGlobalUnitAssignedContext tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 150 : 
+  case 150 :
     {
       DeclareAndCast(StepBasic_Group, anent, ent);
       RWStepBasic_RWGroup tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 152 : 
+  case 152 :
     {
       DeclareAndCast(StepBasic_GroupRelationship, anent, ent);
       RWStepBasic_RWGroupRelationship tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 153 : 
+  case 153 :
     {
       DeclareAndCast(StepShape_HalfSpaceSolid, anent, ent);
       RWStepShape_RWHalfSpaceSolid tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 154 : 
+  case 154 :
     {
       DeclareAndCast(StepGeom_Hyperbola, anent, ent);
       RWStepGeom_RWHyperbola tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 155 : 
+  case 155 :
     {
       DeclareAndCast(StepGeom_IntersectionCurve, anent, ent);
       RWStepGeom_RWIntersectionCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 156 : 
+  case 156 :
     {
       DeclareAndCast(StepVisual_Invisibility, anent, ent);
       RWStepVisual_RWInvisibility tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 157 : 
+  case 157 :
     {
       DeclareAndCast(StepBasic_LengthMeasureWithUnit, anent, ent);
       RWStepBasic_RWLengthMeasureWithUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 158 : 
+  case 158 :
     {
       DeclareAndCast(StepBasic_LengthUnit, anent, ent);
       RWStepBasic_RWLengthUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 159 : 
+  case 159 :
     {
       DeclareAndCast(StepGeom_Line, anent, ent);
       RWStepGeom_RWLine tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 160 : 
+  case 160 :
     {
       DeclareAndCast(StepBasic_LocalTime, anent, ent);
       RWStepBasic_RWLocalTime tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 161 : 
+  case 161 :
     {
       DeclareAndCast(StepShape_Loop, anent, ent);
       RWStepShape_RWLoop tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 162 : 
+  case 162 :
     {
       DeclareAndCast(StepShape_ManifoldSolidBrep, anent, ent);
       RWStepShape_RWManifoldSolidBrep tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 163 : 
+  case 163 :
     {
       DeclareAndCast(StepShape_ManifoldSurfaceShapeRepresentation, anent, ent);
       RWStepShape_RWManifoldSurfaceShapeRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 164 : 
+  case 164 :
     {
       DeclareAndCast(StepRepr_MappedItem, anent, ent);
       RWStepRepr_RWMappedItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 165 : 
+  case 165 :
     {
       DeclareAndCast(StepBasic_MeasureWithUnit, anent, ent);
       RWStepBasic_RWMeasureWithUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 166 : 
+  case 166 :
     {
       DeclareAndCast(StepVisual_MechanicalDesignGeometricPresentationArea, anent, ent);
       RWStepVisual_RWMechanicalDesignGeometricPresentationArea tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 167 : 
+  case 167 :
     {
       DeclareAndCast(StepVisual_MechanicalDesignGeometricPresentationRepresentation, anent, ent);
       RWStepVisual_RWMechanicalDesignGeometricPresentationRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 169 : 
+  case 169 :
     {
       DeclareAndCast(StepBasic_NamedUnit, anent, ent);
       RWStepBasic_RWNamedUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 171 : 
+  case 171 :
     {
       DeclareAndCast(StepGeom_OffsetCurve3d, anent, ent);
       RWStepGeom_RWOffsetCurve3d tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 172 : 
+  case 172 :
     {
       DeclareAndCast(StepGeom_OffsetSurface, anent, ent);
       RWStepGeom_RWOffsetSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 174 : 
+  case 174 :
     {
       DeclareAndCast(StepShape_OpenShell, anent, ent);
       RWStepShape_RWOpenShell tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 175 : 
+  case 175 :
     {
       DeclareAndCast(StepBasic_OrdinalDate, anent, ent);
       RWStepBasic_RWOrdinalDate tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 176 : 
+  case 176 :
     {
       DeclareAndCast(StepBasic_Organization, anent, ent);
       RWStepBasic_RWOrganization tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 178 : 
+  case 178 :
     {
       DeclareAndCast(StepBasic_OrganizationRole, anent, ent);
       RWStepBasic_RWOrganizationRole tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 179 : 
+  case 179 :
     {
       DeclareAndCast(StepBasic_OrganizationalAddress, anent, ent);
       RWStepBasic_RWOrganizationalAddress tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 180 : 
+  case 180 :
     {
       DeclareAndCast(StepShape_OrientedClosedShell, anent, ent);
       RWStepShape_RWOrientedClosedShell tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 181 : 
+  case 181 :
     {
       DeclareAndCast(StepShape_OrientedEdge, anent, ent);
       RWStepShape_RWOrientedEdge tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 182 : 
+  case 182 :
     {
       DeclareAndCast(StepShape_OrientedFace, anent, ent);
       RWStepShape_RWOrientedFace tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 183 : 
+  case 183 :
     {
       DeclareAndCast(StepShape_OrientedOpenShell, anent, ent);
       RWStepShape_RWOrientedOpenShell tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 184 : 
+  case 184 :
     {
       DeclareAndCast(StepShape_OrientedPath, anent, ent);
       RWStepShape_RWOrientedPath tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 185 : 
+  case 185 :
     {
       DeclareAndCast(StepGeom_OuterBoundaryCurve, anent, ent);
       RWStepGeom_RWOuterBoundaryCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 186 : 
+  case 186 :
     {
       DeclareAndCast(StepVisual_OverRidingStyledItem, anent, ent);
       RWStepVisual_RWOverRidingStyledItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 187 : 
+  case 187 :
     {
       DeclareAndCast(StepGeom_Parabola, anent, ent);
       RWStepGeom_RWParabola tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 188 : 
+  case 188 :
     {
       DeclareAndCast(StepRepr_ParametricRepresentationContext, anent, ent);
       RWStepRepr_RWParametricRepresentationContext tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 189 : 
+  case 189 :
     {
       DeclareAndCast(StepShape_Path, anent, ent);
       RWStepShape_RWPath tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 190 : 
+  case 190 :
     {
       DeclareAndCast(StepGeom_Pcurve, anent, ent);
       RWStepGeom_RWPcurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 191 : 
+  case 191 :
     {
       DeclareAndCast(StepBasic_Person, anent, ent);
       RWStepBasic_RWPerson tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 192 : 
+  case 192 :
     {
       DeclareAndCast(StepBasic_PersonAndOrganization, anent, ent);
       RWStepBasic_RWPersonAndOrganization tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 194 : 
+  case 194 :
     {
       DeclareAndCast(StepBasic_PersonAndOrganizationRole, anent, ent);
       RWStepBasic_RWPersonAndOrganizationRole tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 195 : 
+  case 195 :
     {
       DeclareAndCast(StepBasic_PersonalAddress, anent, ent);
       RWStepBasic_RWPersonalAddress tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 196 : 
+  case 196 :
     {
       DeclareAndCast(StepGeom_Placement, anent, ent);
       RWStepGeom_RWPlacement tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 197 : 
+  case 197 :
     {
       DeclareAndCast(StepVisual_PlanarBox, anent, ent);
       RWStepVisual_RWPlanarBox tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 198 : 
+  case 198 :
     {
       DeclareAndCast(StepVisual_PlanarExtent, anent, ent);
       RWStepVisual_RWPlanarExtent tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 199 : 
+  case 199 :
     {
       DeclareAndCast(StepGeom_Plane, anent, ent);
       RWStepGeom_RWPlane tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 200 : 
+  case 200 :
     {
       DeclareAndCast(StepBasic_PlaneAngleMeasureWithUnit, anent, ent);
       RWStepBasic_RWPlaneAngleMeasureWithUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 201 : 
+  case 201 :
     {
       DeclareAndCast(StepBasic_PlaneAngleUnit, anent, ent);
       RWStepBasic_RWPlaneAngleUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 202 : 
+  case 202 :
     {
       DeclareAndCast(StepGeom_Point, anent, ent);
       RWStepGeom_RWPoint tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 203 : 
+  case 203 :
     {
       DeclareAndCast(StepGeom_PointOnCurve, anent, ent);
       RWStepGeom_RWPointOnCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 204 : 
+  case 204 :
     {
       DeclareAndCast(StepGeom_PointOnSurface, anent, ent);
       RWStepGeom_RWPointOnSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 205 : 
+  case 205 :
     {
       DeclareAndCast(StepGeom_PointReplica, anent, ent);
       RWStepGeom_RWPointReplica tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 206 : 
+  case 206 :
     {
       DeclareAndCast(StepVisual_PointStyle, anent, ent);
       RWStepVisual_RWPointStyle tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 207 : 
+  case 207 :
     {
       DeclareAndCast(StepShape_PolyLoop, anent, ent);
       RWStepShape_RWPolyLoop tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 208 : 
+  case 208 :
     {
       DeclareAndCast(StepGeom_Polyline, anent, ent);
       RWStepGeom_RWPolyline tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 209 : 
+  case 209 :
     {
       DeclareAndCast(StepVisual_PreDefinedColour, anent, ent);
       RWStepVisual_RWPreDefinedColour tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 210 : 
+  case 210 :
     {
       DeclareAndCast(StepVisual_PreDefinedCurveFont, anent, ent);
       RWStepVisual_RWPreDefinedCurveFont tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 211 : 
-  case 213 : 
+  case 211 :
+  case 213 :
     {
       DeclareAndCast(StepVisual_PreDefinedItem, anent, ent);
       RWStepVisual_RWPreDefinedItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 214 : 
+  case 214 :
     {
       DeclareAndCast(StepVisual_PresentationArea, anent, ent);
       RWStepVisual_RWPresentationArea tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 215 : 
+  case 215 :
     {
       DeclareAndCast(StepVisual_PresentationLayerAssignment, anent, ent);
       RWStepVisual_RWPresentationLayerAssignment tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 216 : 
+  case 216 :
     {
       DeclareAndCast(StepVisual_PresentationRepresentation, anent, ent);
       RWStepVisual_RWPresentationRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 217 : 
+  case 217 :
     {
       DeclareAndCast(StepVisual_PresentationSet, anent, ent);
       RWStepVisual_RWPresentationSet tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 218 : 
+  case 218 :
     {
       DeclareAndCast(StepVisual_PresentationSize, anent, ent);
       RWStepVisual_RWPresentationSize tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 219 : 
+  case 219 :
     {
       DeclareAndCast(StepVisual_PresentationStyleAssignment, anent, ent);
       RWStepVisual_RWPresentationStyleAssignment tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 220 : 
+  case 220 :
     {
       DeclareAndCast(StepVisual_PresentationStyleByContext, anent, ent);
       RWStepVisual_RWPresentationStyleByContext tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 221 : 
+  case 221 :
     {
       DeclareAndCast(StepVisual_PresentationView, anent, ent);
       RWStepVisual_RWPresentationView tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 223 : 
+  case 223 :
     {
       DeclareAndCast(StepBasic_Product, anent, ent);
       RWStepBasic_RWProduct tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 224 : 
+  case 224 :
     {
       DeclareAndCast(StepBasic_ProductCategory, anent, ent);
       RWStepBasic_RWProductCategory tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 225 : 
+  case 225 :
     {
       DeclareAndCast(StepBasic_ProductContext, anent, ent);
       RWStepBasic_RWProductContext tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 227 : 
+  case 227 :
     {
       DeclareAndCast(StepBasic_ProductDefinition, anent, ent);
       RWStepBasic_RWProductDefinition tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 228 : 
+  case 228 :
     {
       DeclareAndCast(StepBasic_ProductDefinitionContext, anent, ent);
       RWStepBasic_RWProductDefinitionContext tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 229 : 
+  case 229 :
     {
       DeclareAndCast(StepBasic_ProductDefinitionFormation, anent, ent);
       RWStepBasic_RWProductDefinitionFormation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 230 : 
+  case 230 :
     {
       DeclareAndCast(StepBasic_ProductDefinitionFormationWithSpecifiedSource, anent, ent);
       RWStepBasic_RWProductDefinitionFormationWithSpecifiedSource tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 231 : 
+  case 231 :
     {
       DeclareAndCast(StepRepr_ProductDefinitionShape, anent, ent);
       RWStepRepr_RWProductDefinitionShape tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 232 : 
+  case 232 :
     {
       DeclareAndCast(StepBasic_ProductRelatedProductCategory, anent, ent);
       RWStepBasic_RWProductRelatedProductCategory tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 233 : 
+  case 233 :
     {
       DeclareAndCast(StepBasic_ProductType, anent, ent);
       RWStepBasic_RWProductType tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 234 : 
+  case 234 :
     {
       DeclareAndCast(StepRepr_PropertyDefinition, anent, ent);
       RWStepRepr_RWPropertyDefinition tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 235 : 
+  case 235 :
     {
       DeclareAndCast(StepRepr_PropertyDefinitionRepresentation, anent, ent);
       RWStepRepr_RWPropertyDefinitionRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 236 : 
+  case 236 :
     {
       DeclareAndCast(StepGeom_QuasiUniformCurve, anent, ent);
       RWStepGeom_RWQuasiUniformCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 237 : 
+  case 237 :
     {
       DeclareAndCast(StepGeom_QuasiUniformSurface, anent, ent);
       RWStepGeom_RWQuasiUniformSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 238 : 
+  case 238 :
     {
       DeclareAndCast(StepBasic_RatioMeasureWithUnit, anent, ent);
       RWStepBasic_RWRatioMeasureWithUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 239 : 
+  case 239 :
     {
       DeclareAndCast(StepGeom_RationalBSplineCurve, anent, ent);
       RWStepGeom_RWRationalBSplineCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 240 : 
+  case 240 :
     {
       DeclareAndCast(StepGeom_RationalBSplineSurface, anent, ent);
       RWStepGeom_RWRationalBSplineSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 241 : 
+  case 241 :
     {
       DeclareAndCast(StepGeom_RectangularCompositeSurface, anent, ent);
       RWStepGeom_RWRectangularCompositeSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 242 : 
+  case 242 :
     {
       DeclareAndCast(StepGeom_RectangularTrimmedSurface, anent, ent);
       RWStepGeom_RWRectangularTrimmedSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 243 : 
+  case 243 :
     {
       DeclareAndCast(StepAP214_RepItemGroup, anent, ent);
       RWStepAP214_RWRepItemGroup tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 244 : 
+  case 244 :
     {
       DeclareAndCast(StepGeom_ReparametrisedCompositeCurveSegment, anent, ent);
       RWStepGeom_RWReparametrisedCompositeCurveSegment tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 245 : 
+  case 245 :
     {
       DeclareAndCast(StepRepr_Representation, anent, ent);
       RWStepRepr_RWRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 246 : 
+  case 246 :
     {
       DeclareAndCast(StepRepr_RepresentationContext, anent, ent);
       RWStepRepr_RWRepresentationContext tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 247 : 
+  case 247 :
     {
       DeclareAndCast(StepRepr_RepresentationItem, anent, ent);
       RWStepRepr_RWRepresentationItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 248 : 
+  case 248 :
     {
       DeclareAndCast(StepRepr_RepresentationMap, anent, ent);
       RWStepRepr_RWRepresentationMap tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 249 : 
+  case 249 :
     {
       DeclareAndCast(StepRepr_RepresentationRelationship, anent, ent);
       RWStepRepr_RWRepresentationRelationship tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 250 : 
+  case 250 :
     {
       DeclareAndCast(StepShape_RevolvedAreaSolid, anent, ent);
       RWStepShape_RWRevolvedAreaSolid tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 251 : 
+  case 251 :
     {
       DeclareAndCast(StepShape_RightAngularWedge, anent, ent);
       RWStepShape_RWRightAngularWedge tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 252 : 
+  case 252 :
     {
       DeclareAndCast(StepShape_RightCircularCone, anent, ent);
       RWStepShape_RWRightCircularCone tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 253 : 
+  case 253 :
     {
       DeclareAndCast(StepShape_RightCircularCylinder, anent, ent);
       RWStepShape_RWRightCircularCylinder tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 254 : 
+  case 254 :
     {
       DeclareAndCast(StepGeom_SeamCurve, anent, ent);
       RWStepGeom_RWSeamCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 255 : 
+  case 255 :
     {
       DeclareAndCast(StepBasic_SecurityClassification, anent, ent);
       RWStepBasic_RWSecurityClassification tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 257 : 
+  case 257 :
     {
       DeclareAndCast(StepBasic_SecurityClassificationLevel, anent, ent);
       RWStepBasic_RWSecurityClassificationLevel tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 258 : 
+  case 258 :
     {
       DeclareAndCast(StepRepr_ShapeAspect, anent, ent);
       RWStepRepr_RWShapeAspect tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 259 : 
+  case 259 :
     {
       DeclareAndCast(StepRepr_ShapeAspectRelationship, anent, ent);
       RWStepRepr_RWShapeAspectRelationship tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 260 : 
+  case 260 :
     {
       DeclareAndCast(StepRepr_ShapeAspectTransition, anent, ent);
       RWStepRepr_RWShapeAspectTransition tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 261 : 
+  case 261 :
     {
       DeclareAndCast(StepShape_ShapeDefinitionRepresentation, anent, ent);
       RWStepShape_RWShapeDefinitionRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 262 : 
+  case 262 :
     {
       DeclareAndCast(StepShape_ShapeRepresentation, anent, ent);
       RWStepShape_RWShapeRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 263 : 
+  case 263 :
     {
       DeclareAndCast(StepShape_ShellBasedSurfaceModel, anent, ent);
       RWStepShape_RWShellBasedSurfaceModel tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 264 : 
+  case 264 :
     {
       DeclareAndCast(StepBasic_SiUnit, anent, ent);
       RWStepBasic_RWSiUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 265 : 
+  case 265 :
     {
       DeclareAndCast(StepBasic_SolidAngleMeasureWithUnit, anent, ent);
       RWStepBasic_RWSolidAngleMeasureWithUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 266 : 
+  case 266 :
     {
       DeclareAndCast(StepShape_SolidModel, anent, ent);
       RWStepShape_RWSolidModel tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 267 : 
+  case 267 :
     {
       DeclareAndCast(StepShape_SolidReplica, anent, ent);
       RWStepShape_RWSolidReplica tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 268 : 
+  case 268 :
     {
       DeclareAndCast(StepShape_Sphere, anent, ent);
       RWStepShape_RWSphere tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 269 : 
+  case 269 :
     {
       DeclareAndCast(StepGeom_SphericalSurface, anent, ent);
       RWStepGeom_RWSphericalSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 270 : 
+  case 270 :
     {
       DeclareAndCast(StepVisual_StyledItem, anent, ent);
       RWStepVisual_RWStyledItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 271 : 
+  case 271 :
     {
       DeclareAndCast(StepGeom_Surface, anent, ent);
       RWStepGeom_RWSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 272 : 
+  case 272 :
     {
       DeclareAndCast(StepGeom_SurfaceCurve, anent, ent);
       RWStepGeom_RWSurfaceCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 273 : 
+  case 273 :
     {
       DeclareAndCast(StepGeom_SurfaceOfLinearExtrusion, anent, ent);
       RWStepGeom_RWSurfaceOfLinearExtrusion tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 274 : 
+  case 274 :
     {
       DeclareAndCast(StepGeom_SurfaceOfRevolution, anent, ent);
       RWStepGeom_RWSurfaceOfRevolution tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 275 : 
+  case 275 :
     {
       DeclareAndCast(StepGeom_SurfacePatch, anent, ent);
       RWStepGeom_RWSurfacePatch tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 276 : 
+  case 276 :
     {
       DeclareAndCast(StepGeom_SurfaceReplica, anent, ent);
       RWStepGeom_RWSurfaceReplica tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 277 : 
+  case 277 :
     {
       DeclareAndCast(StepVisual_SurfaceSideStyle, anent, ent);
       RWStepVisual_RWSurfaceSideStyle tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 278 : 
+  case 278 :
     {
       DeclareAndCast(StepVisual_SurfaceStyleBoundary, anent, ent);
       RWStepVisual_RWSurfaceStyleBoundary tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 279 : 
+  case 279 :
     {
       DeclareAndCast(StepVisual_SurfaceStyleControlGrid, anent, ent);
       RWStepVisual_RWSurfaceStyleControlGrid tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 280 : 
+  case 280 :
     {
       DeclareAndCast(StepVisual_SurfaceStyleFillArea, anent, ent);
       RWStepVisual_RWSurfaceStyleFillArea tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 281 : 
+  case 281 :
     {
       DeclareAndCast(StepVisual_SurfaceStyleParameterLine, anent, ent);
       RWStepVisual_RWSurfaceStyleParameterLine tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 282 : 
+  case 282 :
     {
       DeclareAndCast(StepVisual_SurfaceStyleSegmentationCurve, anent, ent);
       RWStepVisual_RWSurfaceStyleSegmentationCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 283 : 
+  case 283 :
     {
       DeclareAndCast(StepVisual_SurfaceStyleSilhouette, anent, ent);
       RWStepVisual_RWSurfaceStyleSilhouette tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 284 : 
+  case 284 :
     {
       DeclareAndCast(StepVisual_SurfaceStyleUsage, anent, ent);
       RWStepVisual_RWSurfaceStyleUsage tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 285 : 
+  case 285 :
     {
       DeclareAndCast(StepShape_SweptAreaSolid, anent, ent);
       RWStepShape_RWSweptAreaSolid tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 286 : 
+  case 286 :
     {
       DeclareAndCast(StepGeom_SweptSurface, anent, ent);
       RWStepGeom_RWSweptSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 292 : 
+  case 292 :
     {
       DeclareAndCast(StepVisual_Template, anent, ent);
       RWStepVisual_RWTemplate tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 293 : 
+  case 293 :
     {
       DeclareAndCast(StepVisual_TemplateInstance, anent, ent);
       RWStepVisual_RWTemplateInstance tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 295 : 
+  case 295 :
     {
       DeclareAndCast(StepVisual_TextLiteral, anent, ent);
       RWStepVisual_RWTextLiteral tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 300 : 
+  case 300 :
     {
       DeclareAndCast(StepVisual_TextStyle, anent, ent);
       RWStepVisual_RWTextStyle tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 301 : 
+  case 301 :
     {
       DeclareAndCast(StepVisual_TextStyleForDefinedFont, anent, ent);
       RWStepVisual_RWTextStyleForDefinedFont tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 302 : 
+  case 302 :
     {
       DeclareAndCast(StepVisual_TextStyleWithBoxCharacteristics, anent, ent);
       RWStepVisual_RWTextStyleWithBoxCharacteristics tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 304 : 
+  case 304 :
     {
       DeclareAndCast(StepShape_TopologicalRepresentationItem, anent, ent);
       RWStepShape_RWTopologicalRepresentationItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 305 : 
+  case 305 :
     {
       DeclareAndCast(StepGeom_ToroidalSurface, anent, ent);
       RWStepGeom_RWToroidalSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 306 : 
+  case 306 :
     {
       DeclareAndCast(StepShape_Torus, anent, ent);
       RWStepShape_RWTorus tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 307 : 
+  case 307 :
     {
       DeclareAndCast(StepShape_TransitionalShapeRepresentation, anent, ent);
       RWStepShape_RWTransitionalShapeRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 308 : 
+  case 308 :
     {
       DeclareAndCast(StepGeom_TrimmedCurve, anent, ent);
       RWStepGeom_RWTrimmedCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 310 : 
+  case 310 :
     {
       DeclareAndCast(StepBasic_UncertaintyMeasureWithUnit, anent, ent);
       RWStepBasic_RWUncertaintyMeasureWithUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 311 : 
+  case 311 :
     {
       DeclareAndCast(StepGeom_UniformCurve, anent, ent);
       RWStepGeom_RWUniformCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 312 : 
+  case 312 :
     {
       DeclareAndCast(StepGeom_UniformSurface, anent, ent);
       RWStepGeom_RWUniformSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 313 : 
+  case 313 :
     {
       DeclareAndCast(StepGeom_Vector, anent, ent);
       RWStepGeom_RWVector tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 314 : 
+  case 314 :
     {
       DeclareAndCast(StepShape_Vertex, anent, ent);
       RWStepShape_RWVertex tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 315 : 
+  case 315 :
     {
       DeclareAndCast(StepShape_VertexLoop, anent, ent);
       RWStepShape_RWVertexLoop tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 316 : 
+  case 316 :
     {
       DeclareAndCast(StepShape_VertexPoint, anent, ent);
       RWStepShape_RWVertexPoint tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 317 : 
+  case 317 :
     {
       DeclareAndCast(StepVisual_ViewVolume, anent, ent);
       RWStepVisual_RWViewVolume tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 318 : 
+  case 318 :
     {
       DeclareAndCast(StepBasic_WeekOfYearAndDayDate, anent, ent);
       RWStepBasic_RWWeekOfYearAndDayDate tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 319 : 
+  case 319 :
     {
       DeclareAndCast(StepGeom_UniformCurveAndRationalBSplineCurve, anent, ent);
       RWStepGeom_RWUniformCurveAndRationalBSplineCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 320 : 
+  case 320 :
     {
       DeclareAndCast(StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve, anent, ent);
       RWStepGeom_RWBSplineCurveWithKnotsAndRationalBSplineCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 321 : 
+  case 321 :
     {
       DeclareAndCast(StepGeom_QuasiUniformCurveAndRationalBSplineCurve, anent, ent);
       RWStepGeom_RWQuasiUniformCurveAndRationalBSplineCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 322 : 
+  case 322 :
     {
       DeclareAndCast(StepGeom_BezierCurveAndRationalBSplineCurve, anent, ent);
       RWStepGeom_RWBezierCurveAndRationalBSplineCurve tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 323 : 
+  case 323 :
     {
       DeclareAndCast(StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface, anent, ent);
       RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 324 : 
+  case 324 :
     {
       DeclareAndCast(StepGeom_UniformSurfaceAndRationalBSplineSurface, anent, ent);
       RWStepGeom_RWUniformSurfaceAndRationalBSplineSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 325 : 
+  case 325 :
     {
       DeclareAndCast(StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface, anent, ent);
       RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 326 : 
+  case 326 :
     {
       DeclareAndCast(StepGeom_BezierSurfaceAndRationalBSplineSurface, anent, ent);
       RWStepGeom_RWBezierSurfaceAndRationalBSplineSurface tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 327 : 
+  case 327 :
     {
       DeclareAndCast(StepBasic_SiUnitAndLengthUnit, anent, ent);
       RWStepBasic_RWSiUnitAndLengthUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 328 : 
+  case 328 :
     {
       DeclareAndCast(StepBasic_SiUnitAndPlaneAngleUnit, anent, ent);
       RWStepBasic_RWSiUnitAndPlaneAngleUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 329 : 
+  case 329 :
     {
       DeclareAndCast(StepBasic_ConversionBasedUnitAndLengthUnit, anent, ent);
       RWStepBasic_RWConversionBasedUnitAndLengthUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 330 : 
+  case 330 :
     {
       DeclareAndCast(StepBasic_ConversionBasedUnitAndPlaneAngleUnit, anent, ent);
       RWStepBasic_RWConversionBasedUnitAndPlaneAngleUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 331 : 
+  case 331 :
     {
       DeclareAndCast(StepGeom_GeometricRepresentationContextAndGlobalUnitAssignedContext, anent, ent);
       RWStepGeom_RWGeometricRepresentationContextAndGlobalUnitAssignedContext tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 332 : 
+  case 332 :
     {
       DeclareAndCast(StepShape_LoopAndPath, anent, ent);
       RWStepShape_RWLoopAndPath tool;
@@ -7713,7 +7713,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
     // ------------
     // Added by FMA
     // ------------
-    
+
   case 333 :
     {
       DeclareAndCast(StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx, anent, ent);
@@ -7749,14 +7749,14 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
       tool.ReadStep(data,num,ach,anent);
     }
     break;
-  case 338 : 
+  case 338 :
     {
       DeclareAndCast(StepGeom_GeometricRepresentationContextAndParametricRepresentationContext, anent, ent);
       RWStepGeom_RWGeometricRepresentationContextAndParametricRepresentationContext tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 339 : 
+  case 339 :
     {
       DeclareAndCast(StepBasic_MechanicalContext, anent, ent);
       RWStepBasic_RWMechanicalContext tool;
@@ -7881,7 +7881,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
 
     // Added for CATIA -  CKY 15-SEP-1997
     // RWUncertaintyMeasureWithUnit sait lire cette variante
-  case 357 : 
+  case 357 :
     {
       DeclareAndCast(StepBasic_UncertaintyMeasureWithUnit, anent, ent);
       RWStepBasic_RWUncertaintyMeasureWithUnit tool;
@@ -7890,7 +7890,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
     break;
 
     //:n5 abv 15 Feb 99: S4132 complex type bounded_curve + surface_curve
-  case 358: 
+  case 358:
     {
       DeclareAndCast(StepGeom_SurfaceCurveAndBoundedCurve, anent, ent);
       RWStepGeom_RWSurfaceCurveAndBoundedCurve tool;
@@ -7970,7 +7970,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-    
+
   case 377:
     {
       DeclareAndCast(StepRepr_ProductDefinitionUsage,anent,ent);
@@ -8153,7 +8153,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-    
+
   case 404:
     {
       DeclareAndCast(StepShape_RevolvedFaceSolid,anent,ent);
@@ -8168,7 +8168,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-    
+
   // Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
   case 406:
     {
@@ -8425,7 +8425,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-    
+
   // Added by ABV 18.04.00 for CAX-IF TRJ4
   case 442:
     {
@@ -8735,8 +8735,8 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  
-    
+
+
   case 492:
     {
       DeclareAndCast(StepGeom_OrientedSurface,anent,ent);
@@ -8772,590 +8772,590 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-    case 500:  
+    case 500:
     {
       DeclareAndCast(StepBasic_EulerAngles,anent,ent);
       RWStepBasic_RWEulerAngles tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 501:  
+  case 501:
     {
       DeclareAndCast(StepBasic_MassUnit,anent,ent);
       RWStepBasic_RWMassUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 502:  
+  case 502:
     {
       DeclareAndCast(StepBasic_ThermodynamicTemperatureUnit,anent,ent);
       RWStepBasic_RWThermodynamicTemperatureUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 503:  
+  case 503:
     {
       DeclareAndCast(StepElement_AnalysisItemWithinRepresentation,anent,ent);
       RWStepElement_RWAnalysisItemWithinRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 504:  
+  case 504:
     {
       DeclareAndCast(StepElement_Curve3dElementDescriptor,anent,ent);
       RWStepElement_RWCurve3dElementDescriptor tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 505:  
+  case 505:
     {
       DeclareAndCast(StepElement_CurveElementEndReleasePacket,anent,ent);
       RWStepElement_RWCurveElementEndReleasePacket tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 506:  
+  case 506:
     {
       DeclareAndCast(StepElement_CurveElementSectionDefinition,anent,ent);
       RWStepElement_RWCurveElementSectionDefinition tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 507:  
+  case 507:
     {
       DeclareAndCast(StepElement_CurveElementSectionDerivedDefinitions,anent,ent);
       RWStepElement_RWCurveElementSectionDerivedDefinitions tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 508:  
+  case 508:
     {
       DeclareAndCast(StepElement_ElementDescriptor,anent,ent);
       RWStepElement_RWElementDescriptor tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 509:  
+  case 509:
     {
       DeclareAndCast(StepElement_ElementMaterial,anent,ent);
       RWStepElement_RWElementMaterial tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 510:  
+  case 510:
     {
       DeclareAndCast(StepElement_Surface3dElementDescriptor,anent,ent);
       RWStepElement_RWSurface3dElementDescriptor tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 511:  
+  case 511:
     {
       DeclareAndCast(StepElement_SurfaceElementProperty,anent,ent);
       RWStepElement_RWSurfaceElementProperty tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 512:  
+  case 512:
     {
       DeclareAndCast(StepElement_SurfaceSection,anent,ent);
       RWStepElement_RWSurfaceSection tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 513:  
+  case 513:
     {
       DeclareAndCast(StepElement_SurfaceSectionField,anent,ent);
       RWStepElement_RWSurfaceSectionField tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 514:  
+  case 514:
     {
       DeclareAndCast(StepElement_SurfaceSectionFieldConstant,anent,ent);
       RWStepElement_RWSurfaceSectionFieldConstant tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 515:  
+  case 515:
     {
       DeclareAndCast(StepElement_SurfaceSectionFieldVarying,anent,ent);
       RWStepElement_RWSurfaceSectionFieldVarying tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 516:  
+  case 516:
     {
       DeclareAndCast(StepElement_UniformSurfaceSection,anent,ent);
       RWStepElement_RWUniformSurfaceSection tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 517:  
+  case 517:
     {
       DeclareAndCast(StepElement_Volume3dElementDescriptor,anent,ent);
       RWStepElement_RWVolume3dElementDescriptor tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 518:  
+  case 518:
     {
       DeclareAndCast(StepFEA_AlignedCurve3dElementCoordinateSystem,anent,ent);
       RWStepFEA_RWAlignedCurve3dElementCoordinateSystem tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 519:  
+  case 519:
     {
       DeclareAndCast(StepFEA_ArbitraryVolume3dElementCoordinateSystem,anent,ent);
       RWStepFEA_RWArbitraryVolume3dElementCoordinateSystem tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 520:  
+  case 520:
     {
       DeclareAndCast(StepFEA_Curve3dElementProperty,anent,ent);
       RWStepFEA_RWCurve3dElementProperty tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 521:  
+  case 521:
     {
       DeclareAndCast(StepFEA_Curve3dElementRepresentation,anent,ent);
       RWStepFEA_RWCurve3dElementRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 522:  
+  case 522:
     {
       DeclareAndCast(StepFEA_Node,anent,ent);
       RWStepFEA_RWNode tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-//case 523:  
+//case 523:
 //    {
 //      DeclareAndCast(StepFEA_CurveElementEndCoordinateSystem,anent,ent);
 //      RWStepFEA_RWCurveElementEndCoordinateSystem tool;
 //      tool.ReadStep (data,num,ach,anent);
 //    }
 //    break;
-  case 524:  
+  case 524:
     {
       DeclareAndCast(StepFEA_CurveElementEndOffset,anent,ent);
       RWStepFEA_RWCurveElementEndOffset tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 525:  
+  case 525:
     {
       DeclareAndCast(StepFEA_CurveElementEndRelease,anent,ent);
       RWStepFEA_RWCurveElementEndRelease tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 526:  
+  case 526:
     {
       DeclareAndCast(StepFEA_CurveElementInterval,anent,ent);
       RWStepFEA_RWCurveElementInterval tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 527:  
+  case 527:
     {
       DeclareAndCast(StepFEA_CurveElementIntervalConstant,anent,ent);
       RWStepFEA_RWCurveElementIntervalConstant tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 528:  
+  case 528:
     {
       DeclareAndCast(StepFEA_DummyNode,anent,ent);
       RWStepFEA_RWDummyNode tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 529:  
+  case 529:
     {
       DeclareAndCast(StepFEA_CurveElementLocation,anent,ent);
       RWStepFEA_RWCurveElementLocation tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 530:  
+  case 530:
     {
       DeclareAndCast(StepFEA_ElementGeometricRelationship,anent,ent);
       RWStepFEA_RWElementGeometricRelationship tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 531:  
+  case 531:
     {
       DeclareAndCast(StepFEA_ElementGroup,anent,ent);
       RWStepFEA_RWElementGroup tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 532:  
+  case 532:
     {
       DeclareAndCast(StepFEA_ElementRepresentation,anent,ent);
       RWStepFEA_RWElementRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 533:  
+  case 533:
     {
       DeclareAndCast(StepFEA_FeaAreaDensity,anent,ent);
       RWStepFEA_RWFeaAreaDensity tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 534:  
+  case 534:
     {
       DeclareAndCast(StepFEA_FeaAxis2Placement3d,anent,ent);
       RWStepFEA_RWFeaAxis2Placement3d tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 535:  
+  case 535:
     {
       DeclareAndCast(StepFEA_FeaGroup,anent,ent);
       RWStepFEA_RWFeaGroup tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 536:  
+  case 536:
     {
       DeclareAndCast(StepFEA_FeaLinearElasticity,anent,ent);
       RWStepFEA_RWFeaLinearElasticity tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 537:  
+  case 537:
     {
       DeclareAndCast(StepFEA_FeaMassDensity,anent,ent);
       RWStepFEA_RWFeaMassDensity tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 538:  
+  case 538:
     {
       DeclareAndCast(StepFEA_FeaMaterialPropertyRepresentation,anent,ent);
       RWStepFEA_RWFeaMaterialPropertyRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 539:  
+  case 539:
     {
       DeclareAndCast(StepFEA_FeaMaterialPropertyRepresentationItem,anent,ent);
       RWStepFEA_RWFeaMaterialPropertyRepresentationItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 540:  
+  case 540:
     {
       DeclareAndCast(StepFEA_FeaModel,anent,ent);
       RWStepFEA_RWFeaModel tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 541:  
+  case 541:
     {
       DeclareAndCast(StepFEA_FeaModel3d,anent,ent);
       RWStepFEA_RWFeaModel3d tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 542:  
+  case 542:
     {
       DeclareAndCast(StepFEA_FeaMoistureAbsorption,anent,ent);
       RWStepFEA_RWFeaMoistureAbsorption tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 543:  
+  case 543:
     {
       DeclareAndCast(StepFEA_FeaParametricPoint,anent,ent);
       RWStepFEA_RWFeaParametricPoint tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 544:  
+  case 544:
     {
       DeclareAndCast(StepFEA_FeaRepresentationItem,anent,ent);
       RWStepFEA_RWFeaRepresentationItem tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 545:  
+  case 545:
     {
       DeclareAndCast(StepFEA_FeaSecantCoefficientOfLinearThermalExpansion,anent,ent);
       RWStepFEA_RWFeaSecantCoefficientOfLinearThermalExpansion tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 546:  
+  case 546:
     {
       DeclareAndCast(StepFEA_FeaShellBendingStiffness,anent,ent);
       RWStepFEA_RWFeaShellBendingStiffness tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 547:  
+  case 547:
     {
       DeclareAndCast(StepFEA_FeaShellMembraneBendingCouplingStiffness,anent,ent);
       RWStepFEA_RWFeaShellMembraneBendingCouplingStiffness tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 548:  
+  case 548:
     {
       DeclareAndCast(StepFEA_FeaShellMembraneStiffness,anent,ent);
       RWStepFEA_RWFeaShellMembraneStiffness tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 549:  
+  case 549:
     {
       DeclareAndCast(StepFEA_FeaShellShearStiffness,anent,ent);
       RWStepFEA_RWFeaShellShearStiffness tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 550:  
+  case 550:
     {
       DeclareAndCast(StepFEA_GeometricNode,anent,ent);
       RWStepFEA_RWGeometricNode tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 551:  
+  case 551:
     {
       DeclareAndCast(StepFEA_FeaTangentialCoefficientOfLinearThermalExpansion,anent,ent);
       RWStepFEA_RWFeaTangentialCoefficientOfLinearThermalExpansion tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 552:  
+  case 552:
     {
       DeclareAndCast(StepFEA_NodeGroup,anent,ent);
       RWStepFEA_RWNodeGroup tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 553:  
+  case 553:
     {
       DeclareAndCast(StepFEA_NodeRepresentation,anent,ent);
       RWStepFEA_RWNodeRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 554:  
+  case 554:
     {
       DeclareAndCast(StepFEA_NodeSet,anent,ent);
       RWStepFEA_RWNodeSet tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 555:  
+  case 555:
     {
       DeclareAndCast(StepFEA_NodeWithSolutionCoordinateSystem,anent,ent);
       RWStepFEA_RWNodeWithSolutionCoordinateSystem tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 556:  
+  case 556:
     {
       DeclareAndCast(StepFEA_NodeWithVector,anent,ent);
       RWStepFEA_RWNodeWithVector tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 557:  
+  case 557:
     {
       DeclareAndCast(StepFEA_ParametricCurve3dElementCoordinateDirection,anent,ent);
       RWStepFEA_RWParametricCurve3dElementCoordinateDirection tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 558:  
+  case 558:
     {
       DeclareAndCast(StepFEA_ParametricCurve3dElementCoordinateSystem,anent,ent);
       RWStepFEA_RWParametricCurve3dElementCoordinateSystem tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 559:  
+  case 559:
     {
       DeclareAndCast(StepFEA_ParametricSurface3dElementCoordinateSystem,anent,ent);
       RWStepFEA_RWParametricSurface3dElementCoordinateSystem tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 560:  
+  case 560:
     {
       DeclareAndCast(StepFEA_Surface3dElementRepresentation,anent,ent);
       RWStepFEA_RWSurface3dElementRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-//case 561:  
+//case 561:
 //    {
 //      DeclareAndCast(StepFEA_SymmetricTensor22d,anent,ent);
 //      RWStepFEA_RWSymmetricTensor22d tool;
 //      tool.ReadStep (data,num,ach,anent);
 //    }
 //    break;
-//case 562:  
+//case 562:
 //    {
 //      DeclareAndCast(StepFEA_SymmetricTensor42d,anent,ent);
 //      RWStepFEA_RWSymmetricTensor42d tool;
 //      tool.ReadStep (data,num,ach,anent);
 //    }
 //    break;
-//case 563:  
+//case 563:
 //    {
 //      DeclareAndCast(StepFEA_SymmetricTensor43d,anent,ent);
 //      RWStepFEA_RWSymmetricTensor43d tool;
 //      tool.ReadStep (data,num,ach,anent);
 //    }
 //    break;
-  case 564:  
+  case 564:
     {
       DeclareAndCast(StepFEA_Volume3dElementRepresentation,anent,ent);
       RWStepFEA_RWVolume3dElementRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 565:  
+  case 565:
     {
       DeclareAndCast(StepRepr_DataEnvironment,anent,ent);
       RWStepRepr_RWDataEnvironment tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 566:  
+  case 566:
     {
       DeclareAndCast(StepRepr_MaterialPropertyRepresentation,anent,ent);
       RWStepRepr_RWMaterialPropertyRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 567:  
+  case 567:
     {
       DeclareAndCast(StepRepr_PropertyDefinitionRelationship,anent,ent);
       RWStepRepr_RWPropertyDefinitionRelationship tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 568:  
+  case 568:
     {
       DeclareAndCast(StepShape_PointRepresentation,anent,ent);
       RWStepShape_RWPointRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 569:  
+  case 569:
     {
       DeclareAndCast(StepRepr_MaterialProperty,anent,ent);
       RWStepRepr_RWMaterialProperty tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 570:  
+  case 570:
     {
       DeclareAndCast(StepFEA_FeaModelDefinition,anent,ent);
       RWStepFEA_RWFeaModelDefinition tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 571:  
+  case 571:
     {
       DeclareAndCast(StepFEA_FreedomAndCoefficient,anent,ent);
       RWStepFEA_RWFreedomAndCoefficient tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 572:  
+  case 572:
     {
       DeclareAndCast(StepFEA_FreedomsList,anent,ent);
       RWStepFEA_RWFreedomsList tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 573:  
+  case 573:
     {
       DeclareAndCast(StepBasic_ProductDefinitionFormationRelationship,anent,ent);
       RWStepBasic_RWProductDefinitionFormationRelationship tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 574 : 
+  case 574 :
     {
       DeclareAndCast(StepBasic_SiUnitAndMassUnit, anent, ent);
       RWStepBasic_RWSiUnitAndMassUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    
+
     break;
-  case 575:  
+  case 575:
     {
       DeclareAndCast(StepFEA_NodeDefinition,anent,ent);
       RWStepFEA_RWNodeDefinition tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 576:  
+  case 576:
     {
       DeclareAndCast(StepRepr_StructuralResponseProperty,anent,ent);
       RWStepRepr_RWStructuralResponseProperty tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 577:  
+  case 577:
     {
       DeclareAndCast(StepRepr_StructuralResponsePropertyDefinitionRepresentation,anent,ent);
       RWStepRepr_RWStructuralResponsePropertyDefinitionRepresentation tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 578 : 
+  case 578 :
     {
       DeclareAndCast(StepBasic_SiUnitAndThermodynamicTemperatureUnit, anent, ent);
       RWStepBasic_RWSiUnitAndThermodynamicTemperatureUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
-  
+
     break;
-  case 579:  
+  case 579:
     {
       DeclareAndCast(StepFEA_AlignedSurface3dElementCoordinateSystem,anent,ent);
       RWStepFEA_RWAlignedSurface3dElementCoordinateSystem tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 580:  
+  case 580:
     {
       DeclareAndCast(StepFEA_ConstantSurface3dElementCoordinateSystem,anent,ent);
       RWStepFEA_RWConstantSurface3dElementCoordinateSystem tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 581:  
+  case 581:
     {
       DeclareAndCast(StepFEA_CurveElementIntervalLinearlyVarying,anent,ent);
       RWStepFEA_RWCurveElementIntervalLinearlyVarying tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 582: 
+  case 582:
     {
       DeclareAndCast(StepFEA_FeaCurveSectionGeometricRelationship,anent,ent);
       RWStepFEA_RWFeaCurveSectionGeometricRelationship tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 583:  
+  case 583:
     {
       DeclareAndCast(StepFEA_FeaSurfaceSectionGeometricRelationship,anent,ent);
       RWStepFEA_RWFeaSurfaceSectionGeometricRelationship tool;
@@ -9375,7 +9375,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
       RWStepBasic_RWDocumentProductEquivalence tool;
       tool.ReadStep (data,num,ach,anent);
     }
-    break; 
+    break;
   case 609:
     {
       DeclareAndCast(StepDimTol_CylindricityTolerance,anent,ent);
@@ -9383,203 +9383,203 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 610:  
+  case 610:
     {
       DeclareAndCast(StepShape_ShapeRepresentationWithParameters,anent,ent);
       RWStepShape_RWShapeRepresentationWithParameters tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 611:  
+  case 611:
     {
       DeclareAndCast(StepDimTol_AngularityTolerance,anent,ent);
       RWStepDimTol_RWAngularityTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 612:  
+  case 612:
     {
       DeclareAndCast(StepDimTol_ConcentricityTolerance,anent,ent);
       RWStepDimTol_RWConcentricityTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 613:  
+  case 613:
     {
       DeclareAndCast(StepDimTol_CircularRunoutTolerance,anent,ent);
       RWStepDimTol_RWCircularRunoutTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 614:  
+  case 614:
     {
       DeclareAndCast(StepDimTol_CoaxialityTolerance,anent,ent);
       RWStepDimTol_RWCoaxialityTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 615:  
+  case 615:
     {
       DeclareAndCast(StepDimTol_FlatnessTolerance,anent,ent);
       RWStepDimTol_RWFlatnessTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 616:  
+  case 616:
     {
       DeclareAndCast(StepDimTol_LineProfileTolerance,anent,ent);
       RWStepDimTol_RWLineProfileTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 617:  
+  case 617:
     {
       DeclareAndCast(StepDimTol_ParallelismTolerance,anent,ent);
       RWStepDimTol_RWParallelismTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 618:  
+  case 618:
     {
       DeclareAndCast(StepDimTol_PerpendicularityTolerance,anent,ent);
       RWStepDimTol_RWPerpendicularityTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 619:  
+  case 619:
     {
       DeclareAndCast(StepDimTol_PositionTolerance,anent,ent);
       RWStepDimTol_RWPositionTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 620:  
+  case 620:
     {
       DeclareAndCast(StepDimTol_RoundnessTolerance,anent,ent);
       RWStepDimTol_RWRoundnessTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 621:  
+  case 621:
     {
       DeclareAndCast(StepDimTol_StraightnessTolerance,anent,ent);
       RWStepDimTol_RWStraightnessTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 622:  
+  case 622:
     {
       DeclareAndCast(StepDimTol_SurfaceProfileTolerance,anent,ent);
       RWStepDimTol_RWSurfaceProfileTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 623:  
+  case 623:
     {
       DeclareAndCast(StepDimTol_SymmetryTolerance,anent,ent);
       RWStepDimTol_RWSymmetryTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 624:  
+  case 624:
     {
       DeclareAndCast(StepDimTol_TotalRunoutTolerance,anent,ent);
       RWStepDimTol_RWTotalRunoutTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 625:  
+  case 625:
     {
       DeclareAndCast(StepDimTol_GeometricTolerance,anent,ent);
       RWStepDimTol_RWGeometricTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 626:  
+  case 626:
     {
       DeclareAndCast(StepDimTol_GeometricToleranceRelationship,anent,ent);
       RWStepDimTol_RWGeometricToleranceRelationship tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 627:  
+  case 627:
     {
       DeclareAndCast(StepDimTol_GeometricToleranceWithDatumReference,anent,ent);
       RWStepDimTol_RWGeometricToleranceWithDatumReference tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 628:  
+  case 628:
     {
       DeclareAndCast(StepDimTol_ModifiedGeometricTolerance,anent,ent);
       RWStepDimTol_RWModifiedGeometricTolerance tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 629:  
+  case 629:
     {
       DeclareAndCast(StepDimTol_Datum,anent,ent);
       RWStepDimTol_RWDatum tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 630:  
+  case 630:
     {
       DeclareAndCast(StepDimTol_DatumFeature,anent,ent);
       RWStepDimTol_RWDatumFeature tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 631:  
+  case 631:
     {
       DeclareAndCast(StepDimTol_DatumReference,anent,ent);
       RWStepDimTol_RWDatumReference tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 632:  
+  case 632:
     {
       DeclareAndCast(StepDimTol_CommonDatum,anent,ent);
       RWStepDimTol_RWCommonDatum tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 633:  
+  case 633:
     {
       DeclareAndCast(StepDimTol_DatumTarget,anent,ent);
       RWStepDimTol_RWDatumTarget tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 634:  
+  case 634:
     {
       DeclareAndCast(StepDimTol_PlacedDatumTargetFeature,anent,ent);
       RWStepDimTol_RWPlacedDatumTargetFeature tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 635:  
+  case 635:
     {
       DeclareAndCast(StepRepr_ReprItemAndLengthMeasureWithUnit,anent,ent);
       RWStepRepr_RWReprItemAndLengthMeasureWithUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 636:  
+  case 636:
     {
       DeclareAndCast(StepDimTol_GeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol,anent,ent);
       RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 650 : 
+  case 650 :
     {
       DeclareAndCast(StepBasic_ConversionBasedUnitAndMassUnit, anent, ent);
       RWStepBasic_RWConversionBasedUnitAndMassUnit tool;
       tool.ReadStep (data,num,ach,anent);
     }
     break;
-  case 651 : 
+  case 651 :
     {
       DeclareAndCast(StepBasic_MassMeasureWithUnit, anent, ent);
       RWStepBasic_RWMassMeasureWithUnit tool;
@@ -10694,7 +10694,7 @@ void RWStepAP214_ReadWriteModule::ReadStep(const Standard_Integer CN,
     aTool.ReadStep(data, num, ach, anEnt);
   }
   break;
-  default: 
+  default:
     ach->AddFail("Type Mismatch when reading - Entity");
   }
   return;
@@ -10710,34 +10710,35 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
                                             StepData_StepWriter& SW,
                                             const Handle(Standard_Transient)&ent) const
 {
+#if !defined(OCCT_DISABLE_XDE_STEP_WRITER)
   if (CN == 0) return;
   switch (CN) {
-  case 1 : 
+  case 1 :
     {
       DeclareAndCast(StepBasic_Address, anent, ent);
       RWStepBasic_RWAddress tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 2 : 
+  case 2 :
     {
       DeclareAndCast(StepShape_AdvancedBrepShapeRepresentation, anent, ent);
       RWStepShape_RWAdvancedBrepShapeRepresentation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 3 : 
+  case 3 :
     {
       DeclareAndCast(StepShape_AdvancedFace, anent, ent);
       RWStepShape_RWAdvancedFace tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
   case 4 :
     {
@@ -10760,787 +10761,787 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
     tool.WriteStep(SW, anent);
   }
     break;
-  case 7 : 
+  case 7 :
     {
       DeclareAndCast(StepVisual_AnnotationOccurrence, anent, ent);
       RWStepVisual_RWAnnotationOccurrence tool;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 11 : 
+  case 11 :
     {
       DeclareAndCast(StepRepr_MappedItem, anent, ent);
       RWStepRepr_RWMappedItem tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 12 : 
+  case 12 :
     {
       DeclareAndCast(StepVisual_StyledItem, anent, ent);
       RWStepVisual_RWStyledItem tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 13 : 
+  case 13 :
     {
       DeclareAndCast(StepBasic_ApplicationContext, anent, ent);
       RWStepBasic_RWApplicationContext tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 14 : 
+  case 14 :
     {
       DeclareAndCast(StepBasic_ApplicationContextElement, anent, ent);
       RWStepBasic_RWApplicationContextElement tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 15 : 
+  case 15 :
     {
       DeclareAndCast(StepBasic_ApplicationProtocolDefinition, anent, ent);
       RWStepBasic_RWApplicationProtocolDefinition tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 16 : 
+  case 16 :
     {
       DeclareAndCast(StepBasic_Approval, anent, ent);
       RWStepBasic_RWApproval tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 18 : 
+  case 18 :
     {
       DeclareAndCast(StepBasic_ApprovalPersonOrganization, anent, ent);
       RWStepBasic_RWApprovalPersonOrganization tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 19 : 
+  case 19 :
     {
       DeclareAndCast(StepBasic_ApprovalRelationship, anent, ent);
       RWStepBasic_RWApprovalRelationship tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 20 : 
+  case 20 :
     {
       DeclareAndCast(StepBasic_ApprovalRole, anent, ent);
       RWStepBasic_RWApprovalRole tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 21 : 
+  case 21 :
     {
       DeclareAndCast(StepBasic_ApprovalStatus, anent, ent);
       RWStepBasic_RWApprovalStatus tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 22 : 
+  case 22 :
     {
       DeclareAndCast(StepVisual_AreaInSet, anent, ent);
       RWStepVisual_RWAreaInSet tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 23 : 
+  case 23 :
     {
       DeclareAndCast(StepAP214_AutoDesignActualDateAndTimeAssignment, anent, ent);
       RWStepAP214_RWAutoDesignActualDateAndTimeAssignment tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 24 : 
+  case 24 :
     {
       DeclareAndCast(StepAP214_AutoDesignActualDateAssignment, anent, ent);
       RWStepAP214_RWAutoDesignActualDateAssignment tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 25 : 
+  case 25 :
     {
       DeclareAndCast(StepAP214_AutoDesignApprovalAssignment, anent, ent);
       RWStepAP214_RWAutoDesignApprovalAssignment tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 26 : 
+  case 26 :
     {
       DeclareAndCast(StepAP214_AutoDesignDateAndPersonAssignment, anent, ent);
       RWStepAP214_RWAutoDesignDateAndPersonAssignment tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 27 : 
+  case 27 :
     {
       DeclareAndCast(StepAP214_AutoDesignGroupAssignment, anent, ent);
       RWStepAP214_RWAutoDesignGroupAssignment tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 28 : 
+  case 28 :
     {
       DeclareAndCast(StepAP214_AutoDesignNominalDateAndTimeAssignment, anent, ent);
       RWStepAP214_RWAutoDesignNominalDateAndTimeAssignment tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 29 : 
+  case 29 :
     {
       DeclareAndCast(StepAP214_AutoDesignNominalDateAssignment, anent, ent);
       RWStepAP214_RWAutoDesignNominalDateAssignment tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 30 : 
+  case 30 :
     {
       DeclareAndCast(StepAP214_AutoDesignOrganizationAssignment, anent, ent);
       RWStepAP214_RWAutoDesignOrganizationAssignment tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 31 : 
+  case 31 :
     {
       DeclareAndCast(StepAP214_AutoDesignPersonAndOrganizationAssignment, anent, ent);
       RWStepAP214_RWAutoDesignPersonAndOrganizationAssignment tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 32 : 
+  case 32 :
     {
       DeclareAndCast(StepAP214_AutoDesignPresentedItem, anent, ent);
       RWStepAP214_RWAutoDesignPresentedItem tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 33 : 
+  case 33 :
     {
       DeclareAndCast(StepAP214_AutoDesignSecurityClassificationAssignment, anent, ent);
       RWStepAP214_RWAutoDesignSecurityClassificationAssignment tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 35 : 
+  case 35 :
     {
       DeclareAndCast(StepGeom_Axis1Placement, anent, ent);
       RWStepGeom_RWAxis1Placement tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 36 : 
+  case 36 :
     {
       DeclareAndCast(StepGeom_Axis2Placement2d, anent, ent);
       RWStepGeom_RWAxis2Placement2d tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 37 : 
+  case 37 :
     {
       DeclareAndCast(StepGeom_Axis2Placement3d, anent, ent);
       RWStepGeom_RWAxis2Placement3d tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 38 : 
+  case 38 :
     {
       DeclareAndCast(StepGeom_BSplineCurve, anent, ent);
       RWStepGeom_RWBSplineCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 39 : 
+  case 39 :
     {
       DeclareAndCast(StepGeom_BSplineCurveWithKnots, anent, ent);
       RWStepGeom_RWBSplineCurveWithKnots tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 40 : 
+  case 40 :
     {
       DeclareAndCast(StepGeom_BSplineSurface, anent, ent);
       RWStepGeom_RWBSplineSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 41 : 
+  case 41 :
     {
       DeclareAndCast(StepGeom_BSplineSurfaceWithKnots, anent, ent);
       RWStepGeom_RWBSplineSurfaceWithKnots tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 42 : 
+  case 42 :
     {
       DeclareAndCast(StepVisual_BackgroundColour, anent, ent);
       RWStepVisual_RWBackgroundColour tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 43 : 
+  case 43 :
     {
       DeclareAndCast(StepGeom_BezierCurve, anent, ent);
       RWStepGeom_RWBezierCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 44 : 
+  case 44 :
     {
       DeclareAndCast(StepGeom_BezierSurface, anent, ent);
       RWStepGeom_RWBezierSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 45 : 
+  case 45 :
     {
       DeclareAndCast(StepShape_Block, anent, ent);
       RWStepShape_RWBlock tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 46 : 
+  case 46 :
     {
       DeclareAndCast(StepShape_BooleanResult, anent, ent);
       RWStepShape_RWBooleanResult tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 47 : 
+  case 47 :
     {
       DeclareAndCast(StepGeom_BoundaryCurve, anent, ent);
       RWStepGeom_RWBoundaryCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 48 : 
+  case 48 :
     {
       DeclareAndCast(StepGeom_BoundedCurve, anent, ent);
       RWStepGeom_RWBoundedCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 49 : 
+  case 49 :
     {
       DeclareAndCast(StepGeom_BoundedSurface, anent, ent);
       RWStepGeom_RWBoundedSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 50 : 
+  case 50 :
     {
       DeclareAndCast(StepShape_BoxDomain, anent, ent);
       RWStepShape_RWBoxDomain tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 51 : 
+  case 51 :
     {
       DeclareAndCast(StepShape_BoxedHalfSpace, anent, ent);
       RWStepShape_RWBoxedHalfSpace tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 52 : 
+  case 52 :
     {
       DeclareAndCast(StepShape_BrepWithVoids, anent, ent);
       RWStepShape_RWBrepWithVoids tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 53 : 
+  case 53 :
     {
       DeclareAndCast(StepBasic_CalendarDate, anent, ent);
       RWStepBasic_RWCalendarDate tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 54 : 
+  case 54 :
     {
       DeclareAndCast(StepVisual_CameraImage, anent, ent);
       RWStepVisual_RWCameraImage tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 55 : 
+  case 55 :
     {
       DeclareAndCast(StepVisual_CameraModel, anent, ent);
       RWStepVisual_RWCameraModel tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 56 : 
+  case 56 :
     {
       DeclareAndCast(StepVisual_CameraModelD2, anent, ent);
       RWStepVisual_RWCameraModelD2 tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 57 : 
+  case 57 :
     {
       DeclareAndCast(StepVisual_CameraModelD3, anent, ent);
       RWStepVisual_RWCameraModelD3 tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 58 : 
+  case 58 :
     {
       DeclareAndCast(StepVisual_CameraUsage, anent, ent);
       RWStepVisual_RWCameraUsage tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 59 : 
+  case 59 :
     {
       DeclareAndCast(StepGeom_CartesianPoint, anent, ent);
       RWStepGeom_RWCartesianPoint tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 60 : 
+  case 60 :
     {
       DeclareAndCast(StepGeom_CartesianTransformationOperator, anent, ent);
       RWStepGeom_RWCartesianTransformationOperator tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 61 : 
+  case 61 :
     {
       DeclareAndCast(StepGeom_CartesianTransformationOperator3d, anent, ent);
       RWStepGeom_RWCartesianTransformationOperator3d tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 62 : 
+  case 62 :
     {
       DeclareAndCast(StepGeom_Circle, anent, ent);
       RWStepGeom_RWCircle tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 63 : 
+  case 63 :
     {
       DeclareAndCast(StepShape_ClosedShell, anent, ent);
       RWStepShape_RWClosedShell tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 64 : 
+  case 64 :
     {
       DeclareAndCast(StepVisual_Colour, anent, ent);
       RWStepVisual_RWColour tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 65 : 
+  case 65 :
     {
       DeclareAndCast(StepVisual_ColourRgb, anent, ent);
       RWStepVisual_RWColourRgb tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 66 : 
+  case 66 :
     {
       DeclareAndCast(StepVisual_ColourSpecification, anent, ent);
       RWStepVisual_RWColourSpecification tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 67 : 
+  case 67 :
     {
       DeclareAndCast(StepGeom_CompositeCurve, anent, ent);
       RWStepGeom_RWCompositeCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 68 : 
+  case 68 :
     {
       DeclareAndCast(StepGeom_CompositeCurveOnSurface, anent, ent);
       RWStepGeom_RWCompositeCurveOnSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 69 : 
+  case 69 :
     {
       DeclareAndCast(StepGeom_CompositeCurveSegment, anent, ent);
       RWStepGeom_RWCompositeCurveSegment tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 70 : 
+  case 70 :
     {
       DeclareAndCast(StepVisual_CompositeText, anent, ent);
       RWStepVisual_RWCompositeText tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 73 : 
+  case 73 :
     {
       DeclareAndCast(StepVisual_CompositeTextWithExtent, anent, ent);
       RWStepVisual_RWCompositeTextWithExtent tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 74 : 
+  case 74 :
     {
       DeclareAndCast(StepGeom_Conic, anent, ent);
       RWStepGeom_RWConic tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 75 : 
+  case 75 :
     {
       DeclareAndCast(StepGeom_ConicalSurface, anent, ent);
       RWStepGeom_RWConicalSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 76 : 
+  case 76 :
     {
       DeclareAndCast(StepShape_ConnectedFaceSet, anent, ent);
       RWStepShape_RWConnectedFaceSet tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 77 : 
+  case 77 :
     {
       DeclareAndCast(StepVisual_ContextDependentInvisibility, anent, ent);
       RWStepVisual_RWContextDependentInvisibility tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 78 : 
+  case 78 :
     {
       DeclareAndCast(StepVisual_ContextDependentOverRidingStyledItem, anent, ent);
       RWStepVisual_RWContextDependentOverRidingStyledItem tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 79 : 
+  case 79 :
     {
       DeclareAndCast(StepBasic_ConversionBasedUnit, anent, ent);
       RWStepBasic_RWConversionBasedUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 80 : 
+  case 80 :
     {
       DeclareAndCast(StepBasic_CoordinatedUniversalTimeOffset, anent, ent);
       RWStepBasic_RWCoordinatedUniversalTimeOffset tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 82 : 
+  case 82 :
     {
       DeclareAndCast(StepShape_CsgShapeRepresentation, anent, ent);
       RWStepShape_RWCsgShapeRepresentation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 83 : 
+  case 83 :
     {
       DeclareAndCast(StepShape_CsgSolid, anent, ent);
       RWStepShape_RWCsgSolid tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 84 : 
+  case 84 :
     {
       DeclareAndCast(StepGeom_Curve, anent, ent);
       RWStepGeom_RWCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 85 : 
+  case 85 :
     {
       DeclareAndCast(StepGeom_CurveBoundedSurface, anent, ent);
       RWStepGeom_RWCurveBoundedSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 86 : 
+  case 86 :
     {
       DeclareAndCast(StepGeom_CurveReplica, anent, ent);
       RWStepGeom_RWCurveReplica tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 87 : 
+  case 87 :
     {
       DeclareAndCast(StepVisual_CurveStyle, anent, ent);
       RWStepVisual_RWCurveStyle tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 88 : 
+  case 88 :
     {
       DeclareAndCast(StepVisual_CurveStyleFont, anent, ent);
       RWStepVisual_RWCurveStyleFont tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 89 : 
+  case 89 :
     {
       DeclareAndCast(StepVisual_CurveStyleFontPattern, anent, ent);
       RWStepVisual_RWCurveStyleFontPattern tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 90 : 
+  case 90 :
     {
       DeclareAndCast(StepGeom_CylindricalSurface, anent, ent);
       RWStepGeom_RWCylindricalSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 91 : 
+  case 91 :
     {
       DeclareAndCast(StepBasic_Date, anent, ent);
       RWStepBasic_RWDate tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 92 : 
+  case 92 :
     {
       DeclareAndCast(StepBasic_DateAndTime, anent, ent);
       RWStepBasic_RWDateAndTime tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 95 : 
+  case 95 :
     {
       DeclareAndCast(StepBasic_DateRole, anent, ent);
       RWStepBasic_RWDateRole tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 96 : 
+  case 96 :
     {
       DeclareAndCast(StepBasic_DateTimeRole, anent, ent);
       RWStepBasic_RWDateTimeRole tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 98 : 
+  case 98 :
     {
       DeclareAndCast(StepRepr_DefinitionalRepresentation, anent, ent);
       RWStepRepr_RWDefinitionalRepresentation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 99 : 
+  case 99 :
     {
       DeclareAndCast(StepGeom_DegeneratePcurve, anent, ent);
       RWStepGeom_RWDegeneratePcurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 100 : 
+  case 100 :
     {
       DeclareAndCast(StepGeom_DegenerateToroidalSurface, anent, ent);
       RWStepGeom_RWDegenerateToroidalSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 101 : 
+  case 101 :
     {
       DeclareAndCast(StepRepr_DescriptiveRepresentationItem, anent, ent);
       RWStepRepr_RWDescriptiveRepresentationItem tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 104 : 
+  case 104 :
     {
       DeclareAndCast(StepBasic_DimensionalExponents, anent, ent);
       RWStepBasic_RWDimensionalExponents tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 105 : 
+  case 105 :
     {
       DeclareAndCast(StepGeom_Direction, anent, ent);
       RWStepGeom_RWDirection tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 106 : 
+  case 106 :
     {
       DeclareAndCast(StepVisual_StyledItem, anent, ent);
       RWStepVisual_RWStyledItem tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
   case 107 :
     {
@@ -11549,1737 +11550,1737 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
       tool.WriteStep (SW,anent);
     }
     break;
-  case 108 : 
+  case 108 :
     {
       DeclareAndCast(StepVisual_DraughtingPreDefinedColour, anent, ent);
       RWStepVisual_RWDraughtingPreDefinedColour tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 109 : 
+  case 109 :
     {
       DeclareAndCast(StepVisual_DraughtingPreDefinedCurveFont, anent, ent);
       RWStepVisual_RWDraughtingPreDefinedCurveFont tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 115 : 
+  case 115 :
     {
       DeclareAndCast(StepShape_Edge, anent, ent);
       RWStepShape_RWEdge tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 116 : 
+  case 116 :
     {
       DeclareAndCast(StepShape_EdgeCurve, anent, ent);
       RWStepShape_RWEdgeCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 117 : 
+  case 117 :
     {
       DeclareAndCast(StepShape_EdgeLoop, anent, ent);
       RWStepShape_RWEdgeLoop tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 118 : 
+  case 118 :
     {
       DeclareAndCast(StepGeom_ElementarySurface, anent, ent);
       RWStepGeom_RWElementarySurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 119 : 
+  case 119 :
     {
       DeclareAndCast(StepGeom_Ellipse, anent, ent);
       RWStepGeom_RWEllipse tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 120 : 
+  case 120 :
     {
       DeclareAndCast(StepGeom_EvaluatedDegeneratePcurve, anent, ent);
       RWStepGeom_RWEvaluatedDegeneratePcurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 121 : 
+  case 121 :
     {
       DeclareAndCast(StepBasic_ExternalSource, anent, ent);
       RWStepBasic_RWExternalSource tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 122 : 
+  case 122 :
     {
       DeclareAndCast(StepVisual_ExternallyDefinedCurveFont, anent, ent);
       RWStepVisual_RWExternallyDefinedCurveFont tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 124 : 
-  case 126 : 
+  case 124 :
+  case 126 :
     {
       DeclareAndCast(StepBasic_ExternallyDefinedItem, anent, ent);
       RWStepBasic_RWExternallyDefinedItem tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 128 : 
+  case 128 :
     {
       DeclareAndCast(StepShape_ExtrudedAreaSolid, anent, ent);
       RWStepShape_RWExtrudedAreaSolid tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 129 : 
+  case 129 :
     {
       DeclareAndCast(StepShape_Face, anent, ent);
       RWStepShape_RWFace tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 131 : 
+  case 131 :
     {
       DeclareAndCast(StepShape_FaceBound, anent, ent);
       RWStepShape_RWFaceBound tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 132 : 
+  case 132 :
     {
       DeclareAndCast(StepShape_FaceOuterBound, anent, ent);
       RWStepShape_RWFaceOuterBound tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 133 : 
+  case 133 :
     {
       DeclareAndCast(StepShape_FaceSurface, anent, ent);
       RWStepShape_RWFaceSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 134 : 
+  case 134 :
     {
       DeclareAndCast(StepShape_FacetedBrep, anent, ent);
       RWStepShape_RWFacetedBrep tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 135 : 
+  case 135 :
     {
       DeclareAndCast(StepShape_FacetedBrepShapeRepresentation, anent, ent);
       RWStepShape_RWFacetedBrepShapeRepresentation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 136 : 
+  case 136 :
     {
       DeclareAndCast(StepVisual_FillAreaStyle, anent, ent);
       RWStepVisual_RWFillAreaStyle tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 137 : 
+  case 137 :
     {
       DeclareAndCast(StepVisual_FillAreaStyleColour, anent, ent);
       RWStepVisual_RWFillAreaStyleColour tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 141 : 
+  case 141 :
     {
       DeclareAndCast(StepRepr_FunctionallyDefinedTransformation, anent, ent);
       RWStepRepr_RWFunctionallyDefinedTransformation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 142 : 
+  case 142 :
     {
       DeclareAndCast(StepShape_GeometricCurveSet, anent, ent);
       RWStepShape_RWGeometricCurveSet tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 143 : 
+  case 143 :
     {
       DeclareAndCast(StepGeom_GeometricRepresentationContext, anent, ent);
       RWStepGeom_RWGeometricRepresentationContext tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 144 : 
+  case 144 :
     {
       DeclareAndCast(StepGeom_GeometricRepresentationItem, anent, ent);
       RWStepGeom_RWGeometricRepresentationItem tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 145 : 
+  case 145 :
     {
       DeclareAndCast(StepShape_GeometricSet, anent, ent);
       RWStepShape_RWGeometricSet tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 146 : 
+  case 146 :
     {
       DeclareAndCast(StepShape_GeometricallyBoundedSurfaceShapeRepresentation, anent, ent);
       RWStepShape_RWGeometricallyBoundedSurfaceShapeRepresentation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 147 : 
+  case 147 :
     {
       DeclareAndCast(StepShape_GeometricallyBoundedWireframeShapeRepresentation, anent, ent);
       RWStepShape_RWGeometricallyBoundedWireframeShapeRepresentation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 148 : 
+  case 148 :
     {
       DeclareAndCast(StepRepr_GlobalUncertaintyAssignedContext, anent, ent);
       RWStepRepr_RWGlobalUncertaintyAssignedContext tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 149 : 
+  case 149 :
     {
       DeclareAndCast(StepRepr_GlobalUnitAssignedContext, anent, ent);
       RWStepRepr_RWGlobalUnitAssignedContext tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 150 : 
+  case 150 :
     {
       DeclareAndCast(StepBasic_Group, anent, ent);
       RWStepBasic_RWGroup tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 152 : 
+  case 152 :
     {
       DeclareAndCast(StepBasic_GroupRelationship, anent, ent);
       RWStepBasic_RWGroupRelationship tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 153 : 
+  case 153 :
     {
       DeclareAndCast(StepShape_HalfSpaceSolid, anent, ent);
       RWStepShape_RWHalfSpaceSolid tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 154 : 
+  case 154 :
     {
       DeclareAndCast(StepGeom_Hyperbola, anent, ent);
       RWStepGeom_RWHyperbola tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 155 : 
+  case 155 :
     {
       DeclareAndCast(StepGeom_IntersectionCurve, anent, ent);
       RWStepGeom_RWIntersectionCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 156 : 
+  case 156 :
     {
       DeclareAndCast(StepVisual_Invisibility, anent, ent);
       RWStepVisual_RWInvisibility tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 157 : 
+  case 157 :
     {
       DeclareAndCast(StepBasic_LengthMeasureWithUnit, anent, ent);
       RWStepBasic_RWLengthMeasureWithUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 158 : 
+  case 158 :
     {
       DeclareAndCast(StepBasic_LengthUnit, anent, ent);
       RWStepBasic_RWLengthUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 159 : 
+  case 159 :
     {
       DeclareAndCast(StepGeom_Line, anent, ent);
       RWStepGeom_RWLine tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 160 : 
+  case 160 :
     {
       DeclareAndCast(StepBasic_LocalTime, anent, ent);
       RWStepBasic_RWLocalTime tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 161 : 
+  case 161 :
     {
       DeclareAndCast(StepShape_Loop, anent, ent);
       RWStepShape_RWLoop tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 162 : 
+  case 162 :
     {
       DeclareAndCast(StepShape_ManifoldSolidBrep, anent, ent);
       RWStepShape_RWManifoldSolidBrep tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 163 : 
+  case 163 :
     {
       DeclareAndCast(StepShape_ManifoldSurfaceShapeRepresentation, anent, ent);
       RWStepShape_RWManifoldSurfaceShapeRepresentation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 164 : 
+  case 164 :
     {
       DeclareAndCast(StepRepr_MappedItem, anent, ent);
       RWStepRepr_RWMappedItem tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 165 : 
+  case 165 :
     {
       DeclareAndCast(StepBasic_MeasureWithUnit, anent, ent);
       RWStepBasic_RWMeasureWithUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 166 : 
+  case 166 :
     {
       DeclareAndCast(StepVisual_MechanicalDesignGeometricPresentationArea, anent, ent);
       RWStepVisual_RWMechanicalDesignGeometricPresentationArea tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 167 : 
+  case 167 :
     {
       DeclareAndCast(StepVisual_MechanicalDesignGeometricPresentationRepresentation, anent, ent);
       RWStepVisual_RWMechanicalDesignGeometricPresentationRepresentation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 169 : 
+  case 169 :
     {
       DeclareAndCast(StepBasic_NamedUnit, anent, ent);
       RWStepBasic_RWNamedUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 171 : 
+  case 171 :
     {
       DeclareAndCast(StepGeom_OffsetCurve3d, anent, ent);
       RWStepGeom_RWOffsetCurve3d tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 172 : 
+  case 172 :
     {
       DeclareAndCast(StepGeom_OffsetSurface, anent, ent);
       RWStepGeom_RWOffsetSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 174 : 
+  case 174 :
     {
       DeclareAndCast(StepShape_OpenShell, anent, ent);
       RWStepShape_RWOpenShell tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 175 : 
+  case 175 :
     {
       DeclareAndCast(StepBasic_OrdinalDate, anent, ent);
       RWStepBasic_RWOrdinalDate tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 176 : 
+  case 176 :
     {
       DeclareAndCast(StepBasic_Organization, anent, ent);
       RWStepBasic_RWOrganization tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 178 : 
+  case 178 :
     {
       DeclareAndCast(StepBasic_OrganizationRole, anent, ent);
       RWStepBasic_RWOrganizationRole tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 179 : 
+  case 179 :
     {
       DeclareAndCast(StepBasic_OrganizationalAddress, anent, ent);
       RWStepBasic_RWOrganizationalAddress tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 180 : 
+  case 180 :
     {
       DeclareAndCast(StepShape_OrientedClosedShell, anent, ent);
       RWStepShape_RWOrientedClosedShell tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 181 : 
+  case 181 :
     {
       DeclareAndCast(StepShape_OrientedEdge, anent, ent);
       RWStepShape_RWOrientedEdge tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 182 : 
+  case 182 :
     {
       DeclareAndCast(StepShape_OrientedFace, anent, ent);
       RWStepShape_RWOrientedFace tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 183 : 
+  case 183 :
     {
       DeclareAndCast(StepShape_OrientedOpenShell, anent, ent);
       RWStepShape_RWOrientedOpenShell tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 184 : 
+  case 184 :
     {
       DeclareAndCast(StepShape_OrientedPath, anent, ent);
       RWStepShape_RWOrientedPath tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 185 : 
+  case 185 :
     {
       DeclareAndCast(StepGeom_OuterBoundaryCurve, anent, ent);
       RWStepGeom_RWOuterBoundaryCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 186 : 
+  case 186 :
     {
       DeclareAndCast(StepVisual_OverRidingStyledItem, anent, ent);
       RWStepVisual_RWOverRidingStyledItem tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 187 : 
+  case 187 :
     {
       DeclareAndCast(StepGeom_Parabola, anent, ent);
       RWStepGeom_RWParabola tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 188 : 
+  case 188 :
     {
       DeclareAndCast(StepRepr_ParametricRepresentationContext, anent, ent);
       RWStepRepr_RWParametricRepresentationContext tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 189 : 
+  case 189 :
     {
       DeclareAndCast(StepShape_Path, anent, ent);
       RWStepShape_RWPath tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 190 : 
+  case 190 :
     {
       DeclareAndCast(StepGeom_Pcurve, anent, ent);
       RWStepGeom_RWPcurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 191 : 
+  case 191 :
     {
       DeclareAndCast(StepBasic_Person, anent, ent);
       RWStepBasic_RWPerson tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 192 : 
+  case 192 :
     {
       DeclareAndCast(StepBasic_PersonAndOrganization, anent, ent);
       RWStepBasic_RWPersonAndOrganization tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 194 : 
+  case 194 :
     {
       DeclareAndCast(StepBasic_PersonAndOrganizationRole, anent, ent);
       RWStepBasic_RWPersonAndOrganizationRole tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 195 : 
+  case 195 :
     {
       DeclareAndCast(StepBasic_PersonalAddress, anent, ent);
       RWStepBasic_RWPersonalAddress tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 196 : 
+  case 196 :
     {
       DeclareAndCast(StepGeom_Placement, anent, ent);
       RWStepGeom_RWPlacement tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 197 : 
+  case 197 :
     {
       DeclareAndCast(StepVisual_PlanarBox, anent, ent);
       RWStepVisual_RWPlanarBox tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 198 : 
+  case 198 :
     {
       DeclareAndCast(StepVisual_PlanarExtent, anent, ent);
       RWStepVisual_RWPlanarExtent tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 199 : 
+  case 199 :
     {
       DeclareAndCast(StepGeom_Plane, anent, ent);
       RWStepGeom_RWPlane tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 200 : 
+  case 200 :
     {
       DeclareAndCast(StepBasic_PlaneAngleMeasureWithUnit, anent, ent);
       RWStepBasic_RWPlaneAngleMeasureWithUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 201 : 
+  case 201 :
     {
       DeclareAndCast(StepBasic_PlaneAngleUnit, anent, ent);
       RWStepBasic_RWPlaneAngleUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 202 : 
+  case 202 :
     {
       DeclareAndCast(StepGeom_Point, anent, ent);
       RWStepGeom_RWPoint tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 203 : 
+  case 203 :
     {
       DeclareAndCast(StepGeom_PointOnCurve, anent, ent);
       RWStepGeom_RWPointOnCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 204 : 
+  case 204 :
     {
       DeclareAndCast(StepGeom_PointOnSurface, anent, ent);
       RWStepGeom_RWPointOnSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 205 : 
+  case 205 :
     {
       DeclareAndCast(StepGeom_PointReplica, anent, ent);
       RWStepGeom_RWPointReplica tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 206 : 
+  case 206 :
     {
       DeclareAndCast(StepVisual_PointStyle, anent, ent);
       RWStepVisual_RWPointStyle tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 207 : 
+  case 207 :
     {
       DeclareAndCast(StepShape_PolyLoop, anent, ent);
       RWStepShape_RWPolyLoop tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 208 : 
+  case 208 :
     {
       DeclareAndCast(StepGeom_Polyline, anent, ent);
       RWStepGeom_RWPolyline tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 209 : 
+  case 209 :
     {
       DeclareAndCast(StepVisual_PreDefinedColour, anent, ent);
       RWStepVisual_RWPreDefinedColour tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 210 : 
+  case 210 :
     {
       DeclareAndCast(StepVisual_PreDefinedCurveFont, anent, ent);
       RWStepVisual_RWPreDefinedCurveFont tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 211 : 
-  case 213 : 
+  case 211 :
+  case 213 :
     {
       DeclareAndCast(StepVisual_PreDefinedItem, anent, ent);
       RWStepVisual_RWPreDefinedItem tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 214 : 
+  case 214 :
     {
       DeclareAndCast(StepVisual_PresentationArea, anent, ent);
       RWStepVisual_RWPresentationArea tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 215 : 
+  case 215 :
     {
       DeclareAndCast(StepVisual_PresentationLayerAssignment, anent, ent);
       RWStepVisual_RWPresentationLayerAssignment tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 216 : 
+  case 216 :
     {
       DeclareAndCast(StepVisual_PresentationRepresentation, anent, ent);
       RWStepVisual_RWPresentationRepresentation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 217 : 
+  case 217 :
     {
       DeclareAndCast(StepVisual_PresentationSet, anent, ent);
       RWStepVisual_RWPresentationSet tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 218 : 
+  case 218 :
     {
       DeclareAndCast(StepVisual_PresentationSize, anent, ent);
       RWStepVisual_RWPresentationSize tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 219 : 
+  case 219 :
     {
       DeclareAndCast(StepVisual_PresentationStyleAssignment, anent, ent);
       RWStepVisual_RWPresentationStyleAssignment tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 220 : 
+  case 220 :
     {
       DeclareAndCast(StepVisual_PresentationStyleByContext, anent, ent);
       RWStepVisual_RWPresentationStyleByContext tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 221 : 
+  case 221 :
     {
       DeclareAndCast(StepVisual_PresentationView, anent, ent);
       RWStepVisual_RWPresentationView tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 223 : 
+  case 223 :
     {
       DeclareAndCast(StepBasic_Product, anent, ent);
       RWStepBasic_RWProduct tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 224 : 
+  case 224 :
     {
       DeclareAndCast(StepBasic_ProductCategory, anent, ent);
       RWStepBasic_RWProductCategory tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 225 : 
+  case 225 :
     {
       DeclareAndCast(StepBasic_ProductContext, anent, ent);
       RWStepBasic_RWProductContext tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 227 : 
+  case 227 :
     {
       DeclareAndCast(StepBasic_ProductDefinition, anent, ent);
       RWStepBasic_RWProductDefinition tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 228 : 
+  case 228 :
     {
       DeclareAndCast(StepBasic_ProductDefinitionContext, anent, ent);
       RWStepBasic_RWProductDefinitionContext tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 229 : 
+  case 229 :
     {
       DeclareAndCast(StepBasic_ProductDefinitionFormation, anent, ent);
       RWStepBasic_RWProductDefinitionFormation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 230 : 
+  case 230 :
     {
       DeclareAndCast(StepBasic_ProductDefinitionFormationWithSpecifiedSource, anent, ent);
       RWStepBasic_RWProductDefinitionFormationWithSpecifiedSource tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 231 : 
+  case 231 :
     {
       DeclareAndCast(StepRepr_ProductDefinitionShape, anent, ent);
       RWStepRepr_RWProductDefinitionShape tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 232 : 
+  case 232 :
     {
       DeclareAndCast(StepBasic_ProductRelatedProductCategory, anent, ent);
       RWStepBasic_RWProductRelatedProductCategory tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 233 : 
+  case 233 :
     {
       DeclareAndCast(StepBasic_ProductType, anent, ent);
       RWStepBasic_RWProductType tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 234 : 
+  case 234 :
     {
       DeclareAndCast(StepRepr_PropertyDefinition, anent, ent);
       RWStepRepr_RWPropertyDefinition tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 235 : 
+  case 235 :
     {
       DeclareAndCast(StepRepr_PropertyDefinitionRepresentation, anent, ent);
       RWStepRepr_RWPropertyDefinitionRepresentation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 236 : 
+  case 236 :
     {
       DeclareAndCast(StepGeom_QuasiUniformCurve, anent, ent);
       RWStepGeom_RWQuasiUniformCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 237 : 
+  case 237 :
     {
       DeclareAndCast(StepGeom_QuasiUniformSurface, anent, ent);
       RWStepGeom_RWQuasiUniformSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 238 : 
+  case 238 :
     {
       DeclareAndCast(StepBasic_RatioMeasureWithUnit, anent, ent);
       RWStepBasic_RWRatioMeasureWithUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 239 : 
+  case 239 :
     {
       DeclareAndCast(StepGeom_RationalBSplineCurve, anent, ent);
       RWStepGeom_RWRationalBSplineCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 240 : 
+  case 240 :
     {
       DeclareAndCast(StepGeom_RationalBSplineSurface, anent, ent);
       RWStepGeom_RWRationalBSplineSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 241 : 
+  case 241 :
     {
       DeclareAndCast(StepGeom_RectangularCompositeSurface, anent, ent);
       RWStepGeom_RWRectangularCompositeSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 242 : 
+  case 242 :
     {
       DeclareAndCast(StepGeom_RectangularTrimmedSurface, anent, ent);
       RWStepGeom_RWRectangularTrimmedSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 243 : 
+  case 243 :
     {
       DeclareAndCast(StepAP214_RepItemGroup, anent, ent);
       RWStepAP214_RWRepItemGroup tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 244 : 
+  case 244 :
     {
       DeclareAndCast(StepGeom_ReparametrisedCompositeCurveSegment, anent, ent);
       RWStepGeom_RWReparametrisedCompositeCurveSegment tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 245 : 
+  case 245 :
     {
       DeclareAndCast(StepRepr_Representation, anent, ent);
       RWStepRepr_RWRepresentation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 246 : 
+  case 246 :
     {
       DeclareAndCast(StepRepr_RepresentationContext, anent, ent);
       RWStepRepr_RWRepresentationContext tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 247 : 
+  case 247 :
     {
       DeclareAndCast(StepRepr_RepresentationItem, anent, ent);
       RWStepRepr_RWRepresentationItem tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 248 : 
+  case 248 :
     {
       DeclareAndCast(StepRepr_RepresentationMap, anent, ent);
       RWStepRepr_RWRepresentationMap tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 249 : 
+  case 249 :
     {
       DeclareAndCast(StepRepr_RepresentationRelationship, anent, ent);
       RWStepRepr_RWRepresentationRelationship tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 250 : 
+  case 250 :
     {
       DeclareAndCast(StepShape_RevolvedAreaSolid, anent, ent);
       RWStepShape_RWRevolvedAreaSolid tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 251 : 
+  case 251 :
     {
       DeclareAndCast(StepShape_RightAngularWedge, anent, ent);
       RWStepShape_RWRightAngularWedge tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 252 : 
+  case 252 :
     {
       DeclareAndCast(StepShape_RightCircularCone, anent, ent);
       RWStepShape_RWRightCircularCone tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 253 : 
+  case 253 :
     {
       DeclareAndCast(StepShape_RightCircularCylinder, anent, ent);
       RWStepShape_RWRightCircularCylinder tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 254 : 
+  case 254 :
     {
       DeclareAndCast(StepGeom_SeamCurve, anent, ent);
       RWStepGeom_RWSeamCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 255 : 
+  case 255 :
     {
       DeclareAndCast(StepBasic_SecurityClassification, anent, ent);
       RWStepBasic_RWSecurityClassification tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 257 : 
+  case 257 :
     {
       DeclareAndCast(StepBasic_SecurityClassificationLevel, anent, ent);
       RWStepBasic_RWSecurityClassificationLevel tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 258 : 
+  case 258 :
     {
       DeclareAndCast(StepRepr_ShapeAspect, anent, ent);
       RWStepRepr_RWShapeAspect tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 259 : 
+  case 259 :
     {
       DeclareAndCast(StepRepr_ShapeAspectRelationship, anent, ent);
       RWStepRepr_RWShapeAspectRelationship tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 260 : 
+  case 260 :
     {
       DeclareAndCast(StepRepr_ShapeAspectTransition, anent, ent);
       RWStepRepr_RWShapeAspectTransition tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 261 : 
+  case 261 :
     {
       DeclareAndCast(StepShape_ShapeDefinitionRepresentation, anent, ent);
       RWStepShape_RWShapeDefinitionRepresentation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 262 : 
+  case 262 :
     {
       DeclareAndCast(StepShape_ShapeRepresentation, anent, ent);
       RWStepShape_RWShapeRepresentation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 263 : 
+  case 263 :
     {
       DeclareAndCast(StepShape_ShellBasedSurfaceModel, anent, ent);
       RWStepShape_RWShellBasedSurfaceModel tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 264 : 
+  case 264 :
     {
       DeclareAndCast(StepBasic_SiUnit, anent, ent);
       RWStepBasic_RWSiUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 265 : 
+  case 265 :
     {
       DeclareAndCast(StepBasic_SolidAngleMeasureWithUnit, anent, ent);
       RWStepBasic_RWSolidAngleMeasureWithUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 266 : 
+  case 266 :
     {
       DeclareAndCast(StepShape_SolidModel, anent, ent);
       RWStepShape_RWSolidModel tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 267 : 
+  case 267 :
     {
       DeclareAndCast(StepShape_SolidReplica, anent, ent);
       RWStepShape_RWSolidReplica tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 268 : 
+  case 268 :
     {
       DeclareAndCast(StepShape_Sphere, anent, ent);
       RWStepShape_RWSphere tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 269 : 
+  case 269 :
     {
       DeclareAndCast(StepGeom_SphericalSurface, anent, ent);
       RWStepGeom_RWSphericalSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 270 : 
+  case 270 :
     {
       DeclareAndCast(StepVisual_StyledItem, anent, ent);
       RWStepVisual_RWStyledItem tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 271 : 
+  case 271 :
     {
       DeclareAndCast(StepGeom_Surface, anent, ent);
       RWStepGeom_RWSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 272 : 
+  case 272 :
     {
       DeclareAndCast(StepGeom_SurfaceCurve, anent, ent);
       RWStepGeom_RWSurfaceCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 273 : 
+  case 273 :
     {
       DeclareAndCast(StepGeom_SurfaceOfLinearExtrusion, anent, ent);
       RWStepGeom_RWSurfaceOfLinearExtrusion tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 274 : 
+  case 274 :
     {
       DeclareAndCast(StepGeom_SurfaceOfRevolution, anent, ent);
       RWStepGeom_RWSurfaceOfRevolution tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 275 : 
+  case 275 :
     {
       DeclareAndCast(StepGeom_SurfacePatch, anent, ent);
       RWStepGeom_RWSurfacePatch tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 276 : 
+  case 276 :
     {
       DeclareAndCast(StepGeom_SurfaceReplica, anent, ent);
       RWStepGeom_RWSurfaceReplica tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 277 : 
+  case 277 :
     {
       DeclareAndCast(StepVisual_SurfaceSideStyle, anent, ent);
       RWStepVisual_RWSurfaceSideStyle tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 278 : 
+  case 278 :
     {
       DeclareAndCast(StepVisual_SurfaceStyleBoundary, anent, ent);
       RWStepVisual_RWSurfaceStyleBoundary tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 279 : 
+  case 279 :
     {
       DeclareAndCast(StepVisual_SurfaceStyleControlGrid, anent, ent);
       RWStepVisual_RWSurfaceStyleControlGrid tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 280 : 
+  case 280 :
     {
       DeclareAndCast(StepVisual_SurfaceStyleFillArea, anent, ent);
       RWStepVisual_RWSurfaceStyleFillArea tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 281 : 
+  case 281 :
     {
       DeclareAndCast(StepVisual_SurfaceStyleParameterLine, anent, ent);
       RWStepVisual_RWSurfaceStyleParameterLine tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 282 : 
+  case 282 :
     {
       DeclareAndCast(StepVisual_SurfaceStyleSegmentationCurve, anent, ent);
       RWStepVisual_RWSurfaceStyleSegmentationCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 283 : 
+  case 283 :
     {
       DeclareAndCast(StepVisual_SurfaceStyleSilhouette, anent, ent);
       RWStepVisual_RWSurfaceStyleSilhouette tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 284 : 
+  case 284 :
     {
       DeclareAndCast(StepVisual_SurfaceStyleUsage, anent, ent);
       RWStepVisual_RWSurfaceStyleUsage tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 285 : 
+  case 285 :
     {
       DeclareAndCast(StepShape_SweptAreaSolid, anent, ent);
       RWStepShape_RWSweptAreaSolid tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 286 : 
+  case 286 :
     {
       DeclareAndCast(StepGeom_SweptSurface, anent, ent);
       RWStepGeom_RWSweptSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 292 : 
+  case 292 :
     {
       DeclareAndCast(StepVisual_Template, anent, ent);
       RWStepVisual_RWTemplate tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 293 : 
+  case 293 :
     {
       DeclareAndCast(StepVisual_TemplateInstance, anent, ent);
       RWStepVisual_RWTemplateInstance tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 295 : 
+  case 295 :
     {
       DeclareAndCast(StepVisual_TextLiteral, anent, ent);
       RWStepVisual_RWTextLiteral tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 300 : 
+  case 300 :
     {
       DeclareAndCast(StepVisual_TextStyle, anent, ent);
       RWStepVisual_RWTextStyle tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 301 : 
+  case 301 :
     {
       DeclareAndCast(StepVisual_TextStyleForDefinedFont, anent, ent);
       RWStepVisual_RWTextStyleForDefinedFont tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 302 : 
+  case 302 :
     {
       DeclareAndCast(StepVisual_TextStyleWithBoxCharacteristics, anent, ent);
       RWStepVisual_RWTextStyleWithBoxCharacteristics tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 304 : 
+  case 304 :
     {
       DeclareAndCast(StepShape_TopologicalRepresentationItem, anent, ent);
       RWStepShape_RWTopologicalRepresentationItem tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 305 : 
+  case 305 :
     {
       DeclareAndCast(StepGeom_ToroidalSurface, anent, ent);
       RWStepGeom_RWToroidalSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 306 : 
+  case 306 :
     {
       DeclareAndCast(StepShape_Torus, anent, ent);
       RWStepShape_RWTorus tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 307 : 
+  case 307 :
     {
       DeclareAndCast(StepShape_TransitionalShapeRepresentation, anent, ent);
       RWStepShape_RWTransitionalShapeRepresentation tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 308 : 
+  case 308 :
     {
       DeclareAndCast(StepGeom_TrimmedCurve, anent, ent);
       RWStepGeom_RWTrimmedCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 310 : 
+  case 310 :
     {
       DeclareAndCast(StepBasic_UncertaintyMeasureWithUnit, anent, ent);
       RWStepBasic_RWUncertaintyMeasureWithUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 311 : 
+  case 311 :
     {
       DeclareAndCast(StepGeom_UniformCurve, anent, ent);
       RWStepGeom_RWUniformCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 312 : 
+  case 312 :
     {
       DeclareAndCast(StepGeom_UniformSurface, anent, ent);
       RWStepGeom_RWUniformSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 313 : 
+  case 313 :
     {
       DeclareAndCast(StepGeom_Vector, anent, ent);
       RWStepGeom_RWVector tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 314 : 
+  case 314 :
     {
       DeclareAndCast(StepShape_Vertex, anent, ent);
       RWStepShape_RWVertex tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 315 : 
+  case 315 :
     {
       DeclareAndCast(StepShape_VertexLoop, anent, ent);
       RWStepShape_RWVertexLoop tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 316 : 
+  case 316 :
     {
       DeclareAndCast(StepShape_VertexPoint, anent, ent);
       RWStepShape_RWVertexPoint tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 317 : 
+  case 317 :
     {
       DeclareAndCast(StepVisual_ViewVolume, anent, ent);
       RWStepVisual_RWViewVolume tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 318 : 
+  case 318 :
     {
       DeclareAndCast(StepBasic_WeekOfYearAndDayDate, anent, ent);
       RWStepBasic_RWWeekOfYearAndDayDate tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 319 : 
+  case 319 :
     {
       DeclareAndCast(StepGeom_UniformCurveAndRationalBSplineCurve, anent, ent);
       RWStepGeom_RWUniformCurveAndRationalBSplineCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 320 : 
+  case 320 :
     {
       DeclareAndCast(StepGeom_BSplineCurveWithKnotsAndRationalBSplineCurve, anent, ent);
       RWStepGeom_RWBSplineCurveWithKnotsAndRationalBSplineCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 321 : 
+  case 321 :
     {
       DeclareAndCast(StepGeom_QuasiUniformCurveAndRationalBSplineCurve, anent, ent);
       RWStepGeom_RWQuasiUniformCurveAndRationalBSplineCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 322 : 
+  case 322 :
     {
       DeclareAndCast(StepGeom_BezierCurveAndRationalBSplineCurve, anent, ent);
       RWStepGeom_RWBezierCurveAndRationalBSplineCurve tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 323 : 
+  case 323 :
     {
       DeclareAndCast(StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface, anent, ent);
       RWStepGeom_RWBSplineSurfaceWithKnotsAndRationalBSplineSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 324 : 
+  case 324 :
     {
       DeclareAndCast(StepGeom_UniformSurfaceAndRationalBSplineSurface, anent, ent);
       RWStepGeom_RWUniformSurfaceAndRationalBSplineSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 325 : 
+  case 325 :
     {
       DeclareAndCast(StepGeom_QuasiUniformSurfaceAndRationalBSplineSurface, anent, ent);
       RWStepGeom_RWQuasiUniformSurfaceAndRationalBSplineSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 326 : 
+  case 326 :
     {
       DeclareAndCast(StepGeom_BezierSurfaceAndRationalBSplineSurface, anent, ent);
       RWStepGeom_RWBezierSurfaceAndRationalBSplineSurface tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 327 : 
+  case 327 :
     {
       DeclareAndCast(StepBasic_SiUnitAndLengthUnit, anent, ent);
       RWStepBasic_RWSiUnitAndLengthUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 328 : 
+  case 328 :
     {
       DeclareAndCast(StepBasic_SiUnitAndPlaneAngleUnit, anent, ent);
       RWStepBasic_RWSiUnitAndPlaneAngleUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 329 : 
+  case 329 :
     {
       DeclareAndCast(StepBasic_ConversionBasedUnitAndLengthUnit, anent, ent);
       RWStepBasic_RWConversionBasedUnitAndLengthUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 330 : 
+  case 330 :
     {
       DeclareAndCast(StepBasic_ConversionBasedUnitAndPlaneAngleUnit, anent, ent);
       RWStepBasic_RWConversionBasedUnitAndPlaneAngleUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 331 : 
+  case 331 :
     {
       DeclareAndCast(StepGeom_GeometricRepresentationContextAndGlobalUnitAssignedContext, anent, ent);
       RWStepGeom_RWGeometricRepresentationContextAndGlobalUnitAssignedContext tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 332 : 
+  case 332 :
     {
       DeclareAndCast(StepShape_LoopAndPath, anent, ent);
       RWStepShape_RWLoopAndPath tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-    
+
     // ------------
     // Added by FMA
     // ------------
-    
+
   case 333 :
     {
       DeclareAndCast(StepGeom_GeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx, anent, ent);
       RWStepGeom_RWGeomRepContextAndGlobUnitAssCtxAndGlobUncertaintyAssCtx tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
     break;
-    
+
   case 334 :
     {
       DeclareAndCast(StepBasic_ConversionBasedUnitAndSolidAngleUnit, anent, ent);
       RWStepBasic_RWConversionBasedUnitAndSolidAngleUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
     break;
-    
+
   case 335 :
     {
       DeclareAndCast(StepBasic_SiUnitAndSolidAngleUnit, anent, ent);
       RWStepBasic_RWSiUnitAndSolidAngleUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
     break;
@@ -13287,7 +13288,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
     {
       DeclareAndCast(StepBasic_SolidAngleUnit, anent, ent);
       RWStepBasic_RWSolidAngleUnit tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
     break;
@@ -13295,23 +13296,23 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
     {
       DeclareAndCast(StepShape_FacetedBrepAndBrepWithVoids, anent, ent);
       RWStepShape_RWFacetedBrepAndBrepWithVoids tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
     break;
-  case 338 : 
+  case 338 :
     {
       DeclareAndCast(StepGeom_GeometricRepresentationContextAndParametricRepresentationContext, anent, ent);
       RWStepGeom_RWGeometricRepresentationContextAndParametricRepresentationContext tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
     break;
-  case 339 : 
+  case 339 :
     {
       DeclareAndCast(StepBasic_MechanicalContext, anent, ent);
       RWStepBasic_RWMechanicalContext tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
     }
     break;
@@ -13320,7 +13321,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
     {
       DeclareAndCast(StepBasic_ProductDefinitionContext, anent, ent);
       RWStepBasic_RWProductDefinitionContext tool;
-//      if (anent.IsNull()) return; 
+//      if (anent.IsNull()) return;
       tool.WriteStep (SW,anent);
       break;
     }
@@ -13328,7 +13329,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
     // -----------
     // Added for Rev4
     // -----------
-    
+
   case 341:  // TimeMeasureWithUnit
     {
       DeclareAndCast(StepBasic_MeasureWithUnit,anent,ent);
@@ -13373,7 +13374,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
       tool.WriteStep (SW,anent);
     }
     break;
-    
+
   case 348:  // ApprovalDateTime
     {
       DeclareAndCast(StepBasic_ApprovalDateTime,anent,ent);
@@ -13433,7 +13434,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
     break;
 
     //:n5 abv 15 Feb 99: S4132 complex type bounded_curve + surface_curve
-  case 358 : 
+  case 358 :
     {
       DeclareAndCast(StepGeom_SurfaceCurveAndBoundedCurve, anent, ent);
       RWStepGeom_RWSurfaceCurveAndBoundedCurve tool;
@@ -13513,7 +13514,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
       tool.WriteStep (SW,anent);
     }
     break;
-    
+
   case 377:
     {
       DeclareAndCast(StepRepr_ProductDefinitionUsage,anent,ent);
@@ -13586,7 +13587,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
       tool.WriteStep (SW,anent);
     }
     break;
-    
+
   case 389:
     {
       DeclareAndCast(StepRepr_ShapeRepresentationRelationshipWithTransformation,anent,ent);
@@ -13594,7 +13595,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
       tool.WriteStep (SW,anent);
     }
     break;
-    
+
   case 390:
     {
       DeclareAndCast(StepRepr_MaterialDesignation,anent,ent);
@@ -13602,7 +13603,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
       tool.WriteStep (SW,anent);
     }
     break;
-    
+
   case 391:
     {
       DeclareAndCast(StepShape_ContextDependentShapeRepresentation,anent,ent);
@@ -13696,7 +13697,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
       tool.WriteStep (SW,anent);
     }
     break;
-    
+
   case 404:
     {
       DeclareAndCast(StepShape_RevolvedFaceSolid,anent,ent);
@@ -13711,7 +13712,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
       tool.WriteStep (SW,anent);
     }
     break;
-    
+
   // Added by ABV 08.09.99 for CAX TRJ 2 (validation properties)
   case 406:
     {
@@ -13726,14 +13727,14 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
       RWStepBasic_RWNamedUnit tool;
       tool.WriteStep (SW,anent);
     }
-    break;    
+    break;
   case 408:
     {
       DeclareAndCast(StepBasic_VolumeUnit,anent,ent);
       RWStepBasic_RWNamedUnit tool;
       tool.WriteStep (SW,anent);
     }
-    break;    
+    break;
   case 409:
     {
       DeclareAndCast(StepBasic_SiUnitAndAreaUnit,anent,ent);
@@ -13761,7 +13762,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
       RWStepBasic_RWConversionBasedUnitAndVolumeUnit tool;
       tool.WriteStep (SW,anent);
     }
-    break; 
+    break;
 
   // Added by ABV 10.11.99 for AP203
   case 413:
@@ -13968,7 +13969,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
       tool.WriteStep (SW,anent);
     }
     break;
-    
+
   // Added by ABV 18.04.00 for CAX-IF TRJ4
   case 442:
     {
@@ -14832,7 +14833,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
       tool.WriteStep (SW,anent);
     }
     break;
-  case 574 : 
+  case 574 :
     {
       DeclareAndCast(StepBasic_SiUnitAndMassUnit, anent, ent);
       RWStepBasic_RWSiUnitAndMassUnit tool;
@@ -14860,7 +14861,7 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
       tool.WriteStep (SW,anent);
     }
     break;
-  case 578 : 
+  case 578 :
     {
       DeclareAndCast(StepBasic_SiUnitAndThermodynamicTemperatureUnit, anent, ent);
       RWStepBasic_RWSiUnitAndThermodynamicTemperatureUnit tool;
@@ -15112,15 +15113,15 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
       tool.WriteStep (SW,anent);
     }
     break;
-  case 650 : 
+  case 650 :
     {
       DeclareAndCast(StepBasic_ConversionBasedUnitAndMassUnit, anent, ent);
       RWStepBasic_RWConversionBasedUnitAndMassUnit tool;
       tool.WriteStep (SW,anent);
     }
-    
+
     break;
-  case 651 : 
+  case 651 :
     {
       DeclareAndCast(StepBasic_MassMeasureWithUnit, anent, ent);
       RWStepBasic_RWMassMeasureWithUnit tool;
@@ -16241,4 +16242,9 @@ void RWStepAP214_ReadWriteModule::WriteStep(const Standard_Integer CN,
   default:
     return;
   }
+#else
+  (void)CN;
+  (void)SW;
+  (void)ent;
+#endif
 }
