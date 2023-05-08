@@ -143,8 +143,8 @@ VrmlData_ErrorStatus VrmlData_WorldInfo::Write (const char * thePrefix) const
 {
   VrmlData_ErrorStatus aStatus (VrmlData_StatusOK);
   const VrmlData_Scene& aScene = Scene();
-  static char header[] = "WorldInfo {";
-  static char headerX3D[] = "<WorldInfo";
+  static const char header[] = "WorldInfo {";
+  static const char headerX3D[] = "<WorldInfo";
   if (aScene.IsDummyWrite() == Standard_False &&
       OK (aStatus, Scene().isX3D() ?
       aScene.WriteLine (headerX3D, 0L, GlobalIndent(), true, false) :

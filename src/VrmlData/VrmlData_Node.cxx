@@ -418,8 +418,8 @@ VrmlData_ErrorStatus VrmlData_ShapeNode::Write (const char * thePrefix) const
 {
   VrmlData_ErrorStatus aStatus (VrmlData_StatusOK);
   const VrmlData_Scene& aScene = Scene();
-  static char header[] = "Shape {";
-  static char headerX3D[] = "<Shape";
+  static const char header[] = "Shape {";
+  static const char headerX3D[] = "<Shape";
   if (OK (aStatus, Scene().isX3D() ?
   aScene.WriteLine (headerX3D, 0L, GlobalIndent(), true, false):
   aScene.WriteLine (thePrefix, header, GlobalIndent())))
@@ -586,8 +586,8 @@ VrmlData_ErrorStatus VrmlData_Appearance::Read (VrmlData_InBuffer& theBuffer)
 
 VrmlData_ErrorStatus VrmlData_Appearance::Write (const char * thePrefix) const
 {
-  static char header[] = "Appearance {";
-  static char headerX3D[] = "<Appearance";
+  static const char header[] = "Appearance {";
+  static const char headerX3D[] = "<Appearance";
   VrmlData_ErrorStatus aStatus;
   const VrmlData_Scene& aScene = Scene();
   if (OK (aStatus, Scene().isX3D() ?
@@ -711,8 +711,8 @@ VrmlData_ErrorStatus VrmlData_ImageTexture::Write(const char *thePrefix)  const
 {
   VrmlData_ErrorStatus aStatus = VrmlData_StatusOK;
   const VrmlData_Scene& aScene = Scene();
-  static char header[] = "ImageTexture {";
-  static char headerX3D[] = "<ImageTexture";
+  static const char header[] = "ImageTexture {";
+  static const char headerX3D[] = "<ImageTexture";
   if (aScene.IsDummyWrite() == Standard_False &&
     (OK (aStatus, Scene().isX3D() ?
                      Scene().WriteLine (headerX3D, 0L, GlobalIndent(), true, false):

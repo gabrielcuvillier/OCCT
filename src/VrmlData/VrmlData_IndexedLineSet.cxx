@@ -179,8 +179,8 @@ VrmlData_ErrorStatus VrmlData_IndexedLineSet::Read
 VrmlData_ErrorStatus VrmlData_IndexedLineSet::Write
                                         (const char * thePrefix) const
 {
-  static char header[] = "IndexedLineSet {";
-  static char headerX3D[] = "<IndexedLineSet";
+  static const char header[] = "IndexedLineSet {";
+  static const char headerX3D[] = "<IndexedLineSet";
   const VrmlData_Scene& aScene = Scene();
   VrmlData_ErrorStatus aStatus;
   if (OK(aStatus, aScene.isX3D() ?

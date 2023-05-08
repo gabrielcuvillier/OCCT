@@ -187,8 +187,8 @@ VrmlData_ErrorStatus VrmlData_Material::Write (const char * thePrefix) const
 {
   VrmlData_ErrorStatus aStatus = VrmlData_StatusOK;
   const VrmlData_Scene& aScene = Scene();
-  static char header[] = "Material {";
-  static char headerX3D[] = "<Material";
+  static const char header[] = "Material {";
+  static const char headerX3D[] = "<Material";
   if (aScene.IsDummyWrite() == Standard_False &&
       OK (aStatus, aScene.isX3D() ?
       aScene.WriteLine (headerX3D, 0L, GlobalIndent(), true, false) :

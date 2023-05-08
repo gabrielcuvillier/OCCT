@@ -439,8 +439,8 @@ Standard_Boolean VrmlData_IndexedFaceSet::IsDefault () const
 VrmlData_ErrorStatus VrmlData_IndexedFaceSet::Write
                                                 (const char * thePrefix) const
 {
-  static char header[] = "IndexedFaceSet {";
-  static char headerX3D[] = "<IndexedFaceSet";
+  static const char header[] = "IndexedFaceSet {";
+  static const char headerX3D[] = "<IndexedFaceSet";
   const VrmlData_Scene& aScene = Scene();
   VrmlData_ErrorStatus aStatus;
 

@@ -126,8 +126,8 @@ VrmlData_ErrorStatus VrmlData_Box::Read (VrmlData_InBuffer& theBuffer)
 
 VrmlData_ErrorStatus VrmlData_Box::Write (const char * thePrefix) const
 {
-  static char header[] = "Box {";
-  static char headerX3D[] = "<Box";
+  static const char header[] = "Box {";
+  static const char headerX3D[] = "<Box";
   VrmlData_ErrorStatus aStatus;
   if (OK (aStatus, Scene().isX3D() ?
   Scene().WriteLine (headerX3D, 0L, GlobalIndent(), true, false):
@@ -237,8 +237,8 @@ VrmlData_ErrorStatus VrmlData_Cone::Read (VrmlData_InBuffer& theBuffer)
 
 VrmlData_ErrorStatus VrmlData_Cone::Write (const char * thePrefix) const
 {
-  static char header[] = "Cone {";
-  static char headerX3D[] = "<Cone";
+  static const char header[] = "Cone {";
+  static const char headerX3D[] = "<Cone";
   VrmlData_ErrorStatus aStatus;
   if (OK (aStatus, Scene().isX3D() ?
                    Scene().WriteLine (headerX3D, 0L, GlobalIndent(), true, false):
@@ -381,8 +381,8 @@ VrmlData_ErrorStatus VrmlData_Cylinder::Read (VrmlData_InBuffer& theBuffer)
 
 VrmlData_ErrorStatus VrmlData_Cylinder::Write (const char * thePrefix) const
 {
-  static char header[] = "Cylinder {";
-  static char headerX3D[] = "<Cylinder";
+  static const char header[] = "Cylinder {";
+  static const char headerX3D[] = "<Cylinder";
   VrmlData_ErrorStatus aStatus;
   if (OK (aStatus, Scene().isX3D() ?
                    Scene().WriteLine (headerX3D, 0L, GlobalIndent(), true, false):
@@ -493,8 +493,8 @@ VrmlData_ErrorStatus VrmlData_Sphere::Read (VrmlData_InBuffer& theBuffer)
 
 VrmlData_ErrorStatus VrmlData_Sphere::Write (const char * thePrefix) const
 {
-  static char header[] = "Sphere {";
-  static char headerX3D[] = "<Sphere";
+  static const char header[] = "Sphere {";
+  static const char headerX3D[] = "<Sphere";
   VrmlData_ErrorStatus aStatus;
   if (OK (aStatus, Scene().isX3D() ?
                    Scene().WriteLine (headerX3D, 0L, GlobalIndent(), true, false):
@@ -793,8 +793,8 @@ VrmlData_ErrorStatus VrmlData_Coordinate::Read (VrmlData_InBuffer& theBuffer)
 
 VrmlData_ErrorStatus VrmlData_Coordinate::Write (const char * thePrefix) const
 {
-  static char header[] = "Coordinate {";
-  static char headerX3D[] = "<Coordinate";
+  static const char header[] = "Coordinate {";
+  static const char headerX3D[] = "<Coordinate";
   VrmlData_ErrorStatus aStatus;
   if (OK (aStatus, Scene().isX3D() ?
                    Scene().WriteLine (headerX3D, 0L, GlobalIndent(), true, false):
@@ -853,8 +853,8 @@ VrmlData_ErrorStatus VrmlData_Color::Read (VrmlData_InBuffer& theBuffer)
 
 VrmlData_ErrorStatus VrmlData_Color::Write (const char * thePrefix) const
 {
-  static char header[] = "Color {";
-  static char headerX3D[] = "<Color";
+  static const char header[] = "Color {";
+  static const char headerX3D[] = "<Color";
   VrmlData_ErrorStatus aStatus;
   if (OK (aStatus, Scene().isX3D() ?
                    Scene().WriteLine (headerX3D, 0L, GlobalIndent(), true, false):
@@ -913,8 +913,8 @@ VrmlData_ErrorStatus VrmlData_Normal::Read (VrmlData_InBuffer& theBuffer)
 
 VrmlData_ErrorStatus VrmlData_Normal::Write (const char * thePrefix) const
 {
-  static char header[] = "Normal {";
-  static char headerX3D[] = "<Normal";
+  static const char header[] = "Normal {";
+  static const char headerX3D[] = "<Normal";
   VrmlData_ErrorStatus aStatus;
   if (OK (aStatus, Scene().isX3D() ?
                    Scene().WriteLine (headerX3D, 0L, GlobalIndent(), true, false):
