@@ -41,6 +41,9 @@ else()
     # enable WebAssembly Exceptions support
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fwasm-exceptions")
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fwasm-exceptions")
+    # completelly disable inlining to gain some precious KB
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-inline-functions ")
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-inline-functions")
     # enforce STRICT mode
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -sSTRICT=1")
     set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -sSTRICT=1")
