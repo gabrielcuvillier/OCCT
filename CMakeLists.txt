@@ -382,7 +382,7 @@ if (NOT DEFINED INSTALL_DIR_DOC)
 endif()
 
 # define folder containing CMake configuration files
-if (TRUE)
+if (NOT DEFINED INSTALL_DIR_CMAKE)
   if ("${INSTALL_DIR_LAYOUT}" STREQUAL "Unix")
     if (INSTALL_DIR_WITH_VERSION)
       set (INSTALL_DIR_CMAKE "lib/cmake/opencascade-${OCC_VERSION_STRING_EXT}" CACHE PATH "${INSTALL_DIR_CMAKE_DESCR}" FORCE)
