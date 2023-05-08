@@ -21,11 +21,11 @@
 #include <Standard_NullObject.hxx>
 #include <TCollection_AsciiString.hxx>
 
-const OSD_WhoAmI Iam = OSD_WHost;
 
 #include <errno.h>
 
 #if !defined(__EMSCRIPTEN__) // uname syscall is a stub on Emscripten (don't work with STRICT=1)
+const OSD_WhoAmI Iam = OSD_WHost;
 #include <sys/utsname.h> // For 'uname'
 #endif
 #include <netdb.h>       // This is for 'gethostbyname'
