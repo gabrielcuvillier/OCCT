@@ -41,12 +41,12 @@ else()
     # enable WebAssembly Exceptions support
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fwasm-exceptions")
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fwasm-exceptions")
-    # completelly disable inlining to gain some precious KB
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-inline-functions ")
-    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-inline-functions")
+    # reduce inlining a bit to gain some precious KB
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -finline-hint-functions")
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -finline-hint-functions")
     # enforce STRICT mode
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -sSTRICT=1")
-    set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -sSTRICT=1")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s STRICT=1")
+    set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -s STRICT=1")
   elseif (NOT (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]" AND NOT MINGW))
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
 
