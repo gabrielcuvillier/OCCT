@@ -52,9 +52,7 @@ private:
 
   Handle(Adaptor3d_Curve) myCurve;
   Handle(Adaptor3d_Surface) mySurface;
-  #if !defined(OCCT_DISABLE_APPROX_FIT_AND_DIVIDE)
   Standard_Real myTolerance;
-  #endif
   Standard_Boolean myIsDone;
   Handle(Geom_BSplineCurve) myResult;
 

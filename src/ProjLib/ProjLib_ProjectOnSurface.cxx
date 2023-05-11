@@ -146,9 +146,7 @@ private:
 //=======================================================================
 
 ProjLib_ProjectOnSurface::ProjLib_ProjectOnSurface() :
-#if !defined(OCCT_DISABLE_APPROX_FIT_AND_DIVIDE)
 myTolerance(0.0),
-#endif
 myIsDone(Standard_False)
 {
 }
@@ -159,9 +157,7 @@ myIsDone(Standard_False)
 //=======================================================================
 ProjLib_ProjectOnSurface::ProjLib_ProjectOnSurface
 (const Handle(Adaptor3d_Surface)& S ) :
-#if !defined(OCCT_DISABLE_APPROX_FIT_AND_DIVIDE)
 myTolerance(0.0),
-#endif
 myIsDone(Standard_False)
 {
   mySurface = S;
@@ -184,8 +180,8 @@ void ProjLib_ProjectOnSurface::Load (const Handle(Adaptor3d_Surface)& S)
 void ProjLib_ProjectOnSurface::Load(const Handle(Adaptor3d_Curve)& C,
 				    const Standard_Real  Tolerance)
 {
-#if !defined(OCCT_DISABLE_APPROX_FIT_AND_DIVIDE)
   myTolerance = Tolerance ;
+#if !defined(OCCT_DISABLE_APPROX_FIT_AND_DIVIDE)
   myCurve = C;
   myIsDone = Standard_False ;
   if (!mySurface.IsNull()) {
@@ -270,7 +266,6 @@ void ProjLib_ProjectOnSurface::Load(const Handle(Adaptor3d_Curve)& C,
     WarnOnce_UnavailableApproxFitAndDivide = Standard_False;
   }
   (void)C;
-  (void)Tolerance;
 #endif
 }
 
