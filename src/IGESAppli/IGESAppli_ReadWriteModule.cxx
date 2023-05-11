@@ -67,7 +67,7 @@ IGESAppli_ReadWriteModule::IGESAppli_ReadWriteModule ()    {  }
 
 
     Standard_Integer  IGESAppli_ReadWriteModule::CaseIGES
-  (const Standard_Integer typenum, const Standard_Integer formnum) const 
+  (const Standard_Integer typenum, const Standard_Integer formnum) const
 {
   switch (typenum) {
     case 134 : return 12;
@@ -107,7 +107,7 @@ IGESAppli_ReadWriteModule::IGESAppli_ReadWriteModule ()    {  }
 
     void  IGESAppli_ReadWriteModule::ReadOwnParams
   (const Standard_Integer CN, const Handle(IGESData_IGESEntity)& ent,
-   const Handle(IGESData_IGESReaderData)& IR, IGESData_ParamReader& PR) const 
+   const Handle(IGESData_IGESReaderData)& IR, IGESData_ParamReader& PR) const
 {
   switch (CN) {
     case  1 : {
@@ -252,6 +252,7 @@ IGESAppli_ReadWriteModule::IGESAppli_ReadWriteModule ()    {  }
   (const Standard_Integer CN,  const Handle(IGESData_IGESEntity)& ent,
    IGESData_IGESWriter& IW) const
 {
+#if !defined(OCCT_DISABLE_XDE_IGES_WRITER)
   switch (CN) {
     case  1 : {
       DeclareAndCast(IGESAppli_DrilledHole,anent,ent);
@@ -388,4 +389,5 @@ IGESAppli_ReadWriteModule::IGESAppli_ReadWriteModule ()    {  }
       break;
     default : break;
   }
+#endif
 }

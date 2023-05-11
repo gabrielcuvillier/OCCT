@@ -52,29 +52,29 @@ RWObj_ConfigurationNode::RWObj_ConfigurationNode(const Handle(RWObj_Configuratio
 bool RWObj_ConfigurationNode::Load(const Handle(DE_ConfigurationContext)& theResource)
 {
   TCollection_AsciiString aScope = THE_CONFIGURATION_SCOPE() + "." + GetFormat() + "." + GetVendor();
-  InternalParameters.FileLengthUnit = 
+  InternalParameters.FileLengthUnit =
     theResource->RealVal("file.length.unit", InternalParameters.FileLengthUnit, aScope);
   InternalParameters.SystemCS = (RWMesh_CoordinateSystem)
     (theResource->IntegerVal("system.cs", (int)InternalParameters.SystemCS, aScope) % 2);
   InternalParameters.FileCS = (RWMesh_CoordinateSystem)
     (theResource->IntegerVal("file.cs", (int)InternalParameters.SystemCS, aScope) % 2);
 
-  InternalParameters.ReadSinglePrecision = 
+  InternalParameters.ReadSinglePrecision =
     theResource->BooleanVal("read.single.precision", InternalParameters.ReadSinglePrecision, aScope);
-  InternalParameters.ReadCreateShapes = 
+  InternalParameters.ReadCreateShapes =
     theResource->BooleanVal("read.create.shapes", InternalParameters.ReadCreateShapes, aScope);
   InternalParameters.ReadRootPrefix =
     theResource->StringVal("read.root.prefix", InternalParameters.ReadRootPrefix, aScope);
-  InternalParameters.ReadFillDoc = 
+  InternalParameters.ReadFillDoc =
     theResource->BooleanVal("read.fill.doc", InternalParameters.ReadFillDoc, aScope);
-  InternalParameters.ReadFillIncomplete = 
+  InternalParameters.ReadFillIncomplete =
     theResource->BooleanVal("read.fill.incomplete", InternalParameters.ReadFillIncomplete, aScope);
-  InternalParameters.ReadMemoryLimitMiB = 
+  InternalParameters.ReadMemoryLimitMiB =
     theResource->IntegerVal("read.memory.limit.mib", InternalParameters.ReadMemoryLimitMiB, aScope);
 
-  InternalParameters.WriteComment = 
+  InternalParameters.WriteComment =
     theResource->StringVal("write.comment", InternalParameters.WriteComment, aScope);
-  InternalParameters.WriteAuthor = 
+  InternalParameters.WriteAuthor =
     theResource->StringVal("write.author", InternalParameters.WriteAuthor, aScope);
   return true;
 }
@@ -86,6 +86,7 @@ bool RWObj_ConfigurationNode::Load(const Handle(DE_ConfigurationContext)& theRes
 TCollection_AsciiString RWObj_ConfigurationNode::Save() const
 {
   TCollection_AsciiString aResult;
+#if !defined(OCCT_DISABLE_CONFIGURATION_NODE_SAVE)
   aResult += "!*****************************************************************************\n";
   aResult = aResult + "!Configuration Node " + " Vendor: " + GetVendor() + " Format: " + GetFormat() + "\n";
   TCollection_AsciiString aScope = THE_CONFIGURATION_SCOPE() + "." + GetFormat() + "." + GetVendor() + ".";
@@ -169,6 +170,7 @@ TCollection_AsciiString RWObj_ConfigurationNode::Save() const
   aResult += "!\n";
 
   aResult += "!*****************************************************************************\n";
+#endif
   return aResult;
 }
 

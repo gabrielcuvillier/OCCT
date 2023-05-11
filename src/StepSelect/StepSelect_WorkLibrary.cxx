@@ -83,6 +83,7 @@ Standard_Integer  StepSelect_WorkLibrary::ReadStream (const Standard_CString the
 Standard_Boolean  StepSelect_WorkLibrary::WriteFile
   (IFSelect_ContextWrite& ctx) const
 {
+#if !defined(OCCT_DISABLE_WORK_LIBRARY_SAVE_FILE)
 //  Preparation
   Message_Messenger::StreamBuffer sout = Message::SendInfo();
   DeclareAndCast(StepData_StepModel,stepmodel,ctx.Model());
@@ -119,16 +120,20 @@ Standard_Boolean  StepSelect_WorkLibrary::WriteFile
   for (chl.Start(); chl.More(); chl.Next())
     ctx.CCheck(chl.Number())->GetMessages(chl.Value());
   sout<<" Write ";
-  Standard_Boolean isGood = SW.Print (*aStream);                 
+  Standard_Boolean isGood = SW.Print (*aStream);
   sout<<" Done"<<std::endl;
-      
+
   errno = 0;
   aStream->flush();
   isGood = aStream->good() && isGood && !errno;
   aStream.reset();
   if(errno)
     sout << strerror(errno) << std::endl;
-  return isGood;  
+  return isGood;
+#else
+  (void)ctx;
+  return Standard_False;
+#endif
 }
 
 
@@ -150,6 +155,7 @@ void  StepSelect_WorkLibrary::DumpEntity
    const Handle(Standard_Transient)& entity,
    Standard_OStream& S, const Standard_Integer level) const
 {
+#if !defined(OCCT_DISABLE_WORK_LIBRARY_SAVE_FILE)
   Standard_Integer nument = model->Number(entity);
   if (nument <= 0 || nument > model->NbEntities()) return;
   Standard_Boolean iserr = model->IsRedefinedContent(nument);
@@ -168,4 +174,11 @@ void  StepSelect_WorkLibrary::DumpEntity
   StepData_StepDumper dump(GetCasted(StepData_StepModel,model),
                            GetCasted(StepData_Protocol,protocol),thelabmode);
   dump.Dump(S,ent,level);
+#else
+    (void)model;
+    (void)protocol;
+    (void)entity;
+    (void)S;
+    (void)level;
+#endif
 }

@@ -54,11 +54,11 @@ bool RWStl_ConfigurationNode::Load(const Handle(DE_ConfigurationContext)& theRes
 {
   TCollection_AsciiString aScope = THE_CONFIGURATION_SCOPE() + "." + GetFormat() + "." + GetVendor();
 
-  InternalParameters.ReadMergeAngle = 
+  InternalParameters.ReadMergeAngle =
     theResource->RealVal("read.merge.angle", InternalParameters.ReadMergeAngle, aScope);
-  InternalParameters.ReadBRep = 
+  InternalParameters.ReadBRep =
     theResource->BooleanVal("read.brep", InternalParameters.ReadBRep, aScope);
-  InternalParameters.WriteAscii = 
+  InternalParameters.WriteAscii =
     theResource->BooleanVal("write.ascii", InternalParameters.WriteAscii, aScope);
   return true;
 }
@@ -70,6 +70,7 @@ bool RWStl_ConfigurationNode::Load(const Handle(DE_ConfigurationContext)& theRes
 TCollection_AsciiString RWStl_ConfigurationNode::Save() const
 {
   TCollection_AsciiString aResult;
+#if !defined(OCCT_DISABLE_CONFIGURATION_NODE_SAVE)
   aResult += "!*****************************************************************************\n";
   aResult = aResult + "!Configuration Node " + " Vendor: " + GetVendor() + " Format: " + GetFormat() + "\n";
   TCollection_AsciiString aScope = THE_CONFIGURATION_SCOPE() + "." + GetFormat() + "." + GetVendor() + ".";
@@ -101,6 +102,7 @@ TCollection_AsciiString RWStl_ConfigurationNode::Save() const
   aResult += "!\n";
 
   aResult += "!*****************************************************************************\n";
+#endif
   return aResult;
 }
 

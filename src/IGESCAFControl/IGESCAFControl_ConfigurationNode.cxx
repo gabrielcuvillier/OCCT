@@ -131,7 +131,7 @@ bool IGESCAFControl_ConfigurationNode::Load(const Handle(DE_ConfigurationContext
 TCollection_AsciiString IGESCAFControl_ConfigurationNode::Save() const
 {
   TCollection_AsciiString aResult;
-#if !defined(OCCT_DISABLE_XDE_IGES_WRITER)
+#if !defined(OCCT_DISABLE_CONFIGURATION_NODE_SAVE)
   aResult += "!*****************************************************************************\n";
   aResult = aResult + "!Configuration Node " + " Vendor: " + GetVendor() + " Format: " + GetFormat() + "\n";
   TCollection_AsciiString aScope = THE_CONFIGURATION_SCOPE() + "." + GetFormat() + "." + GetVendor() + ".";

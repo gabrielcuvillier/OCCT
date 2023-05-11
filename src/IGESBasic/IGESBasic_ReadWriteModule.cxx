@@ -60,7 +60,7 @@ IGESBasic_ReadWriteModule::IGESBasic_ReadWriteModule ()    {  }
 
 
     Standard_Integer  IGESBasic_ReadWriteModule::CaseIGES
-  (const Standard_Integer typenum, const Standard_Integer formnum) const 
+  (const Standard_Integer typenum, const Standard_Integer formnum) const
 {
   switch (typenum) {
     case 308 : return 16;
@@ -103,7 +103,7 @@ IGESBasic_ReadWriteModule::IGESBasic_ReadWriteModule ()    {  }
 
     void  IGESBasic_ReadWriteModule::ReadOwnParams
   (const Standard_Integer CN, const Handle(IGESData_IGESEntity)& ent,
-   const Handle(IGESData_IGESReaderData)& IR, IGESData_ParamReader& PR) const 
+   const Handle(IGESData_IGESReaderData)& IR, IGESData_ParamReader& PR) const
 {
   switch (CN) {
     case  1 : {
@@ -227,6 +227,7 @@ IGESBasic_ReadWriteModule::IGESBasic_ReadWriteModule ()    {  }
   (const Standard_Integer CN,  const Handle(IGESData_IGESEntity)& ent,
    IGESData_IGESWriter& IW) const
 {
+#if !defined(OCCT_DISABLE_XDE_IGES_WRITER)
   switch (CN) {
     case  1 : {
       DeclareAndCast(IGESBasic_AssocGroupType,anent,ent);
@@ -342,4 +343,5 @@ IGESBasic_ReadWriteModule::IGESBasic_ReadWriteModule ()    {  }
       break;
     default : break;
   }
+#endif
 }

@@ -74,6 +74,7 @@ bool DEBRepCascade_ConfigurationNode::Load(const Handle(DE_ConfigurationContext)
 TCollection_AsciiString DEBRepCascade_ConfigurationNode::Save() const
 {
   TCollection_AsciiString aResult;
+#if !defined(OCCT_DISABLE_CONFIGURATION_NODE_SAVE)
   aResult += "!*****************************************************************************\n";
   aResult = aResult + "!Configuration Node " + " Vendor: " + GetVendor() + " Format: " + GetFormat() + "\n";
   TCollection_AsciiString aScope = THE_CONFIGURATION_SCOPE() + "." + GetFormat() + "." + GetVendor() + ".";
@@ -113,6 +114,7 @@ TCollection_AsciiString DEBRepCascade_ConfigurationNode::Save() const
   aResult += "!\n";
 
   aResult += "!*****************************************************************************\n";
+#endif
   return aResult;
 }
 

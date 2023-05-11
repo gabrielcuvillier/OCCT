@@ -8,4 +8,7 @@ if (LIGHT_BUILD)
 
   message (STATUS "Info: [TKVRML] OCCT_DISABLE_VRML_IMPORT is defined")
   target_compile_definitions(TKVRML PRIVATE -DOCCT_DISABLE_VRML_IMPORT)
+
+  message (STATUS "Info: [TKVRML] OCCT_DISABLE_CONFIGURATION_NODE_SAVE is defined")
+  target_compile_definitions(TKVRML PRIVATE -DOCCT_DISABLE_CONFIGURATION_NODE_SAVE)
 endif()

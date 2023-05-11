@@ -92,6 +92,7 @@ static  Handle(IGESData_FileProtocol) IGESProto;
     Standard_Boolean  IGESSelect_WorkLibrary::WriteFile
   (IFSelect_ContextWrite& ctx) const
 {
+#if !defined(OCCT_DISABLE_WORK_LIBRARY_SAVE_FILE)
   Message_Messenger::StreamBuffer sout = Message::SendInfo();
 //  Preparation
   DeclareAndCast(IGESData_IGESModel,igesmod,ctx.Model());
@@ -106,7 +107,7 @@ static  Handle(IGESData_FileProtocol) IGESProto;
     sout<<" - IGES File could not be created : " << ctx.FileName() << std::endl; return 0;
   }
   sout<<" IGES File Name : "<<ctx.FileName();
-  IGESData_IGESWriter VW(igesmod);  
+  IGESData_IGESWriter VW(igesmod);
   sout<<"("<<igesmod->NbEntities()<<" ents) ";
 
 //  File Modifiers
@@ -123,7 +124,7 @@ static  Handle(IGESData_FileProtocol) IGESProto;
   }
 
 //  Envoi
-  VW.SendModel(prot);            
+  VW.SendModel(prot);
   sout<<" Write ";
   if (themodefnes) VW.WriteMode() = 10;
   Standard_Boolean status = VW.Print (*aStream);                sout<<" Done"<<std::endl;
@@ -136,6 +137,11 @@ static  Handle(IGESData_FileProtocol) IGESProto;
     sout << strerror(errno) << std::endl;
 
   return status;
+#else
+        (void)ctx;
+        (void)themodefnes;
+        return Standard_False;
+#endif
 }
 
     Handle(IGESData_Protocol)  IGESSelect_WorkLibrary::DefineProtocol ()
@@ -152,11 +158,12 @@ static  Handle(IGESData_FileProtocol) IGESProto;
 
 
     void  IGESSelect_WorkLibrary::DumpEntity
-  (const Handle(Interface_InterfaceModel)& model, 
+  (const Handle(Interface_InterfaceModel)& model,
    const Handle(Interface_Protocol)& protocol,
    const Handle(Standard_Transient)& entity,
    Standard_OStream& S, const Standard_Integer level) const
 {
+#if !defined(OCCT_DISABLE_WORK_LIBRARY_SAVE_FILE)
   DeclareAndCast(IGESData_IGESModel,igesmod,model);
   DeclareAndCast(IGESData_Protocol,igespro,protocol);
   DeclareAndCast(IGESData_IGESEntity,igesent,entity);
@@ -193,4 +200,11 @@ static  Handle(IGESData_FileProtocol) IGESProto;
   catch (Standard_Failure const&) {
     S << " **  Dump Interrupt **" << std::endl;
   }
+#else
+    (void)model;
+    (void)protocol;
+    (void)entity;
+    (void)S;
+    (void)level;
+#endif
 }

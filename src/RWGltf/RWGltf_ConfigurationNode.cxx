@@ -53,43 +53,43 @@ bool RWGltf_ConfigurationNode::Load(const Handle(DE_ConfigurationContext)& theRe
 {
   TCollection_AsciiString aScope = THE_CONFIGURATION_SCOPE() + "." + GetFormat() + "." + GetVendor();
 
-  InternalParameters.FileLengthUnit = 
+  InternalParameters.FileLengthUnit =
     theResource->RealVal("file.length.unit", InternalParameters.FileLengthUnit, aScope);
   InternalParameters.SystemCS = (RWMesh_CoordinateSystem)
     (theResource->IntegerVal("system.cs", (int)InternalParameters.SystemCS, aScope) % 2);
   InternalParameters.FileCS = (RWMesh_CoordinateSystem)
     (theResource->IntegerVal("file.cs", (int)InternalParameters.SystemCS, aScope) % 2);
 
-  InternalParameters.ReadSinglePrecision = 
+  InternalParameters.ReadSinglePrecision =
     theResource->BooleanVal("read.single.precision", InternalParameters.ReadSinglePrecision, aScope);
-  InternalParameters.ReadCreateShapes = 
+  InternalParameters.ReadCreateShapes =
     theResource->BooleanVal("read.create.shapes", InternalParameters.ReadCreateShapes, aScope);
-  InternalParameters.ReadRootPrefix = 
+  InternalParameters.ReadRootPrefix =
     theResource->StringVal("read.root.prefix", InternalParameters.ReadRootPrefix, aScope);
-  InternalParameters.ReadFillDoc = 
+  InternalParameters.ReadFillDoc =
     theResource->BooleanVal("read.fill.doc", InternalParameters.ReadFillDoc, aScope);
-  InternalParameters.ReadFillIncomplete = 
+  InternalParameters.ReadFillIncomplete =
     theResource->BooleanVal("read.fill.incomplete", InternalParameters.ReadFillIncomplete, aScope);
-  InternalParameters.ReadMemoryLimitMiB = 
+  InternalParameters.ReadMemoryLimitMiB =
     theResource->IntegerVal("read.memory.limit.mib", InternalParameters.ReadMemoryLimitMiB, aScope);
-  InternalParameters.ReadParallel = 
+  InternalParameters.ReadParallel =
     theResource->BooleanVal("read.parallel", InternalParameters.ReadParallel, aScope);
-  InternalParameters.ReadSkipEmptyNodes = 
+  InternalParameters.ReadSkipEmptyNodes =
     theResource->BooleanVal("read.skip.empty.nodes", InternalParameters.ReadSkipEmptyNodes, aScope);
-  InternalParameters.ReadLoadAllScenes = 
+  InternalParameters.ReadLoadAllScenes =
     theResource->BooleanVal("read.load.all.scenes", InternalParameters.ReadLoadAllScenes, aScope);
-  InternalParameters.ReadUseMeshNameAsFallback = 
+  InternalParameters.ReadUseMeshNameAsFallback =
     theResource->BooleanVal("read.use.mesh.name.as.fallback", InternalParameters.ReadUseMeshNameAsFallback, aScope);
-  InternalParameters.ReadSkipLateDataLoading = 
+  InternalParameters.ReadSkipLateDataLoading =
     theResource->BooleanVal("read.skip.late.data.loading", InternalParameters.ReadSkipLateDataLoading, aScope);
-  InternalParameters.ReadKeepLateData = 
+  InternalParameters.ReadKeepLateData =
     theResource->BooleanVal("read.keep.late.data", InternalParameters.ReadKeepLateData, aScope);
-  InternalParameters.ReadPrintDebugMessages = 
+  InternalParameters.ReadPrintDebugMessages =
     theResource->BooleanVal("read.print.debug.message", InternalParameters.ReadPrintDebugMessages, aScope);
 
-  InternalParameters.WriteComment = 
+  InternalParameters.WriteComment =
     theResource->StringVal("write.comment", InternalParameters.WriteComment, aScope);
-  InternalParameters.WriteAuthor = 
+  InternalParameters.WriteAuthor =
     theResource->StringVal("write.author", InternalParameters.WriteAuthor, aScope);
 
   InternalParameters.WriteTrsfFormat = (RWGltf_WriterTrsfFormat)
@@ -98,13 +98,13 @@ bool RWGltf_ConfigurationNode::Load(const Handle(DE_ConfigurationContext)& theRe
     (theResource->IntegerVal("write.node.name.format", InternalParameters.WriteNodeNameFormat, aScope) % (RWMesh_NameFormat_ProductAndInstanceAndOcaf + 1));
   InternalParameters.WriteMeshNameFormat = (RWMesh_NameFormat)
     (theResource->IntegerVal("write.mesh.name.format", InternalParameters.WriteMeshNameFormat, aScope) % (RWMesh_NameFormat_ProductAndInstanceAndOcaf + 1));
-  InternalParameters.WriteForcedUVExport = 
+  InternalParameters.WriteForcedUVExport =
     theResource->BooleanVal("write.forced.uv.export", InternalParameters.WriteForcedUVExport, aScope);
-  InternalParameters.WriteEmbedTexturesInGlb = 
+  InternalParameters.WriteEmbedTexturesInGlb =
     theResource->BooleanVal("write.embed.textures.in.glb", InternalParameters.WriteEmbedTexturesInGlb, aScope);
-  InternalParameters.WriteMergeFaces = 
+  InternalParameters.WriteMergeFaces =
     theResource->BooleanVal("write.merge.faces", InternalParameters.WriteMergeFaces, aScope);
-  InternalParameters.WriteSplitIndices16 = 
+  InternalParameters.WriteSplitIndices16 =
     theResource->BooleanVal("write.split.indices16", InternalParameters.WriteSplitIndices16, aScope);
   return true;
 }
@@ -116,6 +116,7 @@ bool RWGltf_ConfigurationNode::Load(const Handle(DE_ConfigurationContext)& theRe
 TCollection_AsciiString RWGltf_ConfigurationNode::Save() const
 {
   TCollection_AsciiString aResult;
+#if !defined(OCCT_DISABLE_CONFIGURATION_NODE_SAVE)
   aResult += "!*****************************************************************************\n";
   aResult = aResult + "!Configuration Node " + " Vendor: " + GetVendor() + " Format: " + GetFormat() + "\n";
   TCollection_AsciiString aScope = THE_CONFIGURATION_SCOPE() + "." + GetFormat() + "." + GetVendor() + ".";
@@ -283,6 +284,7 @@ TCollection_AsciiString RWGltf_ConfigurationNode::Save() const
   aResult += "!\n";
 
   aResult += "!*****************************************************************************\n";
+#endif
   return aResult;
 }
 

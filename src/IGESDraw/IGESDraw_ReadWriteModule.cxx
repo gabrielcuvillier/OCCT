@@ -55,7 +55,7 @@ IGESDraw_ReadWriteModule::IGESDraw_ReadWriteModule ()    {  }
 
 
     Standard_Integer  IGESDraw_ReadWriteModule::CaseIGES
-  (const Standard_Integer typenum, const Standard_Integer formnum) const 
+  (const Standard_Integer typenum, const Standard_Integer formnum) const
 {
   switch (typenum) {
     case 132 : return  2;
@@ -86,7 +86,7 @@ IGESDraw_ReadWriteModule::IGESDraw_ReadWriteModule ()    {  }
 
     void  IGESDraw_ReadWriteModule::ReadOwnParams
   (const Standard_Integer CN, const Handle(IGESData_IGESEntity)& ent,
-   const Handle(IGESData_IGESReaderData)& IR, IGESData_ParamReader& PR) const 
+   const Handle(IGESData_IGESReaderData)& IR, IGESData_ParamReader& PR) const
 {
   switch (CN) {
     case  1 : {
@@ -196,6 +196,7 @@ IGESDraw_ReadWriteModule::IGESDraw_ReadWriteModule ()    {  }
   (const Standard_Integer CN,  const Handle(IGESData_IGESEntity)& ent,
    IGESData_IGESWriter& IW) const
 {
+#if !defined(OCCT_DISABLE_XDE_IGES_WRITER)
   switch (CN) {
     case  1 : {
       DeclareAndCast(IGESDraw_CircArraySubfigure,anent,ent);
@@ -297,4 +298,5 @@ IGESDraw_ReadWriteModule::IGESDraw_ReadWriteModule ()    {  }
       break;
     default : break;
   }
+#endif
 }
