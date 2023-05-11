@@ -78,6 +78,7 @@ void OSD_Chronometer::GetThreadCPU (Standard_Real& theUserSeconds,
                                     Standard_Real& theSystemSeconds)
 {
   theUserSeconds = theSystemSeconds = 0.0;
+#if !defined(__EMSCRIPTEN__)
 #if (defined(__APPLE__))
   struct task_thread_times_info aTaskInfo;
   mach_msg_type_number_t aTaskInfoCount = TASK_THREAD_TIMES_INFO_COUNT;
@@ -104,6 +105,7 @@ void OSD_Chronometer::GetThreadCPU (Standard_Real& theUserSeconds,
   }
 #else
   #pragma error "OS is not supported yet; code to be ported"
+#endif
 #endif
 }
 
