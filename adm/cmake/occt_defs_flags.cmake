@@ -41,9 +41,9 @@ else()
     # enable WebAssembly Exceptions support
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fwasm-exceptions")
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fwasm-exceptions")
-    # reduce inlining a bit to gain some precious KB
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_MINSIZEREL} -finline-hint-functions")
-    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS_MINSIZEREL} -finline-hint-functions")
+    # disable inlining a bit to gain some precious KB
+    set (CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} -fno-inline-functions")
+    set (CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL} -fno-inline-functions")
     # completely disable Threads usage
     add_definitions(-DOCCT_DISABLE_THREADS)
   elseif (NOT (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]" AND NOT MINGW))
