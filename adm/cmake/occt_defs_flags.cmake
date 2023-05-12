@@ -42,21 +42,22 @@ else()
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fwasm-exceptions")
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fwasm-exceptions")
     # reduce inlining a bit to gain some precious KB
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -finline-hint-functions")
-    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -finline-hint-functions")
-    # enforce STRICT mode
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s STRICT=1")
-    set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -s STRICT=1")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_MINSIZEREL} -finline-hint-functions")
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS_MINSIZEREL} -finline-hint-functions")
+    # completely disable Threads usage
+    add_definitions(-DOCCT_DISABLE_THREADS)
   elseif (NOT (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "[Cc][Ll][Aa][Nn][Gg]" AND NOT MINGW))
+    # On anything (except Clang on Windows with MSVC), use exceptions, PIC, stack protector, and OCC_CONVERT_SIGNAL
+    # enable exceptions
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
-
-    # On anything except Clang on Windows with MSVC, use fPIC and OCC_CONVERT_SIGNAL
+    # PIC
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
     set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -fPIC")
-
-    add_definitions(-DOCC_CONVERT_SIGNALS)
+    # Stack Protector
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector")
     set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -fstack-protector")
+    # Signals
+    add_definitions(-DOCC_CONVERT_SIGNALS)
   else()
     # Specifically on Clang on Windows with MSVC, use the experimental -fasync-exceptions to mimic MSVC /EHa behavior
     # => Not yet working (tested on Clang 16 on Windows)
@@ -64,9 +65,11 @@ else()
     #set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fasync-exceptions")
 
     # Workaround
+    # (regular) exceptions
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
-    # => enable OCC_CONVERT_SIGNALS instead for now
+    # Signals
     add_definitions(-DOCC_CONVERT_SIGNALS)
+    # Stack Protector
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector")
     set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -fstack-protector")
   endif()

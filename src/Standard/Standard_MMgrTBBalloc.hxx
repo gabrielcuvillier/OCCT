@@ -16,8 +16,6 @@
 #ifndef _Standard_MMgrTBBalloc_HeaderFile
 #define _Standard_MMgrTBBalloc_HeaderFile
 
-#if !defined(OCCT_DISABLE_OPTIMIZED_MEMORY_ALLOCATOR)
-
 #include <Standard_MMgrRoot.hxx>
 
 //!
@@ -51,4 +49,3 @@ class Standard_MMgrTBBalloc : public Standard_MMgrRoot
 
 #endif
 
-#endif
