@@ -22,7 +22,6 @@
 
 static Handle(Resource_Manager) CurrentUnits,SICurrentUnits,MDTVCurrentUnits;
 static Units_UnitsSystem LocalSystemUnits,SILocalSystemUnits,MDTVLocalSystemUnits;
-static TCollection_AsciiString rstring;
 static UnitsAPI_SystemUnits localSystem = UnitsAPI_SI;
 static UnitsAPI_SystemUnits currentSystem = UnitsAPI_DEFAULT;
 
@@ -35,11 +34,12 @@ void UnitsAPI::CheckLoading (const UnitsAPI_SystemUnits aSystemUnits)
 {
   if( currentSystem != aSystemUnits || CurrentUnits.IsNull()) {
     switch (aSystemUnits) {
+      default:
       case UnitsAPI_DEFAULT :
         if( !CurrentUnits.IsNull() ) break;
         Standard_FALLTHROUGH
-      case UnitsAPI_SI :  
-        currentSystem = UnitsAPI_SI; 
+      case UnitsAPI_SI :
+        currentSystem = UnitsAPI_SI;
         if( SICurrentUnits.IsNull() ) {
 #ifdef _WIN32
           OSD_Environment env3("CSF_CurrentUnits");
@@ -53,10 +53,88 @@ void UnitsAPI::CheckLoading (const UnitsAPI_SystemUnits aSystemUnits)
 #endif
         }
         CurrentUnits = SICurrentUnits;
+        if ( SICurrentUnits.IsNull() ) {
+          SILocalSystemUnits.Specify("MASS", "kg");
+          SILocalSystemUnits.Specify("LENGTH", "m");
+          SILocalSystemUnits.Specify("TIME", "s");
+          SILocalSystemUnits.Specify("ELECTRIC CURRENT", "A");
+          SILocalSystemUnits.Specify("THERMODYNAMIC TEMPERATURE", "°K");
+          SILocalSystemUnits.Specify("AMOUNT OF SUBSTANCE", "mol");
+          SILocalSystemUnits.Specify("PLANE ANGLE", "rad");
+          SILocalSystemUnits.Specify("SOLID ANGLE", "sr");
+          SILocalSystemUnits.Specify("AREA", "m²");
+          SILocalSystemUnits.Specify("VOLUME", "m³");
+          SILocalSystemUnits.Specify("INERTIA", "m**4");
+          SILocalSystemUnits.Specify("ANGULAR SPEED", "rad/s");
+          SILocalSystemUnits.Specify("SPEED", "m/s");
+          SILocalSystemUnits.Specify("ACCELERATION", "m/s²");
+          SILocalSystemUnits.Specify("FREQUENCY", "Hz");
+          SILocalSystemUnits.Specify("VOLUMIC MASS", "kg/m³");
+          SILocalSystemUnits.Specify("MASS FLOW", "kg/s");
+          SILocalSystemUnits.Specify("VOLUME FLOW", "m³/s");
+          SILocalSystemUnits.Specify("CONSUMPTION", "m²");
+          SILocalSystemUnits.Specify("QUANTITY OF MOVEMENT", "kg*m/s");
+          SILocalSystemUnits.Specify("KINETIC MOMENT", "kg*m²/s");
+          SILocalSystemUnits.Specify("MOMENT OF INERTIA", "kg*m²");
+          SILocalSystemUnits.Specify("FORCE", "N");
+          SILocalSystemUnits.Specify("MOMENT OF A FORCE", "N*m");
+          SILocalSystemUnits.Specify("LINEIC FORCE", "N/m");
+          SILocalSystemUnits.Specify("PRESSURE", "Pa");
+          SILocalSystemUnits.Specify("DYNAMIC VISCOSITY", "Pa/s");
+          SILocalSystemUnits.Specify("KINETIC VISCOSITY", "m²/s");
+          SILocalSystemUnits.Specify("TENSION SUPERFICIELLE", "m/s²");
+          SILocalSystemUnits.Specify("ELECTRIC POTENTIAL", "V");
+          SILocalSystemUnits.Specify("ENERGY", "J");
+          SILocalSystemUnits.Specify("POWER", "W");
+          SILocalSystemUnits.Specify("LINEIC POWER", "W/m");
+          SILocalSystemUnits.Specify("SURFACIC POWER", "W/m²");
+          SILocalSystemUnits.Specify("VOLUMIC POWER", "W/m³");
+          SILocalSystemUnits.Specify("COEFFICIENT OF LINEAR INFLATION", "1./°K");
+          SILocalSystemUnits.Specify("THERMICAL CONDUCTIVITY", "W/m/°K");
+          SILocalSystemUnits.Specify("THERMICAL CONVECTIVITY", "W/m²/°K");
+          SILocalSystemUnits.Specify("THERMICAL MASSIC CAPACITY", "J/kg/°K");
+          SILocalSystemUnits.Specify("ENTROPY", "J/°K");
+          SILocalSystemUnits.Specify("ENTHALPY", "J");
+          SILocalSystemUnits.Specify("LUMINOUS FLUX", "Lu");
+          SILocalSystemUnits.Specify("LUMINANCE", "cd/m²");
+          SILocalSystemUnits.Specify("EXITANCE", "lx");
+          SILocalSystemUnits.Specify("LUMINOUS INTENSITY", "cd");
+          SILocalSystemUnits.Specify("LUMINOUS EXPOSITION", "lx*s");
+          SILocalSystemUnits.Specify("LUMINOUS EFFICACITY", "Lu/W");
+          SILocalSystemUnits.Specify("LUMINOUS FLUX", "Lu");
+          SILocalSystemUnits.Specify("ILLUMINANCE", "lx");
+          SILocalSystemUnits.Specify("ELECTRIC CHARGE", "C");
+          SILocalSystemUnits.Specify("ELECTRIC FIELD", "V/m");
+          SILocalSystemUnits.Specify("ELECTRIC CAPACITANCE", "F");
+          SILocalSystemUnits.Specify("MAGNETIC FIELD", "A/m");
+          SILocalSystemUnits.Specify("MAGNETIC FLUX DENSITY", "T");
+          SILocalSystemUnits.Specify("MAGNETIC FLUX", "Wb");
+          SILocalSystemUnits.Specify("INDUCTANCE", "H");
+          SILocalSystemUnits.Specify("RELUCTANCE", "1./H");
+          SILocalSystemUnits.Specify("ELECTRIC RESISTANCE", "O");
+          SILocalSystemUnits.Specify("ELECTRIC CONDUCTANCE", "S");
+          SILocalSystemUnits.Specify("RESISTIVITY", "O*m");
+          SILocalSystemUnits.Specify("CONDUCTIVITY", "S/m");
+          SILocalSystemUnits.Specify("MOLAR MASS", "kg/mol");
+          SILocalSystemUnits.Specify("MOLAR VOLUME", "m³/mol");
+          SILocalSystemUnits.Specify("CONCENTRATION", "kg/m³");
+          SILocalSystemUnits.Specify("MOLAR CONCENTRATION", "mol/m³");
+          SILocalSystemUnits.Specify("MOLARITY", "mol/kg");
+          SILocalSystemUnits.Specify("ACCOUSTIC INTENSITY", "B");
+          SILocalSystemUnits.Specify("DOSE EQUIVALENT", "Si");
+          SILocalSystemUnits.Specify("ABSORBED DOSE", "Gr");
+          SILocalSystemUnits.Specify("ACTIVITY (OF A RADIONUCLEIDE)", "Be");
+          SILocalSystemUnits.Specify("FLUX OF MAGNETIC INDUCTION", "kg*m²/s²/A");
+          SILocalSystemUnits.Specify("ROTATION ACCELERATION", "rad/s²");
+          SILocalSystemUnits.Specify("TRANSLATION STIFFNESS", "N/m");
+          SILocalSystemUnits.Specify("ROTATION STIFFNESS", "N*m/rad");
+          SILocalSystemUnits.Activates();
+        }
         LocalSystemUnits = SILocalSystemUnits;
         break;
-      case UnitsAPI_MDTV :  
-        currentSystem = UnitsAPI_MDTV; 
+#if !defined(OCCT_DISABLE_MDTV_UNITS)
+      case UnitsAPI_MDTV :
+        currentSystem = UnitsAPI_MDTV;
         if( MDTVCurrentUnits.IsNull() )  {
 #ifdef _WIN32
           OSD_Environment env4("CSF_MDTVCurrentUnits");
@@ -125,6 +203,8 @@ void UnitsAPI::CheckLoading (const UnitsAPI_SystemUnits aSystemUnits)
         }
         LocalSystemUnits = MDTVLocalSystemUnits;
         break;
+        }
+#endif
     }
   }
 }
@@ -139,7 +219,7 @@ Standard_Real UnitsAPI::CurrentToLS(const Standard_Real aData,
                                     const Standard_CString aQuantity)
 {
   Standard_Real aValue = aData;
-  CheckLoading (localSystem); 
+  CheckLoading (localSystem);
   if( CurrentUnits->Find(aQuantity) ) {
     TCollection_AsciiString current(CurrentUnits->Value(aQuantity));
     aValue = Units::ToSI(aData,current.ToCString());
@@ -164,7 +244,7 @@ Standard_Real UnitsAPI::CurrentToSI(const Standard_Real aData,
                                     const Standard_CString aQuantity)
 {
   Standard_Real aValue = aData;
-  CheckLoading (UnitsAPI_DEFAULT); 
+  CheckLoading (UnitsAPI_DEFAULT);
   if( CurrentUnits->Find(aQuantity) ) {
     TCollection_AsciiString current(CurrentUnits->Value(aQuantity));
     aValue = Units::ToSI(aData,current.ToCString());
@@ -188,7 +268,7 @@ Standard_Real UnitsAPI::CurrentFromLS(const Standard_Real aData,
                                       const Standard_CString aQuantity)
 {
   Standard_Real aValue = aData;
-  CheckLoading (localSystem); 
+  CheckLoading (localSystem);
   if( CurrentUnits->Find(aQuantity) ) {
     TCollection_AsciiString current(CurrentUnits->Value(aQuantity));
     aValue = LocalSystemUnits.ConvertUserSystemValueToSI(aQuantity,aData);
@@ -213,7 +293,7 @@ Standard_Real UnitsAPI::CurrentFromSI(const Standard_Real aData,
                                       const Standard_CString aQuantity)
 {
   Standard_Real aValue = aData;
-  CheckLoading (UnitsAPI_DEFAULT); 
+  CheckLoading (UnitsAPI_DEFAULT);
   if( CurrentUnits->Find(aQuantity) ) {
     TCollection_AsciiString current(CurrentUnits->Value(aQuantity));
     aValue = Units::FromSI(aData,current.ToCString());
@@ -237,7 +317,7 @@ Standard_Real UnitsAPI::CurrentToAny(const Standard_Real aData,
                                      const Standard_CString aQuantity,
                                      const Standard_CString aUnit) {
   Standard_Real aValue = aData;
-  CheckLoading (UnitsAPI_DEFAULT); 
+  CheckLoading (UnitsAPI_DEFAULT);
   if( CurrentUnits->Find(aQuantity) ) {
     TCollection_AsciiString current(CurrentUnits->Value(aQuantity));
     aValue = AnyToAny(aData,current.ToCString(),aUnit);
@@ -262,7 +342,7 @@ Standard_Real UnitsAPI::CurrentFromAny(const Standard_Real aData,
                                        const Standard_CString aUnit)
 {
   Standard_Real aValue = aData;
-  CheckLoading (UnitsAPI_DEFAULT); 
+  CheckLoading (UnitsAPI_DEFAULT);
   if( CurrentUnits->Find(aQuantity) ) {
     TCollection_AsciiString current(CurrentUnits->Value(aQuantity));
     aValue = AnyToAny(aData,aUnit,current.ToCString());
@@ -286,7 +366,7 @@ Standard_Real UnitsAPI::AnyToLS(const Standard_Real aData,
                                 const Standard_CString aUnit)
 {
   Standard_Real aValue = aData;
-  CheckLoading (localSystem); 
+  CheckLoading (localSystem);
   Handle(Units_Dimensions) aDim;
   aValue = Units::ToSI(aValue,aUnit,aDim);
   if(aDim.IsNull())
@@ -313,7 +393,7 @@ Standard_Real UnitsAPI::AnyToLS(const Standard_Real aData,
                                 Handle(Units_Dimensions) &aDim)
 {
   Standard_Real aValue = aData;
-  CheckLoading (localSystem); 
+  CheckLoading (localSystem);
   aValue = Units::ToSI(aValue,aUnit,aDim);
   Standard_CString quantity = aDim->Quantity();
   if(aDim.IsNull())
@@ -338,7 +418,7 @@ Standard_Real UnitsAPI::AnyToSI(const Standard_Real aData,
                                 const Standard_CString aUnit)
 {
   Standard_Real aValue;
-  CheckLoading (UnitsAPI_DEFAULT); 
+  CheckLoading (UnitsAPI_DEFAULT);
   aValue = Units::ToSI(aData,aUnit);
   return aValue;
 }
@@ -369,7 +449,7 @@ Standard_Real UnitsAPI::AnyFromLS(const Standard_Real aData,
                                   const Standard_CString aUnit)
 {
   Standard_Real aValue = aData;
-  CheckLoading (localSystem); 
+  CheckLoading (localSystem);
   Handle(Units_Dimensions) aDim;
   aValue = Units::FromSI(aValue,aUnit,aDim);
   Standard_CString quantity = aDim->Quantity();
@@ -394,7 +474,7 @@ Standard_Real UnitsAPI::AnyFromSI(const Standard_Real aData,
                                   const Standard_CString aUnit)
 {
   Standard_Real aValue;
-  CheckLoading (UnitsAPI_DEFAULT); 
+  CheckLoading (UnitsAPI_DEFAULT);
   aValue = Units::FromSI(aData,aUnit);
   return aValue;
 }
@@ -410,7 +490,7 @@ Standard_Real UnitsAPI::AnyToAny(const Standard_Real aData,
                                  const Standard_CString aUnit2)
 {
   Standard_Real aValue = aData;
-  CheckLoading (UnitsAPI_DEFAULT); 
+  CheckLoading (UnitsAPI_DEFAULT);
   aValue = Units::Convert(aValue,aUnit1,aUnit2);
   return aValue;
 }
@@ -425,7 +505,7 @@ Standard_Real UnitsAPI::LSToSI(const Standard_Real aData,
                                const Standard_CString aQuantity)
 {
   Standard_Real aValue = aData;
-  CheckLoading (localSystem); 
+  CheckLoading (localSystem);
   if( CurrentUnits->Find(aQuantity) ) {
     aValue = LocalSystemUnits.ConvertUserSystemValueToSI(aQuantity,aData);
   }
@@ -448,7 +528,7 @@ Standard_Real UnitsAPI::SIToLS(const Standard_Real aData,
                                const Standard_CString aQuantity)
 {
   Standard_Real aValue = aData;
-  CheckLoading (localSystem); 
+  CheckLoading (localSystem);
   if( CurrentUnits->Find(aQuantity) ) {
     aValue = LocalSystemUnits.ConvertSIValueToUserSystem(aQuantity,aValue);
   }
@@ -469,8 +549,8 @@ Standard_Real UnitsAPI::SIToLS(const Standard_Real aData,
 
 void UnitsAPI::SetLocalSystem(const UnitsAPI_SystemUnits aSystemUnits)
 {
-  CheckLoading (aSystemUnits); 
-  localSystem = currentSystem; 
+  CheckLoading (aSystemUnits);
+  localSystem = currentSystem;
 }
 
 
@@ -481,7 +561,7 @@ void UnitsAPI::SetLocalSystem(const UnitsAPI_SystemUnits aSystemUnits)
 
 UnitsAPI_SystemUnits UnitsAPI::LocalSystem()
 {
-  return localSystem; 
+  return localSystem;
 }
 
 
@@ -662,11 +742,11 @@ Handle(Units_Dimensions) UnitsAPI::DimensionSolidAngle()
 //purpose  :
 //=======================================================================
 
-Standard_Boolean UnitsAPI::Check(const Standard_CString aQuantity, 
+Standard_Boolean UnitsAPI::Check(const Standard_CString aQuantity,
 				 const Standard_CString /*aUnit*/)
 {
   Standard_Boolean status = Standard_False;
-  CheckLoading (UnitsAPI_DEFAULT); 
+  CheckLoading (UnitsAPI_DEFAULT);
   if( CurrentUnits->Find(aQuantity) ) {
     TCollection_AsciiString current(CurrentUnits->Value(aQuantity));
 //    aValue = AnyToAny(aData,current.ToCString(),aUnit);
