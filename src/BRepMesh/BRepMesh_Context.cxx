@@ -22,7 +22,9 @@
 #include <BRepMesh_ModelPostProcessor.hxx>
 
 #include <BRepMesh_MeshAlgoFactory.hxx>
+#if !defined(OCCT_DISABLE_DELABELLA_MESH_ALGO)
 #include <BRepMesh_DelabellaMeshAlgoFactory.hxx>
+#endif
 #include <Message.hxx>
 #include <OSD_Environment.hxx>
 
@@ -30,12 +32,13 @@ IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_Context, IMeshTools_Context)
 
 //=======================================================================
 // Function: Constructor
-// Purpose : 
+// Purpose :
 //=======================================================================
 BRepMesh_Context::BRepMesh_Context (IMeshTools_MeshAlgoType theMeshType)
 {
   if (theMeshType == IMeshTools_MeshAlgoType_DEFAULT)
   {
+#if !defined(OCCT_DISABLE_DELABELLA_MESH_ALGO)
     TCollection_AsciiString aValue = OSD_Environment ("CSF_MeshAlgo").Value();
     aValue.LowerCase();
     if (aValue == "watson"
@@ -56,18 +59,24 @@ BRepMesh_Context::BRepMesh_Context (IMeshTools_MeshAlgoType theMeshType)
       }
       theMeshType = IMeshTools_MeshAlgoType_Watson;
     }
+#else
+    theMeshType = IMeshTools_MeshAlgoType_Watson;
+#endif
   }
 
   Handle (IMeshTools_MeshAlgoFactory) aAlgoFactory;
   switch (theMeshType)
   {
+    default:
     case IMeshTools_MeshAlgoType_DEFAULT:
     case IMeshTools_MeshAlgoType_Watson:
       aAlgoFactory = new BRepMesh_MeshAlgoFactory();
       break;
+#if !defined(OCCT_DISABLE_DELABELLA_MESH_ALGO)
     case IMeshTools_MeshAlgoType_Delabella:
       aAlgoFactory = new BRepMesh_DelabellaMeshAlgoFactory();
       break;
+#endif
   }
 
   SetModelBuilder (new BRepMesh_ModelBuilder);
@@ -80,7 +89,7 @@ BRepMesh_Context::BRepMesh_Context (IMeshTools_MeshAlgoType theMeshType)
 
 //=======================================================================
 // Function: Destructor
-// Purpose : 
+// Purpose :
 //=======================================================================
 BRepMesh_Context::~BRepMesh_Context ()
 {
