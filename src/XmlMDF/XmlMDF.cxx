@@ -36,11 +36,15 @@
 
 IMPLEMENT_DOMSTRING (TagString,         "tag")
 IMPLEMENT_DOMSTRING (LabelString,       "label")
+
+#if !defined(OCCT_DISABLE_STORAGE_MIGRATION)
 #define DATATYPE_MIGRATION
+#endif
+
 //#define DATATYPE_MIGRATION_DEB
 //=======================================================================
 //function : UnsuppTypesMap
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 static TColStd_MapOfTransient& UnsuppTypesMap ()
@@ -67,7 +71,7 @@ void XmlMDF::FromTo (const Handle(TDF_Data)&             theData,
 
 //=======================================================================
 //function : WriteSubTree
-//purpose  : 
+//purpose  :
 //=======================================================================
 Standard_Integer XmlMDF::WriteSubTree
                       (const TDF_Label&                    theLabel,
@@ -152,7 +156,7 @@ Standard_Integer XmlMDF::WriteSubTree
 Standard_Boolean XmlMDF::FromTo (const XmlObjMgt_Element&           theElement,
                                  Handle(TDF_Data)&                  theData,
                                  XmlObjMgt_RRelocationTable&        theRelocTable,
-                                 const Handle(XmlMDF_ADriverTable)& theDrivers, 
+                                 const Handle(XmlMDF_ADriverTable)& theDrivers,
                                  const Message_ProgressRange&       theRange)
 {
   TDF_Label aRootLab = theData->Root();
@@ -186,12 +190,12 @@ Standard_Boolean XmlMDF::FromTo (const XmlObjMgt_Element&           theElement,
 
 //=======================================================================
 //function : ReadSubTree
-//purpose  : 
+//purpose  :
 //=======================================================================
 Standard_Integer XmlMDF::ReadSubTree (const XmlObjMgt_Element&     theElement,
                                       const TDF_Label&             theLabel,
                                       XmlObjMgt_RRelocationTable&  theRelocTable,
-                                      const XmlMDF_MapOfDriver&    theDriverMap, 
+                                      const XmlMDF_MapOfDriver&    theDriverMap,
                                       const Message_ProgressRange& theRange)
 {
   // Extraction of the driver subset.
@@ -234,7 +238,7 @@ Standard_Integer XmlMDF::ReadSubTree (const XmlObjMgt_Element&     theElement,
         XmlObjMgt_DOMString aName = anElem.getNodeName();
 
 #ifdef DATATYPE_MIGRATION
-	TCollection_AsciiString  newName;	
+	TCollection_AsciiString  newName;
 	if(Storage_Schema::CheckTypeMigration(aName, newName)) {
 #ifdef OCCT_DEBUG
 	  std::cout << "CheckTypeMigration:OldType = " <<aName.GetString() << " Len = "<<strlen(aName.GetString())<<std::endl;
@@ -242,8 +246,8 @@ Standard_Integer XmlMDF::ReadSubTree (const XmlObjMgt_Element&     theElement,
 #endif
 	  aName = newName.ToCString();
 	}
-#endif  
-       
+#endif
+
         if (theDriverMap.IsBound (aName))
         {
           count++;
@@ -325,11 +329,11 @@ Standard_Integer XmlMDF::ReadSubTree (const XmlObjMgt_Element&     theElement,
 
 //=======================================================================
 //function : AddDrivers
-//purpose  : 
+//purpose  :
 //=======================================================================
 void XmlMDF::AddDrivers (const Handle(XmlMDF_ADriverTable)& aDriverTable,
                          const Handle(Message_Messenger)&   aMessageDriver)
 {
-  aDriverTable->AddDriver (new XmlMDF_TagSourceDriver(aMessageDriver)); 
+  aDriverTable->AddDriver (new XmlMDF_TagSourceDriver(aMessageDriver));
   aDriverTable->AddDriver (new XmlMDF_ReferenceDriver(aMessageDriver));
 }

@@ -49,8 +49,12 @@ IMPLEMENT_STANDARD_RTTIEXT(BinLDrivers_DocumentRetrievalDriver,PCDM_RetrievalDri
 #define ENDSECTION_POS ":"
 #define SIZEOFSHAPELABEL  18
 
+
+#if !defined(OCCT_DISABLE_STORAGE_MIGRATION)
 #define DATATYPE_MIGRATION
+#endif
 //#define DATATYPE_MIGRATION_DEB
+
 //=======================================================================
 //function : BinLDrivers_DocumentRetrievalDriver
 //purpose  : Constructor
@@ -128,7 +132,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read (Standard_IStream&               
 
   // 1. the information section
   Handle(Storage_HeaderData) aHeaderData;
-  
+
   if (!theStorageData.IsNull())
   {
     aHeaderData = theStorageData->HeaderData();
@@ -184,7 +188,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read (Standard_IStream&               
     else if (begin) {
       if ( aFileVer < TDocStd_FormatVersion_VERSION_8) {
 #ifdef DATATYPE_MIGRATION
-        TCollection_AsciiString  newName;	
+        TCollection_AsciiString  newName;
         if(Storage_Schema::CheckTypeMigration(aStr, newName)) {
 #ifdef OCCT_DEBUG
           std::cout << "CheckTypeMigration:OldType = " <<aStr << " Len = "<<aStr.Length()<<std::endl;
@@ -192,19 +196,19 @@ void BinLDrivers_DocumentRetrievalDriver::Read (Standard_IStream&               
 #endif
           aStr = newName;
         }
-#endif  
-      } 
-      aTypeNames.Append (aStr);    
+#endif
+      }
+      aTypeNames.Append (aStr);
     }
   }
   if (myDrivers.IsNull())
     myDrivers = AttributeDrivers (myMsgDriver);
-  myDrivers->AssignIds (aTypeNames); 
+  myDrivers->AssignIds (aTypeNames);
 
   // recognize types not supported by drivers
   myMapUnsupported.Clear();
   for (i=1; i <= aTypeNames.Length(); i++)
-    if (myDrivers->GetDriver(i).IsNull()) 
+    if (myDrivers->GetDriver(i).IsNull())
       myMapUnsupported.Add(i);
   if (!myMapUnsupported.IsEmpty()) {
     myMsgDriver->Send (aMethStr + "warning: "
@@ -293,7 +297,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read (Standard_IStream&               
 #ifdef OCCT_DEBUG
       std::cout <<"aShapeSectionPos = " <<aShapeSectionPos <<std::endl;
 #endif
-      if(aShapeSectionPos) { 
+      if(aShapeSectionPos) {
         aDocumentPos = theIStream.tellg();
         theIStream.seekg((std::streampos) aShapeSectionPos);
 
@@ -325,12 +329,12 @@ void BinLDrivers_DocumentRetrievalDriver::Read (Standard_IStream&               
   if (!theFilter.IsNull())
     theFilter->StartIteration();
   Standard_Integer nbRead = ReadSubTree (theIStream, aData->Root(), theFilter, aQuickPart, aPS.Next());
-  if (!aPS.More()) 
+  if (!aPS.More())
   {
     myReaderStatus = PCDM_RS_UserBreak;
     return;
   }
-  
+
   Clear();
   if (!aPS.More())
   {
@@ -338,7 +342,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read (Standard_IStream&               
     return;
   }
   aPS.Next();
-    
+
   if (nbRead > 0) {
     // attach data to the document
     if (theFilter.IsNull() || !theFilter->IsAppendMode())
@@ -357,7 +361,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read (Standard_IStream&               
       BinLDrivers_DocumentSection& aCurSection = aSectIter.ChangeValue();
       if (aCurSection.IsPostRead()) {
         theIStream.seekg ((std::streampos) aCurSection.Offset());
-        ReadSection (aCurSection, theDoc, theIStream); 
+        ReadSection (aCurSection, theDoc, theIStream);
       }
     }
   }
@@ -560,7 +564,7 @@ Handle(BinMDF_ADriverTable) BinLDrivers_DocumentRetrievalDriver::AttributeDriver
 
 //=======================================================================
 //function : ReadSection
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void BinLDrivers_DocumentRetrievalDriver::ReadSection
@@ -573,7 +577,7 @@ void BinLDrivers_DocumentRetrievalDriver::ReadSection
 
 //=======================================================================
 //function : ReadShapeSection
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void BinLDrivers_DocumentRetrievalDriver::ReadShapeSection
@@ -591,7 +595,7 @@ void BinLDrivers_DocumentRetrievalDriver::ReadShapeSection
 
 //=======================================================================
 //function : CheckShapeSection
-//purpose  : 
+//purpose  :
 //=======================================================================
 void BinLDrivers_DocumentRetrievalDriver::CheckShapeSection
   (const Storage_Position& ShapeSectionPos, Standard_IStream& IS)
@@ -611,7 +615,7 @@ void BinLDrivers_DocumentRetrievalDriver::CheckShapeSection
 
 //=======================================================================
 //function : Clear
-//purpose  : 
+//purpose  :
 //=======================================================================
 void BinLDrivers_DocumentRetrievalDriver::Clear()
 {
@@ -622,7 +626,7 @@ void BinLDrivers_DocumentRetrievalDriver::Clear()
 
 //=======================================================================
 //function : CheckDocumentVersion
-//purpose  : 
+//purpose  :
 //=======================================================================
 Standard_Boolean BinLDrivers_DocumentRetrievalDriver::CheckDocumentVersion
   (const Standard_Integer theFileVersion, const Standard_Integer theCurVersion)
@@ -636,7 +640,7 @@ Standard_Boolean BinLDrivers_DocumentRetrievalDriver::CheckDocumentVersion
 
 //=======================================================================
 //function : IsQuickPart
-//purpose  : 
+//purpose  :
 //=======================================================================
 Standard_Boolean BinLDrivers_DocumentRetrievalDriver::IsQuickPart (const Standard_Integer theFileVer)
 {

@@ -33,7 +33,9 @@
 #include <stdio.h>
 IMPLEMENT_STANDARD_RTTIEXT(Storage_Schema,Standard_Transient)
 
+#if !defined(OCCT_DISABLE_STORAGE_MIGRATION)
 #define DATATYPE_MIGRATION
+#endif
 
 #ifdef DATATYPE_MIGRATION
 #include <NCollection_DataMap.hxx>
@@ -42,7 +44,7 @@ IMPLEMENT_STANDARD_RTTIEXT(Storage_Schema,Standard_Transient)
 #include <OSD_Protection.hxx>
 #include <OSD_Environment.hxx>
 
-typedef NCollection_DataMap <TCollection_AsciiString, 
+typedef NCollection_DataMap <TCollection_AsciiString,
   TCollection_AsciiString> DataMapOfAStringAString;
 
 #endif
@@ -59,7 +61,7 @@ Storage_Bucket::~Storage_Bucket()
 
 //=======================================================================
 //function : Clear
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void Storage_Bucket::Clear()
@@ -69,7 +71,7 @@ void Storage_Bucket::Clear()
 
 //=======================================================================
 //function : Append
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void Storage_Bucket::Append(Standard_Persistent *sp)
@@ -80,7 +82,7 @@ void Storage_Bucket::Append(Standard_Persistent *sp)
 
 //=======================================================================
 //function : Value
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Persistent* Storage_Bucket::Value
@@ -91,7 +93,7 @@ Standard_Persistent* Storage_Bucket::Value
 
 //=======================================================================
 //function : Storage_BucketOfPersistent
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Storage_BucketOfPersistent::Storage_BucketOfPersistent
@@ -110,7 +112,7 @@ Storage_BucketOfPersistent::Storage_BucketOfPersistent
 
 //=======================================================================
 //function : Clear
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void Storage_BucketOfPersistent::Clear()
@@ -137,7 +139,7 @@ Storage_BucketOfPersistent::~Storage_BucketOfPersistent()
 
 //=======================================================================
 //function : Value
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Persistent* Storage_BucketOfPersistent::Value
@@ -153,7 +155,7 @@ Standard_Persistent* Storage_BucketOfPersistent::Value
 
 //=======================================================================
 //function : Append
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void Storage_BucketOfPersistent::Append(const Handle(Standard_Persistent)& sp)
@@ -185,7 +187,7 @@ void Storage_BucketOfPersistent::Append(const Handle(Standard_Persistent)& sp)
 
 //=======================================================================
 //function : Storage_BucketIterator
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Storage_BucketIterator::Storage_BucketIterator
@@ -206,7 +208,7 @@ Storage_BucketIterator::Storage_BucketIterator
 
 //=======================================================================
 //function : Reset
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void Storage_BucketIterator::Reset()
@@ -223,7 +225,7 @@ void Storage_BucketIterator::Reset()
 
 //=======================================================================
 //function : Init
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void Storage_BucketIterator::Init(Storage_BucketOfPersistent* aBucketManager)
@@ -241,7 +243,7 @@ void Storage_BucketIterator::Init(Storage_BucketOfPersistent* aBucketManager)
 
 //=======================================================================
 //function : Next
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void Storage_BucketIterator::Next()
@@ -318,7 +320,7 @@ TCollection_AsciiString Storage_Schema::Name() const
 
 //=======================================================================
 //function : Write
-//purpose  : write 
+//purpose  : write
 //Arguments:
 //           s: driver to write
 //           raises  if  the  stream  is  not  opened  in  VSWrite  or
@@ -610,7 +612,7 @@ Handle(Storage_CallBack) Storage_Schema::DefaultCallBack() const
 
 //=======================================================================
 //function : BindType
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void Storage_Schema::BindType
@@ -630,7 +632,7 @@ void Storage_Schema::BindType
 
 //=======================================================================
 //function : TypeBinding
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Handle(Storage_CallBack) Storage_Schema::TypeBinding
@@ -649,7 +651,7 @@ Handle(Storage_CallBack) Storage_Schema::TypeBinding
 
 //=======================================================================
 //function : AddPersistent
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean Storage_Schema::AddPersistent
@@ -681,7 +683,7 @@ Standard_Boolean Storage_Schema::AddPersistent
 
 //=======================================================================
 //function : PersistentToAdd
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Standard_Boolean Storage_Schema::PersistentToAdd
@@ -704,7 +706,7 @@ Standard_Boolean Storage_Schema::PersistentToAdd
 
 //=======================================================================
 //function : Clear
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void Storage_Schema::Clear() const
@@ -724,7 +726,7 @@ Standard_Boolean Storage_Schema::CheckTypeMigration(
   static Standard_Boolean isChecked(Standard_False);
   static DataMapOfAStringAString aDMap;
   Standard_Boolean aMigration(Standard_False);
-  
+
   if(!isChecked) {
     isChecked = Standard_True;
 //    TCollection_AsciiString aFileName = getenv("CSF_MIGRATION_TYPES");
@@ -758,7 +760,7 @@ Standard_Boolean Storage_Schema::CheckTypeMigration(
       }
       else
       {
-        // hard-code migration table for known types	
+        // hard-code migration table for known types
 	aDMap.Bind("TDataStd_Shape",          "TDataXtd_Shape");
 	aDMap.Bind("TDataStd_Constraint",     "TDataXtd_Constraint");
         aDMap.Bind("TDataStd_Geometry",       "TDataXtd_Geometry");
@@ -794,14 +796,14 @@ Standard_Boolean Storage_Schema::CheckTypeMigration(
       std::cout << " newName = " << newName << std::endl;
 #endif
     }
-  } 
+  }
   return aMigration;
 }
 #endif
 
 //=======================================================================
 //function : ISetCurrentData
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 void Storage_Schema::ISetCurrentData(const Handle(Storage_Data)& dData)
@@ -811,7 +813,7 @@ void Storage_Schema::ISetCurrentData(const Handle(Storage_Data)& dData)
 
 //=======================================================================
 //function : ICurrentData
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 Handle(Storage_Data)& Storage_Schema::ICurrentData()
@@ -824,7 +826,7 @@ Handle(Storage_Data)& Storage_Schema::ICurrentData()
 
 //=======================================================================
 //function : ICreationDate
-//purpose  : 
+//purpose  :
 //=======================================================================
 
 TCollection_AsciiString Storage_Schema::ICreationDate()
